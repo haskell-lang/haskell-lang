@@ -1,0 +1,75 @@
+* What do all existing language sites have?
+** A theme
+** Logo
+** Menu
+*** Download
+- Platform http://www.haskell.org/platform/
+- GHC https://www.haskell.org/ghc/
+- Hackage http://hackage.haskell.org/
+*** Community
+*** Documentation
+*** News
+** Visual things
+*** Opening paragraph
+**** Python
+Python is a programming language that lets you work quickly and
+integrate systems more effectively.
+**** Ruby
+Ruby is...
+A dynamic, open source programming language with a focus on simplicity
+and productivity. It has an elegant syntax that is natural to read and
+easy to write.
+**** Clojure
+Clojure is a dynamic programming language that targets the Java
+Virtual Machine (and the CLR, and JavaScript). It is designed to be a
+general-purpose language, combining the approachability and
+interactive development of a scripting language with an efficient and
+robust infrastructure for multithreaded programming. Clojure is a
+compiled language - it compiles directly to JVM bytecode, yet remains
+completely dynamic. Every feature supported by Clojure is supported at
+runtime. Clojure provides easy access to the Java frameworks, with
+optional type hints and type inference, to ensure that calls to Java
+can avoid reflection.
+**** F#
+F# is a mature, open source, cross-platform, functional-first
+programming language which empowers users and organizations to tackle
+complex computing problems with simple, maintainable and robust code.
+
+F# runs on Linux, Mac OS X, Android, iOS, Windows as well as HTML5 and
+GPUs. F# is free to use and has an OSI-approved open source license.
+
+F# is used in a wide range of application areas and is supported by
+both industry-leading companies providing professional tools, and by
+an active open community.
+
+The F# Software Foundation exists to promote, protect, and advance F#,
+and to support and foster the growth of a diverse international
+community of F# users.
+**** Haskell.org
+Haskell is an advanced purely-functional programming language. An
+open-source product of more than twenty years of cutting-edge
+research, it allows rapid development of robust, concise, correct
+software. With strong support for integration with other languages,
+built-in concurrency and parallelism, debuggers, profilers, rich
+libraries and an active community, Haskell makes it easier to produce
+flexible, maintainable, high-quality software.
+**** Scala
+Have the best of both worlds. Construct elegant class hierarchies for
+maximum code reuse and extensibility, implement their behavior using
+higher-order functions. Or anything in-between.
+*** Code sample
+*** Thumbnails of videos
+*** Pictures of community stuff
+*** Screenshots
+*** Selling points
+- I like python.org's menu which shows Web Programming, GUI
+  Development, etc. and then next to each the library one would use
+  to accomplish that task.
+- Linux, OS X, Windows.
+*** News
+*** Twitter
+*** Supporters
+** Other links
+*** Application areas / success stories
+*** Language options
+** Footer with more links
