@@ -5,10 +5,12 @@ module Main where
 import HL.Foundation
 import HL.Dispatch ()
 
+import Control.Concurrent.Chan
 import Yesod.Static
 
 -- | Main entry point.
 main :: IO ()
 main =
   do s <- static "static"
-     warp 1990 (App s)
+     c <- newChan
+     warp 1990 (App s c)

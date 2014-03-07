@@ -6,6 +6,12 @@
 module HL.Dispatch () where
 
 import HL.Controller.Home
+import HL.Controller.Reload
+import HL.Controller.Theme
+import HL.Controller.Downloads
+import HL.Controller.Community
+import HL.Controller.Documentation
+import HL.Controller.News
 import HL.Foundation
 
 mkYesodDispatch "App" resourcesApp

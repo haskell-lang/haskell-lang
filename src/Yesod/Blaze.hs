@@ -2,17 +2,23 @@
 
 module Yesod.Blaze
   (module Yesod.Blaze
-  ,module Yesod
-  ,module Blaze)
+  ,module Yesod)
   where
 
 import Yesod hiding (object)
 import Blaze
 
-type Blaze a = (Route a -> AttributeValue) -> Html
+-- | A blaze generator.
+type Blaze a =
+  Maybe (Route a) ->
+  (Route a -> AttributeValue) ->
+  Html
 
 -- | Output some blaze, passes a URL renderer to the continuation.
-blaze :: MonadHandler m => ((Route (HandlerSite m) -> AttributeValue) -> b) -> m b
-blaze f =
+blaze :: MonadHandler m => Blaze (HandlerSite m) -> m Html
+blaze cont =
   do render <- getUrlRender
-     return (f (toValue . render))
+     current <- getCurrentRoute
+     return
+       (cont current
+             (toValue . render))

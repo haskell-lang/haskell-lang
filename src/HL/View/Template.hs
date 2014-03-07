@@ -5,49 +5,89 @@
 
 module HL.View.Template where
 
-import HL.Foundation
+import           HL.Foundation
 
-import Blaze.Elements as E
-import Blaze.Attributes as A
-import Blaze.Prelude
-import Blaze.Bootstrap
+import           Blaze (AttributeValue)
+import qualified Blaze.Attributes as A
+import           Blaze.Bootstrap
+import qualified Blaze.Elements as E
+import           Blaze.Prelude
+import           Blaze.Senza
+import           Control.Monad
+import           Data.Text (Text)
 
 -- | Render a template.
-template :: Blaze App -- ^ Content.
-         -> Blaze App
-template inner url =
+template
+  :: [(Route App,Text)]
+  -> ((Route App -> AttributeValue) -> Html)
+  -> Blaze App
+template crumbs inner cur url =
   docTypeHtml
-    (do head
-          (do E.title "Haskell"
-              with meta [charset "utf-8"]
-              with meta [httpEquiv "X-UA-Compatible",A.content "IE edge"]
-              with meta [name "viewport",A.content "width=device-width, initial-scale=1"]
-              styles [css_bootstrap_min_css
-                     ,css_bootstrap_theme_min_css])
-        body
-          (do with div
-                   [class_ "wrap"]
-                   (do inner url
-                       with div
-                            [class_ "footer"]
-                            (container
-                               (row
-                                  (span12
-                                     (with div
-                                           [class_ "muted credit"]
-                                           "Footer")))))
-              scripts [js_jquery_js
-                      ,js_jquery_cookie_js
-                      ,js_bootstrap_min_js]))
+    (do head []
+             (do headtitle "Haskell"
+                 meta [charset "utf-8"]
+                 meta [httpEquiv "X-UA-Compatible",content "IE edge"]
+                 meta [name "viewport",content "width=device-width, initial-scale=1"]
+                 link [rel "stylesheet"
+                      ,type_ "text/css"
+                      ,href "http://fonts.googleapis.com/css?family=Open+Sans"]
+                 styles [StaticR css_bootstrap_min_css
+                        ,StaticR css_haskell_font_css
+                        ,ThemeR])
+        body []
+             (do div [class_ "wrap"]
+                     (do navigation cur url
+                         container (bread url crumbs)
+                         inner url)
+                 div [class_ "footer"]
+                     (div [class_ "container"]
+                          (p [] (do "Copyright © 2014 haskell-lang.org")))
+                 scripts [js_jquery_js
+                         ,js_jquery_cookie_js
+                         ,js_bootstrap_min_js
+                         ,js_warp_reload_js]))
   where
     scripts =
       mapM_ (\route ->
-               with script
-                    [src (url (StaticR route))]
-                    (return ()))
+               script [src (url (StaticR route))]
+                      (return ()))
     styles =
       mapM_ (\route ->
-               with link
-                    [rel "stylesheet"
+               link [rel "stylesheet"
                     ,type_ "text/css"
-                    ,href (url (StaticR route))])
+                    ,href (url route)])
+
+-- | Main navigation.
+navigation :: Blaze App
+navigation cur url =
+  nav [class_ "navbar navbar-default"]
+      (div [class_ "container"]
+           (do brand
+               items))
+  where items =
+          div [class_ "collapse navbar-collapse"]
+              (ul [class_ "nav navbar-nav"]
+                  (mapM_ (uncurry item)
+                         [(DownloadsR,"Downloads")
+                         ,(CommunityR,"Community")
+                         ,(DocumentationR,"Documentation")
+                         ,(NewsR,"News")]))
+          where item route title = li theclass (a [href (url route)] title)
+                  where theclass
+                          | Just route == cur = [class_ "active"]
+                          | otherwise = []
+        brand =
+          div [class_ "navbar-header"]
+               (do a [class_ "navbar-brand"
+                     ,href (url HomeR)]
+                     (do span [class_ "logo"]
+                              "\xe000"
+                         "Haskell"))
+
+-- | Breadcrumb.
+bread :: (t -> E.AttributeValue) -> [(t,Text)] -> Html
+bread url crumbs =
+  ol [class_ "breadcrumb"]
+     (forM_ crumbs
+            (\(route,title) -> li [] (a [href (url route)]
+                                        (toHtml title))))

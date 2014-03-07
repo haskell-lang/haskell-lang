@@ -16,6 +16,7 @@ module HL.Foundation
 
 import HL.Static
 
+import Control.Concurrent.Chan
 import Network.Wai.Logger
 import System.Log.FastLogger
 import Yesod
@@ -26,6 +27,7 @@ import Yesod.Static
 -- | Application state.
 data App = App
   { appStatic :: Static
+  , appReload :: Chan ()
   }
 
 -- | Generate boilerplate.

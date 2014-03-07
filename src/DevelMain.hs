@@ -15,15 +15,19 @@ import Yesod.Static
 main :: IO (Store (IORef Application))
 main =
   do s <- static "static"
-     app <- toWaiApp (App s)
+     c <- newChan
+     app <- toWaiApp (App s c)
      ref <- newIORef app
      tid <- forkIO
               (runSettings
                  (defaultSettings { settingsPort = 1990 })
-                 (\req -> do handler <- readIORef ref
-                             handler req))
+                 (\req ->
+                    do handler <- readIORef ref
+                       handler req))
      _ <- newStore tid
-     newStore ref
+     ref <- newStore ref
+     newStore c
+     return ref
 
 -- | Update the server, start it if not running.
 update :: IO (Store (IORef Application))
@@ -33,7 +37,9 @@ update =
        Nothing -> main
        Just store ->
          do ref <- readStore store
+            c <- readStore (Store 2)
+            writeChan c ()
             s <- static "static"
-            app <- toWaiApp (App s)
+            app <- toWaiApp (App s c)
             writeIORef ref app
             return store

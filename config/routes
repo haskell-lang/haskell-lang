@@ -1,2 +1,8 @@
 /static StaticR Static appStatic
+/theme ThemeR GET
 / HomeR GET
+/reload ReloadR GET
+/downloads DownloadsR GET
+/community CommunityR GET
+/documentation DocumentationR GET
+/news NewsR GET
