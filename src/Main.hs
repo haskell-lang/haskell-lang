@@ -1,12 +1,14 @@
--- | Main entry point to haskell-lang.
---
--- Haskell web site.
+-- | Web server.
 
 module Main where
 
-import HL.Server
+import HL.Foundation
+import HL.Dispatch ()
+
+import Yesod.Static
 
 -- | Main entry point.
 main :: IO ()
 main =
- startServer
+  do s <- static "static"
+     warp 1990 (App s)

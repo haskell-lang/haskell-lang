@@ -3,9 +3,10 @@
 
 -- | Templates.
 
-module HL.V.Template where
+module HL.View.Template where
 
 import HL.Foundation
+
 import Blaze.Elements as E
 import Blaze.Attributes as A
 import Blaze.Prelude
@@ -14,7 +15,7 @@ import Blaze.Bootstrap
 -- | Render a template.
 template :: Blaze App -- ^ Content.
          -> Blaze App
-template content url =
+template inner url =
   docTypeHtml
     (do head
           (do E.title "Haskell"
@@ -26,7 +27,7 @@ template content url =
         body
           (do with div
                    [class_ "wrap"]
-                   (do content url
+                   (do inner url
                        with div
                             [class_ "footer"]
                             (container

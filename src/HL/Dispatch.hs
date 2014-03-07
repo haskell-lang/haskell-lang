@@ -3,9 +3,9 @@
 
 -- | Make the dispatcher.
 
-module HL.Dispatch where
+module HL.Dispatch () where
 
+import HL.Controller.Home
 import HL.Foundation
-import HL.C.Home
 
 mkYesodDispatch "App" resourcesApp

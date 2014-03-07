@@ -1,10 +1,10 @@
--- | Home page controller.
+-- | Reload poller.
 
-module HL.C.Home where
+module HL.C.Reload where
 
 import HL.Foundation
 import HL.V.Home
 
 -- | Home controller.
 getHomeR :: Handler Html
-getHomeR = blaze homeV
+getHomeR =
