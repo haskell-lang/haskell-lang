@@ -70,7 +70,7 @@ navigation cur url =
                          ,(CommunityR,"Community")
                          ,(DocumentationR,"Documentation")
                          ,(NewsR,"News")
-                         ,(WikiR "","Wiki")]))
+                         ,(WikiHomeR,"Wiki")]))
           where item route title = li theclass (a [href (url route)] title)
                   where theclass
                           | Just route == cur = [class_ "active"]

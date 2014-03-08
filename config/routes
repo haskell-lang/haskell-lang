@@ -8,3 +8,4 @@
 /news NewsR GET
 /report/#Int ReportR GET
 /wiki/#Text WikiR GET
+/wiki/ WikiHomeR GET

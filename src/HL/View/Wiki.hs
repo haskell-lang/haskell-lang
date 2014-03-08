@@ -16,7 +16,8 @@ import Data.Text (Text)
 wikiV :: Either Text (Text,Html) -> Blaze App
 wikiV result =
   template
-    [(WikiR "","Wiki")]
+    ([(WikiHomeR,"Wiki")] ++
+     [(WikiR name,name) | Right (name,_) <- [result]])
     (\_ ->
        container
          (row
