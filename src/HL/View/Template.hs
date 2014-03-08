@@ -31,6 +31,7 @@ template crumbs inner cur url =
                       ,href "http://fonts.googleapis.com/css?family=Open+Sans"]
                  styles [StaticR css_bootstrap_min_css
                         ,StaticR css_haskell_font_css
+                        ,StaticR css_hscolour_css
                         ,ThemeR])
         body []
              (do div [class_ "wrap"]

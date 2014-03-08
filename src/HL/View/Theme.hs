@@ -16,6 +16,7 @@ theme =
      breadcrumb
      navbar
      footer
+     codes
 
 main =
   do rule "html"
@@ -93,3 +94,8 @@ footer =
            rule "p"
                 (do marginTop "1em"
                     fontSize "13px"))
+
+codes =
+  rule "code"
+       (do backgroundColor "#f5f5f5"
+           color "#366354")

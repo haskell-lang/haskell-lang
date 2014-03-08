@@ -30,4 +30,7 @@ executable hl
                      blaze == 0.0.2,
                      css == 0.1,
                      directory == 1.1.0.2,
-                     pandoc == 1.12.3.3
+                     pandoc == 1.12.3.3,
+                     pandoc-types == 1.12.3.2,
+                     http-conduit == 2.0.0.5,
+                     hscolour == 1.20.3
