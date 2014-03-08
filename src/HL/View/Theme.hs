@@ -53,7 +53,7 @@ navbar =
               border "0"
               marginBottom "0.5em")
      rule ".navbar-header .navbar-brand"
-          (do color "#fff"
+          (do color "#d1cddc"
               fontSize "inherit"
               fontWeight "bold"
               rule ".logo"
@@ -96,6 +96,8 @@ footer =
                     fontSize "13px"))
 
 codes =
-  rule "code"
-       (do backgroundColor "#f5f5f5"
-           color "#366354")
+  do rule "code"
+          (do backgroundColor "#f5f5f5"
+              color "#366354")
+     rule "pre"
+          (do fontSize "14px")
