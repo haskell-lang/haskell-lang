@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>29 Foreign.ForeignPtr</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch30.html" >next</a>] [<a 
+href="haskellch28.html" >prev</a>] [<a 
+href="haskellch28.html#tailhaskellch28.html" >prev-tail</a>] [<a 
+href="#tailhaskellch29.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch29.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;29</span><br /><a 
+ id="x37-28000029"></a><span 
+class="pcrr7t-">Foreign.ForeignPtr</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-442">
+module&#x00A0;Foreign.ForeignPtr&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;ForeignPtr,&#x00A0;&#x00A0;FinalizerPtr,&#x00A0;&#x00A0;FinalizerEnvPtr,&#x00A0;&#x00A0;newForeignPtr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;newForeignPtr_,&#x00A0;&#x00A0;addForeignPtrFinalizer,&#x00A0;&#x00A0;newForeignPtrEnv,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;addForeignPtrFinalizerEnv,&#x00A0;&#x00A0;withForeignPtr,&#x00A0;&#x00A0;finalizeForeignPtr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;unsafeForeignPtrToPtr,&#x00A0;&#x00A0;touchForeignPtr,&#x00A0;&#x00A0;castForeignPtr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;mallocForeignPtr,&#x00A0;&#x00A0;mallocForeignPtrBytes,&#x00A0;&#x00A0;mallocForeignPtrArray,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;mallocForeignPtrArray0
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">29.1    </span> <a 
+ id="x37-28100029.1"></a>Finalised data pointers </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-504" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-504-1g"><col 
+id="TBL-504-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-504-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-504-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The type <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-281001"></a> represents references to objects that are maintained in a foreign language,
+     i.e.,  that  are  not  part  of  the  data  structures  usually  managed  by  the  Haskell  storage  manager.  The
+     essential difference between <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-281002"></a>s and vanilla memory references of type <span 
+class="pcrr7t-">Ptr</span><span 
+class="pcrr7t-">&#x00A0;a </span>is that
+     the former may be associated with <span 
+class="ptmri7t-">finalizers</span>. A finalizer is a routine that is invoked when the Haskell
+     storage manager detects that - within the Haskell heap and stack - there are no more references left
+     that are pointing to the <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-281003"></a>. Typically, the finalizer will, then, invoke routines in the foreign
+     language that free the resources bound by the foreign object.
+     <p class="noindent"> The <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-281004"></a> is parameterised in the same way as <span 
+class="pcrr7t-">Ptr</span><a 
+ id="dx37-281005"></a>. The type argument of <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-281006"></a>
+     should normally be an instance of class <span 
+class="pcrr7t-">Storable</span><a 
+ id="dx37-281007"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-505" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-505-1g"><col 
+id="TBL-505-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-505-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-505-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-505-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-505-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-505-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-505-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-506" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-506-1g"><col 
+id="TBL-506-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-506-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-506-1-1"  
+class="td11"><span 
+class="pcrb7t-">type</span><span 
+class="pcrb7t-">&#x00A0;FinalizerPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=</span><span 
+class="pcrb7t-">&#x00A0;FunPtr</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;()) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     A finalizer is represented as a pointer to a foreign function that, at finalisation time, gets as an argument
+     a plain pointer variant of the foreign pointer that the finalizer is associated with.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-507" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-507-1g"><col 
+id="TBL-507-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-507-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-507-1-1"  
+class="td11"><span 
+class="pcrb7t-">type</span><span 
+class="pcrb7t-">&#x00A0;FinalizerEnvPtr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=</span><span 
+class="pcrb7t-">&#x00A0;FunPtr</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;()) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">29.1.1    </span> <a 
+ id="x37-28200029.1.1"></a>Basic operations </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-508" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-508-1g"><col 
+id="TBL-508-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-508-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-508-1-1"  
+class="td11"><span 
+class="pcrb7t-">newForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FinalizerPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Turns a plain memory reference into a foreign pointer, and associates a finalizer with the reference.
+     The finalizer will be executed after the last reference to the foreign object is dropped. There is no
+     guarantee of promptness, however the finalizer will be executed before the program exits.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-509" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-509-1g"><col 
+id="TBL-509-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-509-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-509-1-1"  
+class="td11"><span 
+class="pcrb7t-">newForeignPtr_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Turns a plain memory reference into a foreign pointer that may be associated with finalizers by using
+     <span 
+class="pcrr7t-">addForeignPtrFinalizer</span><a 
+ id="dx37-282001"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-510" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-510-1g"><col 
+id="TBL-510-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-510-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-510-1-1"  
+class="td11"><span 
+class="pcrb7t-">addForeignPtrFinalizer</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FinalizerPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  function  adds  a  finalizer  to  the  given  foreign  object.  The  finalizer  will  run  <span 
+class="ptmri7t-">before  </span>all  other
+     finalizers for the same object which have already been registered.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-511" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-511-1g"><col 
+id="TBL-511-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-511-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-511-1-1"  
+class="td11"><span 
+class="pcrb7t-">newForeignPtrEnv</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FinalizerEnvPtr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;a                   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-511-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-511-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  variant  of  <span 
+class="pcrr7t-">newForeignPtr</span><a 
+ id="dx37-282002"></a> adds  a  finalizer  that  expects  an  environment  in  addition  to  the
+     finalized pointer. The environment that will be passed to the finalizer is fixed by the second argument
+     to <span 
+class="pcrr7t-">newForeignPtrEnv</span><a 
+ id="dx37-282003"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-512" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-512-1g"><col 
+id="TBL-512-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-512-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-512-1-1"  
+class="td11"><span 
+class="pcrb7t-">addForeignPtrFinalizerEnv</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FinalizerEnvPtr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;a              </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-512-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-512-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;env</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like   <span 
+class="pcrr7t-">addForeignPtrFinalizerEnv</span><a 
+ id="dx37-282004"></a> but   allows   the   finalizer   to   be   passed   an   additional
+     environment parameter to be passed to the finalizer. The environment passed to the finalizer is fixed by
+     the second argument to <span 
+class="pcrr7t-">addForeignPtrFinalizerEnv</span><a 
+ id="dx37-282005"></a>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-513" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-513-1g"><col 
+id="TBL-513-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-513-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-513-1-1"  
+class="td11"><span 
+class="pcrb7t-">withForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  is  a  way  to  look  at  the  pointer  living  inside  a  foreign  object.  This  function  takes  a  function
+     which is applied to that pointer. The resulting <span 
+class="pcrr7t-">IO</span><a 
+ id="dx37-282006"></a> action is then executed. The foreign object is kept
+     alive at least during the whole action, even if it is not used directly inside. Note that it is not safe
+     to  return  the  pointer  from  the  action  and  use  it  after  the  action  completes.  All  uses  of  the  pointer
+     should  be  inside  the  <span 
+class="pcrr7t-">withForeignPtr</span><a 
+ id="dx37-282007"></a> bracket.  The  reason  for  this  unsafeness  is  the  same  as
+     for  <span 
+class="pcrr7t-">unsafeForeignPtrToPtr</span><a 
+ id="dx37-282008"></a> below:  the  finalizer  may  run  earlier  than  expected,  because  the
+     compiler can only track usage of the <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-282009"></a> object, not a <span 
+class="pcrr7t-">Ptr</span><a 
+ id="dx37-282010"></a> object made from it.
+      <p class="noindent">  This  function  is  normally  used  for  marshalling  data  to  or  from  the  object  pointed  to  by  the
+     <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-282011"></a>, using the operations from the <span 
+class="pcrr7t-">Storable</span><a 
+ id="dx37-282012"></a> class.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-514" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-514-1g"><col 
+id="TBL-514-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-514-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-514-1-1"  
+class="td11"><span 
+class="pcrb7t-">finalizeForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Causes the finalizers associated with a foreign pointer to be run immediately.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">29.1.2    </span> <a 
+ id="x37-28300029.1.2"></a>Low-level operations </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-515" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-515-1g"><col 
+id="TBL-515-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-515-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-515-1-1"  
+class="td11"><span 
+class="pcrb7t-">unsafeForeignPtrToPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  function  extracts  the  pointer  component  of  a  foreign  pointer.  This  is  a  potentially  dangerous
+     operations, as if the argument to <span 
+class="pcrr7t-">unsafeForeignPtrToPtr</span><a 
+ id="dx37-283001"></a> is the last usage occurrence of the
+     given foreign pointer, then its finalizer(s) will be run, which potentially invalidates the plain pointer
+     just obtained. Hence, <span 
+class="pcrr7t-">touchForeignPtr</span><a 
+ id="dx37-283002"></a> must be used wherever it has to be guaranteed that the
+     pointer lives on - i.e., has another usage occurrence.
+                                                                                   
+
+                                                                                   
+              <p class="noindent">                    To                    avoid                    subtle                    coding                    errors,
+     hand written marshalling code should preferably use <span 
+class="pcrr7t-">Foreign.ForeignPtr.withForeignPtr</span>
+     rather than combinations of <span 
+class="pcrr7t-">unsafeForeignPtrToPtr</span><a 
+ id="dx37-283003"></a> and <span 
+class="pcrr7t-">touchForeignPtr</span><a 
+ id="dx37-283004"></a>. However, the
+     latter routines are occasionally preferred in tool generated marshalling code.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-516" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-516-1g"><col 
+id="TBL-516-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-516-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-516-1-1"  
+class="td11"><span 
+class="pcrb7t-">touchForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This function ensures that the foreign object in question is alive at the given place in the sequence of
+     IO actions. In particular <span 
+class="pcrr7t-">withForeignPtr</span><a 
+ id="dx37-283005"></a> does a <span 
+class="pcrr7t-">touchForeignPtr</span><a 
+ id="dx37-283006"></a> after it executes the user
+     action.
+      <p class="noindent">  Note  that  this  function  should  not  be  used  to  express  dependencies  between  finalizers  on
+     <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-283007"></a>s. For example, if the finalizer for a <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-283008"></a><span 
+class="pcrr7t-">F1 </span>calls <span 
+class="pcrr7t-">touchForeignPtr</span><a 
+ id="dx37-283009"></a> on
+     a second <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-283010"></a><span 
+class="pcrr7t-">F2</span>, then the only guarantee is that the finalizer for <span 
+class="pcrr7t-">F2 </span>is never started before
+     the  finalizer  for  <span 
+class="pcrr7t-">F1</span>.  They  might  be  started  together  if  for  example  both  <span 
+class="pcrr7t-">F1 </span>and  <span 
+class="pcrr7t-">F2 </span>are  otherwise
+     unreachable.
+      <p class="noindent">  In  general,  it  is  not  recommended  to  use  finalizers  on  separate  objects  with  ordering  constraints
+     between them. To express the ordering robustly requires explicit synchronisation between finalizers.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-517" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-517-1g"><col 
+id="TBL-517-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-517-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-517-1-1"  
+class="td11"><span 
+class="pcrb7t-">castForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This function casts a <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-283011"></a> parameterised by one type into another type.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">29.1.3    </span> <a 
+ id="x37-28400029.1.3"></a>Allocating managed memory </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-518" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-518-1g"><col 
+id="TBL-518-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-518-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-518-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Allocate some memory and return a <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-284001"></a> to it. The memory will be released automatically
+     when the <span 
+class="pcrr7t-">ForeignPtr</span><a 
+ id="dx37-284002"></a> is discarded.
+     <p class="noindent"> <span 
+class="pcrr7t-">mallocForeignPtr</span><a 
+ id="dx37-284003"></a> is equivalent to
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-443">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;do&#x00A0;{&#x00A0;p&#x00A0;&#x003C;-&#x00A0;malloc;&#x00A0;newForeignPtr&#x00A0;finalizerFree&#x00A0;p&#x00A0;}
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> although it may be implemented differently internally: you may not assume that the memory returned by
+     <span 
+class="pcrr7t-">mallocForeignPtr</span><a 
+ id="dx37-284004"></a> has been allocated with <span 
+class="pcrr7t-">Foreign.Marshal.Alloc.malloc</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-519" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-519-1g"><col 
+id="TBL-519-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-519-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-519-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocForeignPtrBytes</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  function  is  similar  to  <span 
+class="pcrr7t-">mallocForeignPtr</span><a 
+ id="dx37-284005"></a>,  except  that  the  size  of  the  memory  required  is
+     given explicitly as a number of bytes.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-520" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-520-1g"><col 
+id="TBL-520-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-520-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-520-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocForeignPtrArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This function is similar to <span 
+class="pcrr7t-">Foreign.Marshal.Array.mallocArray</span>, but yields a memory area
+     that has a finalizer attached that releases the memory area. As with <span 
+class="pcrr7t-">mallocForeignPtr</span><a 
+ id="dx37-284006"></a>, it is not
+     guaranteed that the block of memory was allocated by <span 
+class="pcrr7t-">Foreign.Marshal.Alloc.malloc</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-521" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-521-1g"><col 
+id="TBL-521-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-521-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-521-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocForeignPtrArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(ForeignPtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This  function  is  similar  to  <span 
+class="pcrr7t-">Foreign.Marshal.Array.mallocArray0</span>,  but  yields  a  memory
+     area that has a finalizer attached that releases the memory area. As with <span 
+class="pcrr7t-">mallocForeignPtr</span><a 
+ id="dx37-284007"></a>, it is
+     not guaranteed that the block of memory was allocated by <span 
+class="pcrr7t-">Foreign.Marshal.Alloc.malloc</span>.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch30.html" >next</a>] [<a 
+href="haskellch28.html" >prev</a>] [<a 
+href="haskellch28.html#tailhaskellch28.html" >prev-tail</a>] [<a 
+href="haskellch29.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch29.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch29.html"></a>    
+</body></html> 

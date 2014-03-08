@@ -1,0 +1,1696 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>5 Modules</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 7--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch6.html" >next</a>] [<a 
+href="haskellch4.html" >prev</a>] [<a 
+href="haskellch4.html#tailhaskellch4.html" >prev-tail</a>] [<a 
+href="#tailhaskellch5.html">tail</a>] [<a 
+href="haskellpa1.html#haskellch5.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;5</span><br /><a 
+ id="x11-980005"></a>Modules</h2> <a 
+ id="dx11-98001"></a>
+<p class="noindent"> A module defines a collection of values, datatypes, type synonyms, classes, etc.&#x00A0;(see Chapter&#x00A0;<a 
+href="haskellch4.html#x10-620004">4<!--tex4ht:ref: declarations --></a>), in an environment
+created by a set of <span 
+class="ptmri7t-">imports </span>(resources brought into scope from other modules). It <span 
+class="ptmri7t-">exports </span>some of these resources,
+making them available to other modules. We use the term <span 
+class="ptmri7t-">entity</span><a 
+ id="dx11-98002"></a> to refer to a value, type, or class defined in, imported
+into, or perhaps exported from a module.
+ <p class="noindent"> A Haskell <span 
+class="ptmri7t-">program </span>is a collection of modules, one of which, by convention, must be called <span 
+class="pcrr7t-">Main</span><a 
+ id="dx11-98003"></a> and must export
+the value <span 
+class="pcrr7t-">main</span><a 
+ id="dx11-98004"></a>. The <span 
+class="ptmri7t-">value </span>of the program is the value of the identifier <span 
+class="pcrr7t-">main</span> in module <span 
+class="pcrr7t-">Main</span>, which must be a
+computation of type <span 
+class="pcrr7t-">IO</span><span 
+class="cmmi-10">&#x00A0;&tau; </span>for some type <span 
+class="cmmi-10">&tau; </span>(see Chapter&#x00A0;<a 
+href="haskellch7.html#x14-1420007">7<!--tex4ht:ref: io --></a>). When the program is executed, the computation <span 
+class="pcrr7t-">main</span> is
+performed, and its result (of type <span 
+class="cmmi-10">&tau;</span>) is discarded.
+ <p class="noindent"> Modules may reference other modules via explicit <span 
+class="pcrr7t-">import</span> declarations, each giving the name of a module to be
+imported and specifying its entities to be imported. Modules may be mutually recursive.
+ <p class="noindent"> Modules are used for name-space control, and are not first class values. A multi-module Haskell program
+can be converted into a single-module program by giving each entity a unique name, changing
+all occurrences to refer to the appropriate unique name, and then concatenating all the module
+bodies<span class="footnote-mark"><a 
+href="haskell12.html#fn1x30"><sup class="textsuperscript">1</sup></a></span><a 
+ id="x11-98005f1"></a> .
+For example, here is a three-module program:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-84">
+&#x00A0;&#x00A0;module&#x00A0;Main&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;A
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;B
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;main&#x00A0;=&#x00A0;A.f&#x00A0;&#x003E;&#x003E;&#x00A0;B.f
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;A&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;=&#x00A0;...
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;B&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;=&#x00A0;...
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> It is equivalent to the following single-module program:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-85">
+&#x00A0;&#x00A0;module&#x00A0;Main&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;main&#x00A0;=&#x00A0;af&#x00A0;&#x003E;&#x003E;&#x00A0;bf
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;af&#x00A0;=&#x00A0;...
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;bf&#x00A0;=&#x00A0;...
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Because they are allowed to be mutually recursive, modules allow a program to be partitioned freely without regard
+to dependencies.
+ <p class="noindent"> A module name (lexeme <span 
+class="cmmi-10">modid</span>) is a sequence of one or more identifiers beginning with capital letters, separated by
+dots, with no intervening spaces. For example, <span 
+class="pcrr7t-">Data.Bool</span>, <span 
+class="pcrr7t-">Main</span> and <span 
+class="pcrr7t-">Foreign.Marshal.Alloc</span> are all valid
+module names.
+<div class="flushleft" 
+>
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-82" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-82-1g"><col 
+id="TBL-82-1" /><col 
+id="TBL-82-2" /><col 
+id="TBL-82-3" /><col 
+id="TBL-82-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-82-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-82-1-1"  
+class="td11"> <span 
+class="cmmi-10">modid  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-82-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-82-1-3"  
+class="td11"> <span 
+class="cmsy-10">{</span><span 
+class="cmmi-10">conid</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">.</span><span 
+class="cmsy-10">}</span><span 
+class="cmmi-10">&#x00A0;conid</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-82-1-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span>modules<span 
+class="cmr-10">)  </span></td>
+</tr></table>
+</div></div>
+<a 
+ id="dx11-98006"></a>
+ <p class="noindent"> Module names can be thought of as being arranged in a hierarchy in which appending a new component creates a
+child of the original module name. For example, the module <span 
+class="pcrr7t-">Control.Monad.ST</span> is a child of the
+<span 
+class="pcrr7t-">Control.Monad</span> sub-hierarchy. This is purely a convention, however, and not part of the language definition; in
+this report a <span 
+class="cmmi-10">modid</span> is treated as a single identifier occupying a flat namespace. 
+ <p class="noindent"> There is one distinguished module, <span 
+class="pcrr7t-">Prelude</span>, which is imported into all modules by default (see Section&#x00A0;<a 
+href="#x11-1110005.6">5.6<!--tex4ht:ref: standard-prelude --></a>), plus
+a set of standard library modules that may be imported as required (see Part&#x00A0;<a 
+href="haskellpa2.html#x20-192000II">II<!--tex4ht:ref: libraries --></a>).
+<h3 class="sectionHead"><span class="titlemark">5.1    </span> <a 
+ id="x11-990005.1"></a>Module Structure</h3>
+<p class="noindent"> A module defines a mutually recursive scope containing declarations for value bindings, data types, type synonyms,
+classes, etc. (see Chapter&#x00A0;<a 
+href="haskellch4.html#x10-620004">4<!--tex4ht:ref: declarations --></a>).
+<div class="flushleft" 
+>
+                                                                                   
+
+                                                                                   
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-83" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-83-1g"><col 
+id="TBL-83-1" /><col 
+id="TBL-83-2" /><col 
+id="TBL-83-3" /><col 
+id="TBL-83-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-83-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-1-1"  
+class="td11"> <span 
+class="cmmi-10">module   </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-1-3"  
+class="td11"> <span 
+class="pcrr7t-">module</span><span 
+class="cmmi-10">&#x00A0;modid</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">exports</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">where</span><span 
+class="cmmi-10">&#x00A0;body  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-2-1"  
+class="td11">         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-2-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-2-3"  
+class="td11"> <span 
+class="cmmi-10">body                                         </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-3-1"  
+class="td11"> <span 
+class="cmmi-10">body       </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-3-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-3-3"  
+class="td11"> <span 
+class="pcrr7t-">{</span><span 
+class="cmmi-10">&#x00A0;impdecls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">;</span><span 
+class="cmmi-10">&#x00A0;topdecls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">}</span>           </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-4-1"  
+class="td11">         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-4-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-4-3"  
+class="td11"> <span 
+class="pcrr7t-">{</span><span 
+class="cmmi-10">&#x00A0;impdecls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">}</span>                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-5-1"  
+class="td11">         </td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-5-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-5-3"  
+class="td11"> <span 
+class="pcrr7t-">{</span><span 
+class="cmmi-10">&#x00A0;topdecls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">}</span>                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-6-1"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;                </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-7-1"  
+class="td11">         </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-8-1"  
+class="td11"> <span 
+class="cmmi-10">impdecls  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-8-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-8-3"  
+class="td11"> <span 
+class="cmmi-10">impdecl</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">;</span><span 
+class="cmmi-10">&#x00A0;impdecl</span><sub><span 
+class="cmmi-7">n</span></sub>                   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-8-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">1)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-83-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-83-9-1"  
+class="td11"> <span 
+class="cmmi-10">topdecls  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-83-9-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-9-3"  
+class="td11"> <span 
+class="cmmi-10">topdecl</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">;</span><span 
+class="cmmi-10">&#x00A0;topdecl</span><sub><span 
+class="cmmi-7">n</span></sub>                     </td><td  style="white-space:nowrap; text-align:left;" id="TBL-83-9-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">1)  </span></td>
+</tr></table></div></div>
+<a 
+ id="dx11-99001"></a>
+<a 
+ id="dx11-99002"></a>
+<a 
+ id="dx11-99003"></a>
+<a 
+ id="dx11-99004"></a>
+ <p class="noindent"> A module begins with a header: the keyword <span 
+class="pcrr7t-">module</span>, the module name, and a list of entities (enclosed in round
+parentheses) to be exported. The header is followed by a possibly-empty list of <span 
+class="pcrr7t-">import</span> declarations (<span 
+class="cmmi-10">impdecls</span>,
+Section&#x00A0;<a 
+href="#x11-1010005.3">5.3<!--tex4ht:ref: import --></a>) that specify modules to be imported, optionally restricting the imported bindings. This is followed by a
+possibly-empty list of top-level declarations (<span 
+class="cmmi-10">topdecls</span>, Chapter&#x00A0;<a 
+href="haskellch4.html#x10-620004">4<!--tex4ht:ref: declarations --></a>).
+ <p class="noindent"> An abbreviated form of module, consisting only of<a 
+ id="dx11-99005"></a> the module body, is permitted. If this is used, the header is
+assumed to be &#8216;<span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;Main(main)</span><span 
+class="pcrr7t-">&#x00A0;where</span>&#8217;. If the first lexeme in the abbreviated module is not a <span 
+class="pcrr7t-">{</span>, then the
+layout rule applies for the top level of the module.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.2    </span> <a 
+ id="x11-1000005.2"></a>Export Lists</h3>
+<a 
+ id="dx11-100001"></a>
+<div class="flushleft" 
+>
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-84" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-84-1g"><col 
+id="TBL-84-1" /><col 
+id="TBL-84-2" /><col 
+id="TBL-84-3" /><col 
+id="TBL-84-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-84-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-1-1"  
+class="td11"> <span 
+class="cmmi-10">exports  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-1-3"  
+class="td11"> <span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;export</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;export</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span>         </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-1-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-2-1"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;               </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-3-1"  
+class="td11"></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-4-1"  
+class="td11"> <span 
+class="cmmi-10">export   </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-4-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-4-3"  
+class="td11"> <span 
+class="cmmi-10">qvar                                                  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-5-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-5-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-5-3"  
+class="td11"> <span 
+class="cmmi-10">qtycon</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="pcrr7t-">(..)</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;cname</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;cname</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span><span 
+class="cmr-10">]  </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-5-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-6-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-6-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-6-3"  
+class="td11"> <span 
+class="cmmi-10">qtycls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="pcrr7t-">(..)</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;var</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;var</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span><span 
+class="cmr-10">]           </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-6-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-7-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-7-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-7-3"  
+class="td11"> <span 
+class="pcrr7t-">module</span><span 
+class="cmmi-10">&#x00A0;modid                                     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-8-1"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-9-1"  
+class="td11">        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-84-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-84-10-1"  
+class="td11"> <span 
+class="cmmi-10">cname   </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-84-10-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-84-10-3"  
+class="td11"> <span 
+class="cmmi-10">var</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;con                                            </span></td>
+</tr></table></div></div>
+<a 
+ id="dx11-100002"></a>
+<a 
+ id="dx11-100003"></a>
+<p class="noindent"> An <span 
+class="ptmri7t-">export list </span>identifies the entities to be exported by a module declaration. A module implementation may only
+export an entity that it declares, or that it imports from some other module. If the export list is omitted, all values,
+types and classes defined in the module are exported, <span 
+class="ptmri7t-">but not those that are imported</span>.
+ <p class="noindent"> Entities in an export list may be named as follows:
+                                                                                   
+
+                                                                                   
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x11-100005x1">A value, field name, or class method, whether declared in the module body or imported, may be named
+     by giving the name of the value as a <span 
+class="cmmi-10">qvarid</span>, which must be in scope. Operators should be enclosed in
+     parentheses to turn them into <span 
+class="cmmi-10">qvarid</span>s.
+     </li>
+     <li 
+  class="enumerate" id="x11-100007x2">An algebraic datatype <span 
+class="cmmi-10">T</span> <a 
+ id="dx11-100008"></a>declared by a <span 
+class="pcrr7t-">data</span> or <span 
+class="pcrr7t-">newtype</span> declaration may be named in one of three
+     ways:
+         <ul class="itemize1">
+         <li class="itemize">The form <span 
+class="cmmi-10">T</span> names the type <span 
+class="ptmri7t-">but not the constructors or field names</span>. The ability to export a type
+         without its constructors allows the construction of abstract datatypes (see Section&#x00A0;<a 
+href="#x11-1150005.8">5.8<!--tex4ht:ref: abstract-types --></a>).
+         </li>
+         <li class="itemize">The form <span 
+class="cmmi-10">T</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">c</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">c</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="pcrr7t-">)</span>, names the type and some or all of its constructors and field names.
+         </li>
+         <li class="itemize">The abbreviated form <span 
+class="cmmi-10">T</span><span 
+class="pcrr7t-">(..)</span> names the type and all its constructors and field names that are
+         currently in scope (whether qualified or not).</li></ul>
+     <p class="noindent"> In all cases, the (possibly-qualified) type constructor <span 
+class="cmmi-10">T</span> must be in scope. The constructor and field names <span 
+class="cmmi-10">c</span><sub><span 
+class="cmmi-7">i</span></sub> in
+     the second form are unqualified; one of these subordinate names is legal if and only if (a) it names a
+     constructor or field of <span 
+class="cmmi-10">T</span> , and (b) the constructor or field is in scope in the module body <span 
+class="ptmri7t-">regardless of</span>
+     <span 
+class="ptmri7t-">whether it is in scope under a qualified or unqualified name</span>. For example, the following is legal
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-86">
+&#x00A0;&#x00A0;module&#x00A0;A(&#x00A0;Mb.Maybe(&#x00A0;Nothing,&#x00A0;Just&#x00A0;)&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;Data.Maybe&#x00A0;as&#x00A0;Mb
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Data constructors cannot be named in export lists except as subordinate names, because they cannot otherwise
+     be distinguished from type constructors.
+     </li>
+     <li 
+  class="enumerate" id="x11-100010x3">A type synonym <span 
+class="cmmi-10">T</span> declared by a <span 
+class="pcrr7t-">type</span> declaration may be named by the form <span 
+class="cmmi-10">T</span> , where <span 
+class="cmmi-10">T</span> is in scope.
+     <a 
+ id="dx11-100011"></a>
+     </li>
+     <li 
+  class="enumerate" id="x11-100013x4"><a 
+ id="dx11-100014"></a> A class <span 
+class="cmmi-10">C </span>with operations <span 
+class="cmmi-10">f</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">,</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">,f</span><sub><span 
+class="cmmi-7">n</span></sub> declared in a <span 
+class="pcrr7t-">class</span> declaration may be named in one of three
+     ways:
+         <ul class="itemize1">
+         <li class="itemize">The form <span 
+class="cmmi-10">C</span> names the class <span 
+class="ptmri7t-">but not the class methods</span>.
+         </li>
+         <li class="itemize">The form <span 
+class="cmmi-10">C</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="pcrr7t-">)</span>, names the class and some or all of its methods.
+         </li>
+         <li class="itemize">The abbreviated form <span 
+class="cmmi-10">C</span><span 
+class="pcrr7t-">(..)</span> names the class and all its methods that are in scope (whether
+         qualified or not).</li></ul>
+     <p class="noindent"> In all cases, <span 
+class="cmmi-10">C</span> must be in scope. In the second form, one of the (unqualified) subordinate names <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">i</span></sub> is legal if
+     and only if (a) it names a class method of <span 
+class="cmmi-10">C</span>, and (b) the class method is in scope in the module body regardless
+     of whether it is in scope under a qualified or unqualified name.
+     </li>
+     <li 
+  class="enumerate" id="x11-100016x5">The form &#8220;<span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;M</span>&#8221; names the set of all entities that are in scope with both an unqualified name &#8220;<span 
+class="pcrr7t-">e</span>&#8221; and a
+     qualified name &#8220;<span 
+class="pcrr7t-">M.e</span>&#8221;. This set may be empty. For example:
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-87">
+&#x00A0;&#x00A0;module&#x00A0;Queue(&#x00A0;module&#x00A0;Stack,&#x00A0;enqueue,&#x00A0;dequeue&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;Stack
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Here the module <span 
+class="pcrr7t-">Queue</span> uses the module name <span 
+class="pcrr7t-">Stack</span> in its export list to abbreviate all the entities imported
+     from <span 
+class="pcrr7t-">Stack</span>.
+     <p class="noindent"> A module can name its own local definitions in its export list using its own name in the &#8220;<span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;M</span>&#8221; syntax,
+     because a local declaration brings into scope both a qualified and unqualified name (Section&#x00A0;<a 
+href="#x11-1080005.5.1">5.5.1<!--tex4ht:ref: qualifiers --></a>). For
+     example:
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-88">
+&#x00A0;&#x00A0;module&#x00A0;Mod1(&#x00A0;module&#x00A0;Mod1,&#x00A0;module&#x00A0;Mod2&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;Mod2
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;Mod3
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Here module <span 
+class="pcrr7t-">Mod1</span> exports all local definitions as well as those imported from <span 
+class="pcrr7t-">Mod2</span> but not those imported
+     from <span 
+class="pcrr7t-">Mod3</span>.
+     <p class="noindent"> It is an error to use <span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;M</span> in an export list unless <span 
+class="pcrr7t-">M</span> is the module bearing the export list, or <span 
+class="pcrr7t-">M</span> is imported
+     by at least one import declaration (qualified or unqualified).</li></ol>
+<p class="noindent"> Exports lists are cumulative: the set of entities exported by an export list is the union of the entities exported by the
+individual items of the list.
+ <p class="noindent"> It makes no difference to an importing module how an entity was exported. For example, a field name <span 
+class="pcrr7t-">f</span> from data
+type <span 
+class="pcrr7t-">T</span> may be exported individually (<span 
+class="pcrr7t-">f</span>, item (1) above); or as an explicitly-named member of its data type (<span 
+class="pcrr7t-">T(f)</span>,
+item (2)); or as an implicitly-named member (<span 
+class="pcrr7t-">T(..)</span>, item(2)); or by exporting an entire module (<span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;M</span>, item
+(5)).
+ <p class="noindent"> The <span 
+class="ptmri7t-">unqualified </span>names of the entities exported by a module must all be distinct (within their respective namespace).
+For example
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-89">
+&#x00A0;&#x00A0;module&#x00A0;A&#x00A0;(&#x00A0;C.f,&#x00A0;C.g,&#x00A0;g,&#x00A0;module&#x00A0;B&#x00A0;)&#x00A0;where&#x00A0;&#x00A0;&#x00A0;--&#x00A0;an&#x00A0;invalid&#x00A0;module
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;B(f)
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;C(f,g)
+&#x00A0;<br />&#x00A0;&#x00A0;g&#x00A0;=&#x00A0;f&#x00A0;True
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> There are no name clashes within module <span 
+class="pcrr7t-">A</span> itself, but there are name clashes in the export list between <span 
+class="pcrr7t-">C.g</span> and <span 
+class="pcrr7t-">g</span>
+(assuming <span 
+class="pcrr7t-">C.g</span> and <span 
+class="pcrr7t-">g</span> are different entities &#8211; remember, modules can import each other recursively), and between
+<span 
+class="pcrr7t-">module</span><span 
+class="pcrr7t-">&#x00A0;B</span> and <span 
+class="pcrr7t-">C.f</span> (assuming <span 
+class="pcrr7t-">B.f</span> and <span 
+class="pcrr7t-">C.f</span> are different entities).
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.3    </span> <a 
+ id="x11-1010005.3"></a>Import Declarations</h3>
+<a 
+ id="dx11-101001"></a>
+<div class="flushleft" 
+>
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-85" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-85-1g"><col 
+id="TBL-85-1" /><col 
+id="TBL-85-2" /><col 
+id="TBL-85-3" /><col 
+id="TBL-85-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-85-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-1-1"  
+class="td11"> <span 
+class="cmmi-10">impdecl  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-1-3"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="pcrr7t-">qualified</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;modid</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="pcrr7t-">as</span><span 
+class="cmmi-10">&#x00A0;modid</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">impspec</span><span 
+class="cmr-10">]  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-2-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-2-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-2-3"  
+class="td11">                                          </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-2-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">empty</span><span 
+class="cmmi-10">&#x00A0;declaration</span><span 
+class="cmr-10">)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-3-1"  
+class="td11"> <span 
+class="cmmi-10">impspec  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-3-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-3-3"  
+class="td11"> <span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;import</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;import</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span>             </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-3-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-4-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-4-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-4-3"  
+class="td11"> <span 
+class="pcrr7t-">hiding</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;import</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;import</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">]</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span>      </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-4-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-5-1"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;               </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-6-1"  
+class="td11"></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-7-1"  
+class="td11"> <span 
+class="cmmi-10">import   </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-7-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-7-3"  
+class="td11"> <span 
+class="cmmi-10">var                                                          </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-8-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-8-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-8-3"  
+class="td11"> <span 
+class="cmmi-10">tycon</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(..)</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;cname</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;cname</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span><span 
+class="cmr-10">]          </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-8-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-9-1"  
+class="td11">        </td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-9-2"  
+class="td11">    <span 
+class="cmsy-10">|</span>   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-9-3"  
+class="td11"> <span 
+class="cmmi-10">tycls</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmr-10">[</span><span 
+class="pcrr7t-">(..)</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">(</span><span 
+class="cmmi-10">&#x00A0;var</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;var</span><sub><span 
+class="cmmi-7">n</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">)</span><span 
+class="cmr-10">]                     </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-9-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">0)                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-85-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-85-10-1"  
+class="td11"> <span 
+class="cmmi-10">cname    </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-85-10-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-85-10-3"  
+class="td11"> <span 
+class="cmmi-10">var</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">&#x00A0;con                                                   </span></td>
+</tr></table></div></div>
+<a 
+ id="dx11-101002"></a>
+<a 
+ id="dx11-101003"></a>
+<a 
+ id="dx11-101004"></a>
+<a 
+ id="dx11-101005"></a>
+<p class="noindent"> The entities exported by a module may be brought into scope in another module with an <span 
+class="pcrr7t-">import</span> declaration at the
+beginning of the module. The <span 
+class="pcrr7t-">import</span> declaration names the module to be imported and optionally specifies the
+entities to be imported. A single module may be imported by more than one <span 
+class="pcrr7t-">import</span> declaration. Imported names
+serve as top level declarations: they scope over the entire body of the module but may be shadowed by local
+non-top-level bindings.
+ <p class="noindent"> The effect of multiple <span 
+class="pcrr7t-">import</span> declarations is strictly cumulative: an entity is in scope if it is imported by any of the
+<span 
+class="pcrr7t-">import</span> declarations in a module. The ordering of import declarations is irrelevant.
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> Lexically, the terminal symbols &#8220;<span 
+class="pcrr7t-">as</span>&#8221;, &#8220;<span 
+class="pcrr7t-">qualified</span>&#8221; and &#8220;<span 
+class="pcrr7t-">hiding</span>&#8221; are each a <span 
+class="cmmi-10">varid</span> rather than a <span 
+class="cmmi-10">reservedid</span>.
+They have special significance only in the context of an <span 
+class="pcrr7t-">import</span> declaration; they may also be used as
+variables.
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.3.1    </span> <a 
+ id="x11-1020005.3.1"></a>What is imported</h4>
+<p class="noindent"> Exactly which entities are to be imported can be specified in one of the following three ways:
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x11-102002x1">The imported entities can be specified explicitly by listing them in parentheses. Items in the list have
+     the same form as those in export lists, except qualifiers are not permitted and the &#8216;<span 
+class="pcrr7t-">module</span> <span 
+class="cmmi-10">modid</span>&#8217;
+     entity is not permitted. When the <span 
+class="pcrr7t-">(..)</span> form of import is used for a type or class, the <span 
+class="pcrr7t-">(..)</span> refers to
+     all of the constructors, methods, or field names exported from the module.
+     <p class="noindent"> The list must name only entities exported by the imported module. The list may be empty, in which
+     case nothing except the instances is imported.
+     </li>
+     <li 
+  class="enumerate" id="x11-102004x2">Entities can be excluded by using the form <span 
+class="pcrr7t-">hiding(</span><span 
+class="cmmi-10">import</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;import</span><sub><span 
+class="cmmi-7">n</span></sub> <span 
+class="pcrr7t-">)</span>,<a 
+ id="dx11-102005"></a> which specifies that all
+     entities exported by the named module should be imported except for those named in the list. Data constructors
+     may be named directly in hiding lists without being prefixed by the associated type. Thus, in
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-90">
+&#x00A0;&#x00A0;import&#x00A0;M&#x00A0;hiding&#x00A0;(C)
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> any constructor, class, or type named <span 
+class="pcrr7t-">C</span> is excluded. In contrast, using <span 
+class="pcrr7t-">C</span> in an import list names only a class or
+     type.
+     <p class="noindent"> It is an error to hide an entity that is not, in fact, exported by the imported module.
+     </li>
+     <li 
+  class="enumerate" id="x11-102007x3">Finally, if <span 
+class="cmmi-10">impspec</span> is omitted then all the entities exported by the specified module are imported.</li></ol>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.3.2    </span> <a 
+ id="x11-1030005.3.2"></a>Qualified import</h4>
+<a 
+ id="dx11-103001"></a>
+<p class="noindent"> For each entity imported under the rules of Section&#x00A0;<a 
+href="#x11-1020005.3.1">5.3.1<!--tex4ht:ref: whatisimported --></a>, the top-level environment is extended. If the import
+declaration used the <span 
+class="pcrr7t-">qualified</span> keyword, only the <span 
+class="ptmri7t-">qualified name </span>of the entity is brought into scope. If the
+<span 
+class="pcrr7t-">qualified</span> keyword is omitted, then <span 
+class="ptmri7t-">both </span>the qualified <span 
+class="ptmri7t-">and </span>unqualified name of the entity is brought into scope.
+Section&#x00A0;<a 
+href="#x11-1080005.5.1">5.5.1<!--tex4ht:ref: qualifiers --></a> describes qualified names in more detail.
+ <p class="noindent"> The qualifier on the imported name is either the name of the imported module, or the local alias given in the <span 
+class="pcrr7t-">as</span>
+clause (Section&#x00A0;<a 
+href="#x11-1040005.3.3">5.3.3<!--tex4ht:ref: as-clause --></a>) on the <span 
+class="pcrr7t-">import</span> statement. Hence, <span 
+class="ptmri7t-">the qualifier is not necessarily the name of the module in</span>
+<span 
+class="ptmri7t-">which the entity was originally declared</span>.
+ <p class="noindent"> The ability to exclude the unqualified names allows full programmer control of the unqualified namespace: a locally
+defined entity can share the same name as a qualified import:
+ <p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-91">
+&#x00A0;&#x00A0;module&#x00A0;Ring&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;Prelude&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;All&#x00A0;Prelude&#x00A0;names&#x00A0;must&#x00A0;be&#x00A0;qualified
+&#x00A0;<br />&#x00A0;&#x00A0;import&#x00A0;Data.List(&#x00A0;nub&#x00A0;)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;l1&#x00A0;+&#x00A0;l2&#x00A0;=&#x00A0;l1&#x00A0;Prelude.++&#x00A0;l2&#x00A0;&#x00A0;--&#x00A0;This&#x00A0;+&#x00A0;differs&#x00A0;from&#x00A0;the&#x00A0;one&#x00A0;in&#x00A0;the&#x00A0;Prelude
+&#x00A0;<br />&#x00A0;&#x00A0;l1&#x00A0;&#x22C6;&#x00A0;l2&#x00A0;=&#x00A0;nub&#x00A0;(l1&#x00A0;+&#x00A0;l2)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;This&#x00A0;&#x22C6;&#x00A0;differs&#x00A0;from&#x00A0;the&#x00A0;one&#x00A0;in&#x00A0;the&#x00A0;Prelude
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;succ&#x00A0;=&#x00A0;(Prelude.+&#x00A0;1)
+</div>
+     <p class="noindent"></div>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.3.3    </span> <a 
+ id="x11-1040005.3.3"></a>Local aliases</h4>
+<p class="noindent"> Imported modules may be assigned a local alias in the importing module using the <span 
+class="pcrr7t-">as</span> clause. For example, in
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-92">
+&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;VeryLongModuleName&#x00A0;as&#x00A0;C
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> entities must be referenced using &#8216;<span 
+class="pcrr7t-">C.</span>&#8217; as a qualifier instead of &#8216;<span 
+class="pcrr7t-">VeryLongModuleName.</span>&#8217;. This also allows a
+different module to be substituted for <span 
+class="pcrr7t-">VeryLongModuleName</span> without changing the qualifiers used for the
+imported module. It is legal for more than one module in scope to use the same qualifier, provided that all names can
+still be resolved unambiguously. For example:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-93">
+&#x00A0;&#x00A0;module&#x00A0;M&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;Foo&#x00A0;as&#x00A0;A
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;qualified&#x00A0;Baz&#x00A0;as&#x00A0;A
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;A.f
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> This module is legal provided only that <span 
+class="pcrr7t-">Foo</span> and <span 
+class="pcrr7t-">Baz</span> do not both export <span 
+class="pcrr7t-">f</span>.
+ <p class="noindent"> An <span 
+class="pcrr7t-">as</span> clause may also be used on an un-<span 
+class="pcrr7t-">qualified</span><span 
+class="pcrr7t-">import</span> statement:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-94">
+&#x00A0;&#x00A0;import&#x00A0;Foo&#x00A0;as&#x00A0;A(f)
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> This declaration brings into scope <span 
+class="pcrr7t-">f</span> and <span 
+class="pcrr7t-">A.f</span>.
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.3.4    </span> <a 
+ id="x11-1050005.3.4"></a>Examples</h4>
+<p class="noindent"> To clarify the above import rules, suppose the module <span 
+class="pcrr7t-">A</span> exports <span 
+class="pcrr7t-">x</span> and <span 
+class="pcrr7t-">y</span>. Then this table shows what names are
+brought into scope by the specified import statement:
+<div class="center" 
+>
+ <p class="noindent">
+<div class="tabular"> <table id="TBL-86" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-86-1g"><col 
+id="TBL-86-1" /><col 
+id="TBL-86-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-1-1"  
+class="td11"> Import declaration                                         </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-1-2"  
+class="td11"> Names brought into scope  </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-2-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A</span>                      </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-2-2"  
+class="td11"> <span 
+class="pcrr7t-">x</span>, <span 
+class="pcrr7t-">y</span>, <span 
+class="pcrr7t-">A.x</span>, <span 
+class="pcrr7t-">A.y</span>        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-3-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A()</span>                    </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-3-2"  
+class="td11"> (nothing)                             </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-4-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A(x)</span>                   </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-4-2"  
+class="td11"> <span 
+class="pcrr7t-">x</span>, <span 
+class="pcrr7t-">A.x</span>              </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-5-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A</span>            </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-5-2"  
+class="td11"> <span 
+class="pcrr7t-">A.x</span>, <span 
+class="pcrr7t-">A.y</span>            </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-6-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A()</span>          </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-6-2"  
+class="td11"> (nothing)                             </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-7-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A(x)</span>         </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-7-2"  
+class="td11"> <span 
+class="pcrr7t-">A.x</span>               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-8-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;hiding</span><span 
+class="pcrr7t-">&#x00A0;()</span>            </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-8-2"  
+class="td11"> <span 
+class="pcrr7t-">x</span>, <span 
+class="pcrr7t-">y</span>, <span 
+class="pcrr7t-">A.x</span>, <span 
+class="pcrr7t-">A.y</span>        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-9-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;hiding</span><span 
+class="pcrr7t-">&#x00A0;(x)</span>           </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-9-2"  
+class="td11"> <span 
+class="pcrr7t-">y</span>, <span 
+class="pcrr7t-">A.y</span>              </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-10-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;hiding</span><span 
+class="pcrr7t-">&#x00A0;()</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-10-2"  
+class="td11"> <span 
+class="pcrr7t-">A.x</span>, <span 
+class="pcrr7t-">A.y</span>            </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-11-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;hiding</span><span 
+class="pcrr7t-">&#x00A0;(x)</span> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-11-2"  
+class="td11"> <span 
+class="pcrr7t-">A.y</span>               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-12-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;as</span><span 
+class="pcrr7t-">&#x00A0;B</span>                 </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-12-2"  
+class="td11"> <span 
+class="pcrr7t-">x</span>, <span 
+class="pcrr7t-">y</span>, <span 
+class="pcrr7t-">B.x</span>, <span 
+class="pcrr7t-">B.y</span>        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-13-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;as</span><span 
+class="pcrr7t-">&#x00A0;B(x)</span>              </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-13-2"  
+class="td11"> <span 
+class="pcrr7t-">x</span>, <span 
+class="pcrr7t-">B.x</span>              </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-14-1"  
+class="td11"> <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;qualified</span><span 
+class="pcrr7t-">&#x00A0;A</span><span 
+class="pcrr7t-">&#x00A0;as</span><span 
+class="pcrr7t-">&#x00A0;B</span>       </td><td  style="white-space:nowrap; text-align:left;" id="TBL-86-14-2"  
+class="td11"> <span 
+class="pcrr7t-">B.x</span>, <span 
+class="pcrr7t-">B.y</span>            </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-86-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-86-15-1"  
+class="td11">                               </td>
+</tr></table></div></div>
+<p class="noindent"> In all cases, all instance declarations in scope in module <span 
+class="pcrr7t-">A</span> are imported (Section&#x00A0;<a 
+href="#x11-1060005.4">5.4<!--tex4ht:ref: import-instances --></a>).
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.4    </span> <a 
+ id="x11-1060005.4"></a>Importing and Exporting Instance Declarations</h3>
+<a 
+ id="dx11-106001"></a>
+<p class="noindent"> Instance declarations cannot be explicitly named on import or export lists. All instances in scope within a module are
+<span 
+class="ptmri7t-">always </span>exported and any import brings <span 
+class="ptmri7t-">all </span>instances in from the imported module. Thus, an instance declaration is
+in scope if and only if a chain of <span 
+class="pcrr7t-">import</span> declarations leads to the module containing the instance
+declaration.
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> For example, <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;M()</span> does not bring any new names in scope from module <span 
+class="pcrr7t-">M</span>, but does bring in any instances
+visible in <span 
+class="pcrr7t-">M</span>. A module whose only purpose is to provide instance declarations can have an empty export list. For
+example
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-95">
+&#x00A0;&#x00A0;module&#x00A0;MyInstances()&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;instance&#x00A0;Show&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;show&#x00A0;fn&#x00A0;=&#x00A0;"&#x003C;&#x003C;function&#x003E;&#x003E;"
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;instance&#x00A0;Show&#x00A0;(IO&#x00A0;a)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;show&#x00A0;io&#x00A0;=&#x00A0;"&#x003C;&#x003C;IO&#x00A0;action&#x003E;&#x003E;"
+</div>
+     <p class="noindent"></div>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.5    </span> <a 
+ id="x11-1070005.5"></a>Name Clashes and Closure</h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.5.1    </span> <a 
+ id="x11-1080005.5.1"></a>Qualified names</h4>
+<a 
+ id="dx11-108001"></a>
+<p class="noindent"> A <span 
+class="ptmri7t-">qualified name </span>is written as <span 
+class="cmmi-10">modid</span><span 
+class="pcrr7t-">.</span><span 
+class="cmmi-10">name</span> (Section&#x00A0;<a 
+href="haskellch2.html#x7-180002.4">2.4<!--tex4ht:ref: ids --></a>). A qualified name is brought into scope:
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="ptmri7t-">By a top level declaration. </span>A top-level declaration brings into scope both the unqualified <span 
+class="ptmri7t-">and </span>the qualified name
+     of the entity being defined. Thus:
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-96">
+&#x00A0;&#x00A0;module&#x00A0;M&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;x&#x00A0;=&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;g&#x00A0;x&#x00A0;=&#x00A0;M.f&#x00A0;x&#x00A0;x
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> is legal. The <span 
+class="ptmri7t-">defining </span>occurrence must mention the <span 
+class="ptmri7t-">unqualified </span>name; therefore, it is illegal to write
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-97">
+&#x00A0;&#x00A0;module&#x00A0;M&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;M.f&#x00A0;x&#x00A0;=&#x00A0;...&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;ILLEGAL
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;g&#x00A0;x&#x00A0;=&#x00A0;let&#x00A0;M.y&#x00A0;=&#x00A0;x+1&#x00A0;in&#x00A0;...&#x00A0;&#x00A0;--&#x00A0;ILLEGAL
+</div>
+         <p class="noindent"></div>
+     </li>
+     <li class="itemize"><span 
+class="ptmri7t-">By an</span> <span 
+class="pcrr7t-">import</span> <span 
+class="ptmri7t-">declaration. </span>An <span 
+class="pcrr7t-">import</span> declaration, whether <span 
+class="pcrr7t-">qualified</span> or not, always brings into
+     scope the qualified name of the imported entity (Section&#x00A0;<a 
+href="#x11-1010005.3">5.3<!--tex4ht:ref: import --></a>). This allows a qualified import to
+     be replaced with an unqualified one without forcing changes in the references to the imported
+     names.</li></ul>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.5.2    </span> <a 
+ id="x11-1090005.5.2"></a>Name clashes</h4>
+<p class="noindent"> If a module contains a bound occurrence of a name, such as <span 
+class="pcrr7t-">f</span> or <span 
+class="pcrr7t-">A.f</span>, it must be possible unambiguously to resolve
+which entity is thereby referred to; that is, there must be only one binding for <span 
+class="pcrr7t-">f</span> or <span 
+class="pcrr7t-">A.f</span> respectively.
+ <p class="noindent"> It is <span 
+class="ptmri7t-">not </span>an error for there to exist names that cannot be so resolved, provided that the program does not mention
+those names. For example:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-98">
+&#x00A0;&#x00A0;module&#x00A0;A&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;B
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;C
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;tup&#x00A0;=&#x00A0;(b,&#x00A0;c,&#x00A0;d,&#x00A0;x)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;B(&#x00A0;d,&#x00A0;b,&#x00A0;x,&#x00A0;y&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;D
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;y&#x00A0;=&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;b&#x00A0;=&#x00A0;...
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;C(&#x00A0;d,&#x00A0;c,&#x00A0;x,&#x00A0;y&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;D
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;y&#x00A0;=&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;c&#x00A0;=&#x00A0;...
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;D(&#x00A0;d&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;d&#x00A0;=&#x00A0;...
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Consider the definition of <span 
+class="pcrr7t-">tup</span>.
+     <ul class="itemize1">
+     <li class="itemize">The references to <span 
+class="pcrr7t-">b</span> and <span 
+class="pcrr7t-">c</span> can be unambiguously resolved to <span 
+class="pcrr7t-">b</span> declared in <span 
+class="pcrr7t-">B</span>, and <span 
+class="pcrr7t-">c</span> declared in <span 
+class="pcrr7t-">C</span>
+     respectively.
+     </li>
+     <li class="itemize">The reference to <span 
+class="pcrr7t-">d</span> is unambiguously resolved to <span 
+class="pcrr7t-">d</span> declared in <span 
+class="pcrr7t-">D</span>. In this case the same entity is brought
+     into scope by two routes (the import of <span 
+class="pcrr7t-">B</span> and the import of <span 
+class="pcrr7t-">C</span>), and can be referred to in <span 
+class="pcrr7t-">A</span> by the names
+     <span 
+class="pcrr7t-">d</span>, <span 
+class="pcrr7t-">B.d</span>, and <span 
+class="pcrr7t-">C.d</span>.
+     </li>
+     <li class="itemize">The reference to <span 
+class="pcrr7t-">x</span> is ambiguous: it could mean <span 
+class="pcrr7t-">x</span> declared in <span 
+class="pcrr7t-">B</span>, or <span 
+class="pcrr7t-">x</span> declared in <span 
+class="pcrr7t-">C</span>. The ambiguity
+     could be fixed by replacing the reference to <span 
+class="pcrr7t-">x</span> by <span 
+class="pcrr7t-">B.x</span> or <span 
+class="pcrr7t-">C.x</span>.
+     </li>
+     <li class="itemize">There is no reference to <span 
+class="pcrr7t-">y</span>, so it is not erroneous that distinct entities called <span 
+class="pcrr7t-">y</span> are exported by both <span 
+class="pcrr7t-">B</span>
+     and <span 
+class="pcrr7t-">C</span>. An error is only reported if <span 
+class="pcrr7t-">y</span> is actually mentioned.</li></ul>
+ <p class="noindent"> The name occurring in a type signature or fixity declarations is always unqualified, and unambiguously refers to
+another declaration in the same declaration list (except that the fixity declaration for a class method can occur at top
+level &#8212; Section&#x00A0;<a 
+href="haskellch4.html#x10-820004.4.2">4.4.2<!--tex4ht:ref: fixity --></a>). For example, the following module is legal:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-99">
+&#x00A0;&#x00A0;module&#x00A0;F&#x00A0;where
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;sin&#x00A0;::&#x00A0;Float&#x00A0;-&#x003E;&#x00A0;Float
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;sin&#x00A0;x&#x00A0;=&#x00A0;(x::Float)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;x&#x00A0;=&#x00A0;Prelude.sin&#x00A0;(F.sin&#x00A0;x)
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The local declaration for <span 
+class="pcrr7t-">sin</span> is legal, even though the Prelude function <span 
+class="pcrr7t-">sin</span> is implicitly in scope. The references to
+<span 
+class="pcrr7t-">Prelude.sin</span> and <span 
+class="pcrr7t-">F.sin</span> must both be qualified to make it unambiguous which <span 
+class="pcrr7t-">sin</span> is meant. However, the
+unqualified name <span 
+class="pcrr7t-">sin</span> in the type signature in the first line of <span 
+class="pcrr7t-">F</span> unambiguously refers to the local declaration for
+<span 
+class="pcrr7t-">sin</span>.
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.5.3    </span> <a 
+ id="x11-1100005.5.3"></a>Closure</h4>
+<a 
+ id="dx11-110001"></a>
+<p class="noindent"> Every module in a Haskell program must be <span 
+class="ptmri7t-">closed</span>. That is, every name explicitly mentioned by the
+source code must be either defined locally or imported from another module. However, entities that the
+compiler requires for type checking or other compile time analysis need not be imported if they are
+not mentioned by name. The Haskell compilation system is responsible for finding any information
+needed for compilation without the help of the programmer. That is, the import of a variable <span 
+class="pcrr7t-">x</span> does not
+require that the datatypes and classes in the signature of <span 
+class="pcrr7t-">x</span> be brought into the module along with <span 
+class="pcrr7t-">x</span>
+unless these entities are referenced by name in the user program. The Haskell system silently imports
+any information that must accompany an entity for type checking or any other purposes. Such entities
+need not even be explicitly exported: the following program is valid even though <span 
+class="pcrr7t-">T</span> does not escape <span 
+class="pcrr7t-">M1</span>:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-100">
+&#x00A0;&#x00A0;module&#x00A0;M1(x)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;data&#x00A0;T&#x00A0;=&#x00A0;T
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;T
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;module&#x00A0;M2&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;M1(x)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;y&#x00A0;=&#x00A0;x
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> In this example, there is no way to supply an explicit type signature for <span 
+class="pcrr7t-">y</span> since <span 
+class="pcrr7t-">T</span> is not in scope. Whether or not <span 
+class="pcrr7t-">T</span> is
+explicitly exported, module <span 
+class="pcrr7t-">M2</span> knows enough about <span 
+class="pcrr7t-">T</span> to correctly type check the program.
+ <p class="noindent"> The type of an exported entity is unaffected by non-exported type synonyms. For example, in
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-101">
+&#x00A0;&#x00A0;module&#x00A0;M(x)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;type&#x00A0;T&#x00A0;=&#x00A0;Int
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;::&#x00A0;T
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;1
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> the type of <span 
+class="pcrr7t-">x</span> is both <span 
+class="pcrr7t-">T</span> and <span 
+class="pcrr7t-">Int</span>; these are interchangeable even when <span 
+class="pcrr7t-">T</span> is not in scope. That is, the definition of <span 
+class="pcrr7t-">T</span> is
+available to any module that encounters it whether or not the name <span 
+class="pcrr7t-">T</span> is in scope. The only reason to export <span 
+class="pcrr7t-">T</span> is to
+allow other modules to refer it by name; the type checker finds the definition of <span 
+class="pcrr7t-">T</span> if needed whether or not it is
+exported.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.6    </span> <a 
+ id="x11-1110005.6"></a>Standard Prelude</h3>
+<a 
+ id="dx11-111001"></a>
+<a 
+ id="dx11-111002"></a>
+<p class="noindent"> Many of the features of Haskell are defined in Haskell itself as a library of standard datatypes, classes, and functions,
+called the &#8220;Standard Prelude.&#8221; In Haskell, the Prelude is contained in the module <span 
+class="pcrr7t-">Prelude</span>.<a 
+ id="dx11-111003"></a> There are also many
+predefined library modules, which provide less frequently used functions and types. For example, complex numbers,
+arrays, and most of the input/output are all part of the standard libraries. These are defined in Part&#x00A0;<a 
+href="haskellpa2.html#x20-192000II">II<!--tex4ht:ref: libraries --></a>.
+Separating libraries from the Prelude has the advantage of reducing the size and complexity of the Prelude,
+allowing it to be more easily assimilated, and increasing the space of useful names available to the
+programmer.
+ <p class="noindent"> Prelude and library modules differ from other modules in that their semantics (but not their implementation) are a
+fixed part of the Haskell language definition. This means, for example, that a compiler may optimize calls to functions
+in the Prelude without consulting the source code of the Prelude.
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.6.1    </span> <a 
+ id="x11-1120005.6.1"></a>The <span 
+class="pcrr7t-">Prelude</span> Module</h4>
+<a 
+ id="dx11-112001"></a>
+<a 
+ id="dx11-112002"></a>
+<p class="noindent"> The <span 
+class="pcrr7t-">Prelude</span> module is imported automatically into all modules as if by the statement &#8216;<span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;Prelude</span>&#8217;, if
+and only if it is not imported with an explicit <span 
+class="pcrr7t-">import</span> declaration. This provision for explicit import allows entities
+defined in the Prelude to be selectively imported, just like those from any other module.
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> The semantics of the entities in <span 
+class="pcrr7t-">Prelude</span> is specified by a reference implementation of <span 
+class="pcrr7t-">Prelude</span> written in
+Haskell, given in Chapter&#x00A0;<a 
+href="haskellch9.html#x16-1710009">9<!--tex4ht:ref: stdprelude --></a>. Some datatypes (such as <span 
+class="pcrr7t-">Int</span>) and functions (such as <span 
+class="pcrr7t-">Int</span> addition) cannot be specified
+directly in Haskell. Since the treatment of such entities depends on the implementation, they are not formally defined
+in Chapter&#x00A0;<a 
+href="haskellch9.html#x16-1710009">9<!--tex4ht:ref: stdprelude --></a>. The implementation of <span 
+class="pcrr7t-">Prelude</span> is also incomplete in its treatment of tuples: there
+should be an infinite family of tuples and their instance declarations, but the implementation only gives a
+scheme.
+ <p class="noindent"> Chapter&#x00A0;<a 
+href="haskellch9.html#x16-1710009">9<!--tex4ht:ref: stdprelude --></a> defines the module <span 
+class="pcrr7t-">Prelude</span> using several other modules: <span 
+class="pcrr7t-">PreludeList</span>, <span 
+class="pcrr7t-">PreludeIO</span>, and so on.
+These modules are <span 
+class="ptmri7t-">not </span>part of Haskell 98, and they cannot be imported separately. They are simply there to help
+explain the structure of the <span 
+class="pcrr7t-">Prelude</span> module; they should be considered part of its implementation, not part of the
+language definition.
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">5.6.2    </span> <a 
+ id="x11-1130005.6.2"></a>Shadowing Prelude Names</h4>
+<p class="noindent"> The rules about the Prelude have been cast so that it is possible to use Prelude names for nonstandard purposes;
+however, every module that does so must have an <span 
+class="pcrr7t-">import</span> declaration that makes this nonstandard usage explicit.
+For example:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-102">
+&#x00A0;&#x00A0;module&#x00A0;A(&#x00A0;null,&#x00A0;nonNull&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;Prelude&#x00A0;hiding(&#x00A0;null&#x00A0;)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;null,&#x00A0;nonNull&#x00A0;::&#x00A0;Int&#x00A0;-&#x003E;&#x00A0;Bool
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;null&#x00A0;&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;x&#x00A0;==&#x00A0;0
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;nonNull&#x00A0;x&#x00A0;=&#x00A0;not&#x00A0;(null&#x00A0;x)
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Module <span 
+class="pcrr7t-">A</span> redefines <span 
+class="pcrr7t-">null</span>, and contains an unqualified reference to <span 
+class="pcrr7t-">null</span> on the right hand side of <span 
+class="pcrr7t-">nonNull</span>. The
+latter would be ambiguous without the <span 
+class="pcrr7t-">hiding(null)</span> on the <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;Prelude</span> statement. Every module
+that imports <span 
+class="pcrr7t-">A</span> unqualified, and then makes an unqualified reference to <span 
+class="pcrr7t-">null</span> must also resolve the
+ambiguous use of <span 
+class="pcrr7t-">null</span> just as <span 
+class="pcrr7t-">A</span> does. Thus there is little danger of accidentally shadowing Prelude
+names.
+ <p class="noindent"> It is possible to construct and use a different module to serve in place of the Prelude. Other than the fact that it is
+implicitly imported, the Prelude is an ordinary Haskell module; it is special only in that some objects in the Prelude
+are referenced by special syntactic constructs. Redefining names used by the Prelude does not affect the meaning of
+these special constructs. For example, in
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-103">
+&#x00A0;&#x00A0;module&#x00A0;B&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;Prelude()
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;import&#x00A0;MyPrelude
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;x&#x00A0;=&#x00A0;(x,x)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;g&#x00A0;x&#x00A0;=&#x00A0;(,)&#x00A0;x&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;h&#x00A0;x&#x00A0;=&#x00A0;[x]&#x00A0;++&#x00A0;[]
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> the explicit <span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;Prelude()</span> declaration prevents the automatic import of <span 
+class="pcrr7t-">Prelude</span>, while the declaration
+<span 
+class="pcrr7t-">import</span><span 
+class="pcrr7t-">&#x00A0;MyPrelude</span> brings the non-standard prelude into scope. The special syntax for tuples (such as
+<span 
+class="pcrr7t-">(x,x)</span> and <span 
+class="pcrr7t-">(,)</span>) and lists (such as <span 
+class="pcrr7t-">[x]</span> and <span 
+class="pcrr7t-">[]</span>) continues to refer to the tuples and lists defined by the
+standard <span 
+class="pcrr7t-">Prelude</span>; there is no way to redefine the meaning of <span 
+class="pcrr7t-">[x]</span>, for example, in terms of a different
+implementation of lists. On the other hand, the use of <span 
+class="pcrr7t-">++</span> is not special syntax, so it refers to <span 
+class="pcrr7t-">++</span> imported from
+<span 
+class="pcrr7t-">MyPrelude</span>.
+ <p class="noindent"> It is not possible, however, to hide <span 
+class="pcrr7t-">instance</span> declarations in the <span 
+class="pcrr7t-">Prelude</span>. For example, one cannot define a new
+instance for <span 
+class="pcrr7t-">Show</span><span 
+class="pcrr7t-">&#x00A0;Char</span>.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.7    </span> <a 
+ id="x11-1140005.7"></a>Separate Compilation</h3>
+<a 
+ id="dx11-114001"></a>
+<p class="noindent"> Depending on the Haskell implementation used, separate compilation of mutually recursive modules may require
+that imported modules contain additional information so that they may be referenced before they are compiled.
+Explicit type signatures for all exported values may be necessary to deal with mutual recursion. The precise details of
+separate compilation are not defined by this report.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">5.8    </span> <a 
+ id="x11-1150005.8"></a>Abstract Datatypes</h3>
+<a 
+ id="dx11-115001"></a>
+<p class="noindent"> The ability to export a datatype without its constructors allows the construction of abstract datatypes (ADTs). For
+example, an ADT for stacks could be defined as:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-104">
+&#x00A0;&#x00A0;module&#x00A0;Stack(&#x00A0;StkType,&#x00A0;push,&#x00A0;pop,&#x00A0;empty&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;data&#x00A0;StkType&#x00A0;a&#x00A0;=&#x00A0;EmptyStk&#x00A0;|&#x00A0;Stk&#x00A0;a&#x00A0;(StkType&#x00A0;a)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;push&#x00A0;x&#x00A0;s&#x00A0;=&#x00A0;Stk&#x00A0;x&#x00A0;s
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;pop&#x00A0;(Stk&#x00A0;_&#x00A0;s)&#x00A0;=&#x00A0;s
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;empty&#x00A0;=&#x00A0;EmptyStk
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Modules importing <span 
+class="pcrr7t-">Stack</span> cannot construct values of type <span 
+class="pcrr7t-">StkType</span> because they do not have access to the
+constructors of the type. Instead, they must use <span 
+class="pcrr7t-">push</span>, <span 
+class="pcrr7t-">pop</span>, and <span 
+class="pcrr7t-">empty</span> to construct such values.
+ <p class="noindent"> It is also possible to build an ADT on top of an existing type by using a <span 
+class="pcrr7t-">newtype</span> declaration. For example, stacks
+can be defined with lists:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-105">
+&#x00A0;&#x00A0;module&#x00A0;Stack(&#x00A0;StkType,&#x00A0;push,&#x00A0;pop,&#x00A0;empty&#x00A0;)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;newtype&#x00A0;StkType&#x00A0;a&#x00A0;=&#x00A0;Stk&#x00A0;[a]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;push&#x00A0;x&#x00A0;(Stk&#x00A0;s)&#x00A0;=&#x00A0;Stk&#x00A0;(x:s)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;pop&#x00A0;(Stk&#x00A0;(_:s))&#x00A0;=&#x00A0;Stk&#x00A0;s
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;empty&#x00A0;=&#x00A0;Stk&#x00A0;[]
+</div>
+     <p class="noindent"></div>
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+<!--l. 7--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch6.html" >next</a>] [<a 
+href="haskellch4.html" >prev</a>] [<a 
+href="haskellch4.html#tailhaskellch4.html" >prev-tail</a>] [<a 
+href="haskellch5.html" >front</a>] [<a 
+href="haskellpa1.html#haskellch5.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch5.html"></a>   
+</body></html> 

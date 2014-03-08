@@ -1,0 +1,676 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>15 Data.Bits</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch16.html" >next</a>] [<a 
+href="haskellch14.html" >prev</a>] [<a 
+href="haskellch14.html#tailhaskellch14.html" >prev-tail</a>] [<a 
+href="#tailhaskellch15.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch15.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;15</span><br /><a 
+ id="x23-20800015"></a><span 
+class="pcrr7t-">Data.Bits</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-383">
+module&#x00A0;Data.Bits&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Bits((.&amp;.),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(.|.),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;xor,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;complement,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;shift,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;rotate,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;bit,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;setBit,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;clearBit,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;complementBit,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;testBit,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;bitSize,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;isSigned,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;shiftL,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;shiftR,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;rotateL,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;rotateR)
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> This module defines bitwise operations for signed and unsigned integers.
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-168" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-168-1g"><col 
+id="TBL-168-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-168-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-168-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">Bits</span><a 
+ id="dx23-208001"></a> class defines bitwise operations over integral types.
+         <ul class="itemize1">
+         <li class="itemize">Bits are numbered from 0 with bit 0 being the least significant bit.
+         </li></ul>
+     <p class="noindent"> Minimal complete definition: <span 
+class="pcrr7t-">.&amp;.</span><a 
+ id="dx23-208002"></a>, <span 
+class="pcrr7t-">.|.</span><a 
+ id="dx23-208003"></a>, <span 
+class="pcrr7t-">xor</span><a 
+ id="dx23-208004"></a>, <span 
+class="pcrr7t-">complement</span><a 
+ id="dx23-208005"></a>, (<span 
+class="pcrr7t-">shift</span><a 
+ id="dx23-208006"></a> or (<span 
+class="pcrr7t-">shiftL</span><a 
+ id="dx23-208007"></a> and <span 
+class="pcrr7t-">shiftR</span><a 
+ id="dx23-208008"></a>)),
+     (<span 
+class="pcrr7t-">rotate</span><a 
+ id="dx23-208009"></a> or (<span 
+class="pcrr7t-">rotateL</span><a 
+ id="dx23-208010"></a> and <span 
+class="pcrr7t-">rotateR</span><a 
+ id="dx23-208011"></a>)), <span 
+class="pcrr7t-">bitSize</span><a 
+ id="dx23-208012"></a> and <span 
+class="pcrr7t-">isSigned</span><a 
+ id="dx23-208013"></a>.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-169" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-169-1g"><col 
+id="TBL-169-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-169-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-169-1-1"  
+class="td11"><span 
+class="pcrb7t-">(.&amp;.)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                </div> <dd class="haddockdesc">
+         Bitwise &#8221;and&#8221;
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-170" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-170-1g"><col 
+id="TBL-170-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-170-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-170-1-1"  
+class="td11"><span 
+class="pcrb7t-">(.|.)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                </div> <dd class="haddockdesc">
+         Bitwise &#8221;or&#8221;
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-171" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-171-1g"><col 
+id="TBL-171-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-171-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-171-1-1"  
+class="td11"><span 
+class="pcrb7t-">xor</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                  </div> <dd class="haddockdesc">
+         Bitwise &#8221;xor&#8221;
+                                                                                   
+
+                                                                                   
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-172" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-172-1g"><col 
+id="TBL-172-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-172-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-172-1-1"  
+class="td11"><span 
+class="pcrb7t-">complement</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                </div> <dd class="haddockdesc">
+         Reverse all the bits in the argument
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-173" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-173-1g"><col 
+id="TBL-173-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-173-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-173-1-1"  
+class="td11"><span 
+class="pcrb7t-">shift</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                              </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">shift</span><span 
+class="pcrr7t-">&#x00A0;x</span><span 
+class="pcrr7t-">&#x00A0;i </span>shifts <span 
+class="pcrr7t-">x </span>left by <span 
+class="pcrr7t-">i </span>bits if <span 
+class="pcrr7t-">i </span>is positive, or right by <span 
+class="pcrr7t-">-i </span>bits otherwise. Right shifts
+         perform sign extension on signed number types; i.e. they fill the top bits with 1 if the <span 
+class="pcrr7t-">x </span>is negative
+         and with 0 otherwise.
+         <p class="noindent"> An instance can define either this unified <span 
+class="pcrr7t-">shift</span><a 
+ id="dx23-208014"></a> or <span 
+class="pcrr7t-">shiftL</span><a 
+ id="dx23-208015"></a> and <span 
+class="pcrr7t-">shiftR</span><a 
+ id="dx23-208016"></a>, depending on which
+         is more convenient for the type in question.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-174" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-174-1g"><col 
+id="TBL-174-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-174-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-174-1-1"  
+class="td11"><span 
+class="pcrb7t-">rotate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">rotate</span><span 
+class="pcrr7t-">&#x00A0;x</span><span 
+class="pcrr7t-">&#x00A0;i </span>rotates <span 
+class="pcrr7t-">x </span>left by <span 
+class="pcrr7t-">i </span>bits if <span 
+class="pcrr7t-">i </span>is positive, or right by <span 
+class="pcrr7t-">-i </span>bits otherwise.
+         <p class="noindent"> For unbounded types like <span 
+class="pcrr7t-">Integer</span><a 
+ id="dx23-208017"></a>, <span 
+class="pcrr7t-">rotate</span><a 
+ id="dx23-208018"></a> is equivalent to <span 
+class="pcrr7t-">shift</span><a 
+ id="dx23-208019"></a>.
+         <p class="noindent"> An instance can define either this unified <span 
+class="pcrr7t-">rotate</span><a 
+ id="dx23-208020"></a> or <span 
+class="pcrr7t-">rotateL</span><a 
+ id="dx23-208021"></a> and <span 
+class="pcrr7t-">rotateR</span><a 
+ id="dx23-208022"></a>, depending on
+         which is more convenient for the type in question.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-175" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-175-1g"><col 
+id="TBL-175-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-175-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-175-1-1"  
+class="td11"><span 
+class="pcrb7t-">bit</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                     </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">bit</span><span 
+class="pcrr7t-">&#x00A0;i </span>is a value with the <span 
+class="pcrr7t-">i</span>th bit set and all other bits clear
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-176" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-176-1g"><col 
+id="TBL-176-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-176-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-176-1-1"  
+class="td11"><span 
+class="pcrb7t-">setBit</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;&#8216;setBit&#8216;</span><span 
+class="pcrr7t-">&#x00A0;i </span>is the same as <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;.|.</span><span 
+class="pcrr7t-">&#x00A0;bit</span><span 
+class="pcrr7t-">&#x00A0;i</span>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-177" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-177-1g"><col 
+id="TBL-177-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-177-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-177-1-1"  
+class="td11"><span 
+class="pcrb7t-">clearBit</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                           </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;&#8216;clearBit&#8216;</span><span 
+class="pcrr7t-">&#x00A0;i </span>is the same as <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;.&amp;.</span><span 
+class="pcrr7t-">&#x00A0;complement</span><span 
+class="pcrr7t-">&#x00A0;(bit</span><span 
+class="pcrr7t-">&#x00A0;i)</span>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-178" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-178-1g"><col 
+id="TBL-178-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-178-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-178-1-1"  
+class="td11"><span 
+class="pcrb7t-">complementBit</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                      </div> <dd class="haddockdesc">
+         <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;&#8216;complementBit&#8216;</span><span 
+class="pcrr7t-">&#x00A0;i </span>is the same as <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;&#8216;xor&#8216;</span><span 
+class="pcrr7t-">&#x00A0;bit</span><span 
+class="pcrr7t-">&#x00A0;i</span>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-179" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-179-1g"><col 
+id="TBL-179-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-179-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-179-1-1"  
+class="td11"><span 
+class="pcrb7t-">testBit</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                         </div> <dd class="haddockdesc">
+         Return <span 
+class="pcrr7t-">True</span><a 
+ id="dx23-208023"></a> if the <span 
+class="pcrr7t-">n</span>th bit of the argument is 1
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-180" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-180-1g"><col 
+id="TBL-180-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-180-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-180-1-1"  
+class="td11"><span 
+class="pcrb7t-">bitSize</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                                 </div> <dd class="haddockdesc">
+         Return  the  number  of  bits  in  the  type  of  the  argument.  The  actual  value  of  the  argument  is
+         ignored.  The  function  <span 
+class="pcrr7t-">bitSize</span><a 
+ id="dx23-208024"></a> is  undefined  for  types  that  do  not  have  a  fixed  bitsize,  like
+         <span 
+class="pcrr7t-">Integer</span><a 
+ id="dx23-208025"></a>.
+                                                                                   
+
+                                                                                   
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-181" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-181-1g"><col 
+id="TBL-181-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-181-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-181-1-1"  
+class="td11"><span 
+class="pcrb7t-">isSigned</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+         Return <span 
+class="pcrr7t-">True</span><a 
+ id="dx23-208026"></a> if the argument is a signed type. The actual value of the argument is ignored
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-182" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-182-1g"><col 
+id="TBL-182-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-182-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-182-1-1"  
+class="td11"><span 
+class="pcrb7t-">shiftL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+         Shift the argument left by the specified number of bits (which must be non-negative).
+          <p class="noindent"> An instance can define either this and <span 
+class="pcrr7t-">shiftR</span><a 
+ id="dx23-208027"></a> or the unified <span 
+class="pcrr7t-">shift</span><a 
+ id="dx23-208028"></a>, depending on which is
+         more convenient for the type in question.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-183" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-183-1g"><col 
+id="TBL-183-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-183-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-183-1-1"  
+class="td11"><span 
+class="pcrb7t-">shiftR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+         Shift the first argument right by the specified number of bits (which must be non-negative). Right
+         shifts perform sign extension on signed number types; i.e. they fill the top bits with 1 if the <span 
+class="pcrr7t-">x </span>is
+         negative and with 0 otherwise.
+          <p class="noindent"> An instance can define either this and <span 
+class="pcrr7t-">shiftL</span><a 
+ id="dx23-208029"></a> or the unified <span 
+class="pcrr7t-">shift</span><a 
+ id="dx23-208030"></a>, depending on which is
+         more convenient for the type in question.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-184" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-184-1g"><col 
+id="TBL-184-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-184-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-184-1-1"  
+class="td11"><span 
+class="pcrb7t-">rotateL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                            </div> <dd class="haddockdesc">
+         Rotate the argument left by the specified number of bits (which must be non-negative).
+         <p class="noindent"> An instance can define either this and <span 
+class="pcrr7t-">rotateR</span><a 
+ id="dx23-208031"></a> or the unified <span 
+class="pcrr7t-">rotate</span><a 
+ id="dx23-208032"></a>, depending on which is
+         more convenient for the type in question.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-185" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-185-1g"><col 
+id="TBL-185-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-185-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-185-1-1"  
+class="td11"><span 
+class="pcrb7t-">rotateR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                            </div> <dd class="haddockdesc">
+         Rotate the argument right by the specified number of bits (which must be non-negative).
+         <p class="noindent"> An instance can define either this and <span 
+class="pcrr7t-">rotateL</span><a 
+ id="dx23-208033"></a> or the unified <span 
+class="pcrr7t-">rotate</span><a 
+ id="dx23-208034"></a>, depending on which is
+         more convenient for the type in question.
+         </dl>
+     </dl>
+     <dl> <dt class="haddockdesc">
+                                                                                   
+
+                                                                                   
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-186" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-186-1g"><col 
+id="TBL-186-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-186-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int16      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int64      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Integer</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Word       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Word8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Word16     </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Word32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Word64     </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;WordPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-13-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;IntPtr     </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-14-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-15-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSChar     </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-16-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-16-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-17-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-17-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-18-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-18-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUShort    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-19-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-19-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CInt       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-20-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-20-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUInt      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-21-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-21-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-22-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-22-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-23-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-23-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-24-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-24-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CULLong    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-25-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-25-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-26-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-26-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSize      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-27-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-27-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CWchar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-28-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-28-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-29-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-29-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-30-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-30-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-31-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-31-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CIntMax    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-186-32-"><td  style="white-space:nowrap; text-align:left;" id="TBL-186-32-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax   </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch16.html" >next</a>] [<a 
+href="haskellch14.html" >prev</a>] [<a 
+href="haskellch14.html#tailhaskellch14.html" >prev-tail</a>] [<a 
+href="haskellch15.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch15.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch15.html"></a>  
+</body></html> 

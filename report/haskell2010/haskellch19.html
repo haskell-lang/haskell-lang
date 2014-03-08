@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>19 Data.Ix</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch20.html" >next</a>] [<a 
+href="haskellch18.html" >prev</a>] [<a 
+href="haskellch18.html#tailhaskellch18.html" >prev-tail</a>] [<a 
+href="#tailhaskellch19.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch19.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;19</span><br /><a 
+ id="x27-22500019"></a><span 
+class="pcrr7t-">Data.Ix</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-391">
+module&#x00A0;Data.Ix&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Ix(range,&#x00A0;index,&#x00A0;inRange,&#x00A0;rangeSize)
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">19.1    </span> <a 
+ id="x27-22600019.1"></a>The <span 
+class="pcrr7t-">Ix </span>class </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-245" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-245-1g"><col 
+id="TBL-245-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-245-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-245-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                                 </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">Ix</span><a 
+ id="dx27-226001"></a> class is used to map a contiguous subrange of values in a type onto integers. It is used primarily
+     for array indexing (see the array package).
+     <p class="noindent"> The first argument <span 
+class="pcrr7t-">(l,u) </span>of each of these operations is a pair specifying the lower and upper bounds
+     of a contiguous subrange of values.
+     <p class="noindent"> An implementation is entitled to assume the following laws about these operations:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">inRange</span><span 
+class="pcrr7t-">&#x00A0;(l,u)</span><span 
+class="pcrr7t-">&#x00A0;i</span><span 
+class="pcrr7t-">&#x00A0;==</span><span 
+class="pcrr7t-">&#x00A0;elem</span><span 
+class="pcrr7t-">&#x00A0;i</span><span 
+class="pcrr7t-">&#x00A0;(range</span><span 
+class="pcrr7t-">&#x00A0;(l,u))</span><span 
+class="pcrr7t-">&#x00A0;</span>
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">range</span><span 
+class="pcrr7t-">&#x00A0;(l,u)</span><span 
+class="pcrr7t-">&#x00A0;!!</span><span 
+class="pcrr7t-">&#x00A0;index</span><span 
+class="pcrr7t-">&#x00A0;(l,u)</span><span 
+class="pcrr7t-">&#x00A0;i</span><span 
+class="pcrr7t-">&#x00A0;==</span><span 
+class="pcrr7t-">&#x00A0;i</span>, when <span 
+class="pcrr7t-">inRange</span><span 
+class="pcrr7t-">&#x00A0;(l,u)</span><span 
+class="pcrr7t-">&#x00A0;i</span>
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">map</span><span 
+class="pcrr7t-">&#x00A0;(index</span><span 
+class="pcrr7t-">&#x00A0;(l,u))</span><span 
+class="pcrr7t-">&#x00A0;(range</span><span 
+class="pcrr7t-">&#x00A0;(l,u)))</span><span 
+class="pcrr7t-">&#x00A0;==</span><span 
+class="pcrr7t-">&#x00A0;[0..rangeSize</span><span 
+class="pcrr7t-">&#x00A0;(l,u)-1]</span><span 
+class="pcrr7t-">&#x00A0;</span>
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">rangeSize</span><span 
+class="pcrr7t-">&#x00A0;(l,u)</span><span 
+class="pcrr7t-">&#x00A0;==</span><span 
+class="pcrr7t-">&#x00A0;length</span><span 
+class="pcrr7t-">&#x00A0;(range</span><span 
+class="pcrr7t-">&#x00A0;(l,u))</span><span 
+class="pcrr7t-">&#x00A0;</span>
+         </li></ul>
+     <p class="noindent"> Minimal complete instance: <span 
+class="pcrr7t-">range</span><a 
+ id="dx27-226002"></a>, <span 
+class="pcrr7t-">index</span><a 
+ id="dx27-226003"></a> and <span 
+class="pcrr7t-">inRange</span><a 
+ id="dx27-226004"></a>.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-246" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-246-1g"><col 
+id="TBL-246-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-246-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-246-1-1"  
+class="td11"><span 
+class="pcrb7t-">range</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td></tr></table>                                              </div> <dd class="haddockdesc">
+         The list of values in the subrange defined by a bounding pair.
+         </dl>
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-247" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-247-1g"><col 
+id="TBL-247-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-247-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-247-1-1"  
+class="td11"><span 
+class="pcrb7t-">index</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                         </div> <dd class="haddockdesc">
+         The position of a subscript in the subrange.
+         </dl>
+                                                                                   
+
+                                                                                   
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-248" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-248-1g"><col 
+id="TBL-248-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-248-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-248-1-1"  
+class="td11"><span 
+class="pcrb7t-">inRange</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                      </div> <dd class="haddockdesc">
+         Returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx27-226005"></a> the given subscript lies in the range defined the bounding pair.
+         </dl>
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-249" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-249-1g"><col 
+id="TBL-249-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-249-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-249-1-1"  
+class="td11"><span 
+class="pcrb7t-">rangeSize</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                          </div> <dd class="haddockdesc">
+         The size of the subrange defined by a bounding pair.
+         </dl>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-250" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-250-1g"><col 
+id="TBL-250-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-250-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Bool                                                       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Char</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int                                                         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int16                                                       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int64                                                       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Integer</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Ordering                                                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Word                                                        </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Word8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Word16                                                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-13-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Word32                                                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-14-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Word64                                                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-15-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;()                                                          </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-16-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-16-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;GeneralCategory                                             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-17-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-17-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;SeekMode                                                    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-18-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-18-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;IOMode                                                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-19-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-19-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;b)                                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-20-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-20-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a1,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a3)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;(a1,</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;a3)                       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-21-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-21-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a1,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a3,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a4)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;(a1,</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;a3,</span><span 
+class="pcrb7t-">&#x00A0;a4)            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-250-22-"><td  style="white-space:nowrap; text-align:left;" id="TBL-250-22-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a1,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a3,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a4,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;a5)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;(a1,</span><span 
+class="pcrb7t-">&#x00A0;a2,</span><span 
+class="pcrb7t-">&#x00A0;a3,</span><span 
+class="pcrb7t-">&#x00A0;a4,</span><span 
+class="pcrb7t-">&#x00A0;a5) </span></td>
+</tr></table>                                                                                     </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">19.2    </span> <a 
+ id="x27-22700019.2"></a>Deriving Instances of <span 
+class="pcrr7t-">Ix</span></h3>
+<p class="noindent"> It is possible to derive an instance of <span 
+class="pcrr7t-">Ix </span>automatically, using a <span 
+class="pcrr7t-">deriving </span>clause on a <span 
+class="pcrr7t-">data </span>declaration. Such
+derived instance declarations for the class <span 
+class="pcrr7t-">Ix </span>are only possible for enumerations (i.e. datatypes having only nullary
+constructors) and single-constructor datatypes, whose constituent types are instances of <span 
+class="pcrr7t-">Ix</span>. A Haskell
+implementation must provide <span 
+class="pcrr7t-">Ix </span>instances for tuples up to at least size 15.
+ <p class="noindent"> For an <span 
+class="ptmri7t-">enumeration</span>, the nullary constructors are assumed to be numbered left-to-right with the indices
+being 0 to n-1 inclusive. This is the same numbering defined by the <span 
+class="pcrr7t-">Enum </span>class. For example, given the
+datatype:
+ <p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-392">
+&#x00A0;data&#x00A0;Colour&#x00A0;=&#x00A0;Red&#x00A0;|&#x00A0;Orange&#x00A0;|&#x00A0;Yellow&#x00A0;|&#x00A0;Green&#x00A0;|&#x00A0;Blue&#x00A0;|&#x00A0;Indigo&#x00A0;|&#x00A0;Violet
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> we would have:
+ <p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-393">
+&#x00A0;range&#x00A0;&#x00A0;&#x00A0;(Yellow,Blue)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;==&#x00A0;&#x00A0;[Yellow,Green,Blue]
+&#x00A0;<br />&#x00A0;index&#x00A0;&#x00A0;&#x00A0;(Yellow,Blue)&#x00A0;Green&#x00A0;&#x00A0;==&#x00A0;&#x00A0;1
+&#x00A0;<br />&#x00A0;inRange&#x00A0;(Yellow,Blue)&#x00A0;Red&#x00A0;&#x00A0;&#x00A0;&#x00A0;==&#x00A0;&#x00A0;False
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> For <span 
+class="ptmri7t-">single-constructor datatypes</span>, the derived instance declarations are as shown for tuples:
+ <p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-394">
+&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a,&#x00A0;Ix&#x00A0;b)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Ix&#x00A0;(a,b)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;range&#x00A0;((l,l'),(u,u'))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;[(i,i')&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;range&#x00A0;(l,u),&#x00A0;i'&#x00A0;&#x003C;-&#x00A0;range&#x00A0;(l',u')]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;index&#x00A0;((l,l'),(u,u'))&#x00A0;(i,i')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;index&#x00A0;(l,u)&#x00A0;i&#x00A0;&#x22C6;&#x00A0;rangeSize&#x00A0;(l',u')&#x00A0;+&#x00A0;index&#x00A0;(l',u')&#x00A0;i'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;inRange&#x00A0;((l,l'),(u,u'))&#x00A0;(i,i')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;inRange&#x00A0;(l,u)&#x00A0;i&#x00A0;&amp;&amp;&#x00A0;inRange&#x00A0;(l',u')&#x00A0;i'
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;--&#x00A0;Instances&#x00A0;for&#x00A0;other&#x00A0;tuples&#x00A0;are&#x00A0;obtained&#x00A0;from&#x00A0;this&#x00A0;scheme:
+&#x00A0;<br />&#x00A0;--
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a1,&#x00A0;Ix&#x00A0;a2,&#x00A0;...&#x00A0;,&#x00A0;Ix&#x00A0;ak)&#x00A0;=&#x003E;&#x00A0;Ix&#x00A0;(a1,a2,...,ak)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;range&#x00A0;((l1,l2,...,lk),(u1,u2,...,uk))&#x00A0;=
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;[(i1,i2,...,ik)&#x00A0;|&#x00A0;i1&#x00A0;&#x003C;-&#x00A0;range&#x00A0;(l1,u1),
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;i2&#x00A0;&#x003C;-&#x00A0;range&#x00A0;(l2,u2),
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;ik&#x00A0;&#x003C;-&#x00A0;range&#x00A0;(lk,uk)]
+&#x00A0;<br />&#x00A0;--
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;index&#x00A0;((l1,l2,...,lk),(u1,u2,...,uk))&#x00A0;(i1,i2,...,ik)&#x00A0;=
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;index&#x00A0;(lk,uk)&#x00A0;ik&#x00A0;+&#x00A0;rangeSize&#x00A0;(lk,uk)&#x00A0;&#x22C6;&#x00A0;(
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;index&#x00A0;(lk-1,uk-1)&#x00A0;ik-1&#x00A0;+&#x00A0;rangeSize&#x00A0;(lk-1,uk-1)&#x00A0;&#x22C6;&#x00A0;(
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;index&#x00A0;(l1,u1)))
+&#x00A0;<br />&#x00A0;--
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;inRange&#x00A0;((l1,l2,...lk),(u1,u2,...,uk))&#x00A0;(i1,i2,...,ik)&#x00A0;=
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;inRange&#x00A0;(l1,u1)&#x00A0;i1&#x00A0;&amp;&amp;&#x00A0;inRange&#x00A0;(l2,u2)&#x00A0;i2&#x00A0;&amp;&amp;
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...&#x00A0;&amp;&amp;&#x00A0;inRange&#x00A0;(lk,uk)&#x00A0;ik
+</div>
+     <p class="noindent"></div>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch20.html" >next</a>] [<a 
+href="haskellch18.html" >prev</a>] [<a 
+href="haskellch18.html#tailhaskellch18.html" >prev-tail</a>] [<a 
+href="haskellch19.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch19.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch19.html"></a>   
+</body></html> 

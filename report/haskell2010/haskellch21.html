@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>21 Data.Maybe</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch22.html" >next</a>] [<a 
+href="haskellch20.html" >prev</a>] [<a 
+href="haskellch20.html#tailhaskellch20.html" >prev-tail</a>] [<a 
+href="#tailhaskellch21.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch21.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;21</span><br /><a 
+ id="x29-25500021"></a><span 
+class="pcrr7t-">Data.Maybe</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-432">
+module&#x00A0;Data.Maybe&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Maybe(Nothing,&#x00A0;Just),&#x00A0;&#x00A0;maybe,&#x00A0;&#x00A0;isJust,&#x00A0;&#x00A0;isNothing,&#x00A0;&#x00A0;fromJust,&#x00A0;&#x00A0;fromMaybe,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;listToMaybe,&#x00A0;&#x00A0;maybeToList,&#x00A0;&#x00A0;catMaybes,&#x00A0;&#x00A0;mapMaybe
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">21.1    </span> <a 
+ id="x29-25600021.1"></a>The <span 
+class="pcrr7t-">Maybe </span>type and operations </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-362" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-362-1g"><col 
+id="TBL-362-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-362-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-362-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-363" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-363-1g"><col 
+id="TBL-363-1" /><col 
+id="TBL-363-2" /><col 
+id="TBL-363-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-363-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-363-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-363-1-2"  
+class="td11"> <span 
+class="pcrb7t-">Nothing </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-363-1-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-363-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-363-2-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-363-2-2"  
+class="td11"> <span 
+class="pcrb7t-">Just a  </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-363-2-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-363-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-363-3-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> The <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256001"></a> type encapsulates an optional value. A value of type <span 
+class="pcrr7t-">Maybe</span><span 
+class="pcrr7t-">&#x00A0;a </span>either contains a value of
+     type <span 
+class="pcrr7t-">a </span>(represented as <span 
+class="pcrr7t-">Just</span><span 
+class="pcrr7t-">&#x00A0;a</span>), or it is empty (represented as <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256002"></a>). Using <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256003"></a> is a
+     good way to deal with errors or exceptional cases without resorting to drastic measures such as
+     <span 
+class="pcrr7t-">error</span><a 
+ id="dx29-256004"></a>.
+     <p class="noindent"> The <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256005"></a> type is also a monad. It is a simple kind of error monad, where all errors are represented by
+     <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256006"></a>. A richer error monad can be built using the <span 
+class="pcrr7t-">Data.Either.Either </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-364" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-364-1g"><col 
+id="TBL-364-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-364-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;Maybe             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;Maybe            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;Maybe          </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(Maybe</span><span 
+class="pcrb7t-">&#x00A0;a)     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;(Maybe</span><span 
+class="pcrb7t-">&#x00A0;a)   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;(Maybe</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-364-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-364-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;(Maybe</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-365" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-365-1g"><col 
+id="TBL-365-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-365-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-365-1-1"  
+class="td11"><span 
+class="pcrb7t-">maybe</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">maybe</span><a 
+ id="dx29-256007"></a> function takes a default value, a function, and a <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256008"></a> value. If the <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256009"></a> value is
+     <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256010"></a>, the function returns the default value. Otherwise, it applies the function to the value inside
+     the <span 
+class="pcrr7t-">Just</span><a 
+ id="dx29-256011"></a> and returns the result.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-366" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-366-1g"><col 
+id="TBL-366-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-366-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-366-1-1"  
+class="td11"><span 
+class="pcrb7t-">isJust</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">isJust</span><a 
+ id="dx29-256012"></a> function returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx29-256013"></a> iff its argument is of the form <span 
+class="pcrr7t-">Just</span><span 
+class="pcrr7t-">&#x00A0;_</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-367" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-367-1g"><col 
+id="TBL-367-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-367-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-367-1-1"  
+class="td11"><span 
+class="pcrb7t-">isNothing</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">isNothing</span><a 
+ id="dx29-256014"></a> function returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx29-256015"></a> iff its argument is <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256016"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-368" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-368-1g"><col 
+id="TBL-368-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-368-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-368-1-1"  
+class="td11"><span 
+class="pcrb7t-">fromJust</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">fromJust</span><a 
+ id="dx29-256017"></a> function extracts the element out of a <span 
+class="pcrr7t-">Just</span><a 
+ id="dx29-256018"></a> and throws an error if its argument is
+     <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256019"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-369" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-369-1g"><col 
+id="TBL-369-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-369-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-369-1-1"  
+class="td11"><span 
+class="pcrb7t-">fromMaybe</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">fromMaybe</span><a 
+ id="dx29-256020"></a> function takes a default value and and <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256021"></a> value. If the <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256022"></a> is <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256023"></a>, it
+     returns the default values; otherwise, it returns the value contained in the <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256024"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-370" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-370-1g"><col 
+id="TBL-370-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-370-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-370-1-1"  
+class="td11"><span 
+class="pcrb7t-">listToMaybe</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">listToMaybe</span><a 
+ id="dx29-256025"></a> function  returns  <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256026"></a> on  an  empty  list  or  <span 
+class="pcrr7t-">Just</span><span 
+class="pcrr7t-">&#x00A0;a </span>where  <span 
+class="pcrr7t-">a </span>is  the  first
+     element of the list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-371" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-371-1g"><col 
+id="TBL-371-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-371-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-371-1-1"  
+class="td11"><span 
+class="pcrb7t-">maybeToList</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">maybeToList</span><a 
+ id="dx29-256027"></a> function returns an empty list when given <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256028"></a> or a singleton list when not
+     given <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256029"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-372" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-372-1g"><col 
+id="TBL-372-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-372-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-372-1-1"  
+class="td11"><span 
+class="pcrb7t-">catMaybes</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[Maybe</span><span 
+class="pcrb7t-">&#x00A0;a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">catMaybes</span><a 
+ id="dx29-256030"></a> function takes a list of <span 
+class="pcrr7t-">Maybe</span><a 
+ id="dx29-256031"></a>s and returns a list of all the <span 
+class="pcrr7t-">Just</span><a 
+ id="dx29-256032"></a> values.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-373" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-373-1g"><col 
+id="TBL-373-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-373-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-373-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapMaybe</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">mapMaybe</span><a 
+ id="dx29-256033"></a> function  is  a  version  of  <span 
+class="pcrr7t-">map</span><a 
+ id="dx29-256034"></a> which  can  throw  out  elements.  In  particular,  the
+     functional argument returns something of type <span 
+class="pcrr7t-">Maybe</span><span 
+class="pcrr7t-">&#x00A0;b</span>. If this is <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx29-256035"></a>, no element is added on
+     to the result list. If it just <span 
+class="pcrr7t-">Just</span><span 
+class="pcrr7t-">&#x00A0;b</span>, then <span 
+class="pcrr7t-">b </span>is included in the result list.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">21.2    </span> <a 
+ id="x29-25700021.2"></a>Specification </h3>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-433">
+&#x00A0;module&#x00A0;Data.Maybe(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Maybe(Nothing,&#x00A0;Just),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;isJust,&#x00A0;isNothing,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromJust,&#x00A0;fromMaybe,&#x00A0;listToMaybe,&#x00A0;maybeToList,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;catMaybes,&#x00A0;mapMaybe,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;maybe
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;)&#x00A0;where
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;maybe&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;b&#x00A0;-&#x003E;&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;b
+&#x00A0;<br />&#x00A0;maybe&#x00A0;n&#x00A0;_&#x00A0;Nothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;n
+&#x00A0;<br />&#x00A0;maybe&#x00A0;_&#x00A0;f&#x00A0;(Just&#x00A0;x)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;f&#x00A0;x
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;isJust&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Bool
+&#x00A0;<br />&#x00A0;isJust&#x00A0;(Just&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;True
+&#x00A0;<br />&#x00A0;isJust&#x00A0;Nothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;False
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;isNothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Bool
+&#x00A0;<br />&#x00A0;isNothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;not&#x00A0;.&#x00A0;isJust
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;fromJust&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;fromJust&#x00A0;(Just&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;a
+&#x00A0;<br />&#x00A0;fromJust&#x00A0;Nothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;error&#x00A0;"Maybe.fromJust:&#x00A0;Nothing"
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;fromMaybe&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;fromMaybe&#x00A0;d&#x00A0;Nothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;d
+&#x00A0;<br />&#x00A0;fromMaybe&#x00A0;d&#x00A0;(Just&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;a
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;maybeToList&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Maybe&#x00A0;a&#x00A0;-&#x003E;&#x00A0;[a]
+&#x00A0;<br />&#x00A0;maybeToList&#x00A0;Nothing&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;[]
+&#x00A0;<br />&#x00A0;maybeToList&#x00A0;(Just&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;[a]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;listToMaybe&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;[a]&#x00A0;-&#x003E;&#x00A0;Maybe&#x00A0;a
+&#x00A0;<br />&#x00A0;listToMaybe&#x00A0;[]&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;Nothing
+&#x00A0;<br />&#x00A0;listToMaybe&#x00A0;(a:_)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;Just&#x00A0;a
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;catMaybes&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;[Maybe&#x00A0;a]&#x00A0;-&#x003E;&#x00A0;[a]
+&#x00A0;<br />&#x00A0;catMaybes&#x00A0;ms&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;[&#x00A0;m&#x00A0;|&#x00A0;Just&#x00A0;m&#x00A0;&#x003C;-&#x00A0;ms&#x00A0;]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;mapMaybe&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;Maybe&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;[a]&#x00A0;-&#x003E;&#x00A0;[b]
+&#x00A0;<br />&#x00A0;mapMaybe&#x00A0;f&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;catMaybes&#x00A0;.&#x00A0;map&#x00A0;f
+</div>
+     <p class="noindent"></div>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch22.html" >next</a>] [<a 
+href="haskellch20.html" >prev</a>] [<a 
+href="haskellch20.html#tailhaskellch20.html" >prev-tail</a>] [<a 
+href="haskellch21.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch21.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch21.html"></a>   
+</body> </html> 

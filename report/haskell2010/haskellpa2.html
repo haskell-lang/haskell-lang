@@ -1,0 +1,417 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>II The Haskell 2010 Libraries</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 465--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellpa1.html" >prev</a>] [<a 
+href="haskellpa1.html#tailhaskellpa1.html" >prev-tail</a>] [<a 
+href="#tailhaskellpa2.html">tail</a>] [<a 
+href="haskell.html#haskellpa2.html" >up</a>] </p></div>
+<h1 class="partHead"><span class="titlemark">Part&#x00A0;II<br /></span><a 
+ id="x20-192000II"></a>The Haskell 2010 Libraries</h1>
+                                                                                   
+
+                                                                                   
+ <p class="noindent">
+                                                                                   
+
+                                                                                   
+<div class="chapterTOCS">
+<span class="chapterToc" >13 <a 
+href="haskellch13.html#x21-19300013"><span 
+class="pcrr7t-">Control.Monad</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >13.1 <a 
+href="haskellch13.html#x21-19400013.1">Functor and monad classes </a></span>
+<br />&#x00A0;<span class="sectionToc" >13.2 <a 
+href="haskellch13.html#x21-19500013.2">Functions </a></span>
+<br /><span class="chapterToc" >14 <a 
+href="haskellch14.html#x22-20100014"><span 
+class="pcrr7t-">Data.Array</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >14.1 <a 
+href="haskellch14.html#x22-20200014.1">Immutable non-strict arrays </a></span>
+<br />&#x00A0;<span class="sectionToc" >14.2 <a 
+href="haskellch14.html#x22-20300014.2">Array construction </a></span>
+<br />&#x00A0;<span class="sectionToc" >14.3 <a 
+href="haskellch14.html#x22-20400014.3">Accessing arrays </a></span>
+<br />&#x00A0;<span class="sectionToc" >14.4 <a 
+href="haskellch14.html#x22-20500014.4">Incremental array updates </a></span>
+<br />&#x00A0;<span class="sectionToc" >14.5 <a 
+href="haskellch14.html#x22-20600014.5">Derived arrays </a></span>
+<br />&#x00A0;<span class="sectionToc" >14.6 <a 
+href="haskellch14.html#x22-20700014.6">Specification </a></span>
+<br /><span class="chapterToc" >15 <a 
+href="haskellch15.html#x23-20800015"><span 
+class="pcrr7t-">Data.Bits</span></a></span>
+<br /><span class="chapterToc" >16 <a 
+href="haskellch16.html#x24-20900016"><span 
+class="pcrr7t-">Data.Char</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >16.1 <a 
+href="haskellch16.html#x24-21000016.1">Characters and strings </a></span>
+<br />&#x00A0;<span class="sectionToc" >16.2 <a 
+href="haskellch16.html#x24-21100016.2">Character classification </a></span>
+<br />&#x00A0;<span class="sectionToc" >16.3 <a 
+href="haskellch16.html#x24-21400016.3">Case conversion </a></span>
+<br />&#x00A0;<span class="sectionToc" >16.4 <a 
+href="haskellch16.html#x24-21500016.4">Single digit characters </a></span>
+<br />&#x00A0;<span class="sectionToc" >16.5 <a 
+href="haskellch16.html#x24-21600016.5">Numeric representations </a></span>
+<br />&#x00A0;<span class="sectionToc" >16.6 <a 
+href="haskellch16.html#x24-21700016.6">String representations </a></span>
+<br /><span class="chapterToc" >17 <a 
+href="haskellch17.html#x25-21800017"><span 
+class="pcrr7t-">Data.Complex</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >17.1 <a 
+href="haskellch17.html#x25-21900017.1">Rectangular form </a></span>
+<br />&#x00A0;<span class="sectionToc" >17.2 <a 
+href="haskellch17.html#x25-22000017.2">Polar form </a></span>
+<br />&#x00A0;<span class="sectionToc" >17.3 <a 
+href="haskellch17.html#x25-22100017.3">Conjugate </a></span>
+<br />&#x00A0;<span class="sectionToc" >17.4 <a 
+href="haskellch17.html#x25-22200017.4">Specification </a></span>
+<br /><span class="chapterToc" >18 <a 
+href="haskellch18.html#x26-22300018"><span 
+class="pcrr7t-">Data.Int</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >18.1 <a 
+href="haskellch18.html#x26-22400018.1">Signed integer types </a></span>
+<br /><span class="chapterToc" >19 <a 
+href="haskellch19.html#x27-22500019"><span 
+class="pcrr7t-">Data.Ix</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >19.1 <a 
+href="haskellch19.html#x27-22600019.1">The <span 
+class="pcrr7t-">Ix </span>class </a></span>
+<br />&#x00A0;<span class="sectionToc" >19.2 <a 
+href="haskellch19.html#x27-22700019.2">Deriving Instances of <span 
+class="pcrr7t-">Ix</span></a></span>
+                                                                                   
+
+                                                                                   
+<br /><span class="chapterToc" >20 <a 
+href="haskellch20.html#x28-22800020"><span 
+class="pcrr7t-">Data.List</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >20.1 <a 
+href="haskellch20.html#x28-22900020.1">Basic functions </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.2 <a 
+href="haskellch20.html#x28-23000020.2">List transformations </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.3 <a 
+href="haskellch20.html#x28-23100020.3">Reducing lists (folds) </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.4 <a 
+href="haskellch20.html#x28-23300020.4">Building lists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.5 <a 
+href="haskellch20.html#x28-23800020.5">Sublists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.6 <a 
+href="haskellch20.html#x28-24100020.6">Searching lists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.7 <a 
+href="haskellch20.html#x28-24400020.7">Indexing lists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.8 <a 
+href="haskellch20.html#x28-24500020.8">Zipping and unzipping lists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.9 <a 
+href="haskellch20.html#x28-24600020.9">Special lists </a></span>
+<br />&#x00A0;<span class="sectionToc" >20.10 <a 
+href="haskellch20.html#x28-25000020.10">Generalized functions </a></span>
+<br /><span class="chapterToc" >21 <a 
+href="haskellch21.html#x29-25500021"><span 
+class="pcrr7t-">Data.Maybe</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >21.1 <a 
+href="haskellch21.html#x29-25600021.1">The <span 
+class="pcrr7t-">Maybe </span>type and operations </a></span>
+<br />&#x00A0;<span class="sectionToc" >21.2 <a 
+href="haskellch21.html#x29-25700021.2">Specification </a></span>
+<br /><span class="chapterToc" >22 <a 
+href="haskellch22.html#x30-25800022"><span 
+class="pcrr7t-">Data.Ratio</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >22.1 <a 
+href="haskellch22.html#x30-25900022.1">Specification </a></span>
+<br /><span class="chapterToc" >23 <a 
+href="haskellch23.html#x31-26000023"><span 
+class="pcrr7t-">Data.Word</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >23.1 <a 
+href="haskellch23.html#x31-26100023.1">Unsigned integral types </a></span>
+<br /><span class="chapterToc" >24 <a 
+href="haskellch24.html#x32-26200024"><span 
+class="pcrr7t-">Foreign</span></a></span>
+<br /><span class="chapterToc" >25 <a 
+href="haskellch25.html#x33-26300025"><span 
+class="pcrr7t-">Foreign.C</span></a></span>
+<br /><span class="chapterToc" >26 <a 
+href="haskellch26.html#x34-26400026"><span 
+class="pcrr7t-">Foreign.C.Error</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >26.1 <a 
+href="haskellch26.html#x34-26500026.1">Haskell representations of <span 
+class="pcrr7t-">errno </span>values </a></span>
+<br /><span class="chapterToc" >27 <a 
+href="haskellch27.html#x35-26900027"><span 
+class="pcrr7t-">Foreign.C.String</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >27.1 <a 
+href="haskellch27.html#x35-27000027.1">C strings </a></span>
+<br />&#x00A0;<span class="sectionToc" >27.2 <a 
+href="haskellch27.html#x35-27300027.2">C wide strings </a></span>
+<br /><span class="chapterToc" >28 <a 
+href="haskellch28.html#x36-27400028"><span 
+class="pcrr7t-">Foreign.C.Types</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >28.1 <a 
+href="haskellch28.html#x36-27500028.1">Representations of C types </a></span>
+<br /><span class="chapterToc" >29 <a 
+href="haskellch29.html#x37-28000029"><span 
+class="pcrr7t-">Foreign.ForeignPtr</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >29.1 <a 
+href="haskellch29.html#x37-28100029.1">Finalised data pointers </a></span>
+                                                                                   
+
+                                                                                   
+<br /><span class="chapterToc" >30 <a 
+href="haskellch30.html#x38-28500030"><span 
+class="pcrr7t-">Foreign.Marshal</span></a></span>
+<br /><span class="chapterToc" >31 <a 
+href="haskellch31.html#x39-28600031"><span 
+class="pcrr7t-">Foreign.Marshal.Alloc</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >31.1 <a 
+href="haskellch31.html#x39-28700031.1">Memory allocation </a></span>
+<br /><span class="chapterToc" >32 <a 
+href="haskellch32.html#x40-29000032"><span 
+class="pcrr7t-">Foreign.Marshal.Array</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >32.1 <a 
+href="haskellch32.html#x40-29100032.1">Marshalling arrays </a></span>
+<br /><span class="chapterToc" >33 <a 
+href="haskellch33.html#x41-29800033"><span 
+class="pcrr7t-">Foreign.Marshal.Error</span></a></span>
+<br /><span class="chapterToc" >34 <a 
+href="haskellch34.html#x42-29900034"><span 
+class="pcrr7t-">Foreign.Marshal.Utils</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >34.1 <a 
+href="haskellch34.html#x42-30000034.1">General marshalling utilities </a></span>
+<br /><span class="chapterToc" >35 <a 
+href="haskellch35.html#x43-30600035"><span 
+class="pcrr7t-">Foreign.Ptr</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >35.1 <a 
+href="haskellch35.html#x43-30700035.1">Data pointers </a></span>
+<br />&#x00A0;<span class="sectionToc" >35.2 <a 
+href="haskellch35.html#x43-30800035.2">Function pointers </a></span>
+<br />&#x00A0;<span class="sectionToc" >35.3 <a 
+href="haskellch35.html#x43-30900035.3">Integral types with lossless conversion to and from pointers </a></span>
+<br /><span class="chapterToc" >36 <a 
+href="haskellch36.html#x44-31000036"><span 
+class="pcrr7t-">Foreign.StablePtr</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >36.1 <a 
+href="haskellch36.html#x44-31100036.1">Stable references to Haskell values </a></span>
+<br /><span class="chapterToc" >37 <a 
+href="haskellch37.html#x45-31300037"><span 
+class="pcrr7t-">Foreign.Storable</span></a></span>
+<br /><span class="chapterToc" >38 <a 
+href="haskellch38.html#x46-31400038"><span 
+class="pcrr7t-">Numeric</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >38.1 <a 
+href="haskellch38.html#x46-31500038.1">Showing </a></span>
+<br />&#x00A0;<span class="sectionToc" >38.2 <a 
+href="haskellch38.html#x46-31600038.2">Reading </a></span>
+<br />&#x00A0;<span class="sectionToc" >38.3 <a 
+href="haskellch38.html#x46-31700038.3">Miscellaneous </a></span>
+<br /><span class="chapterToc" >39 <a 
+href="haskellch39.html#x47-31800039"><span 
+class="pcrr7t-">System.Environment</span></a></span>
+<br /><span class="chapterToc" >40 <a 
+href="haskellch40.html#x48-31900040"><span 
+class="pcrr7t-">System.Exit</span></a></span>
+<br /><span class="chapterToc" >41 <a 
+href="haskellch41.html#x49-32000041"><span 
+class="pcrr7t-">System.IO</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >41.1 <a 
+href="haskellch41.html#x49-32100041.1">The IO monad </a></span>
+<br />&#x00A0;<span class="sectionToc" >41.2 <a 
+href="haskellch41.html#x49-32200041.2">Files and handles </a></span>
+<br />&#x00A0;<span class="sectionToc" >41.3 <a 
+href="haskellch41.html#x49-32400041.3">Opening and closing files </a></span>
+<br />&#x00A0;<span class="sectionToc" >41.4 <a 
+href="haskellch41.html#x49-32900041.4">Operations on handles </a></span>
+<br />&#x00A0;<span class="sectionToc" >41.5 <a 
+href="haskellch41.html#x49-33700041.5">Text input and output </a></span>
+<br /><span class="chapterToc" >42 <a 
+href="haskellch42.html#x50-34100042"><span 
+class="pcrr7t-">System.IO.Error</span></a></span>
+<br />&#x00A0;<span class="sectionToc" >42.1 <a 
+href="haskellch42.html#x50-34200042.1">I/O errors </a></span>
+                                                                                   
+
+                                                                                   
+<br />&#x00A0;<span class="sectionToc" >42.2 <a 
+href="haskellch42.html#x50-34500042.2">Types of I/O error </a></span>
+<br />&#x00A0;<span class="sectionToc" >42.3 <a 
+href="haskellch42.html#x50-34600042.3">Throwing and catching I/O errors </a></span>
+<br /><span class="likechapterToc" ><a 
+href="haskellli3.html#x51-34700042.3">Bibliography</a></span>
+</div>
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+
+                                                                                   
+<!--l. 513--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellpa1.html" >prev</a>] [<a 
+href="haskellpa1.html#tailhaskellpa1.html" >prev-tail</a>] [<a 
+href="haskellpa2.html" >front</a>] [<a 
+href="haskell.html#haskellpa2.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellpa2.html"></a>  
+</body> </html> 

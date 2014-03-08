@@ -1,0 +1,808 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>42 System.IO.Error</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellli3.html" >next</a>] [<a 
+href="haskellch41.html" >prev</a>] [<a 
+href="haskellch41.html#tailhaskellch41.html" >prev-tail</a>] [<a 
+href="#tailhaskellch42.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch42.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;42</span><br /><a 
+ id="x50-34100042"></a><span 
+class="pcrr7t-">System.IO.Error</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-472">
+module&#x00A0;System.IO.Error&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;IOError,&#x00A0;&#x00A0;userError,&#x00A0;&#x00A0;mkIOError,&#x00A0;&#x00A0;annotateIOError,&#x00A0;&#x00A0;isAlreadyExistsError,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;isDoesNotExistError,&#x00A0;&#x00A0;isAlreadyInUseError,&#x00A0;&#x00A0;isFullError,&#x00A0;&#x00A0;isEOFError,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;isIllegalOperation,&#x00A0;&#x00A0;isPermissionError,&#x00A0;&#x00A0;isUserError,&#x00A0;&#x00A0;ioeGetErrorString,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;ioeGetHandle,&#x00A0;&#x00A0;ioeGetFileName,&#x00A0;&#x00A0;IOErrorType,&#x00A0;&#x00A0;alreadyExistsErrorType,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;doesNotExistErrorType,&#x00A0;&#x00A0;alreadyInUseErrorType,&#x00A0;&#x00A0;fullErrorType,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eofErrorType,&#x00A0;&#x00A0;illegalOperationErrorType,&#x00A0;&#x00A0;permissionErrorType,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;userErrorType,&#x00A0;&#x00A0;ioError,&#x00A0;&#x00A0;catch,&#x00A0;&#x00A0;try
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">42.1    </span> <a 
+ id="x50-34200042.1"></a>I/O errors </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-697" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-697-1g"><col 
+id="TBL-697-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-697-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-697-1-1"  
+class="td11"><span 
+class="pcrb7t-">type</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;=</span><span 
+class="pcrb7t-">&#x00A0;IOError </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Errors  of  type  <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342001"></a> are  used  by  the  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-342002"></a> monad.  This  is  an  abstract  type;  the  module
+     <span 
+class="pcrr7t-">System.IO.Error </span>provides functions to interrogate and construct values of type <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342003"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-698" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-698-1g"><col 
+id="TBL-698-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-698-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-698-1-1"  
+class="td11"><span 
+class="pcrb7t-">userError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IOError </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Construct an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342004"></a> value with a string describing the error. The <span 
+class="pcrr7t-">fail</span><a 
+ id="dx50-342005"></a> method of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-342006"></a> instance
+     of the <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx50-342007"></a> class raises a <span 
+class="pcrr7t-">userError</span><a 
+ id="dx50-342008"></a>, thus:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-473">
+&#x00A0;instance&#x00A0;Monad&#x00A0;IO&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;fail&#x00A0;s&#x00A0;=&#x00A0;ioError&#x00A0;(userError&#x00A0;s)
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-699" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-699-1g"><col 
+id="TBL-699-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-699-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-699-1-1"  
+class="td11"><span 
+class="pcrb7t-">mkIOError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType                                           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-699-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-699-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IOError </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Construct an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342009"></a> of the given type where the second argument describes the error location and
+     the third and fourth argument contain the file handle and file path of the file involved in the error if
+     applicable.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-700" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-700-1g"><col 
+id="TBL-700-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-700-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-700-1-1"  
+class="td11"><span 
+class="pcrb7t-">annotateIOError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError                                               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-700-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-700-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IOError </span></td>
+</tr></table>                                                                                       </div> <dd class="haddockdesc">
+     Adds a location description and maybe a file path and file handle to an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342010"></a>. If any of the file
+     handle or file path is not given the corresponding value in the <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-342011"></a> remains unaltered.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">42.1.1    </span> <a 
+ id="x50-34300042.1.1"></a>Classifying I/O errors </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-701" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-701-1g"><col 
+id="TBL-701-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-701-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-701-1-1"  
+class="td11"><span 
+class="pcrb7t-">isAlreadyExistsError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343001"></a> operation failed because one of its arguments already exists.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-702" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-702-1g"><col 
+id="TBL-702-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-702-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-702-1-1"  
+class="td11"><span 
+class="pcrb7t-">isDoesNotExistError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                   </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343002"></a> operation failed because one of its arguments does not exist.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-703" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-703-1g"><col 
+id="TBL-703-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-703-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-703-1-1"  
+class="td11"><span 
+class="pcrb7t-">isAlreadyInUseError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343003"></a> operation failed because one of its arguments is a single-use resource,
+     which  is  already  being  used  (for  example,  opening  the  same  file  twice  for  writing  might  give  this
+     error).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-704" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-704-1g"><col 
+id="TBL-704-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-704-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-704-1-1"  
+class="td11"><span 
+class="pcrb7t-">isFullError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                            </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343004"></a> operation failed because the device is full.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-705" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-705-1g"><col 
+id="TBL-705-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-705-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-705-1-1"  
+class="td11"><span 
+class="pcrb7t-">isEOFError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343005"></a> operation failed because the end of file has been reached.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-706" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-706-1g"><col 
+id="TBL-706-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-706-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-706-1-1"  
+class="td11"><span 
+class="pcrb7t-">isIllegalOperation</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     An  error  indicating  that  an  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343006"></a> operation  failed  because  the  operation  was  not  possible.  Any
+     computation which returns an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343007"></a> result may fail with <span 
+class="pcrr7t-">isIllegalOperation</span><a 
+ id="dx50-343008"></a>. In some cases, an
+     implementation will not be able to distinguish between the possible error causes. In this case it should
+     fail with <span 
+class="pcrr7t-">isIllegalOperation</span><a 
+ id="dx50-343009"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-707" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-707-1g"><col 
+id="TBL-707-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-707-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-707-1-1"  
+class="td11"><span 
+class="pcrb7t-">isPermissionError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                     </div> <dd class="haddockdesc">
+     An error indicating that an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-343010"></a> operation failed because the user does not have sufficient operating
+     system privilege to perform that operation.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-708" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-708-1g"><col 
+id="TBL-708-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-708-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-708-1-1"  
+class="td11"><span 
+class="pcrb7t-">isUserError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                            </div> <dd class="haddockdesc">
+     A programmer-defined error value constructed using <span 
+class="pcrr7t-">userError</span><a 
+ id="dx50-343011"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">42.1.2    </span> <a 
+ id="x50-34400042.1.2"></a>Attributes of I/O errors </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ioeGetErrorString</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ioeGetHandle</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;Handle</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ioeGetFileName</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span>  <dd class="haddockdesc"></dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">42.2    </span> <a 
+ id="x50-34500042.2"></a>Types of I/O error </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-709" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-709-1g"><col 
+id="TBL-709-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-709-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-709-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     An abstract type that contains a value for each variant of <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-345001"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-710" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-710-1g"><col 
+id="TBL-710-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-710-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-710-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-710-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-710-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-711" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-711-1g"><col 
+id="TBL-711-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-711-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-711-1-1"  
+class="td11"><span 
+class="pcrb7t-">alreadyExistsErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation failed because one of its arguments already exists.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-712" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-712-1g"><col 
+id="TBL-712-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-712-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-712-1-1"  
+class="td11"><span 
+class="pcrb7t-">doesNotExistErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation failed because one of its arguments does not exist.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-713" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-713-1g"><col 
+id="TBL-713-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-713-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-713-1-1"  
+class="td11"><span 
+class="pcrb7t-">alreadyInUseErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation failed because one of its arguments is a single-use resource, which is
+     already being used.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-714" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-714-1g"><col 
+id="TBL-714-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-714-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-714-1-1"  
+class="td11"><span 
+class="pcrb7t-">fullErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation failed because the device is full.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-715" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-715-1g"><col 
+id="TBL-715-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-715-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-715-1-1"  
+class="td11"><span 
+class="pcrb7t-">eofErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation failed because the end of file has been reached.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-716" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-716-1g"><col 
+id="TBL-716-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-716-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-716-1-1"  
+class="td11"><span 
+class="pcrb7t-">illegalOperationErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error where the operation is not possible.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-717" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-717-1g"><col 
+id="TBL-717-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-717-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-717-1-1"  
+class="td11"><span 
+class="pcrb7t-">permissionErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O  error  where  the  operation  failed  because  the  user  does  not  have  sufficient  operating  system
+     privilege to perform that operation.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-718" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-718-1g"><col 
+id="TBL-718-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-718-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-718-1-1"  
+class="td11"><span 
+class="pcrb7t-">userErrorType</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOErrorType </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     I/O error that is programmer-defined.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">42.3    </span> <a 
+ id="x50-34600042.3"></a>Throwing and catching I/O errors </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-719" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-719-1g"><col 
+id="TBL-719-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-719-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-719-1-1"  
+class="td11"><span 
+class="pcrb7t-">ioError</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                </div> <dd class="haddockdesc">
+     Raise an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-346001"></a> in the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx50-346002"></a> monad.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-720" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-720-1g"><col 
+id="TBL-720-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-720-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-720-1-1"  
+class="td11"><span 
+class="pcrb7t-">catch</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(IOError</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">catch</span><a 
+ id="dx50-346003"></a> function establishes a handler that receives any <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-346004"></a> raised in the action protected
+     by <span 
+class="pcrr7t-">catch</span><a 
+ id="dx50-346005"></a>. An <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-346006"></a> is caught by the most recent handler established by <span 
+class="pcrr7t-">catch</span><a 
+ id="dx50-346007"></a>. These handlers
+     are not selective: all <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-346008"></a>s are caught. Exception propagation must be explicitly provided in a
+     handler by re-raising any unwanted exceptions. For example, in
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-474">
+&#x00A0;f&#x00A0;=&#x00A0;catch&#x00A0;g&#x00A0;(\e&#x00A0;-&#x003E;&#x00A0;if&#x00A0;IO.isEOFError&#x00A0;e&#x00A0;then&#x00A0;return&#x00A0;[]&#x00A0;else&#x00A0;ioError&#x00A0;e)
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> the function <span 
+class="pcrr7t-">f </span>returns <span 
+class="pcrr7t-">[] </span>when an end-of-file exception (cf. <span 
+class="pcrr7t-">isEOFError</span><a 
+ id="dx50-346009"></a>) occurs in <span 
+class="pcrr7t-">g</span>; otherwise, the
+     exception is propagated to the next outer handler.
+     <p class="noindent"> When an exception propagates outside the main program, the Haskell system prints the associated <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx50-346010"></a>
+     value and exits the program.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-721" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-721-1g"><col 
+id="TBL-721-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-721-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-721-1-1"  
+class="td11"><span 
+class="pcrb7t-">try</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Either</span><span 
+class="pcrb7t-">&#x00A0;IOError</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The construct <span 
+class="pcrr7t-">try</span><a 
+ id="dx50-346011"></a><span 
+class="pcrr7t-">comp </span>exposes IO errors which occur within a computation, and which are not fully
+     handled.
+     </dl>
+                                                                                   
+
+                                                                                   
+<a 
+ id="dx50-346012"></a>
+<a 
+ id="dx50-346013"></a>
+<a 
+ id="dx50-346014"></a>
+<a 
+ id="dx50-346015"></a>
+<a 
+ id="dx50-346016"></a>
+<a 
+ id="dx50-346017"></a>
+<a 
+ id="dx50-346018"></a>
+<a 
+ id="dx50-346019"></a>
+<a 
+ id="dx50-346020"></a>
+<a 
+ id="dx50-346021"></a>
+<a 
+ id="dx50-346022"></a>
+<a 
+ id="dx50-346023"></a>
+<a 
+ id="dx50-346024"></a>
+<a 
+ id="dx50-346025"></a>
+<a 
+ id="dx50-346026"></a>
+<a 
+ id="dx50-346027"></a>
+<a 
+ id="dx50-346028"></a>
+<a 
+ id="dx50-346029"></a>
+<a 
+ id="dx50-346030"></a>
+<a 
+ id="dx50-346031"></a>
+<a 
+ id="dx50-346032"></a>
+<a 
+ id="dx50-346033"></a>
+<a 
+ id="dx50-346034"></a>
+<a 
+ id="dx50-346035"></a>
+<a 
+ id="dx50-346036"></a>
+<a 
+ id="dx50-346037"></a>
+<a 
+ id="dx50-346038"></a>
+<a 
+ id="dx50-346039"></a>
+<a 
+ id="dx50-346040"></a>
+<a 
+ id="dx50-346041"></a>
+<a 
+ id="dx50-346042"></a>
+<a 
+ id="dx50-346043"></a>
+<a 
+ id="dx50-346044"></a>
+<a 
+ id="dx50-346045"></a>
+<a 
+ id="dx50-346046"></a>
+<a 
+ id="dx50-346047"></a>
+<a 
+ id="dx50-346048"></a>
+<a 
+ id="dx50-346049"></a>
+<a 
+ id="dx50-346050"></a>
+<a 
+ id="dx50-346051"></a>
+<a 
+ id="dx50-346052"></a>
+<a 
+ id="dx50-346053"></a>
+<a 
+ id="dx50-346054"></a>
+<a 
+ id="dx50-346055"></a>
+<a 
+ id="dx50-346056"></a>
+<a 
+ id="dx50-346057"></a>
+<a 
+ id="dx50-346058"></a>
+<a 
+ id="dx50-346059"></a>
+<a 
+ id="dx50-346060"></a>
+<a 
+ id="dx50-346061"></a>
+<a 
+ id="dx50-346062"></a>
+                                                                                   
+
+                                                                                   
+<a 
+ id="dx50-346063"></a>
+<a 
+ id="dx50-346064"></a>
+<a 
+ id="dx50-346065"></a>
+<a 
+ id="dx50-346066"></a>
+<a 
+ id="dx50-346067"></a>
+<a 
+ id="dx50-346068"></a>
+<a 
+ id="dx50-346069"></a>
+<a 
+ id="dx50-346070"></a>
+<a 
+ id="dx50-346071"></a>
+<a 
+ id="dx50-346072"></a>
+<a 
+ id="dx50-346073"></a>
+<a 
+ id="dx50-346074"></a>
+<a 
+ id="dx50-346075"></a>
+<a 
+ id="dx50-346076"></a>
+<a 
+ id="dx50-346077"></a>
+<a 
+ id="dx50-346078"></a>
+<a 
+ id="dx50-346079"></a>
+<a 
+ id="dx50-346080"></a>
+<a 
+ id="dx50-346081"></a>
+<a 
+ id="dx50-346082"></a>
+<a 
+ id="dx50-346083"></a>
+                                                                                   
+
+                                                                                   
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellli3.html" >next</a>] [<a 
+href="haskellch41.html" >prev</a>] [<a 
+href="haskellch41.html#tailhaskellch41.html" >prev-tail</a>] [<a 
+href="haskellch42.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch42.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch42.html"></a>   
+</body></html> 

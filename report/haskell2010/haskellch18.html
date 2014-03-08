@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>18 Data.Int</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch19.html" >next</a>] [<a 
+href="haskellch17.html" >prev</a>] [<a 
+href="haskellch17.html#tailhaskellch17.html" >prev-tail</a>] [<a 
+href="#tailhaskellch18.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch18.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;18</span><br /><a 
+ id="x26-22300018"></a><span 
+class="pcrr7t-">Data.Int</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-390">
+module&#x00A0;Data.Int&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Int,&#x00A0;&#x00A0;Int8,&#x00A0;&#x00A0;Int16,&#x00A0;&#x00A0;Int32,&#x00A0;&#x00A0;Int64
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">18.1    </span> <a 
+ id="x26-22400018.1"></a>Signed integer types </h3>
+<p class="noindent"> This module provides signed integer types of unspecified width (<span 
+class="pcrr7t-">Int</span><a 
+ id="dx26-224001"></a>) and fixed widths (<span 
+class="pcrr7t-">Int8</span><a 
+ id="dx26-224002"></a>, <span 
+class="pcrr7t-">Int16</span><a 
+ id="dx26-224003"></a>,
+<span 
+class="pcrr7t-">Int32</span><a 
+ id="dx26-224004"></a> and <span 
+class="pcrr7t-">Int64</span><a 
+ id="dx26-224005"></a>). All arithmetic is performed modulo 2^n, where <span 
+class="pcrr7t-">n </span>is the number of bits in the
+type.
+ <p class="noindent"> For coercing between any two integer types, use <span 
+class="pcrr7t-">fromIntegral</span><a 
+ id="dx26-224006"></a>. Coercing word types (see <span 
+class="pcrr7t-">Data.Word</span>) to and
+from integer types preserves representation, not sign.
+ <p class="noindent"> The rules that hold for <span 
+class="pcrr7t-">Enum</span><a 
+ id="dx26-224007"></a> instances over a bounded type such as <span 
+class="pcrr7t-">Int</span><a 
+ id="dx26-224008"></a> (see the section of the Haskell language
+report dealing with arithmetic sequences) also hold for the <span 
+class="pcrr7t-">Enum</span><a 
+ id="dx26-224009"></a> instances over the various <span 
+class="pcrr7t-">Int</span><a 
+ id="dx26-224010"></a> types defined
+here.
+ <p class="noindent"> Right and left shifts by amounts greater than or equal to the width of the type result in either zero or -1, depending
+on the sign of the value being shifted. This is contrary to the behaviour in C, which is undefined; a common
+interpretation is to truncate the shift count to the width of the type, for example <span 
+class="pcrr7t-">1</span><span 
+class="pcrr7t-">&#x00A0;&#x003C;&#x003C;</span><span 
+class="pcrr7t-">&#x00A0;32</span><span 
+class="pcrr7t-">&#x00A0;==</span><span 
+class="pcrr7t-">&#x00A0;1 </span>in some C
+implementations.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-235" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-235-1g"><col 
+id="TBL-235-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-235-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-235-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                                                     </div> <dd class="haddockdesc">
+     A fixed-precision integer type with at least the range <span 
+class="pcrr7t-">[-2^29</span><span 
+class="pcrr7t-">&#x00A0;..</span><span 
+class="pcrr7t-">&#x00A0;2^29-1]</span>. The exact range for a
+     given implementation can be determined by using <span 
+class="pcrr7t-">Prelude.minBound </span>and <span 
+class="pcrr7t-">Prelude.maxBound</span>
+     from the <span 
+class="pcrr7t-">Prelude.Bounded </span>class.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-236" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-236-1g"><col 
+id="TBL-236-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-236-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;Int</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Int       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;Int      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;Int</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;Int     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;Int     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Int     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-236-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-236-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-237" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-237-1g"><col 
+id="TBL-237-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-237-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-237-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Int8 </span></td></tr></table>                                                                    </div> <dd class="haddockdesc">
+     8-bit signed integer type
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-238" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-238-1g"><col 
+id="TBL-238-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-238-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;Int8 </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;Int8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Int8       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;Int8 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;Int8      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;Int8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;Int8     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;Int8     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Int8     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int8       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int8 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-238-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-238-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int8     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-239" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-239-1g"><col 
+id="TBL-239-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-239-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-239-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Int16 </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     16-bit signed integer type
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-240" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-240-1g"><col 
+id="TBL-240-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-240-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;Int16 </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;Int16</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Int16       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;Int16 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;Int16      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;Int16</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;Int16     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;Int16     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Int16     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int16       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int16 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-240-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-240-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int16     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-241" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-241-1g"><col 
+id="TBL-241-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-241-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-241-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Int32 </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     32-bit signed integer type
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-242" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-242-1g"><col 
+id="TBL-242-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-242-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;Int32 </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;Int32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Int32       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;Int32 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;Int32      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;Int32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;Int32     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;Int32     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Int32     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int32       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int32 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-242-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-242-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int32     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-243" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-243-1g"><col 
+id="TBL-243-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-243-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-243-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Int64 </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     64-bit signed integer type
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-244" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-244-1g"><col 
+id="TBL-244-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-244-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;Int64 </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;Int64</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Int64       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;Int64 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;Int64      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;Int64</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;Int64     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;Int64     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Int64     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;Int64       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int64 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-244-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-244-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;Int64     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch19.html" >next</a>] [<a 
+href="haskellch17.html" >prev</a>] [<a 
+href="haskellch17.html#tailhaskellch17.html" >prev-tail</a>] [<a 
+href="haskellch18.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch18.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch18.html"></a>   
+</body></html> 

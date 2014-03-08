@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>17 Data.Complex</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch18.html" >next</a>] [<a 
+href="haskellch16.html" >prev</a>] [<a 
+href="haskellch16.html#tailhaskellch16.html" >prev-tail</a>] [<a 
+href="#tailhaskellch17.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch17.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;17</span><br /><a 
+ id="x25-21800017"></a><span 
+class="pcrr7t-">Data.Complex</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-388">
+module&#x00A0;Data.Complex&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Complex(:+),&#x00A0;&#x00A0;realPart,&#x00A0;&#x00A0;imagPart,&#x00A0;&#x00A0;mkPolar,&#x00A0;&#x00A0;cis,&#x00A0;&#x00A0;polar,&#x00A0;&#x00A0;magnitude,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;phase,&#x00A0;&#x00A0;conjugate
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">17.1    </span> <a 
+ id="x25-21900017.1"></a>Rectangular form </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-224" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-224-1g"><col 
+id="TBL-224-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-224-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-224-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-225" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-225-1g"><col 
+id="TBL-225-1" /><col 
+id="TBL-225-2" /><col 
+id="TBL-225-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-225-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-225-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-225-1-2"  
+class="td11"> <span 
+class="pcrb7t-">!a :+ !a </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-225-1-3"  
+class="td11"> forms a complex number from its real and imaginary rectangular components.  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-225-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-225-2-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> Complex numbers are an algebraic type.
+     <p class="noindent"> For a complex number <span 
+class="pcrr7t-">z</span>, <span 
+class="pcrr7t-">abs</span><span 
+class="pcrr7t-">&#x00A0;z </span>is a number with the magnitude of <span 
+class="pcrr7t-">z</span>, but oriented in the positive real
+     direction, whereas <span 
+class="pcrr7t-">signum</span><span 
+class="pcrr7t-">&#x00A0;z </span>has the phase of <span 
+class="pcrr7t-">z</span>, but unit magnitude.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-226" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-226-1g"><col 
+id="TBL-226-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-226-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a)            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-226-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Floating</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a)       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-226-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Fractional</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a)     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-226-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a)            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-226-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Read</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-226-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-226-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;(Complex</span><span 
+class="pcrb7t-">&#x00A0;a)           </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-227" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-227-1g"><col 
+id="TBL-227-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-227-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-227-1-1"  
+class="td11"><span 
+class="pcrb7t-">realPart</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extracts the real part of a complex number.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-228" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-228-1g"><col 
+id="TBL-228-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-228-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-228-1-1"  
+class="td11"><span 
+class="pcrb7t-">imagPart</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extracts the imaginary part of a complex number.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">17.2    </span> <a 
+ id="x25-22000017.2"></a>Polar form </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-229" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-229-1g"><col 
+id="TBL-229-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-229-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-229-1-1"  
+class="td11"><span 
+class="pcrb7t-">mkPolar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Form a complex number from polar components of magnitude and phase.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-230" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-230-1g"><col 
+id="TBL-230-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-230-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-230-1-1"  
+class="td11"><span 
+class="pcrb7t-">cis</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">cis</span><span 
+class="pcrr7t-">&#x00A0;t </span>is a complex value with magnitude <span 
+class="pcrr7t-">1 </span>and phase <span 
+class="pcrr7t-">t </span>(modulo <span 
+class="pcrr7t-">2&#x22C6;pi</span>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-231" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-231-1g"><col 
+id="TBL-231-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-231-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-231-1-1"  
+class="td11"><span 
+class="pcrb7t-">polar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The function <span 
+class="pcrr7t-">polar</span><a 
+ id="dx25-220001"></a> takes a complex number and returns a (magnitude, phase) pair in canonical form:
+     the magnitude is nonnegative, and the phase in the range <span 
+class="pcrr7t-">(-pi,</span><span 
+class="pcrr7t-">&#x00A0;pi]</span>; if the magnitude is zero, then
+     so is the phase.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-232" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-232-1g"><col 
+id="TBL-232-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-232-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-232-1-1"  
+class="td11"><span 
+class="pcrb7t-">magnitude</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The nonnegative magnitude of a complex number.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-233" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-233-1g"><col 
+id="TBL-233-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-233-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-233-1-1"  
+class="td11"><span 
+class="pcrb7t-">phase</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The phase of a complex number, in the range <span 
+class="pcrr7t-">(-pi,</span><span 
+class="pcrr7t-">&#x00A0;pi]</span>. If the magnitude is zero, then so is the
+     phase.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">17.3    </span> <a 
+ id="x25-22100017.3"></a>Conjugate </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-234" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-234-1g"><col 
+id="TBL-234-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-234-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-234-1-1"  
+class="td11"><span 
+class="pcrb7t-">conjugate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Complex</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The conjugate of a complex number.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">17.4    </span> <a 
+ id="x25-22200017.4"></a>Specification </h3>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-389">
+&#x00A0;module&#x00A0;Data.Complex(Complex((:+)),&#x00A0;realPart,&#x00A0;imagPart,&#x00A0;conjugate,&#x00A0;mkPolar,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cis,&#x00A0;polar,&#x00A0;magnitude,&#x00A0;phase)&#x00A0;&#x00A0;where
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;infix&#x00A0;&#x00A0;6&#x00A0;&#x00A0;:+
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;data&#x00A0;&#x00A0;(RealFloat&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;=&#x00A0;!a&#x00A0;:+&#x00A0;!a&#x00A0;&#x00A0;deriving&#x00A0;(Eq,Read,Show)
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;realPart,&#x00A0;imagPart&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;realPart&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x
+&#x00A0;<br />&#x00A0;imagPart&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;conjugate&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Complex&#x00A0;a
+&#x00A0;<br />&#x00A0;conjugate&#x00A0;(x:+y)&#x00A0;=&#x00A0;&#x00A0;x&#x00A0;:+&#x00A0;(-y)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;mkPolar&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Complex&#x00A0;a
+&#x00A0;<br />&#x00A0;mkPolar&#x00A0;r&#x00A0;theta&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;r&#x00A0;&#x22C6;&#x00A0;cos&#x00A0;theta&#x00A0;:+&#x00A0;r&#x00A0;&#x22C6;&#x00A0;sin&#x00A0;theta
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;cis&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Complex&#x00A0;a
+&#x00A0;<br />&#x00A0;cis&#x00A0;theta&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;cos&#x00A0;theta&#x00A0;:+&#x00A0;sin&#x00A0;theta
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;polar&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;-&#x003E;&#x00A0;(a,a)
+&#x00A0;<br />&#x00A0;polar&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(magnitude&#x00A0;z,&#x00A0;phase&#x00A0;z)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;magnitude&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;magnitude&#x00A0;(x:+y)&#x00A0;=&#x00A0;&#x00A0;scaleFloat&#x00A0;k
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(sqrt&#x00A0;((scaleFloat&#x00A0;mk&#x00A0;x)^2&#x00A0;+&#x00A0;(scaleFloat&#x00A0;mk&#x00A0;y)^2))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;k&#x00A0;&#x00A0;=&#x00A0;max&#x00A0;(exponent&#x00A0;x)&#x00A0;(exponent&#x00A0;y)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;mk&#x00A0;=&#x00A0;-&#x00A0;k
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;phase&#x00A0;::&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Complex&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;phase&#x00A0;(0&#x00A0;:+&#x00A0;0)&#x00A0;=&#x00A0;0
+&#x00A0;<br />&#x00A0;phase&#x00A0;(x&#x00A0;:+&#x00A0;y)&#x00A0;=&#x00A0;atan2&#x00A0;y&#x00A0;x
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Num&#x00A0;(Complex&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:+y)&#x00A0;+&#x00A0;(x':+y')&#x00A0;=&#x00A0;&#x00A0;(x+x')&#x00A0;:+&#x00A0;(y+y')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:+y)&#x00A0;-&#x00A0;(x':+y')&#x00A0;=&#x00A0;&#x00A0;(x-x')&#x00A0;:+&#x00A0;(y-y')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:+y)&#x00A0;&#x22C6;&#x00A0;(x':+y')&#x00A0;=&#x00A0;&#x00A0;(x&#x22C6;x'-y&#x22C6;y')&#x00A0;:+&#x00A0;(x&#x22C6;y'+y&#x22C6;x')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;negate&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;negate&#x00A0;x&#x00A0;:+&#x00A0;negate&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;abs&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;magnitude&#x00A0;z&#x00A0;:+&#x00A0;0
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;signum&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;0
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;signum&#x00A0;z@(x:+y)&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x/r&#x00A0;:+&#x00A0;y/r&#x00A0;&#x00A0;where&#x00A0;r&#x00A0;=&#x00A0;magnitude&#x00A0;z
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromInteger&#x00A0;n&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;fromInteger&#x00A0;n&#x00A0;:+&#x00A0;0
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Fractional&#x00A0;(Complex&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:+y)&#x00A0;/&#x00A0;(x':+y')&#x00A0;=&#x00A0;&#x00A0;(x&#x22C6;x''+y&#x22C6;y'')&#x00A0;/&#x00A0;d&#x00A0;:+&#x00A0;(y&#x22C6;x''-x&#x22C6;y'')&#x00A0;/&#x00A0;d
+                                                                                   
+
+                                                                                   
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;x''&#x00A0;=&#x00A0;scaleFloat&#x00A0;k&#x00A0;x'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;y''&#x00A0;=&#x00A0;scaleFloat&#x00A0;k&#x00A0;y'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;k&#x00A0;&#x00A0;&#x00A0;=&#x00A0;-&#x00A0;max&#x00A0;(exponent&#x00A0;x')&#x00A0;(exponent&#x00A0;y')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;d&#x00A0;&#x00A0;&#x00A0;=&#x00A0;x'&#x22C6;x''&#x00A0;+&#x00A0;y'&#x22C6;y''
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromRational&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;fromRational&#x00A0;a&#x00A0;:+&#x00A0;0
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(RealFloat&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Floating&#x00A0;(Complex&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pi&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;pi&#x00A0;:+&#x00A0;0
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;exp&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;expx&#x00A0;&#x22C6;&#x00A0;cos&#x00A0;y&#x00A0;:+&#x00A0;expx&#x00A0;&#x22C6;&#x00A0;sin&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;expx&#x00A0;=&#x00A0;exp&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;log&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;log&#x00A0;(magnitude&#x00A0;z)&#x00A0;:+&#x00A0;phase&#x00A0;z
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sqrt&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;0
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sqrt&#x00A0;z@(x:+y)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;u&#x00A0;:+&#x00A0;(if&#x00A0;y&#x00A0;&#x003C;&#x00A0;0&#x00A0;then&#x00A0;-v&#x00A0;else&#x00A0;v)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;(u,v)&#x00A0;=&#x00A0;if&#x00A0;x&#x00A0;&#x003C;&#x00A0;0&#x00A0;then&#x00A0;(v',u')&#x00A0;else&#x00A0;(u',v')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;v'&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;abs&#x00A0;y&#x00A0;/&#x00A0;(u'&#x22C6;2)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;u'&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;sqrt&#x00A0;((magnitude&#x00A0;z&#x00A0;+&#x00A0;abs&#x00A0;x)&#x00A0;/&#x00A0;2)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sin&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;sin&#x00A0;x&#x00A0;&#x22C6;&#x00A0;cosh&#x00A0;y&#x00A0;:+&#x00A0;cos&#x00A0;x&#x00A0;&#x22C6;&#x00A0;sinh&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cos&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;cos&#x00A0;x&#x00A0;&#x22C6;&#x00A0;cosh&#x00A0;y&#x00A0;:+&#x00A0;(-&#x00A0;sin&#x00A0;x&#x00A0;&#x22C6;&#x00A0;sinh&#x00A0;y)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;tan&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(sinx&#x22C6;coshy:+cosx&#x22C6;sinhy)/(cosx&#x22C6;coshy:+(-sinx&#x22C6;sinhy))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;sinx&#x00A0;&#x00A0;=&#x00A0;sin&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cosx&#x00A0;&#x00A0;=&#x00A0;cos&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sinhy&#x00A0;=&#x00A0;sinh&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;coshy&#x00A0;=&#x00A0;cosh&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sinh&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;cos&#x00A0;y&#x00A0;&#x22C6;&#x00A0;sinh&#x00A0;x&#x00A0;:+&#x00A0;sin&#x00A0;&#x00A0;y&#x00A0;&#x22C6;&#x00A0;cosh&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cosh&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;cos&#x00A0;y&#x00A0;&#x22C6;&#x00A0;cosh&#x00A0;x&#x00A0;:+&#x00A0;sin&#x00A0;y&#x00A0;&#x22C6;&#x00A0;sinh&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;tanh&#x00A0;(x:+y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(cosy&#x22C6;sinhx:+siny&#x22C6;coshx)/(cosy&#x22C6;coshx:+siny&#x22C6;sinhx)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;siny&#x00A0;&#x00A0;=&#x00A0;sin&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cosy&#x00A0;&#x00A0;=&#x00A0;cos&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;sinhx&#x00A0;=&#x00A0;sinh&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;coshx&#x00A0;=&#x00A0;cosh&#x00A0;x
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;asin&#x00A0;z@(x:+y)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y':+(-x')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;&#x00A0;(x':+y')&#x00A0;=&#x00A0;log&#x00A0;(((-y):+x)&#x00A0;+&#x00A0;sqrt&#x00A0;(1&#x00A0;-&#x00A0;z&#x22C6;z))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;acos&#x00A0;z@(x:+y)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y'':+(-x'')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;(x'':+y'')&#x00A0;=&#x00A0;log&#x00A0;(z&#x00A0;+&#x00A0;((-y'):+x'))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x':+y')&#x00A0;&#x00A0;&#x00A0;=&#x00A0;sqrt&#x00A0;(1&#x00A0;-&#x00A0;z&#x22C6;z)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;atan&#x00A0;z@(x:+y)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y':+(-x')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;(x':+y')&#x00A0;=&#x00A0;log&#x00A0;(((1-y):+x)&#x00A0;/&#x00A0;sqrt&#x00A0;(1+z&#x22C6;z))
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;asinh&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;log&#x00A0;(z&#x00A0;+&#x00A0;sqrt&#x00A0;(1+z&#x22C6;z))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;acosh&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;log&#x00A0;(z&#x00A0;+&#x00A0;(z+1)&#x00A0;&#x22C6;&#x00A0;sqrt&#x00A0;((z-1)/(z+1)))
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;atanh&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;log&#x00A0;((1+z)&#x00A0;/&#x00A0;sqrt&#x00A0;(1-z&#x22C6;z))
+&#x00A0;<br />
+</div>
+     <p class="noindent"></div>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch18.html" >next</a>] [<a 
+href="haskellch16.html" >prev</a>] [<a 
+href="haskellch16.html#tailhaskellch16.html" >prev-tail</a>] [<a 
+href="haskellch17.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch17.html" >up</a>] </p></div>
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> <a 
+ id="tailhaskellch17.html"></a>   
+</body> </html> 

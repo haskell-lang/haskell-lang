@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>33 Foreign.Marshal.Error</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch34.html" >next</a>] [<a 
+href="haskellch32.html" >prev</a>] [<a 
+href="haskellch32.html#tailhaskellch32.html" >prev-tail</a>] [<a 
+href="#tailhaskellch33.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch33.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;33</span><br /><a 
+ id="x41-29800033"></a><span 
+class="pcrr7t-">Foreign.Marshal.Error</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-447">
+module&#x00A0;Foreign.Marshal.Error&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwIf,&#x00A0;&#x00A0;throwIf_,&#x00A0;&#x00A0;throwIfNeg,&#x00A0;&#x00A0;throwIfNeg_,&#x00A0;&#x00A0;throwIfNull,&#x00A0;&#x00A0;void
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-552" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-552-1g"><col 
+id="TBL-552-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-552-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-552-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwIf </span></td></tr></table>                                                                      </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-553" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-553-1g"><col 
+id="TBL-553-1" /><col 
+id="TBL-553-2" /><col 
+id="TBL-553-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-553-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-553-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-553-1-2"  
+class="td11"> <span 
+class="pcrb7t-">(a -&#x003E; Bool)   </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-553-1-3"  
+class="td11"> error condition on the result of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298001"></a> action                                      </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-553-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-553-2-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-553-2-2"  
+class="td11"> <span 
+class="pcrb7t-">(a -&#x003E; String) </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-553-2-3"  
+class="td11"> computes an error message from erroneous results of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298002"></a> action  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-553-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-553-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-553-3-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a          </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-553-3-3"  
+class="td11"> the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298003"></a> action to be executed                                                                </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-553-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-553-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td> <td  style="white-space:nowrap; text-align:left;" id="TBL-553-4-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a </span></td> <td  style="white-space:wrap; text-align:left;" id="TBL-553-4-3"  
+class="td11"></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-553-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-553-5-1"  
+class="td11">    </td></tr></table>
+     </div>
+     <p class="noindent"> Execute an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298004"></a> action, throwing a <span 
+class="pcrr7t-">userError</span><a 
+ id="dx41-298005"></a> if the predicate yields <span 
+class="pcrr7t-">True</span><a 
+ id="dx41-298006"></a> when applied to the result
+     returned by the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298007"></a> action. If no exception is raised, return the result of the computation.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-554" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-554-1g"><col 
+id="TBL-554-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-554-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-554-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwIf_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">throwIf</span><a 
+ id="dx41-298008"></a>, but discarding the result
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-555" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-555-1g"><col 
+id="TBL-555-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-555-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-555-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwIfNeg</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(Ord</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Guards against negative result values
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-556" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-556-1g"><col 
+id="TBL-556-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-556-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-556-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwIfNeg_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(Ord</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">throwIfNeg</span><a 
+ id="dx41-298009"></a>, but discarding the result
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-557" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-557-1g"><col 
+id="TBL-557-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-557-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-557-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwIfNull</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Guards against null pointers
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-558" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-558-1g"><col 
+id="TBL-558-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-558-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-558-1-1"  
+class="td11"><span 
+class="pcrb7t-">void</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Discard the return value of an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx41-298010"></a> action
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch34.html" >next</a>] [<a 
+href="haskellch32.html" >prev</a>] [<a 
+href="haskellch32.html#tailhaskellch32.html" >prev-tail</a>] [<a 
+href="haskellch33.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch33.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch33.html"></a>  
+</body> </html> 

@@ -1,0 +1,2210 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>28 Foreign.C.Types</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch29.html" >next</a>] [<a 
+href="haskellch27.html" >prev</a>] [<a 
+href="haskellch27.html#tailhaskellch27.html" >prev-tail</a>] [<a 
+href="#tailhaskellch28.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch28.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;28</span><br /><a 
+ id="x36-27400028"></a><span 
+class="pcrr7t-">Foreign.C.Types</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-441">
+module&#x00A0;Foreign.C.Types&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;CChar,&#x00A0;&#x00A0;CSChar,&#x00A0;&#x00A0;CUChar,&#x00A0;&#x00A0;CShort,&#x00A0;&#x00A0;CUShort,&#x00A0;&#x00A0;CInt,&#x00A0;&#x00A0;CUInt,&#x00A0;&#x00A0;CLong,&#x00A0;&#x00A0;CULong,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;CPtrdiff,&#x00A0;&#x00A0;CSize,&#x00A0;&#x00A0;CWchar,&#x00A0;&#x00A0;CSigAtomic,&#x00A0;&#x00A0;CLLong,&#x00A0;&#x00A0;CULLong,&#x00A0;&#x00A0;CIntPtr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;CUIntPtr,&#x00A0;&#x00A0;CIntMax,&#x00A0;&#x00A0;CUIntMax,&#x00A0;&#x00A0;CClock,&#x00A0;&#x00A0;CTime,&#x00A0;&#x00A0;CFloat,&#x00A0;&#x00A0;CDouble,&#x00A0;&#x00A0;CFile,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;CFpos,&#x00A0;&#x00A0;CJmpBuf
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">28.1    </span> <a 
+ id="x36-27500028.1"></a>Representations of C types </h3>
+<p class="noindent"> These types are needed to accurately represent C function prototypes, in order to access C library interfaces in
+Haskell. The Haskell system is not required to represent those types exactly as C does, but the following guarantees
+are provided concerning a Haskell type <span 
+class="pcrr7t-">CT </span>representing a C type <span 
+class="pcrr7t-">t</span>:
+     <ul class="itemize1">
+     <li class="itemize">If a C function prototype has <span 
+class="pcrr7t-">t </span>as an argument or result type, the use of <span 
+class="pcrr7t-">CT </span>in the corresponding
+     position in a foreign declaration permits the Haskell program to access the full range of values encoded
+     by the C type; and conversely, any Haskell value for <span 
+class="pcrr7t-">CT </span>has a valid representation in C.
+     </li>
+     <li class="itemize"><span 
+class="pcrr7t-">sizeOf</span><span 
+class="pcrr7t-">&#x00A0;(undefined</span><span 
+class="pcrr7t-">&#x00A0;::</span><span 
+class="pcrr7t-">&#x00A0;CT) </span>will yield the same value as <span 
+class="pcrr7t-">sizeof</span><span 
+class="pcrr7t-">&#x00A0;(t) </span>in C.
+     </li>
+     <li class="itemize"><span 
+class="pcrr7t-">alignment</span><span 
+class="pcrr7t-">&#x00A0;(undefined</span><span 
+class="pcrr7t-">&#x00A0;::</span><span 
+class="pcrr7t-">&#x00A0;CT) </span>matches   the   alignment   constraint   enforced   by   the   C
+     implementation for <span 
+class="pcrr7t-">t</span>.
+     </li>
+     <li class="itemize">The members <span 
+class="pcrr7t-">peek </span>and <span 
+class="pcrr7t-">poke </span>of the <span 
+class="pcrr7t-">Storable </span>class map all values of <span 
+class="pcrr7t-">CT </span>to the corresponding
+     value of <span 
+class="pcrr7t-">t </span>and vice versa.
+     </li>
+     <li class="itemize">When an instance of <span 
+class="pcrr7t-">Bounded</span><a 
+ id="dx36-275001"></a> is defined for <span 
+class="pcrr7t-">CT</span>, the values of <span 
+class="pcrr7t-">minBound</span><a 
+ id="dx36-275002"></a> and <span 
+class="pcrr7t-">maxBound</span><a 
+ id="dx36-275003"></a> coincide
+     with <span 
+class="pcrr7t-">t_MIN </span>and <span 
+class="pcrr7t-">t_MAX </span>in C.
+     </li>
+     <li class="itemize">When an instance of <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx36-275004"></a> or <span 
+class="pcrr7t-">Ord</span><a 
+ id="dx36-275005"></a> is defined for <span 
+class="pcrr7t-">CT</span>, the predicates defined by the type class implement
+     the same relation as the corresponding predicate in C on <span 
+class="pcrr7t-">t</span>.
+     </li>
+     <li class="itemize">When   an   instance   of   <span 
+class="pcrr7t-">Num</span><a 
+ id="dx36-275006"></a>,   <span 
+class="pcrr7t-">Read</span><a 
+ id="dx36-275007"></a>,   <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx36-275008"></a>,   <span 
+class="pcrr7t-">Fractional</span><a 
+ id="dx36-275009"></a>,   <span 
+class="pcrr7t-">Floating</span><a 
+ id="dx36-275010"></a>,   <span 
+class="pcrr7t-">RealFrac</span><a 
+ id="dx36-275011"></a>,   or
+     <span 
+class="pcrr7t-">RealFloat</span><a 
+ id="dx36-275012"></a> is defined for <span 
+class="pcrr7t-">CT</span>, the arithmetic operations defined by the type class implement the same
+     function as the corresponding arithmetic operations (if available) in C on <span 
+class="pcrr7t-">t</span>.
+                                                                                   
+
+                                                                                   
+     </li>
+     <li class="itemize">When an instance of <span 
+class="pcrr7t-">Bits </span>is defined for <span 
+class="pcrr7t-">CT</span>, the bitwise operation defined by the type class implement
+     the same function as the corresponding bitwise operation in C on <span 
+class="pcrr7t-">t</span>.
+     </li></ul>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">28.1.1    </span> <a 
+ id="x36-27600028.1.1"></a>Integral types </h4>
+<p class="noindent"> These types are are represented as <span 
+class="pcrr7t-">newtype</span>s of types in <span 
+class="pcrr7t-">Data.Int </span>and <span 
+class="pcrr7t-">Data.Word</span>, and are instances of <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx36-276001"></a>,
+<span 
+class="pcrr7t-">Ord</span><a 
+ id="dx36-276002"></a>, <span 
+class="pcrr7t-">Num</span><a 
+ id="dx36-276003"></a>, <span 
+class="pcrr7t-">Read</span><a 
+ id="dx36-276004"></a>, <span 
+class="pcrr7t-">Show</span><a 
+ id="dx36-276005"></a>, <span 
+class="pcrr7t-">Enum</span><a 
+ id="dx36-276006"></a>, <span 
+class="pcrr7t-">Storable</span>, <span 
+class="pcrr7t-">Bounded</span><a 
+ id="dx36-276007"></a>, <span 
+class="pcrr7t-">Real</span><a 
+ id="dx36-276008"></a>, <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx36-276009"></a> and <span 
+class="pcrr7t-">Bits</span>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-455" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-455-1g"><col 
+id="TBL-455-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-455-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-455-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CChar </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">char </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-456" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-456-1g"><col 
+id="TBL-456-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-456-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CChar </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CChar       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CChar      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-456-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-456-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CChar     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-457" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-457-1g"><col 
+id="TBL-457-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-457-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-457-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CSChar </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">signed</span><span 
+class="pcrr7t-">&#x00A0;char </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-458" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-458-1g"><col 
+id="TBL-458-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-458-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CSChar </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CSChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CSChar       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CSChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CSChar      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CSChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CSChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CSChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CSChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-458-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-458-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSChar     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-459" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-459-1g"><col 
+id="TBL-459-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-459-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-459-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CUChar </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">unsigned</span><span 
+class="pcrr7t-">&#x00A0;char </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-460" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-460-1g"><col 
+id="TBL-460-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-460-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CUChar </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CUChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CUChar       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CUChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CUChar      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CUChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CUChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CUChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CUChar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUChar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-460-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-460-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUChar     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-461" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-461-1g"><col 
+id="TBL-461-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-461-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-461-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CShort </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">short </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-462" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-462-1g"><col 
+id="TBL-462-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-462-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CShort </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CShort</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CShort       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CShort </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CShort      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CShort</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CShort </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-462-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-462-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CShort     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-463" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-463-1g"><col 
+id="TBL-463-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-463-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-463-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CUShort </span></td></tr></table>                                                                </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">unsigned</span><span 
+class="pcrr7t-">&#x00A0;short </span>type.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-464" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-464-1g"><col 
+id="TBL-464-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-464-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CUShort </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CUShort</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CUShort       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CUShort </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CUShort      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CUShort</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CUShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CUShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CUShort     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUShort </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-464-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-464-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUShort     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-465" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-465-1g"><col 
+id="TBL-465-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-465-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-465-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CInt </span></td></tr></table>                                                                    </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">int </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-466" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-466-1g"><col 
+id="TBL-466-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-466-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CInt </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CInt</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CInt       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CInt </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CInt      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CInt</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CInt </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-466-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-466-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CInt     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-467" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-467-1g"><col 
+id="TBL-467-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-467-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-467-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CUInt </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">unsigned</span><span 
+class="pcrr7t-">&#x00A0;int </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-468" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-468-1g"><col 
+id="TBL-468-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-468-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CUInt </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CUInt</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CUInt       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CUInt </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CUInt      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CUInt</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CUInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CUInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CUInt     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUInt </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-468-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-468-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUInt     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-469" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-469-1g"><col 
+id="TBL-469-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-469-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-469-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CLong </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">long </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-470" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-470-1g"><col 
+id="TBL-470-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-470-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CLong       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-470-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-470-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CLong     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-471" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-471-1g"><col 
+id="TBL-471-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-471-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-471-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CULong </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">unsigned</span><span 
+class="pcrr7t-">&#x00A0;long </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-472" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-472-1g"><col 
+id="TBL-472-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-472-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CULong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CULong       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CULong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CULong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CULong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CULong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-472-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-472-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CULong     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-473" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-473-1g"><col 
+id="TBL-473-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-473-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-473-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff </span></td></tr></table>                                                               </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">ptrdiff_t </span>type.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-474" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-474-1g"><col 
+id="TBL-474-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-474-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-474-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-474-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-475" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-475-1g"><col 
+id="TBL-475-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-475-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-475-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CSize </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">size_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-476" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-476-1g"><col 
+id="TBL-476-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-476-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CSize </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CSize</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CSize       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CSize </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CSize      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CSize</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CSize     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CSize     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CSize     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSize </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-476-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-476-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSize     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-477" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-477-1g"><col 
+id="TBL-477-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-477-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-477-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CWchar </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">wchar_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-478" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-478-1g"><col 
+id="TBL-478-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-478-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CWchar </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CWchar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CWchar       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CWchar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CWchar      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CWchar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CWchar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CWchar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CWchar     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CWchar </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-478-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-478-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CWchar     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-479" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-479-1g"><col 
+id="TBL-479-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-479-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-479-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">sig_atomic_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-480" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-480-1g"><col 
+id="TBL-480-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-480-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-480-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-480-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-481" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-481-1g"><col 
+id="TBL-481-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-481-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-481-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CLLong </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">long</span><span 
+class="pcrr7t-">&#x00A0;long </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-482" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-482-1g"><col 
+id="TBL-482-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-482-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CLLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CLLong       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CLLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CLLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CLLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CLLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-482-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-482-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CLLong     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-483" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-483-1g"><col 
+id="TBL-483-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-483-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-483-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CULLong </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">unsigned</span><span 
+class="pcrr7t-">&#x00A0;long</span><span 
+class="pcrr7t-">&#x00A0;long </span>type.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-484" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-484-1g"><col 
+id="TBL-484-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-484-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CULLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CULLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CULLong       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CULLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CULLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CULLong      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CULLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CULLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CULLong     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CULLong </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-484-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-484-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CULLong     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-485" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-485-1g"><col 
+id="TBL-485-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-485-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-485-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr </span></td></tr></table>                                                                </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-486" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-486-1g"><col 
+id="TBL-486-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-486-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-486-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-486-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-487" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-487-1g"><col 
+id="TBL-487-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-487-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-487-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr </span></td></tr></table>                                                               </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-488" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-488-1g"><col 
+id="TBL-488-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-488-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-488-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-488-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-489" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-489-1g"><col 
+id="TBL-489-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-489-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-489-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CIntMax </span></td></tr></table>                                                                </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-490" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-490-1g"><col 
+id="TBL-490-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-490-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CIntMax </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CIntMax</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CIntMax       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CIntMax </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CIntMax      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CIntMax</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CIntMax </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-490-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-490-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CIntMax     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-491" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-491-1g"><col 
+id="TBL-491-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-491-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-491-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax </span></td></tr></table>                                                               </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-492" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-492-1g"><col 
+id="TBL-492-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-492-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bounded</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-492-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-492-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Bits</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax     </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">28.1.2    </span> <a 
+ id="x36-27700028.1.2"></a>Numeric types </h4>
+<p class="noindent"> These types are are represented as <span 
+class="pcrr7t-">newtype</span>s of basic foreign types, and are instances of <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx36-277001"></a>, <span 
+class="pcrr7t-">Ord</span><a 
+ id="dx36-277002"></a>, <span 
+class="pcrr7t-">Num</span><a 
+ id="dx36-277003"></a>, <span 
+class="pcrr7t-">Read</span><a 
+ id="dx36-277004"></a>,
+<span 
+class="pcrr7t-">Show</span><a 
+ id="dx36-277005"></a>, <span 
+class="pcrr7t-">Enum</span><a 
+ id="dx36-277006"></a> and <span 
+class="pcrr7t-">Storable</span>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-493" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-493-1g"><col 
+id="TBL-493-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-493-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-493-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CClock </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">clock_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-494" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-494-1g"><col 
+id="TBL-494-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-494-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CClock    </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CClock</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CClock      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CClock</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CClock     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CClock     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CClock     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-494-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-494-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CClock </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-495" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-495-1g"><col 
+id="TBL-495-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-495-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-495-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CTime </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">time_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-496" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-496-1g"><col 
+id="TBL-496-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-496-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CTime    </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CTime</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CTime      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CTime</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CTime     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CTime     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CTime     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-496-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-496-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CTime </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">28.1.3    </span> <a 
+ id="x36-27800028.1.3"></a>Floating types </h4>
+<p class="noindent"> These types are are represented as <span 
+class="pcrr7t-">newtype</span>s of <span 
+class="pcrr7t-">Float</span><a 
+ id="dx36-278001"></a> and <span 
+class="pcrr7t-">Double</span><a 
+ id="dx36-278002"></a>, and are instances of <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx36-278003"></a>, <span 
+class="pcrr7t-">Ord</span><a 
+ id="dx36-278004"></a>, <span 
+class="pcrr7t-">Num</span><a 
+ id="dx36-278005"></a>, <span 
+class="pcrr7t-">Read</span><a 
+ id="dx36-278006"></a>,
+<span 
+class="pcrr7t-">Show</span><a 
+ id="dx36-278007"></a>, <span 
+class="pcrr7t-">Enum</span><a 
+ id="dx36-278008"></a>, <span 
+class="pcrr7t-">Storable</span>, <span 
+class="pcrr7t-">Real</span><a 
+ id="dx36-278009"></a>, <span 
+class="pcrr7t-">Fractional</span><a 
+ id="dx36-278010"></a>, <span 
+class="pcrr7t-">Floating</span><a 
+ id="dx36-278011"></a>, <span 
+class="pcrr7t-">RealFrac</span><a 
+ id="dx36-278012"></a> and <span 
+class="pcrr7t-">RealFloat</span><a 
+ id="dx36-278013"></a>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-497" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-497-1g"><col 
+id="TBL-497-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-497-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-497-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CFloat </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">float </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-498" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-498-1g"><col 
+id="TBL-498-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-498-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CFloat      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CFloat</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Floating</span><span 
+class="pcrb7t-">&#x00A0;CFloat   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Fractional</span><span 
+class="pcrb7t-">&#x00A0;CFloat </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CFloat</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CFloat        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CFloat       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CFloat       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;CFloat  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFrac</span><span 
+class="pcrb7t-">&#x00A0;CFloat   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CFloat       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-498-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-498-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CFloat   </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-499" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-499-1g"><col 
+id="TBL-499-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-499-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-499-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CDouble </span></td></tr></table>                                                                </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">double </span>type.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-500" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-500-1g"><col 
+id="TBL-500-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-500-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;CDouble      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;CDouble</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Floating</span><span 
+class="pcrb7t-">&#x00A0;CDouble   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Fractional</span><span 
+class="pcrb7t-">&#x00A0;CDouble </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;CDouble</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;CDouble        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;CDouble       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;CDouble       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFloat</span><span 
+class="pcrb7t-">&#x00A0;CDouble  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;RealFrac</span><span 
+class="pcrb7t-">&#x00A0;CDouble   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;CDouble       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-500-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-500-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CDouble   </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">28.1.4    </span> <a 
+ id="x36-27900028.1.4"></a>Other types </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-501" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-501-1g"><col 
+id="TBL-501-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-501-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-501-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CFile </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">FILE </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-502" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-502-1g"><col 
+id="TBL-502-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-502-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-502-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CFpos </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">fpos_t </span>type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-503" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-503-1g"><col 
+id="TBL-503-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-503-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-503-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;CJmpBuf </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Haskell type representing the C <span 
+class="pcrr7t-">jmp_buf </span>type.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch29.html" >next</a>] [<a 
+href="haskellch27.html" >prev</a>] [<a 
+href="haskellch27.html#tailhaskellch27.html" >prev-tail</a>] [<a 
+href="haskellch28.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch28.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch28.html"></a>    
+</body></html> 

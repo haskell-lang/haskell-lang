@@ -1,0 +1,1961 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>41 System.IO</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch42.html" >next</a>] [<a 
+href="haskellch40.html" >prev</a>] [<a 
+href="haskellch40.html#tailhaskellch40.html" >prev-tail</a>] [<a 
+href="#tailhaskellch41.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch41.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;41</span><br /><a 
+ id="x49-32000041"></a><span 
+class="pcrr7t-">System.IO</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-469">
+module&#x00A0;System.IO&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;IO,&#x00A0;&#x00A0;fixIO,&#x00A0;&#x00A0;FilePath,&#x00A0;&#x00A0;Handle,&#x00A0;&#x00A0;stdin,&#x00A0;&#x00A0;stdout,&#x00A0;&#x00A0;stderr,&#x00A0;&#x00A0;withFile,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;openFile,&#x00A0;&#x00A0;IOMode(ReadMode,&#x00A0;WriteMode,&#x00A0;AppendMode,&#x00A0;ReadWriteMode),&#x00A0;&#x00A0;hClose,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;readFile,&#x00A0;&#x00A0;writeFile,&#x00A0;&#x00A0;appendFile,&#x00A0;&#x00A0;hFileSize,&#x00A0;&#x00A0;hSetFileSize,&#x00A0;&#x00A0;hIsEOF,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;isEOF,&#x00A0;&#x00A0;BufferMode(NoBuffering,&#x00A0;LineBuffering,&#x00A0;BlockBuffering),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hSetBuffering,&#x00A0;&#x00A0;hGetBuffering,&#x00A0;&#x00A0;hFlush,&#x00A0;&#x00A0;hGetPosn,&#x00A0;&#x00A0;hSetPosn,&#x00A0;&#x00A0;HandlePosn,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hSeek,&#x00A0;&#x00A0;SeekMode(AbsoluteSeek,&#x00A0;RelativeSeek,&#x00A0;SeekFromEnd),&#x00A0;&#x00A0;hTell,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hIsOpen,&#x00A0;&#x00A0;hIsClosed,&#x00A0;&#x00A0;hIsReadable,&#x00A0;&#x00A0;hIsWritable,&#x00A0;&#x00A0;hIsSeekable,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hIsTerminalDevice,&#x00A0;&#x00A0;hSetEcho,&#x00A0;&#x00A0;hGetEcho,&#x00A0;&#x00A0;hShow,&#x00A0;&#x00A0;hWaitForInput,&#x00A0;&#x00A0;hReady,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hGetChar,&#x00A0;&#x00A0;hGetLine,&#x00A0;&#x00A0;hLookAhead,&#x00A0;&#x00A0;hGetContents,&#x00A0;&#x00A0;hPutChar,&#x00A0;&#x00A0;hPutStr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;hPutStrLn,&#x00A0;&#x00A0;hPrint,&#x00A0;&#x00A0;interact,&#x00A0;&#x00A0;putChar,&#x00A0;&#x00A0;putStr,&#x00A0;&#x00A0;putStrLn,&#x00A0;&#x00A0;print,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;getChar,&#x00A0;&#x00A0;getLine,&#x00A0;&#x00A0;getContents,&#x00A0;&#x00A0;readIO,&#x00A0;&#x00A0;readLn
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">41.1    </span> <a 
+ id="x49-32100041.1"></a>The IO monad </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-637" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-637-1g"><col 
+id="TBL-637-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-637-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-637-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                                    </div> <dd class="haddockdesc">
+     A value of type <span 
+class="pcrr7t-">IO</span><span 
+class="pcrr7t-">&#x00A0;a </span>is a computation which, when performed, does some I/O before returning a
+     value of type <span 
+class="pcrr7t-">a</span>.
+     <p class="noindent"> There is really only one way to &#8221;perform&#8221; an I/O action: bind it to <span 
+class="pcrr7t-">Main.main </span>in your program.
+     When your program is run, the I/O will be performed. It isn&#8217;t possible to perform I/O from an arbitrary
+     function, unless that function is itself in the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx49-321001"></a> monad and called at some point, directly or indirectly,
+     from <span 
+class="pcrr7t-">Main.main</span>.
+     <p class="noindent">  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx49-321002"></a> is  a  monad,  so  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx49-321003"></a> actions  can  be  combined  using  either  the  do-notation  or  the  <span 
+class="pcrr7t-">&#x003E;&#x003E; </span>and  <span 
+class="pcrr7t-">&#x003E;&#x003E;=</span>
+     operations from the <span 
+class="pcrr7t-">Monad </span>class.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-638" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-638-1g"><col 
+id="TBL-638-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-638-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-638-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;IO  </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-638-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-638-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;IO</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+ <span 
+class="pcrb7t-">fixIO</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span>  <dd class="haddockdesc"></dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">41.2    </span> <a 
+ id="x49-32200041.2"></a>Files and handles </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-639" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-639-1g"><col 
+id="TBL-639-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-639-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-639-1-1"  
+class="td11"><span 
+class="pcrb7t-">type</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;=</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     File  and  directory  names  are  values  of  type  <span 
+class="pcrr7t-">String</span><a 
+ id="dx49-322001"></a>,  whose  precise  meaning  is  operating  system
+     dependent. Files can be opened, yielding a handle which can then be used to operate on the contents
+     of that file.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-640" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-640-1g"><col 
+id="TBL-640-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-640-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-640-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     Haskell defines operations to read and write characters from and to files, represented by values of type
+     <span 
+class="pcrr7t-">Handle</span>. Each value of this type is a <span 
+class="ptmri7t-">handle</span>: a record used by the Haskell run-time system to <span 
+class="ptmri7t-">manage</span>
+     I/O with file system objects. A handle has at least the following properties:
+         <ul class="itemize1">
+         <li class="itemize">whether it manages input or output or both;
+         </li>
+         <li class="itemize">whether it is <span 
+class="ptmri7t-">open</span>, <span 
+class="ptmri7t-">closed </span>or <span 
+class="ptmri7t-">semi-closed</span>;
+         </li>
+         <li class="itemize">whether the object is seekable;
+         </li>
+         <li class="itemize">whether buffering is disabled, or enabled on a line or block basis;
+         </li>
+         <li class="itemize">a buffer (whose length may be zero).
+         </li></ul>
+     <p class="noindent"> Most handles will also have a current I/O position indicating where the next input or output operation will
+     occur. A handle is <span 
+class="ptmri7t-">readable </span>if it manages only input or both input and output; likewise, it is <span 
+class="ptmri7t-">writable </span>if it
+     manages only output or both input and output. A handle is <span 
+class="ptmri7t-">open </span>when first allocated. Once it is closed it can no
+     longer be used for either input or output, though an implementation cannot re-use its storage while references
+     remain to it. Handles are in the <span 
+class="pcrr7t-">Show</span><a 
+ id="dx49-322002"></a> and <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx49-322003"></a> classes. The string produced by showing a handle is system
+     dependent; it should include enough information to identify the handle for debugging. A handle is equal
+     according to <span 
+class="pcrr7t-">==</span><a 
+ id="dx49-322004"></a> only to itself; no attempt is made to compare the internal state of different handles for
+     equality.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-641" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-641-1g"><col 
+id="TBL-641-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-641-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-641-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Handle  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-641-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-641-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-641-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-641-3-1"  
+class="td11">                     </td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.2.1    </span> <a 
+ id="x49-32300041.2.1"></a>Standard handles </h4>
+<p class="noindent"> Three handles are allocated during program initialisation, and are initially open.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-642" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-642-1g"><col 
+id="TBL-642-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-642-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-642-1-1"  
+class="td11"><span 
+class="pcrb7t-">stdin</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td></tr></table>                                                             </div> <dd class="haddockdesc">
+     A handle managing input from the Haskell program&#8217;s standard input channel.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-643" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-643-1g"><col 
+id="TBL-643-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-643-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-643-1-1"  
+class="td11"><span 
+class="pcrb7t-">stdout</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td></tr></table>                                                            </div> <dd class="haddockdesc">
+     A handle managing output to the Haskell program&#8217;s standard output channel.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-644" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-644-1g"><col 
+id="TBL-644-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-644-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-644-1-1"  
+class="td11"><span 
+class="pcrb7t-">stderr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td></tr></table>                                                            </div> <dd class="haddockdesc">
+     A handle managing output to the Haskell program&#8217;s standard error channel.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">41.3    </span> <a 
+ id="x49-32400041.3"></a>Opening and closing files </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.3.1    </span> <a 
+ id="x49-32500041.3.1"></a>Opening files </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-645" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-645-1g"><col 
+id="TBL-645-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-645-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-645-1-1"  
+class="td11"><span 
+class="pcrb7t-">withFile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IOMode</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;r)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;r </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">withFile</span><span 
+class="pcrr7t-">&#x00A0;name</span><span 
+class="pcrr7t-">&#x00A0;mode</span><span 
+class="pcrr7t-">&#x00A0;act </span>opens a file using <span 
+class="pcrr7t-">openFile</span><a 
+ id="dx49-325001"></a> and passes the resulting handle to the
+     computation <span 
+class="pcrr7t-">act</span>. The handle will be closed on exit from <span 
+class="pcrr7t-">withFile</span><a 
+ id="dx49-325002"></a>, whether by normal termination
+     or by raising an exception. If closing the handle raises an exception, then this exception will be raised
+     by <span 
+class="pcrr7t-">withFile</span><a 
+ id="dx49-325003"></a> rather than any exception raised by <span 
+class="pcrr7t-">act</span>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-646" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-646-1g"><col 
+id="TBL-646-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-646-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-646-1-1"  
+class="td11"><span 
+class="pcrb7t-">openFile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IOMode</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Handle </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">openFile</span><a 
+ id="dx49-325004"></a> <span 
+class="pcrr7t-">file</span><span 
+class="pcrr7t-">&#x00A0;mode </span>allocates and returns a new, open handle to manage the file
+     <span 
+class="pcrr7t-">file</span>. It manages input if <span 
+class="pcrr7t-">mode </span>is <span 
+class="pcrr7t-">ReadMode</span><a 
+ id="dx49-325005"></a>, output if <span 
+class="pcrr7t-">mode </span>is <span 
+class="pcrr7t-">WriteMode</span><a 
+ id="dx49-325006"></a> or <span 
+class="pcrr7t-">AppendMode</span><a 
+ id="dx49-325007"></a>,
+     and both input and output if mode is <span 
+class="pcrr7t-">ReadWriteMode</span><a 
+ id="dx49-325008"></a>.
+     <p class="noindent"> If the file does not exist and it is opened for output, it should be created as a new file. If <span 
+class="pcrr7t-">mode </span>is
+     <span 
+class="pcrr7t-">WriteMode</span><a 
+ id="dx49-325009"></a> and the file already exists, then it should be truncated to zero length. Some operating
+     systems delete empty files, so there is no guarantee that the file will exist following an <span 
+class="pcrr7t-">openFile</span><a 
+ id="dx49-325010"></a>
+     with <span 
+class="pcrr7t-">modeWriteMode</span><a 
+ id="dx49-325011"></a> unless it is subsequently written to successfully. The handle is positioned at
+     the end of the file if <span 
+class="pcrr7t-">mode </span>is <span 
+class="pcrr7t-">AppendMode</span><a 
+ id="dx49-325012"></a>, and otherwise at the beginning (in which case its internal
+     position is 0). The initial buffer mode is implementation-dependent.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isAlreadyInUseError </span>if the file is already open and cannot be reopened;
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isDoesNotExistError </span>if the file does not exist; or
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError </span>if the user does not have permission to open the file.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-647" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-647-1g"><col 
+id="TBL-647-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-647-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-647-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;IOMode </span></td></tr></table>                                                                 </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-648" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-648-1g"><col 
+id="TBL-648-1" /><col 
+id="TBL-648-2" /><col 
+id="TBL-648-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-648-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-648-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-648-1-2"  
+class="td11"> <span 
+class="pcrb7t-">ReadMode      </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-648-1-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-648-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-648-2-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-648-2-2"  
+class="td11"> <span 
+class="pcrb7t-">WriteMode     </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-648-2-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-648-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-648-3-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-648-3-2"  
+class="td11"> <span 
+class="pcrb7t-">AppendMode    </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-648-3-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-648-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-648-4-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-648-4-2"  
+class="td11"> <span 
+class="pcrb7t-">ReadWriteMode </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-648-4-3"  
+class="td11">  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-648-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-648-5-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> See <span 
+class="pcrr7t-">System.IO.openFile</span>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-649" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-649-1g"><col 
+id="TBL-649-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-649-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;IOMode </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-649-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;IOMode</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-649-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;IOMode   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-649-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;IOMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-649-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;IOMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-649-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-649-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;IOMode    </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.3.2    </span> <a 
+ id="x49-32600041.3.2"></a>Closing files </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-650" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-650-1g"><col 
+id="TBL-650-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-650-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-650-1-1"  
+class="td11"><span 
+class="pcrb7t-">hClose</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation  <span 
+class="pcrr7t-">hClose</span><a 
+ id="dx49-326001"></a> <span 
+class="pcrr7t-">hdl </span>makes  handle  <span 
+class="pcrr7t-">hdl </span>closed.  Before  the  computation  finishes,  if  <span 
+class="pcrr7t-">hdl </span>is
+     writable its buffer is flushed as for <span 
+class="pcrr7t-">hFlush</span><a 
+ id="dx49-326002"></a>. Performing <span 
+class="pcrr7t-">hClose</span><a 
+ id="dx49-326003"></a> on a handle that has already been
+     closed  has  no  effect;  doing  so  is  not  an  error.  All  other  operations  on  a  closed  handle  will  fail.  If
+     <span 
+class="pcrr7t-">hClose</span><a 
+ id="dx49-326004"></a> fails for any reason, any further operations (apart from <span 
+class="pcrr7t-">hClose</span><a 
+ id="dx49-326005"></a>) on the handle will still fail
+     as if <span 
+class="pcrr7t-">hdl </span>had been successfully closed.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.3.3    </span> <a 
+ id="x49-32700041.3.3"></a>Special cases </h4>
+<p class="noindent"> These functions are also exported by the <span 
+class="pcrr7t-">Prelude</span>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-651" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-651-1g"><col 
+id="TBL-651-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-651-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-651-1-1"  
+class="td11"><span 
+class="pcrb7t-">readFile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">readFile</span><a 
+ id="dx49-327001"></a> function reads a file and returns the contents of the file as a string. The file is read
+     lazily, on demand, as with <span 
+class="pcrr7t-">getContents</span><a 
+ id="dx49-327002"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-652" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-652-1g"><col 
+id="TBL-652-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-652-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-652-1-1"  
+class="td11"><span 
+class="pcrb7t-">writeFile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The computation <span 
+class="pcrr7t-">writeFile</span><a 
+ id="dx49-327003"></a><span 
+class="pcrr7t-">file</span><span 
+class="pcrr7t-">&#x00A0;str </span>function writes the string <span 
+class="pcrr7t-">str</span>, to the file <span 
+class="pcrr7t-">file</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-653" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-653-1g"><col 
+id="TBL-653-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-653-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-653-1-1"  
+class="td11"><span 
+class="pcrb7t-">appendFile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The computation <span 
+class="pcrr7t-">appendFile</span><a 
+ id="dx49-327004"></a><span 
+class="pcrr7t-">file</span><span 
+class="pcrr7t-">&#x00A0;str </span>function appends the string <span 
+class="pcrr7t-">str</span>, to the file <span 
+class="pcrr7t-">file</span>.
+     <p class="noindent"> Note that <span 
+class="pcrr7t-">writeFile</span><a 
+ id="dx49-327005"></a> and <span 
+class="pcrr7t-">appendFile</span><a 
+ id="dx49-327006"></a> write a literal string to a file. To write a value of any
+     printable type, as with <span 
+class="pcrr7t-">print</span><a 
+ id="dx49-327007"></a>, use the <span 
+class="pcrr7t-">show</span><a 
+ id="dx49-327008"></a> function to convert the value to a string first.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-470">
+&#x00A0;main&#x00A0;=&#x00A0;appendFile&#x00A0;"squares"&#x00A0;(show&#x00A0;[(x,x&#x22C6;x)&#x00A0;|&#x00A0;x&#x00A0;&#x003C;-&#x00A0;[0,0.1..2]])
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.3.4    </span> <a 
+ id="x49-32800041.3.4"></a>File locking </h4>
+<p class="noindent"> Implementations should enforce as far as possible, at least locally to the Haskell process, multiple-reader
+single-writer locking on files. That is, <span 
+class="ptmri7t-">there may either be many handles on the same file which manage input, or just</span>
+<span 
+class="ptmri7t-">one handle on the file which manages output</span>. If any open or semi-closed handle is managing a file for output, no new
+handle can be allocated for that file. If any open or semi-closed handle is managing a file for input, new handles can
+only be allocated if they do not manage output. Whether two files are the same is implementation-dependent, but they
+should normally be the same if they have the same absolute path name and neither has been renamed, for
+example.
+ <p class="noindent"> <span 
+class="ptmri7t-">Warning</span>: the <span 
+class="pcrr7t-">readFile</span><a 
+ id="dx49-328001"></a> operation holds a semi-closed handle on the file until the entire contents of the file have
+been consumed. It follows that an attempt to write to a file (using <span 
+class="pcrr7t-">writeFile</span><a 
+ id="dx49-328002"></a>, for example) that was earlier opened
+by <span 
+class="pcrr7t-">readFile</span><a 
+ id="dx49-328003"></a> will usually result in failure with <span 
+class="pcrr7t-">System.IO.Error.isAlreadyInUseError</span>.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">41.4    </span> <a 
+ id="x49-32900041.4"></a>Operations on handles </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.1    </span> <a 
+ id="x49-33000041.4.1"></a>Determining and changing the size of a file </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-654" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-654-1g"><col 
+id="TBL-654-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-654-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-654-1-1"  
+class="td11"><span 
+class="pcrb7t-">hFileSize</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Integer </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     For a handle <span 
+class="pcrr7t-">hdl </span>which attached to a physical file, <span 
+class="pcrr7t-">hFileSize</span><a 
+ id="dx49-330001"></a> <span 
+class="pcrr7t-">hdl </span>returns the size of that file in
+     8-bit bytes.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-655" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-655-1g"><col 
+id="TBL-655-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-655-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-655-1-1"  
+class="td11"><span 
+class="pcrb7t-">hSetFileSize</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Integer</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">hSetFileSize</span><a 
+ id="dx49-330002"></a><span 
+class="pcrr7t-">hdlsize </span>truncates the physical file with handle <span 
+class="pcrr7t-">hdl </span>to <span 
+class="pcrr7t-">size </span>bytes.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.2    </span> <a 
+ id="x49-33100041.4.2"></a>Detecting the end of input </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-656" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-656-1g"><col 
+id="TBL-656-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-656-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-656-1-1"  
+class="td11"><span 
+class="pcrb7t-">hIsEOF</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+     For a readable handle <span 
+class="pcrr7t-">hdl</span>, <span 
+class="pcrr7t-">hIsEOF</span><a 
+ id="dx49-331001"></a> <span 
+class="pcrr7t-">hdl </span>returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx49-331002"></a> if no further input can be taken from <span 
+class="pcrr7t-">hdl</span>
+     or for a physical file, if the current I/O position is equal to the length of the file. Otherwise, it returns
+     <span 
+class="pcrr7t-">False</span><a 
+ id="dx49-331003"></a>.
+     <p class="noindent"> NOTE: <span 
+class="pcrr7t-">hIsEOF</span><a 
+ id="dx49-331004"></a> may block, because it has to attempt to read from the stream to determine whether
+     there is any more data to be read.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-657" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-657-1g"><col 
+id="TBL-657-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-657-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-657-1-1"  
+class="td11"><span 
+class="pcrb7t-">isEOF</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                                            </div> <dd class="haddockdesc">
+     The computation <span 
+class="pcrr7t-">isEOF</span><a 
+ id="dx49-331005"></a> is identical to <span 
+class="pcrr7t-">hIsEOF</span><a 
+ id="dx49-331006"></a>, except that it works only on <span 
+class="pcrr7t-">stdin</span><a 
+ id="dx49-331007"></a>.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.3    </span> <a 
+ id="x49-33200041.4.3"></a>Buffering operations </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-658" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-658-1g"><col 
+id="TBL-658-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-658-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-658-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;BufferMode </span></td></tr></table>                                                             </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-659" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-659-1g"><col 
+id="TBL-659-1" /><col 
+id="TBL-659-2" /><col 
+id="TBL-659-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-659-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-659-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-659-1-2"  
+class="td11"> <span 
+class="pcrb7t-">NoBuffering                </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-659-1-3"  
+class="td11"> buffering is disabled if possible.                                                                                                                                                                                               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-659-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-659-2-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-659-2-2"  
+class="td11"> <span 
+class="pcrb7t-">LineBuffering              </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-659-2-3"  
+class="td11"> line-buffering should be enabled if possible.                                                                                                                                                                            </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-659-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-659-3-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-659-3-2"  
+class="td11"> <span 
+class="pcrb7t-">BlockBuffering (Maybe Int) </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-659-3-3"  
+class="td11"> block-buffering should be enabled if possible. The size of the buffer is <span 
+class="pcrr7t-">n </span>items if the argument is <span 
+class="pcrr7t-">Just</span><a 
+ id="dx49-332001"></a><span 
+class="pcrr7t-">n </span>and is otherwise implementation-dependent.  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-659-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-659-4-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> Three kinds of buffering are supported: line-buffering, block-buffering or no-buffering. These modes have the
+     following effects. For output, items are written out, or <span 
+class="ptmri7t-">flushed</span>, from the internal buffer according to the buffer
+     mode:
+                                                                                   
+
+                                                                                   
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="ptmri7t-">line-buffering</span>:  the  entire  output  buffer  is  flushed  whenever  a  newline  is  output,  the  buffer
+         overflows, a <span 
+class="pcrr7t-">System.IO.hFlush </span>is issued, or the handle is closed.
+         </li>
+         <li class="itemize"><span 
+class="ptmri7t-">block-buffering</span>: the entire buffer is written out whenever it overflows, a <span 
+class="pcrr7t-">System.IO.hFlush</span>
+         is issued, or the handle is closed.
+         </li>
+         <li class="itemize"><span 
+class="ptmri7t-">no-buffering</span>: output is written immediately, and never stored in the buffer.
+         </li></ul>
+     <p class="noindent"> An implementation is free to flush the buffer more frequently, but not less frequently, than specified above. The
+     output buffer is emptied as soon as it has been written out.
+     <p class="noindent"> Similarly, input occurs according to the buffer mode for the handle:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="ptmri7t-">line-buffering</span>: when the buffer for the handle is not empty, the next item is obtained from the
+         buffer;  otherwise,  when  the  buffer  is  empty,  characters  up  to  and  including  the  next  newline
+         character  are  read  into  the  buffer.  No  characters  are  available  until  the  newline  character  is
+         available or the buffer is full.
+         </li>
+         <li class="itemize"><span 
+class="ptmri7t-">block-buffering</span>: when the buffer for the handle becomes empty, the next block of data is read into
+         the buffer.
+         </li>
+         <li class="itemize"><span 
+class="ptmri7t-">no-buffering</span>:  the  next  input  item  is  read  and  returned.  The  <span 
+class="pcrr7t-">System.IO.hLookAhead</span>
+         operation implies that even a no-buffered handle may require a one-character buffer.
+         </li></ul>
+     <p class="noindent"> The default buffering mode when a handle is opened is implementation-dependent and may depend on the file
+     system object which is attached to that handle. For most implementations, physical files will normally be
+     block-buffered and terminals will normally be line-buffered.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-660" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-660-1g"><col 
+id="TBL-660-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-660-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-660-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;BufferMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-660-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-660-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;BufferMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-660-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-660-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;BufferMode </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-660-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-660-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;BufferMode </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-661" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-661-1g"><col 
+id="TBL-661-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-661-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-661-1-1"  
+class="td11"><span 
+class="pcrb7t-">hSetBuffering</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;BufferMode</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hSetBuffering</span><a 
+ id="dx49-332002"></a><span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;mode </span>sets the mode of buffering for handle <span 
+class="pcrr7t-">hdl </span>on subsequent
+     reads and writes.
+     <p class="noindent"> If the buffer mode is changed from <span 
+class="pcrr7t-">BlockBuffering</span><a 
+ id="dx49-332003"></a> or <span 
+class="pcrr7t-">LineBuffering</span><a 
+ id="dx49-332004"></a> to <span 
+class="pcrr7t-">NoBuffering</span><a 
+ id="dx49-332005"></a>,
+     then
+                                                                                   
+
+                                                                                   
+         <ul class="itemize1">
+         <li class="itemize">if <span 
+class="pcrr7t-">hdl </span>is writable, the buffer is flushed as for <span 
+class="pcrr7t-">hFlush</span><a 
+ id="dx49-332006"></a>;
+         </li>
+         <li class="itemize">if <span 
+class="pcrr7t-">hdl </span>is not writable, the contents of the buffer is discarded.
+         </li></ul>
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError </span>if  the  handle  has  already  been  used  for  reading  or  writing  and  the
+         implementation does not allow the buffering mode to be changed.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-662" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-662-1g"><col 
+id="TBL-662-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-662-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-662-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetBuffering</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;BufferMode </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hGetBuffering</span><a 
+ id="dx49-332007"></a><span 
+class="pcrr7t-">hdl </span>returns the current buffering mode for <span 
+class="pcrr7t-">hdl</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-663" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-663-1g"><col 
+id="TBL-663-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-663-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-663-1-1"  
+class="td11"><span 
+class="pcrb7t-">hFlush</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The action <span 
+class="pcrr7t-">hFlush</span><a 
+ id="dx49-332008"></a><span 
+class="pcrr7t-">hdl </span>causes any items buffered for output in handle <span 
+class="pcrr7t-">hdl </span>to be sent immediately
+     to the operating system.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isFullError </span>if the device is full;
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError </span>if a system resource limit would be exceeded. It is unspecified whether
+         the characters in the buffer are discarded or retained under these circumstances.
+         </li></ul>
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.4    </span> <a 
+ id="x49-33300041.4.4"></a>Repositioning handles </h4>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-664" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-664-1g"><col 
+id="TBL-664-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-664-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-664-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetPosn</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;HandlePosn </span></td></tr></table>                                      </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hGetPosn</span><a 
+ id="dx49-333001"></a><span 
+class="pcrr7t-">hdl </span>returns the current I/O position of <span 
+class="pcrr7t-">hdl </span>as a value of the abstract type
+     <span 
+class="pcrr7t-">HandlePosn</span><a 
+ id="dx49-333002"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-665" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-665-1g"><col 
+id="TBL-665-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-665-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-665-1-1"  
+class="td11"><span 
+class="pcrb7t-">hSetPosn</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;HandlePosn</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     If a call to <span 
+class="pcrr7t-">hGetPosn</span><a 
+ id="dx49-333003"></a><span 
+class="pcrr7t-">hdl </span>returns a position <span 
+class="pcrr7t-">p</span>, then computation <span 
+class="pcrr7t-">hSetPosn</span><a 
+ id="dx49-333004"></a><span 
+class="pcrr7t-">p </span>sets the position of
+     <span 
+class="pcrr7t-">hdl </span>to the position it held at the time of the call to <span 
+class="pcrr7t-">hGetPosn</span><a 
+ id="dx49-333005"></a>.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError </span>if a system resource limit would be exceeded.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-666" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-666-1g"><col 
+id="TBL-666-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-666-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-666-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;HandlePosn </span></td></tr></table>                                                             </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-667" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-667-1g"><col 
+id="TBL-667-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-667-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-667-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;HandlePosn  </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-667-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-667-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;HandlePosn</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-668" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-668-1g"><col 
+id="TBL-668-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-668-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-668-1-1"  
+class="td11"><span 
+class="pcrb7t-">hSeek</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;SeekMode</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Integer</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hSeek</span><a 
+ id="dx49-333006"></a><span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;mode</span><span 
+class="pcrr7t-">&#x00A0;i </span>sets the position of handle <span 
+class="pcrr7t-">hdl </span>depending on <span 
+class="pcrr7t-">mode</span>. The offset
+     <span 
+class="pcrr7t-">i </span>is given in terms of 8-bit bytes.
+     <p class="noindent"> If <span 
+class="pcrr7t-">hdl </span>is block- or line-buffered, then seeking to a position which is not in the current buffer will first
+     cause any items in the output buffer to be written to the device, and then cause the input buffer to be
+     discarded. Some handles may not be seekable (see <span 
+class="pcrr7t-">hIsSeekable</span><a 
+ id="dx49-333007"></a>), or only support a subset of the
+     possible positioning operations (for instance, it may only be possible to seek to the end of a tape, or to
+     a positive offset from the beginning or current position). It is not possible to set a negative I/O position,
+     or for a physical file, an I/O position beyond the current end-of-file.
+     <p class="noindent"> This operation may fail with:
+                                                                                   
+
+                                                                                   
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isIllegalOperationError </span>if the Handle is not seekable, or does not support the requested
+         seek mode.
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError </span>if a system resource limit would be exceeded.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-669" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-669-1g"><col 
+id="TBL-669-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-669-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-669-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;SeekMode </span></td></tr></table>                                                               </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-670" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-670-1g"><col 
+id="TBL-670-1" /><col 
+id="TBL-670-2" /><col 
+id="TBL-670-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-670-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-670-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-670-1-2"  
+class="td11"> <span 
+class="pcrb7t-">AbsoluteSeek </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-670-1-3"  
+class="td11"> the position of <span 
+class="pcrr7t-">hdl </span>is set to <span 
+class="pcrr7t-">i</span>.                                                     </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-670-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-670-2-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-670-2-2"  
+class="td11"> <span 
+class="pcrb7t-">RelativeSeek </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-670-2-3"  
+class="td11"> the position of <span 
+class="pcrr7t-">hdl </span>is set to offset <span 
+class="pcrr7t-">i </span>from the current position.  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-670-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-670-3-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-670-3-2"  
+class="td11"> <span 
+class="pcrb7t-">SeekFromEnd  </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-670-3-3"  
+class="td11"> the position of <span 
+class="pcrr7t-">hdl </span>is set to offset <span 
+class="pcrr7t-">i </span>from the end of the file.      </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-670-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-670-4-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> A mode that determines the effect of <span 
+class="pcrr7t-">hSeekhdl</span><span 
+class="pcrr7t-">&#x00A0;mode</span><span 
+class="pcrr7t-">&#x00A0;i</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-671" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-671-1g"><col 
+id="TBL-671-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-671-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;SeekMode </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-671-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;SeekMode</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-671-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;SeekMode   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-671-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;SeekMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-671-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;SeekMode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-671-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-671-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;SeekMode    </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-672" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-672-1g"><col 
+id="TBL-672-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-672-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-672-1-1"  
+class="td11"><span 
+class="pcrb7t-">hTell</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Integer </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hTell</span><a 
+ id="dx49-333008"></a><span 
+class="pcrr7t-">hdl </span>returns the current position of the handle <span 
+class="pcrr7t-">hdl</span>, as the number of bytes from
+     the beginning of the file. The value returned may be subsequently passed to <span 
+class="pcrr7t-">hSeek</span><a 
+ id="dx49-333009"></a> to reposition the
+     handle to the current position.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isIllegalOperationError </span>if the Handle is not seekable.
+         </li></ul>
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.5    </span> <a 
+ id="x49-33400041.4.5"></a>Handle properties </h4>
+<p class="noindent"> Each of these operations returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx49-334001"></a> if the handle has the the specified property, or <span 
+class="pcrr7t-">False</span><a 
+ id="dx49-334002"></a> otherwise.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">hIsOpen</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">hIsClosed</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">hIsReadable</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">hIsWritable</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">hIsSeekable</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool</span>  <dd class="haddockdesc"></dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.6    </span> <a 
+ id="x49-33500041.4.6"></a>Terminal operations </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-673" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-673-1g"><col 
+id="TBL-673-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-673-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-673-1-1"  
+class="td11"><span 
+class="pcrb7t-">hIsTerminalDevice</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                   </div> <dd class="haddockdesc">
+     Is the handle connected to a terminal?
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-674" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-674-1g"><col 
+id="TBL-674-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-674-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-674-1-1"  
+class="td11"><span 
+class="pcrb7t-">hSetEcho</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Set the echoing status of a handle connected to a terminal.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-675" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-675-1g"><col 
+id="TBL-675-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-675-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-675-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetEcho</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+     Get the echoing status of a handle connected to a terminal.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.4.7    </span> <a 
+ id="x49-33600041.4.7"></a>Showing handle state </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-676" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-676-1g"><col 
+id="TBL-676-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-676-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-676-1-1"  
+class="td11"><span 
+class="pcrb7t-">hShow</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">hShow</span><a 
+ id="dx49-336001"></a> is in the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx49-336002"></a> monad, and gives more comprehensive output than the (pure) instance of <span 
+class="pcrr7t-">Show</span><a 
+ id="dx49-336003"></a>
+     for <span 
+class="pcrr7t-">Handle</span><a 
+ id="dx49-336004"></a>.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">41.5    </span> <a 
+ id="x49-33700041.5"></a>Text input and output </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.5.1    </span> <a 
+ id="x49-33800041.5.1"></a>Text input </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-677" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-677-1g"><col 
+id="TBL-677-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-677-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-677-1-1"  
+class="td11"><span 
+class="pcrb7t-">hWaitForInput</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hWaitForInput</span><a 
+ id="dx49-338001"></a><span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;t </span>waits until input is available on handle <span 
+class="pcrr7t-">hdl</span>. It returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx49-338002"></a>
+     as soon as input is available on <span 
+class="pcrr7t-">hdl</span>, or <span 
+class="pcrr7t-">False</span><a 
+ id="dx49-338003"></a> if no input is available within <span 
+class="pcrr7t-">t </span>milliseconds. Note that
+     <span 
+class="pcrr7t-">hWaitForInput</span><a 
+ id="dx49-338004"></a> waits until one or more full <span 
+class="ptmri7t-">characters </span>are available, which means that it needs to
+     do decoding, and hence may fail with a decoding error.
+     <p class="noindent"> If <span 
+class="pcrr7t-">t </span>is less than zero, then <span 
+class="pcrr7t-">hWaitForInput </span>waits indefinitely.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isEOFError </span>if the end of file has been reached.
+         </li>
+         <li class="itemize">a decoding error, if the input begins with an invalid byte sequence in this Handle&#8217;s encoding.
+         </li></ul>
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-678" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-678-1g"><col 
+id="TBL-678-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-678-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-678-1-1"  
+class="td11"><span 
+class="pcrb7t-">hReady</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hReady</span><a 
+ id="dx49-338005"></a><span 
+class="pcrr7t-">hdl </span>indicates whether at least one item is available for input from handle <span 
+class="pcrr7t-">hdl</span>.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">System.IO.Error.isEOFError </span>if the end of file has been reached.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-679" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-679-1g"><col 
+id="TBL-679-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-679-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-679-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetChar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Char </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hGetChar</span><a 
+ id="dx49-338006"></a> <span 
+class="pcrr7t-">hdl </span>reads a character from the file or channel managed by <span 
+class="pcrr7t-">hdl</span>, blocking
+     until a character is available.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isEOFError</span><a 
+ id="dx49-338007"></a> if the end of file has been reached.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-680" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-680-1g"><col 
+id="TBL-680-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-680-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-680-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetLine</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hGetLine</span><a 
+ id="dx49-338008"></a><span 
+class="pcrr7t-">hdl </span>reads a line from the file or channel managed by <span 
+class="pcrr7t-">hdl</span>.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isEOFError</span><a 
+ id="dx49-338009"></a> if the end of file is encountered when reading the <span 
+class="ptmri7t-">first </span>character of the line.
+         </li></ul>
+     <p class="noindent"> If <span 
+class="pcrr7t-">hGetLine</span><a 
+ id="dx49-338010"></a> encounters end-of-file at any other point while reading in a line, it is treated as a line terminator
+     and the (partial) line is returned.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-681" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-681-1g"><col 
+id="TBL-681-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-681-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-681-1-1"  
+class="td11"><span 
+class="pcrb7t-">hLookAhead</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Char </span></td></tr></table>                                           </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hLookAhead</span><a 
+ id="dx49-338011"></a> returns the next character from the handle without removing it from the
+     input buffer, blocking until a character is available.
+     <p class="noindent"> This operation may fail with:
+                                                                                   
+
+                                                                                   
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isEOFError </span>if the end of file has been reached.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-682" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-682-1g"><col 
+id="TBL-682-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-682-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-682-1-1"  
+class="td11"><span 
+class="pcrb7t-">hGetContents</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hGetContents</span><a 
+ id="dx49-338012"></a><span 
+class="pcrr7t-">hdl </span>returns the list of characters corresponding to the unread portion
+     of the channel or file managed by <span 
+class="pcrr7t-">hdl</span>, which is put into an intermediate state, <span 
+class="ptmri7t-">semi-closed</span>. In this
+     state, <span 
+class="pcrr7t-">hdl </span>is effectively closed, but items are read from <span 
+class="pcrr7t-">hdl </span>on demand and accumulated in a special
+     list returned by <span 
+class="pcrr7t-">hGetContents</span><a 
+ id="dx49-338013"></a><span 
+class="pcrr7t-">hdl</span>.
+     <p class="noindent"> Any operation that fails because a handle is closed, also fails if a handle is semi-closed. The only
+     exception is <span 
+class="pcrr7t-">hClose</span>. A semi-closed handle becomes closed:
+         <ul class="itemize1">
+         <li class="itemize">if <span 
+class="pcrr7t-">hClose </span>is applied to it;
+         </li>
+         <li class="itemize">if an I/O error occurs when reading an item from the handle;
+         </li>
+         <li class="itemize">or once the entire contents of the handle has been read.
+         </li></ul>
+     <p class="noindent"> Once a semi-closed handle becomes closed, the contents of the associated list becomes fixed. The contents of
+     this final list is only partially specified: it will contain at least all the items of the stream that were evaluated
+     prior to the handle becoming closed.
+     <p class="noindent"> Any I/O errors encountered while a handle is semi-closed are simply discarded.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isEOFError</span><a 
+ id="dx49-338014"></a> if the end of file has been reached.
+         </li></ul>
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.5.2    </span> <a 
+ id="x49-33900041.5.2"></a>Text output </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-683" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-683-1g"><col 
+id="TBL-683-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-683-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-683-1-1"  
+class="td11"><span 
+class="pcrb7t-">hPutChar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Char</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hPutChar</span><a 
+ id="dx49-339001"></a> <span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;ch </span>writes the character <span 
+class="pcrr7t-">ch </span>to the file or channel managed by <span 
+class="pcrr7t-">hdl</span>.
+     Characters may be buffered if buffering is enabled for <span 
+class="pcrr7t-">hdl</span>.
+                                                                                   
+
+                                                                                   
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isFullError</span><a 
+ id="dx49-339002"></a> if the device is full; or
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError</span><a 
+ id="dx49-339003"></a> if another system resource limit would be exceeded.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-684" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-684-1g"><col 
+id="TBL-684-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-684-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-684-1-1"  
+class="td11"><span 
+class="pcrb7t-">hPutStr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hPutStr</span><a 
+ id="dx49-339004"></a><span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;s </span>writes the string <span 
+class="pcrr7t-">s </span>to the file or channel managed by <span 
+class="pcrr7t-">hdl</span>.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">isFullError</span><a 
+ id="dx49-339005"></a> if the device is full; or
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">isPermissionError</span><a 
+ id="dx49-339006"></a> if another system resource limit would be exceeded.
+         </li></ul>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-685" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-685-1g"><col 
+id="TBL-685-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-685-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-685-1-1"  
+class="td11"><span 
+class="pcrb7t-">hPutStrLn</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The same as <span 
+class="pcrr7t-">hPutStr</span><a 
+ id="dx49-339007"></a>, but adds a newline character.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-686" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-686-1g"><col 
+id="TBL-686-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-686-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-686-1-1"  
+class="td11"><span 
+class="pcrb7t-">hPrint</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Handle</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Computation <span 
+class="pcrr7t-">hPrint</span><a 
+ id="dx49-339008"></a> <span 
+class="pcrr7t-">hdl</span><span 
+class="pcrr7t-">&#x00A0;t </span>writes the string representation of <span 
+class="pcrr7t-">t </span>given by the <span 
+class="pcrr7t-">shows</span><a 
+ id="dx49-339009"></a> function to
+     the file or channel managed by <span 
+class="pcrr7t-">hdl </span>and appends a newline.
+     <p class="noindent"> This operation may fail with:
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">System.IO.Error.isFullError </span>if the device is full; or
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">System.IO.Error.isPermissionError </span>if  another  system  resource  limit  would  be
+         exceeded.
+         </li></ul>
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">41.5.3    </span> <a 
+ id="x49-34000041.5.3"></a>Special cases for standard input and output </h4>
+<p class="noindent"> These functions are also exported by the <span 
+class="pcrr7t-">Prelude</span>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-687" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-687-1g"><col 
+id="TBL-687-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-687-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-687-1-1"  
+class="td11"><span 
+class="pcrb7t-">interact</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">interact</span><a 
+ id="dx49-340001"></a> function takes a function of type <span 
+class="pcrr7t-">String-&#x003E;String </span>as its argument. The entire
+     input from the standard input device is passed to this function as its argument, and the resulting string
+     is output on the standard output device.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-688" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-688-1g"><col 
+id="TBL-688-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-688-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-688-1-1"  
+class="td11"><span 
+class="pcrb7t-">putChar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Char</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write a character to the standard output device (same as <span 
+class="pcrr7t-">hPutChar</span><a 
+ id="dx49-340002"></a><span 
+class="pcrr7t-">stdout</span><a 
+ id="dx49-340003"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-689" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-689-1g"><col 
+id="TBL-689-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-689-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-689-1-1"  
+class="td11"><span 
+class="pcrb7t-">putStr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write a string to the standard output device (same as <span 
+class="pcrr7t-">hPutStr</span><a 
+ id="dx49-340004"></a><span 
+class="pcrr7t-">stdout</span><a 
+ id="dx49-340005"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-690" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-690-1g"><col 
+id="TBL-690-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-690-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-690-1-1"  
+class="td11"><span 
+class="pcrb7t-">putStrLn</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The same as <span 
+class="pcrr7t-">putStr</span><a 
+ id="dx49-340006"></a>, but adds a newline character.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-691" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-691-1g"><col 
+id="TBL-691-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-691-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-691-1-1"  
+class="td11"><span 
+class="pcrb7t-">print</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">print</span><a 
+ id="dx49-340007"></a> function outputs a value of any printable type to the standard output device. Printable
+     types are those that are instances of class <span 
+class="pcrr7t-">Show</span><a 
+ id="dx49-340008"></a>; <span 
+class="pcrr7t-">print</span><a 
+ id="dx49-340009"></a> converts values to strings for output using the
+     <span 
+class="pcrr7t-">show</span><a 
+ id="dx49-340010"></a> operation and adds a newline.
+     <p class="noindent"> For example, a program to print the first 20 integers and their powers of 2 could be written as:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-471">
+&#x00A0;main&#x00A0;=&#x00A0;print&#x00A0;([(n,&#x00A0;2^n)&#x00A0;|&#x00A0;n&#x00A0;&#x003C;-&#x00A0;[0..19]])
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-692" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-692-1g"><col 
+id="TBL-692-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-692-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-692-1-1"  
+class="td11"><span 
+class="pcrb7t-">getChar</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Char </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Read a character from the standard input device (same as <span 
+class="pcrr7t-">hGetChar</span><a 
+ id="dx49-340011"></a><span 
+class="pcrr7t-">stdin</span><a 
+ id="dx49-340012"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-693" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-693-1g"><col 
+id="TBL-693-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-693-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-693-1-1"  
+class="td11"><span 
+class="pcrb7t-">getLine</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Read a line from the standard input device (same as <span 
+class="pcrr7t-">hGetLine</span><a 
+ id="dx49-340013"></a><span 
+class="pcrr7t-">stdin</span><a 
+ id="dx49-340014"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-694" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-694-1g"><col 
+id="TBL-694-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-694-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-694-1-1"  
+class="td11"><span 
+class="pcrb7t-">getContents</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">getContents</span><a 
+ id="dx49-340015"></a> operation returns all user input as a single string, which is read lazily as it is
+     needed (same as <span 
+class="pcrr7t-">hGetContents</span><a 
+ id="dx49-340016"></a><span 
+class="pcrr7t-">stdin</span><a 
+ id="dx49-340017"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-695" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-695-1g"><col 
+id="TBL-695-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-695-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-695-1-1"  
+class="td11"><span 
+class="pcrb7t-">readIO</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">readIO</span><a 
+ id="dx49-340018"></a> function is similar to <span 
+class="pcrr7t-">read</span><a 
+ id="dx49-340019"></a> except that it signals parse failure to the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx49-340020"></a> monad instead
+     of terminating the program.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-696" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-696-1g"><col 
+id="TBL-696-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-696-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-696-1-1"  
+class="td11"><span 
+class="pcrb7t-">readLn</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">readLn</span><a 
+ id="dx49-340021"></a> function combines <span 
+class="pcrr7t-">getLine</span><a 
+ id="dx49-340022"></a> and <span 
+class="pcrr7t-">readIO</span><a 
+ id="dx49-340023"></a>.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch42.html" >next</a>] [<a 
+href="haskellch40.html" >prev</a>] [<a 
+href="haskellch40.html#tailhaskellch40.html" >prev-tail</a>] [<a 
+href="haskellch41.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch41.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch41.html"></a>    
+</body> </html> 

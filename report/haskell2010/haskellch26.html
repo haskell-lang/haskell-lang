@@ -1,0 +1,1774 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>26 Foreign.C.Error</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch27.html" >next</a>] [<a 
+href="haskellch25.html" >prev</a>] [<a 
+href="haskellch25.html#tailhaskellch25.html" >prev-tail</a>] [<a 
+href="#tailhaskellch26.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch26.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;26</span><br /><a 
+ id="x34-26400026"></a><span 
+class="pcrr7t-">Foreign.C.Error</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-439">
+module&#x00A0;Foreign.C.Error&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Errno(Errno),&#x00A0;&#x00A0;eOK,&#x00A0;&#x00A0;e2BIG,&#x00A0;&#x00A0;eACCES,&#x00A0;&#x00A0;eADDRINUSE,&#x00A0;&#x00A0;eADDRNOTAVAIL,&#x00A0;&#x00A0;eADV,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eAFNOSUPPORT,&#x00A0;&#x00A0;eAGAIN,&#x00A0;&#x00A0;eALREADY,&#x00A0;&#x00A0;eBADF,&#x00A0;&#x00A0;eBADMSG,&#x00A0;&#x00A0;eBADRPC,&#x00A0;&#x00A0;eBUSY,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eCHILD,&#x00A0;&#x00A0;eCOMM,&#x00A0;&#x00A0;eCONNABORTED,&#x00A0;&#x00A0;eCONNREFUSED,&#x00A0;&#x00A0;eCONNRESET,&#x00A0;&#x00A0;eDEADLK,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eDESTADDRREQ,&#x00A0;&#x00A0;eDIRTY,&#x00A0;&#x00A0;eDOM,&#x00A0;&#x00A0;eDQUOT,&#x00A0;&#x00A0;eEXIST,&#x00A0;&#x00A0;eFAULT,&#x00A0;&#x00A0;eFBIG,&#x00A0;&#x00A0;eFTYPE,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eHOSTDOWN,&#x00A0;&#x00A0;eHOSTUNREACH,&#x00A0;&#x00A0;eIDRM,&#x00A0;&#x00A0;eILSEQ,&#x00A0;&#x00A0;eINPROGRESS,&#x00A0;&#x00A0;eINTR,&#x00A0;&#x00A0;eINVAL,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eIO,&#x00A0;&#x00A0;eISCONN,&#x00A0;&#x00A0;eISDIR,&#x00A0;&#x00A0;eLOOP,&#x00A0;&#x00A0;eMFILE,&#x00A0;&#x00A0;eMLINK,&#x00A0;&#x00A0;eMSGSIZE,&#x00A0;&#x00A0;eMULTIHOP,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eNAMETOOLONG,&#x00A0;&#x00A0;eNETDOWN,&#x00A0;&#x00A0;eNETRESET,&#x00A0;&#x00A0;eNETUNREACH,&#x00A0;&#x00A0;eNFILE,&#x00A0;&#x00A0;eNOBUFS,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eNODATA,&#x00A0;&#x00A0;eNODEV,&#x00A0;&#x00A0;eNOENT,&#x00A0;&#x00A0;eNOEXEC,&#x00A0;&#x00A0;eNOLCK,&#x00A0;&#x00A0;eNOLINK,&#x00A0;&#x00A0;eNOMEM,&#x00A0;&#x00A0;eNOMSG,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eNONET,&#x00A0;&#x00A0;eNOPROTOOPT,&#x00A0;&#x00A0;eNOSPC,&#x00A0;&#x00A0;eNOSR,&#x00A0;&#x00A0;eNOSTR,&#x00A0;&#x00A0;eNOSYS,&#x00A0;&#x00A0;eNOTBLK,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eNOTCONN,&#x00A0;&#x00A0;eNOTDIR,&#x00A0;&#x00A0;eNOTEMPTY,&#x00A0;&#x00A0;eNOTSOCK,&#x00A0;&#x00A0;eNOTTY,&#x00A0;&#x00A0;eNXIO,&#x00A0;&#x00A0;eOPNOTSUPP,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;ePERM,&#x00A0;&#x00A0;ePFNOSUPPORT,&#x00A0;&#x00A0;ePIPE,&#x00A0;&#x00A0;ePROCLIM,&#x00A0;&#x00A0;ePROCUNAVAIL,&#x00A0;&#x00A0;ePROGMISMATCH,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;ePROGUNAVAIL,&#x00A0;&#x00A0;ePROTO,&#x00A0;&#x00A0;ePROTONOSUPPORT,&#x00A0;&#x00A0;ePROTOTYPE,&#x00A0;&#x00A0;eRANGE,&#x00A0;&#x00A0;eREMCHG,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eREMOTE,&#x00A0;&#x00A0;eROFS,&#x00A0;&#x00A0;eRPCMISMATCH,&#x00A0;&#x00A0;eRREMOTE,&#x00A0;&#x00A0;eSHUTDOWN,&#x00A0;&#x00A0;eSOCKTNOSUPPORT,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eSPIPE,&#x00A0;&#x00A0;eSRCH,&#x00A0;&#x00A0;eSRMNT,&#x00A0;&#x00A0;eSTALE,&#x00A0;&#x00A0;eTIME,&#x00A0;&#x00A0;eTIMEDOUT,&#x00A0;&#x00A0;eTOOMANYREFS,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;eTXTBSY,&#x00A0;&#x00A0;eUSERS,&#x00A0;&#x00A0;eWOULDBLOCK,&#x00A0;&#x00A0;eXDEV,&#x00A0;&#x00A0;isValidErrno,&#x00A0;&#x00A0;getErrno,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;resetErrno,&#x00A0;&#x00A0;errnoToIOError,&#x00A0;&#x00A0;throwErrno,&#x00A0;&#x00A0;throwErrnoIf,&#x00A0;&#x00A0;throwErrnoIf_,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoIfRetry,&#x00A0;&#x00A0;throwErrnoIfRetry_,&#x00A0;&#x00A0;throwErrnoIfMinus1,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoIfMinus1_,&#x00A0;&#x00A0;throwErrnoIfMinus1Retry,&#x00A0;&#x00A0;throwErrnoIfMinus1Retry_,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoIfNull,&#x00A0;&#x00A0;throwErrnoIfNullRetry,&#x00A0;&#x00A0;throwErrnoIfRetryMayBlock,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoIfRetryMayBlock_,&#x00A0;&#x00A0;throwErrnoIfMinus1RetryMayBlock,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoIfMinus1RetryMayBlock_,&#x00A0;&#x00A0;throwErrnoIfNullRetryMayBlock,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoPath,&#x00A0;&#x00A0;throwErrnoPathIf,&#x00A0;&#x00A0;throwErrnoPathIf_,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;throwErrnoPathIfNull,&#x00A0;&#x00A0;throwErrnoPathIfMinus1,&#x00A0;&#x00A0;throwErrnoPathIfMinus1_
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The module <span 
+class="pcrr7t-">Foreign.C.Error </span>facilitates C-specific error handling of <span 
+class="pcrr7t-">errno</span>.
+<h3 class="sectionHead"><span class="titlemark">26.1    </span> <a 
+ id="x34-26500026.1"></a>Haskell representations of <span 
+class="pcrr7t-">errno </span>values </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-393" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-393-1g"><col 
+id="TBL-393-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-393-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-393-1-1"  
+class="td11"><span 
+class="pcrb7t-">newtype</span><span 
+class="pcrb7t-">&#x00A0;Errno </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-394" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-394-1g"><col 
+id="TBL-394-1" /><col 
+id="TBL-394-2" /><col 
+id="TBL-394-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-394-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-394-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-394-1-2"  
+class="td11"> <span 
+class="pcrb7t-">Errno CInt </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-394-1-3"  
+class="td11">  </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-394-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-394-2-1"  
+class="td11"> </td></tr></table>
+     </div>
+     <p class="noindent"> Haskell representation for <span 
+class="pcrr7t-">errno </span>values. The implementation is deliberately exposed, to allow users to add
+     their own definitions of <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-265001"></a> values.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-395" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-395-1g"><col 
+id="TBL-395-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-395-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-395-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;Errno </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">26.1.1    </span> <a 
+ id="x34-26600026.1.1"></a>Common <span 
+class="pcrr7t-">errno </span>symbols </h4>
+<p class="noindent"> Different operating systems and/or C libraries often support different values of <span 
+class="pcrr7t-">errno</span>. This module defines
+the common values, but due to the open definition of <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-266001"></a> users may add definitions which are not
+predefined.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eOK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">e2BIG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eACCES</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eADDRINUSE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eADDRNOTAVAIL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eADV</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eAFNOSUPPORT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eAGAIN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eALREADY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eBADF</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eBADMSG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eBADRPC</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eBUSY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+                                                                                   
+
+                                                                                   
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eCHILD</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eCOMM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eCONNABORTED</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eCONNREFUSED</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eCONNRESET</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eDEADLK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eDESTADDRREQ</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eDIRTY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eDOM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eDQUOT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eEXIST</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eFAULT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eFBIG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eFTYPE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eHOSTDOWN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eHOSTUNREACH</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eIDRM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eILSEQ</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eINPROGRESS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+                                                                                   
+
+                                                                                   
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eINTR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eINVAL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eIO</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eISCONN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eISDIR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eLOOP</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eMFILE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eMLINK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eMSGSIZE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eMULTIHOP</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNAMETOOLONG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNETDOWN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNETRESET</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNETUNREACH</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNFILE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOBUFS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNODATA</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNODEV</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOENT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+                                                                                   
+
+                                                                                   
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOEXEC</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOLCK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOLINK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOMEM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOMSG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNONET</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOPROTOOPT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOSPC</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOSR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOSTR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOSYS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTBLK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTCONN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTDIR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTEMPTY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTSOCK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNOTTY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eNXIO</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eOPNOTSUPP</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+                                                                                   
+
+                                                                                   
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePERM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePFNOSUPPORT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePIPE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROCLIM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROCUNAVAIL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROGMISMATCH</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROGUNAVAIL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROTO</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROTONOSUPPORT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">ePROTOTYPE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eRANGE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eREMCHG</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eREMOTE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eROFS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eRPCMISMATCH</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eRREMOTE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSHUTDOWN</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSOCKTNOSUPPORT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSPIPE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+                                                                                   
+
+                                                                                   
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSRCH</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSRMNT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eSTALE</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eTIME</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eTIMEDOUT</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eTOOMANYREFS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eTXTBSY</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eUSERS</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eWOULDBLOCK</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc">
+     <dt class="haddockdesc">
+ <span 
+class="pcrb7t-">eXDEV</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span>  <dd class="haddockdesc"></dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">26.1.2    </span> <a 
+ id="x34-26700026.1.2"></a><span 
+class="pcrr7t-">Errno </span>functions </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-396" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-396-1g"><col 
+id="TBL-396-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-396-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-396-1-1"  
+class="td11"><span 
+class="pcrb7t-">isValidErrno</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Errno</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+     Yield <span 
+class="pcrr7t-">True</span><a 
+ id="dx34-267001"></a> if the given <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-267002"></a> value is valid on the system. This implies that the <span 
+class="pcrr7t-">Eq</span><a 
+ id="dx34-267003"></a> instance of
+     <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-267004"></a> is also system dependent as it is only defined for valid values of <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-267005"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-397" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-397-1g"><col 
+id="TBL-397-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-397-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-397-1-1"  
+class="td11"><span 
+class="pcrb7t-">getErrno</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Errno </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Get the current value of <span 
+class="pcrr7t-">errno </span>in the current thread.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-398" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-398-1g"><col 
+id="TBL-398-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-398-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-398-1-1"  
+class="td11"><span 
+class="pcrb7t-">resetErrno</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Reset the current thread&#8217;s <span 
+class="pcrr7t-">errno </span>value to <span 
+class="pcrr7t-">eOK</span><a 
+ id="dx34-267006"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-399" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-399-1g"><col 
+id="TBL-399-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-399-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-399-1-1"  
+class="td11"><span 
+class="pcrb7t-">errnoToIOError </span></td></tr></table>                                                              </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-400" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-400-1g"><col 
+id="TBL-400-1" /><col 
+id="TBL-400-2" /><col 
+id="TBL-400-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-400-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-400-1-2"  
+class="td11"> <span 
+class="pcrb7t-">String       </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-400-1-3"  
+class="td11"> the location where the error occurred           </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-400-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-2-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-400-2-2"  
+class="td11"> <span 
+class="pcrb7t-">Errno        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-400-2-3"  
+class="td11"> the error number                                            </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-400-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td> <td  style="white-space:nowrap; text-align:left;" id="TBL-400-3-2"  
+class="td11"> <span 
+class="pcrb7t-">Maybe Handle </span></td> <td  style="white-space:wrap; text-align:left;" id="TBL-400-3-3"  
+class="td11"> optional handle associated with the error</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-400-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-400-4-2"  
+class="td11"> <span 
+class="pcrb7t-">Maybe String </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-400-4-3"  
+class="td11"> optional filename associated with the error  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-400-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-5-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-400-5-2"  
+class="td11"> <span 
+class="pcrb7t-">IOError      </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-400-5-3"  
+class="td11">                              </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-400-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-400-6-1"  
+class="td11"> </td>
+</tr></table></div>
+     <p class="noindent"> Construct an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-267007"></a> based on the given <span 
+class="pcrr7t-">Errno</span><a 
+ id="dx34-267008"></a> value. The optional information can be used to improve
+     the accuracy of error messages.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-401" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-401-1g"><col 
+id="TBL-401-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-401-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-401-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrno </span></td></tr></table>                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-402" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-402-1g"><col 
+id="TBL-402-1" /><col 
+id="TBL-402-2" /><col 
+id="TBL-402-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-402-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-402-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-402-1-2"  
+class="td11"> <span 
+class="pcrb7t-">String </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-402-1-3"  
+class="td11"> textual description of the error location  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-402-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-402-2-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-402-2-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a   </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-402-2-3"  
+class="td11">                            </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-402-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-402-3-1"  
+class="td11"> </td>
+</tr></table></div>
+     <p class="noindent"> Throw an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-267009"></a> corresponding to the current value of <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-267010"></a>.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">26.1.3    </span> <a 
+ id="x34-26800026.1.3"></a>Guards for IO operations that may fail </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-403" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-403-1g"><col 
+id="TBL-403-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-403-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-403-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIf </span></td></tr></table>                                                                </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-404" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-404-1g"><col 
+id="TBL-404-1" /><col 
+id="TBL-404-2" /><col 
+id="TBL-404-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-404-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-404-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-404-1-2"  
+class="td11"> <span 
+class="pcrb7t-">(a -&#x003E; Bool) </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-404-1-3"  
+class="td11"> predicate to apply to the result value of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268001"></a> operation  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-404-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-404-2-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-404-2-2"  
+class="td11"> <span 
+class="pcrb7t-">String      </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-404-2-3"  
+class="td11"> textual description of the location                                       </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-404-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-404-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-404-3-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-404-3-3"  
+class="td11"> the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268002"></a> operation to be executed                                          </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-404-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-404-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-404-4-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-404-4-3"  
+class="td11">                                        </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-404-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-404-5-1"  
+class="td11"> </td>
+</tr></table></div>
+     <p class="noindent"> Throw an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-268003"></a> corresponding to the current value of <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-268004"></a> if the result value of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268005"></a> action
+     meets the given predicate.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-405" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-405-1g"><col 
+id="TBL-405-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-405-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-405-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIf_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIf</span><a 
+ id="dx34-268006"></a>, but discards the result of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268007"></a> action after error handling.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-406" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-406-1g"><col 
+id="TBL-406-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-406-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-406-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfRetry</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIf</span><a 
+ id="dx34-268008"></a>, but retry the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268009"></a> action when it yields the error code <span 
+class="pcrr7t-">eINTR</span><a 
+ id="dx34-268010"></a> - this amounts to the
+     standard retry loop for interrupted POSIX system calls.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-407" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-407-1g"><col 
+id="TBL-407-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-407-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-407-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfRetry_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfRetry</span><a 
+ id="dx34-268011"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-408" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-408-1g"><col 
+id="TBL-408-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-408-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-408-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Throw an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-268012"></a> corresponding to the current value of <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-268013"></a> if the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268014"></a> action returns a result
+     of <span 
+class="pcrr7t-">-1</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-409" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-409-1g"><col 
+id="TBL-409-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-409-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-409-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1</span><a 
+ id="dx34-268015"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-410" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-410-1g"><col 
+id="TBL-410-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-410-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-410-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1Retry</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Throw an <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-268016"></a> corresponding to the current value of <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-268017"></a> if the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268018"></a> action returns a result
+     of <span 
+class="pcrr7t-">-1</span>, but retries in case of an interrupted operation.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-411" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-411-1g"><col 
+id="TBL-411-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-411-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-411-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1Retry_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1</span><a 
+ id="dx34-268019"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-412" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-412-1g"><col 
+id="TBL-412-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-412-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-412-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfNull</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Throw  an  <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-268020"></a> corresponding  to  the  current  value  of  <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-268021"></a> if  the  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268022"></a> action  returns
+     <span 
+class="pcrr7t-">nullPtr</span><a 
+ id="dx34-268023"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-413" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-413-1g"><col 
+id="TBL-413-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-413-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-413-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfNullRetry</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Throw  an  <span 
+class="pcrr7t-">IOError</span><a 
+ id="dx34-268024"></a> corresponding  to  the  current  value  of  <span 
+class="pcrr7t-">getErrno</span><a 
+ id="dx34-268025"></a> if  the  <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268026"></a> action  returns
+     <span 
+class="pcrr7t-">nullPtr</span><a 
+ id="dx34-268027"></a>, but retry in case of an interrupted operation.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-414" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-414-1g"><col 
+id="TBL-414-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-414-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-414-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfRetryMayBlock </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-415" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-415-1g"><col 
+id="TBL-415-1" /><col 
+id="TBL-415-2" /><col 
+id="TBL-415-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-415-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-415-1-2"  
+class="td11"> <span 
+class="pcrb7t-">(a -&#x003E; Bool) </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-415-1-3"  
+class="td11"> predicate to apply to the result value of the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268028"></a> operation                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-415-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-2-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-415-2-2"  
+class="td11"> <span 
+class="pcrb7t-">String      </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-415-2-3"  
+class="td11"> textual description of the location                                                        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-415-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-415-3-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-415-3-3"  
+class="td11"> the <span 
+class="pcrr7t-">IO</span><a 
+ id="dx34-268029"></a> operation to be executed                                                           </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-415-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-415-4-2"  
+class="td11"> <span 
+class="pcrb7t-">IO b        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-415-4-3"  
+class="td11"> action to execute before retrying if an immediate retry would block  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-415-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-5-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-415-5-2"  
+class="td11"> <span 
+class="pcrb7t-">IO a        </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-415-5-3"  
+class="td11">                                               </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-415-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-415-6-1"  
+class="td11"> </td>
+</tr></table></div>
+     <p class="noindent"> as <span 
+class="pcrr7t-">throwErrnoIfRetry</span><a 
+ id="dx34-268030"></a>, but additionally if the operation yields the error code <span 
+class="pcrr7t-">eAGAIN</span><a 
+ id="dx34-268031"></a> or
+     <span 
+class="pcrr7t-">eWOULDBLOCK</span><a 
+ id="dx34-268032"></a>, an alternative action is executed before retrying.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-416" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-416-1g"><col 
+id="TBL-416-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-416-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-416-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfRetryMayBlock_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)                       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-416-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-416-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfRetryMayBlock</span><a 
+ id="dx34-268033"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-417" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-417-1g"><col 
+id="TBL-417-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-417-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-417-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1RetryMayBlock</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String                 </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-417-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-417-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1Retry</span><a 
+ id="dx34-268034"></a>, but checks for operations that would block.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-418" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-418-1g"><col 
+id="TBL-418-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-418-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-418-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfMinus1RetryMayBlock_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String                  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-418-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-418-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1RetryMayBlock</span><a 
+ id="dx34-268035"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-419" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-419-1g"><col 
+id="TBL-419-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-419-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-419-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoIfNullRetryMayBlock</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String                             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-419-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-419-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfNullRetry</span><a 
+ id="dx34-268036"></a>, but checks for operations that would block.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-420" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-420-1g"><col 
+id="TBL-420-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-420-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-420-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPath</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrno</span><a 
+ id="dx34-268037"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-421" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-421-1g"><col 
+id="TBL-421-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-421-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-421-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPathIf</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)                          </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-421-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-421-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIf</span><a 
+ id="dx34-268038"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-422" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-422-1g"><col 
+id="TBL-422-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-422-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-422-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPathIf_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)                           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-422-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-422-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIf_</span><a 
+ id="dx34-268039"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-423" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-423-1g"><col 
+id="TBL-423-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-423-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-423-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPathIfNull</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String                                 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-423-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-423-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfNull</span><a 
+ id="dx34-268040"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-424" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-424-1g"><col 
+id="TBL-424-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-424-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-424-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPathIfMinus1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String                     </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-424-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-424-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1</span><a 
+ id="dx34-268041"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-425" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-425-1g"><col 
+id="TBL-425-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-425-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-425-1-1"  
+class="td11"><span 
+class="pcrb7t-">throwErrnoPathIfMinus1_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String                      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-425-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-425-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;FilePath</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     as <span 
+class="pcrr7t-">throwErrnoIfMinus1_</span><a 
+ id="dx34-268042"></a>, but exceptions include the given path when appropriate.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch27.html" >next</a>] [<a 
+href="haskellch25.html" >prev</a>] [<a 
+href="haskellch25.html#tailhaskellch25.html" >prev-tail</a>] [<a 
+href="haskellch26.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch26.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch26.html"></a>    
+</body> </html> 

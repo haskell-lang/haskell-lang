@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>32 Foreign.Marshal.Array</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch33.html" >next</a>] [<a 
+href="haskellch31.html" >prev</a>] [<a 
+href="haskellch31.html#tailhaskellch31.html" >prev-tail</a>] [<a 
+href="#tailhaskellch32.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch32.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;32</span><br /><a 
+ id="x40-29000032"></a><span 
+class="pcrr7t-">Foreign.Marshal.Array</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-446">
+module&#x00A0;Foreign.Marshal.Array&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;mallocArray,&#x00A0;&#x00A0;mallocArray0,&#x00A0;&#x00A0;allocaArray,&#x00A0;&#x00A0;allocaArray0,&#x00A0;&#x00A0;reallocArray,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;reallocArray0,&#x00A0;&#x00A0;peekArray,&#x00A0;&#x00A0;peekArray0,&#x00A0;&#x00A0;pokeArray,&#x00A0;&#x00A0;pokeArray0,&#x00A0;&#x00A0;newArray,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;newArray0,&#x00A0;&#x00A0;withArray,&#x00A0;&#x00A0;withArray0,&#x00A0;&#x00A0;withArrayLen,&#x00A0;&#x00A0;withArrayLen0,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;copyArray,&#x00A0;&#x00A0;moveArray,&#x00A0;&#x00A0;lengthArray0,&#x00A0;&#x00A0;advancePtr
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The module <span 
+class="pcrr7t-">Foreign.Marshal.Array </span>provides operations for marshalling Haskell lists into monolithic arrays
+and vice versa. Most functions come in two flavours: one for arrays terminated by a special termination element and
+one where an explicit length parameter is used to determine the extent of an array. The typical example for the
+former case are C&#8217;s NUL terminated strings. However, please note that C strings should usually be
+marshalled using the functions provided by <span 
+class="pcrr7t-">Foreign.C.String </span>as the Unicode encoding has to be taken
+into account. All functions specifically operating on arrays that are terminated by a special termination
+element have a name ending on <span 
+class="pcrr7t-">0</span>&#8212;e.g., <span 
+class="pcrr7t-">mallocArray</span><a 
+ id="dx40-290001"></a> allocates space for an array of the given size,
+whereas <span 
+class="pcrr7t-">mallocArray0</span><a 
+ id="dx40-290002"></a> allocates space for one more element to ensure that there is room for the
+terminator.
+<h3 class="sectionHead"><span class="titlemark">32.1    </span> <a 
+ id="x40-29100032.1"></a>Marshalling arrays </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.1    </span> <a 
+ id="x40-29200032.1.1"></a>Allocation </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-532" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-532-1g"><col 
+id="TBL-532-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-532-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-532-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Allocate     storage     for     the     given     number     of     elements     of     a     storable     type     (like
+     <span 
+class="pcrr7t-">Foreign.Marshal.Alloc.malloc</span>, but for multiple elements).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-533" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-533-1g"><col 
+id="TBL-533-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-533-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-533-1-1"  
+class="td11"><span 
+class="pcrb7t-">mallocArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">mallocArray</span><a 
+ id="dx40-292001"></a>, but add an extra position to hold a special termination element.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-534" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-534-1g"><col 
+id="TBL-534-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-534-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-534-1-1"  
+class="td11"><span 
+class="pcrb7t-">allocaArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Temporarily       allocate       space       for       the       given       number       of       elements       (like
+     <span 
+class="pcrr7t-">Foreign.Marshal.Alloc.alloca</span>, but for multiple elements).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-535" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-535-1g"><col 
+id="TBL-535-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-535-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-535-1-1"  
+class="td11"><span 
+class="pcrb7t-">allocaArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">allocaArray</span><a 
+ id="dx40-292002"></a>, but add an extra position to hold a special termination element.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-536" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-536-1g"><col 
+id="TBL-536-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-536-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-536-1-1"  
+class="td11"><span 
+class="pcrb7t-">reallocArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Adjust the size of an array
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-537" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-537-1g"><col 
+id="TBL-537-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-537-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-537-1-1"  
+class="td11"><span 
+class="pcrb7t-">reallocArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Adjust the size of an array including an extra position for the end marker.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.2    </span> <a 
+ id="x40-29300032.1.2"></a>Marshalling </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-538" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-538-1g"><col 
+id="TBL-538-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-538-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-538-1-1"  
+class="td11"><span 
+class="pcrb7t-">peekArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Convert an array of given length into a Haskell list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-539" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-539-1g"><col 
+id="TBL-539-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-539-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-539-1-1"  
+class="td11"><span 
+class="pcrb7t-">peekArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(Storable</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Convert an array terminated by the given end marker into a Haskell list
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-540" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-540-1g"><col 
+id="TBL-540-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-540-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-540-1-1"  
+class="td11"><span 
+class="pcrb7t-">pokeArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write the list elements consecutive into memory
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-541" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-541-1g"><col 
+id="TBL-541-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-541-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-541-1-1"  
+class="td11"><span 
+class="pcrb7t-">pokeArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write the list elements consecutive into memory and terminate them with the given marker element
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.3    </span> <a 
+ id="x40-29400032.1.3"></a>Combined allocation and marshalling </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-542" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-542-1g"><col 
+id="TBL-542-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-542-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-542-1-1"  
+class="td11"><span 
+class="pcrb7t-">newArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write a list of storable elements into a newly allocated, consecutive sequence of storable values (like
+     <span 
+class="pcrr7t-">Foreign.Marshal.Utils.new</span>, but for multiple elements).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-543" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-543-1g"><col 
+id="TBL-543-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-543-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-543-1-1"  
+class="td11"><span 
+class="pcrb7t-">newArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Write a list of storable elements into a newly allocated, consecutive sequence of storable values, where
+     the end is fixed by the given end marker
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-544" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-544-1g"><col 
+id="TBL-544-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-544-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-544-1-1"  
+class="td11"><span 
+class="pcrb7t-">withArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Temporarily store a list of storable values in memory (like <span 
+class="pcrr7t-">Foreign.Marshal.Utils.with</span>, but
+     for multiple elements).
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-545" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-545-1g"><col 
+id="TBL-545-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-545-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-545-1-1"  
+class="td11"><span 
+class="pcrb7t-">withArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">withArray</span><a 
+ id="dx40-294001"></a>, but a terminator indicates where the array ends
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-546" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-546-1g"><col 
+id="TBL-546-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-546-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-546-1-1"  
+class="td11"><span 
+class="pcrb7t-">withArrayLen</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">withArray</span><a 
+ id="dx40-294002"></a>, but the action gets the number of values as an additional parameter
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-547" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-547-1g"><col 
+id="TBL-547-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-547-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-547-1-1"  
+class="td11"><span 
+class="pcrb7t-">withArrayLen0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a                                       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-547-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-547-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                     </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">withArrayLen</span><a 
+ id="dx40-294003"></a>, but a terminator indicates where the array ends
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.4    </span> <a 
+ id="x40-29500032.1.4"></a>Copying </h4>
+<p class="noindent"> (argument order: destination, source)
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-548" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-548-1g"><col 
+id="TBL-548-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-548-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-548-1-1"  
+class="td11"><span 
+class="pcrb7t-">copyArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Copy the given number of elements from the second array (source) into the first array (destination);
+     the copied areas may <span 
+class="ptmri7t-">not </span>overlap
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-549" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-549-1g"><col 
+id="TBL-549-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-549-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-549-1-1"  
+class="td11"><span 
+class="pcrb7t-">moveArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Copy the given number of elements from the second array (source) into the first array (destination);
+     the copied areas <span 
+class="ptmri7t-">may </span>overlap
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.5    </span> <a 
+ id="x40-29600032.1.5"></a>Finding the length </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-550" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-550-1g"><col 
+id="TBL-550-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-550-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-550-1-1"  
+class="td11"><span 
+class="pcrb7t-">lengthArray0</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(Storable</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Return the number of elements in an array, excluding the terminator
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">32.1.6    </span> <a 
+ id="x40-29700032.1.6"></a>Indexing </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-551" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-551-1g"><col 
+id="TBL-551-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-551-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-551-1-1"  
+class="td11"><span 
+class="pcrb7t-">advancePtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                      </div> <dd class="haddockdesc">
+     Advance a pointer into an array by the given number of elements
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch33.html" >next</a>] [<a 
+href="haskellch31.html" >prev</a>] [<a 
+href="haskellch31.html#tailhaskellch31.html" >prev-tail</a>] [<a 
+href="haskellch32.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch32.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch32.html"></a>    
+</body></html> 

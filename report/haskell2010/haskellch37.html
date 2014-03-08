@@ -1,0 +1,581 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>37 Foreign.Storable</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch38.html" >next</a>] [<a 
+href="haskellch36.html" >prev</a>] [<a 
+href="haskellch36.html#tailhaskellch36.html" >prev-tail</a>] [<a 
+href="#tailhaskellch37.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch37.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;37</span><br /><a 
+ id="x45-31300037"></a><span 
+class="pcrr7t-">Foreign.Storable</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-457">
+module&#x00A0;Foreign.Storable&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Storable(sizeOf,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;alignment,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;peekElemOff,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pokeElemOff,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;peekByteOff,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pokeByteOff,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;peek,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;poke)
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-598" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-598-1g"><col 
+id="TBL-598-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-598-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-598-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                                     </div> <dd class="haddockdesc">
+     The member functions of this class facilitate writing values of primitive types to raw memory (which
+     may  have  been  allocated  with  the  above  mentioned  routines)  and  reading  values  from  blocks  of
+     raw  memory.  The  class,  furthermore,  includes  support  for  computing  the  storage  requirements  and
+     alignment restrictions of storable types.
+     <p class="noindent"> Memory addresses are represented as values of type <span 
+class="pcrr7t-">Ptr</span><span 
+class="pcrr7t-">&#x00A0;a</span>, for some <span 
+class="pcrr7t-">a </span>which is an instance of class
+     <span 
+class="pcrr7t-">Storable</span><a 
+ id="dx45-313001"></a>. The type argument to <span 
+class="pcrr7t-">Ptr</span><a 
+ id="dx45-313002"></a> helps provide some valuable type safety in FFI code (you can&#8217;t
+     mix pointers of different types without an explicit cast), while helping the Haskell type system figure
+     out which marshalling method is needed for a given pointer.
+     <p class="noindent"> All marshalling between Haskell and a foreign language ultimately boils down to translating Haskell
+     data structures into the binary representation of a corresponding data structure of the foreign language
+     and vice versa. To code this marshalling in Haskell, it is necessary to manipulate primitive data types
+     stored in unstructured memory blocks. The class <span 
+class="pcrr7t-">Storable</span><a 
+ id="dx45-313003"></a> facilitates this manipulation on all types
+     for which it is instantiated, which are the standard basic types of Haskell, the fixed size <span 
+class="pcrr7t-">Int </span>types
+     (<span 
+class="pcrr7t-">Int8</span><a 
+ id="dx45-313004"></a>, <span 
+class="pcrr7t-">Int16</span><a 
+ id="dx45-313005"></a>, <span 
+class="pcrr7t-">Int32</span><a 
+ id="dx45-313006"></a>, <span 
+class="pcrr7t-">Int64</span><a 
+ id="dx45-313007"></a>), the fixed size <span 
+class="pcrr7t-">Word </span>types (<span 
+class="pcrr7t-">Word8</span><a 
+ id="dx45-313008"></a>, <span 
+class="pcrr7t-">Word16</span><a 
+ id="dx45-313009"></a>, <span 
+class="pcrr7t-">Word32</span><a 
+ id="dx45-313010"></a>, <span 
+class="pcrr7t-">Word64</span><a 
+ id="dx45-313011"></a>),
+     <span 
+class="pcrr7t-">StablePtr</span><a 
+ id="dx45-313012"></a>, all types from <span 
+class="pcrr7t-">Foreign.C.Types</span>, as well as <span 
+class="pcrr7t-">Ptr</span><a 
+ id="dx45-313013"></a>.
+      <p class="noindent">   Minimal   complete   definition:   <span 
+class="pcrr7t-">sizeOf</span><a 
+ id="dx45-313014"></a>,   <span 
+class="pcrr7t-">alignment</span><a 
+ id="dx45-313015"></a>,   one   of   <span 
+class="pcrr7t-">peek</span><a 
+ id="dx45-313016"></a>,   <span 
+class="pcrr7t-">peekElemOff</span><a 
+ id="dx45-313017"></a> and
+     <span 
+class="pcrr7t-">peekByteOff</span><a 
+ id="dx45-313018"></a>, and one of <span 
+class="pcrr7t-">poke</span><a 
+ id="dx45-313019"></a>, <span 
+class="pcrr7t-">pokeElemOff</span><a 
+ id="dx45-313020"></a> and <span 
+class="pcrr7t-">pokeByteOff</span><a 
+ id="dx45-313021"></a>.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-599" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-599-1g"><col 
+id="TBL-599-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-599-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-599-1-1"  
+class="td11"><span 
+class="pcrb7t-">sizeOf</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                                  </div> <dd class="haddockdesc">
+         Computes the storage requirements (in bytes) of the argument. The value of the argument is not
+         used.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-600" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-600-1g"><col 
+id="TBL-600-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-600-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-600-1-1"  
+class="td11"><span 
+class="pcrb7t-">alignment</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+         Computes the alignment constraint of the argument. An alignment constraint <span 
+class="pcrr7t-">x </span>is fulfilled by any
+         address divisible by <span 
+class="pcrr7t-">x</span>. The value of the argument is not used.
+         </dl>
+                                                                                   
+
+                                                                                   
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-601" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-601-1g"><col 
+id="TBL-601-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-601-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-601-1-1"  
+class="td11"><span 
+class="pcrb7t-">peekElemOff</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                 </div> <dd class="haddockdesc">
+         Read a value from a memory area regarded as an array of values of the same kind. The first
+         argument specifies the start address of the array and the second the index into the array (the first
+         element of the array has index <span 
+class="pcrr7t-">0</span>). The following equality holds,
+             <div class="quote">
+                                                                                   
+
+                                                                                   
+             <div class="verbatim" id="verbatim-458">
+&#x00A0;peekElemOff&#x00A0;addr&#x00A0;idx&#x00A0;=&#x00A0;IOExts.fixIO&#x00A0;$&#x00A0;\result&#x00A0;-&#x003E;
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;peek&#x00A0;(addr&#x00A0;&#8216;plusPtr&#8216;&#x00A0;(idx&#x00A0;&#x22C6;&#x00A0;sizeOf&#x00A0;result))
+</div>
+             <p class="noindent"></div>
+         <p class="noindent"> Note that this is only a specification, not necessarily the concrete implementation of the
+         function.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-602" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-602-1g"><col 
+id="TBL-602-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-602-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-602-1-1"  
+class="td11"><span 
+class="pcrb7t-">pokeElemOff</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td></tr></table>                           </div> <dd class="haddockdesc">
+         Write a value to a memory area regarded as an array of values of the same kind. The following
+         equality holds:
+             <div class="quote">
+                                                                                   
+
+                                                                                   
+             <div class="verbatim" id="verbatim-459">
+&#x00A0;pokeElemOff&#x00A0;addr&#x00A0;idx&#x00A0;x&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;poke&#x00A0;(addr&#x00A0;&#8216;plusPtr&#8216;&#x00A0;(idx&#x00A0;&#x22C6;&#x00A0;sizeOf&#x00A0;x))&#x00A0;x
+</div>
+             <p class="noindent"></div>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-603" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-603-1g"><col 
+id="TBL-603-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-603-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-603-1-1"  
+class="td11"><span 
+class="pcrb7t-">peekByteOff</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                 </div> <dd class="haddockdesc">
+         Read a value from a memory location given by a base address and offset. The following equality
+         holds:
+             <div class="quote">
+                                                                                   
+
+                                                                                   
+             <div class="verbatim" id="verbatim-460">
+&#x00A0;peekByteOff&#x00A0;addr&#x00A0;off&#x00A0;=&#x00A0;peek&#x00A0;(addr&#x00A0;&#8216;plusPtr&#8216;&#x00A0;off)
+</div>
+             <p class="noindent"></div>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-604" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-604-1g"><col 
+id="TBL-604-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-604-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-604-1-1"  
+class="td11"><span 
+class="pcrb7t-">pokeByteOff</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td></tr></table>                           </div> <dd class="haddockdesc">
+         Write a value to a memory location given by a base address and offset. The following equality
+         holds:
+             <div class="quote">
+                                                                                   
+
+                                                                                   
+             <div class="verbatim" id="verbatim-461">
+&#x00A0;pokeByteOff&#x00A0;addr&#x00A0;off&#x00A0;x&#x00A0;=&#x00A0;poke&#x00A0;(addr&#x00A0;&#8216;plusPtr&#8216;&#x00A0;off)&#x00A0;x
+</div>
+             <p class="noindent"></div>
+         </dl>
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-605" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-605-1g"><col 
+id="TBL-605-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-605-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-605-1-1"  
+class="td11"><span 
+class="pcrb7t-">peek</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+         Read a value from the given memory location.
+          <p class="noindent"> Note that the peek and poke functions might require properly aligned addresses to function
+         correctly. This is architecture dependent; thus, portable code should ensure that when peeking
+         or  poking  values  of  some  type  <span 
+class="pcrr7t-">a</span>,  the  alignment  constraint  for  <span 
+class="pcrr7t-">a</span>,  as  given  by  the  function
+         <span 
+class="pcrr7t-">alignment</span><a 
+ id="dx45-313022"></a> is fulfilled.
+         </dl>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-606" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-606-1g"><col 
+id="TBL-606-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-606-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-606-1-1"  
+class="td11"><span 
+class="pcrb7t-">poke</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td></tr></table>                                         </div> <dd class="haddockdesc">
+         Write  the  given  value  to  the  given  memory  location.  Alignment  restrictions  might  apply;  see
+         <span 
+class="pcrr7t-">peek</span><a 
+ id="dx45-313023"></a>.
+         </dl>
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-607" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-607-1g"><col 
+id="TBL-607-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-607-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Bool         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Char</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Double        </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Float</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int           </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int8</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int16         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int32</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Int64         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-10-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-10-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Word</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-11-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-11-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Word8         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-12-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-12-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Word16</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-13-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-13-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Word32        </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-14-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-14-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;Word64</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-15-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-15-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;WordPtr       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-16-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-16-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;IntPtr</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-17-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-17-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CChar         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-18-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-18-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSChar</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-19-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-19-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUChar        </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-20-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-20-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CShort</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-21-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-21-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUShort       </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-22-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-22-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CInt</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-23-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-23-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUInt         </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-24-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-24-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CLong         </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-25-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-25-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CULong        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-26-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-26-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CLLong        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-27-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-27-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CULLong       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-28-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-28-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CFloat        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-29-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-29-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CDouble       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-30-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-30-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CPtrdiff      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-31-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-31-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSize         </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-32-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-32-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CWchar        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-33-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-33-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CSigAtomic    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-34-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-34-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CClock        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-35-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-35-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CTime         </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-36-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-36-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CIntPtr       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-37-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-37-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUIntPtr      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-38-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-38-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CIntMax       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-39-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-39-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;CUIntMax      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-40-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-40-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;(StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-41-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-41-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;(Ptr</span><span 
+class="pcrb7t-">&#x00A0;a)       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-607-42-"><td  style="white-space:nowrap; text-align:left;" id="TBL-607-42-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;(FunPtr</span><span 
+class="pcrb7t-">&#x00A0;a)    </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch38.html" >next</a>] [<a 
+href="haskellch36.html" >prev</a>] [<a 
+href="haskellch36.html#tailhaskellch36.html" >prev-tail</a>] [<a 
+href="haskellch37.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch37.html" >up</a>] </p></div>
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> <a 
+ id="tailhaskellch37.html"></a>  
+</body></html> 

@@ -1,0 +1,3620 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>20 Data.List</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch21.html" >next</a>] [<a 
+href="haskellch19.html" >prev</a>] [<a 
+href="haskellch19.html#tailhaskellch19.html" >prev-tail</a>] [<a 
+href="#tailhaskellch20.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch20.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;20</span><br /><a 
+ id="x28-22800020"></a><span 
+class="pcrr7t-">Data.List</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-395">
+module&#x00A0;Data.List&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;(++),&#x00A0;&#x00A0;head,&#x00A0;&#x00A0;last,&#x00A0;&#x00A0;tail,&#x00A0;&#x00A0;init,&#x00A0;&#x00A0;null,&#x00A0;&#x00A0;length,&#x00A0;&#x00A0;map,&#x00A0;&#x00A0;reverse,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;intersperse,&#x00A0;&#x00A0;intercalate,&#x00A0;&#x00A0;transpose,&#x00A0;&#x00A0;subsequences,&#x00A0;&#x00A0;permutations,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;foldl,&#x00A0;&#x00A0;foldl',&#x00A0;&#x00A0;foldl1,&#x00A0;&#x00A0;foldl1',&#x00A0;&#x00A0;foldr,&#x00A0;&#x00A0;foldr1,&#x00A0;&#x00A0;concat,&#x00A0;&#x00A0;concatMap,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;and,&#x00A0;&#x00A0;or,&#x00A0;&#x00A0;any,&#x00A0;&#x00A0;all,&#x00A0;&#x00A0;sum,&#x00A0;&#x00A0;product,&#x00A0;&#x00A0;maximum,&#x00A0;&#x00A0;minimum,&#x00A0;&#x00A0;scanl,&#x00A0;&#x00A0;scanl1,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;scanr,&#x00A0;&#x00A0;scanr1,&#x00A0;&#x00A0;mapAccumL,&#x00A0;&#x00A0;mapAccumR,&#x00A0;&#x00A0;iterate,&#x00A0;&#x00A0;repeat,&#x00A0;&#x00A0;replicate,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;cycle,&#x00A0;&#x00A0;unfoldr,&#x00A0;&#x00A0;take,&#x00A0;&#x00A0;drop,&#x00A0;&#x00A0;splitAt,&#x00A0;&#x00A0;takeWhile,&#x00A0;&#x00A0;dropWhile,&#x00A0;&#x00A0;span,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;break,&#x00A0;&#x00A0;stripPrefix,&#x00A0;&#x00A0;group,&#x00A0;&#x00A0;inits,&#x00A0;&#x00A0;tails,&#x00A0;&#x00A0;isPrefixOf,&#x00A0;&#x00A0;isSuffixOf,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;isInfixOf,&#x00A0;&#x00A0;elem,&#x00A0;&#x00A0;notElem,&#x00A0;&#x00A0;lookup,&#x00A0;&#x00A0;find,&#x00A0;&#x00A0;filter,&#x00A0;&#x00A0;partition,&#x00A0;&#x00A0;(!!),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;elemIndex,&#x00A0;&#x00A0;elemIndices,&#x00A0;&#x00A0;findIndex,&#x00A0;&#x00A0;findIndices,&#x00A0;&#x00A0;zip,&#x00A0;&#x00A0;zip3,&#x00A0;&#x00A0;zip4,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;zip5,&#x00A0;&#x00A0;zip6,&#x00A0;&#x00A0;zip7,&#x00A0;&#x00A0;zipWith,&#x00A0;&#x00A0;zipWith3,&#x00A0;&#x00A0;zipWith4,&#x00A0;&#x00A0;zipWith5,&#x00A0;&#x00A0;zipWith6,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;zipWith7,&#x00A0;&#x00A0;unzip,&#x00A0;&#x00A0;unzip3,&#x00A0;&#x00A0;unzip4,&#x00A0;&#x00A0;unzip5,&#x00A0;&#x00A0;unzip6,&#x00A0;&#x00A0;unzip7,&#x00A0;&#x00A0;lines,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;words,&#x00A0;&#x00A0;unlines,&#x00A0;&#x00A0;unwords,&#x00A0;&#x00A0;nub,&#x00A0;&#x00A0;delete,&#x00A0;&#x00A0;(\\),&#x00A0;&#x00A0;union,&#x00A0;&#x00A0;intersect,&#x00A0;&#x00A0;sort,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;insert,&#x00A0;&#x00A0;nubBy,&#x00A0;&#x00A0;deleteBy,&#x00A0;&#x00A0;deleteFirstsBy,&#x00A0;&#x00A0;unionBy,&#x00A0;&#x00A0;intersectBy,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;groupBy,&#x00A0;&#x00A0;sortBy,&#x00A0;&#x00A0;insertBy,&#x00A0;&#x00A0;maximumBy,&#x00A0;&#x00A0;minimumBy,&#x00A0;&#x00A0;genericLength,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;genericTake,&#x00A0;&#x00A0;genericDrop,&#x00A0;&#x00A0;genericSplitAt,&#x00A0;&#x00A0;genericIndex,&#x00A0;&#x00A0;genericReplicate
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">20.1    </span> <a 
+ id="x28-22900020.1"></a>Basic functions </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-251" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-251-1g"><col 
+id="TBL-251-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-251-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-251-1-1"  
+class="td11"><span 
+class="pcrb7t-">(++)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Append two lists, i.e.,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-396">
+&#x00A0;[x1,&#x00A0;...,&#x00A0;xm]&#x00A0;++&#x00A0;[y1,&#x00A0;...,&#x00A0;yn]&#x00A0;==&#x00A0;[x1,&#x00A0;...,&#x00A0;xm,&#x00A0;y1,&#x00A0;...,&#x00A0;yn]
+&#x00A0;<br />&#x00A0;[x1,&#x00A0;...,&#x00A0;xm]&#x00A0;++&#x00A0;[y1,&#x00A0;...]&#x00A0;==&#x00A0;[x1,&#x00A0;...,&#x00A0;xm,&#x00A0;y1,&#x00A0;...]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> If the first list is not finite, the result is the first list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-252" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-252-1g"><col 
+id="TBL-252-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-252-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-252-1-1"  
+class="td11"><span 
+class="pcrb7t-">head</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extract the first element of a list, which must be non-empty.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-253" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-253-1g"><col 
+id="TBL-253-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-253-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-253-1-1"  
+class="td11"><span 
+class="pcrb7t-">last</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extract the last element of a list, which must be finite and non-empty.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-254" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-254-1g"><col 
+id="TBL-254-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-254-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-254-1-1"  
+class="td11"><span 
+class="pcrb7t-">tail</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extract the elements after the head of a list, which must be non-empty.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-255" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-255-1g"><col 
+id="TBL-255-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-255-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-255-1-1"  
+class="td11"><span 
+class="pcrb7t-">init</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Return all the elements of a list except the last one. The list must be non-empty.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-256" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-256-1g"><col 
+id="TBL-256-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-256-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-256-1-1"  
+class="td11"><span 
+class="pcrb7t-">null</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Test whether a list is empty.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-257" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-257-1g"><col 
+id="TBL-257-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-257-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-257-1-1"  
+class="td11"><span 
+class="pcrb7t-">length</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="ptmri7t-">O(n)</span>.  <span 
+class="pcrr7t-">length</span><a 
+ id="dx28-229001"></a> returns  the  length  of  a  finite  list  as  an  <span 
+class="pcrr7t-">Int</span><a 
+ id="dx28-229002"></a>.  It  is  an  instance  of  the  more  general
+     <span 
+class="pcrr7t-">Data.List.genericLength</span>, the result type of which may be any kind of number.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.2    </span> <a 
+ id="x28-23000020.2"></a>List transformations </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-258" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-258-1g"><col 
+id="TBL-258-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-258-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-258-1-1"  
+class="td11"><span 
+class="pcrb7t-">map</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">map</span><a 
+ id="dx28-230001"></a><span 
+class="pcrr7t-">f</span><span 
+class="pcrr7t-">&#x00A0;xs </span>is the list obtained by applying <span 
+class="pcrr7t-">f </span>to each element of <span 
+class="pcrr7t-">xs</span>, i.e.,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-397">
+&#x00A0;map&#x00A0;f&#x00A0;[x1,&#x00A0;x2,&#x00A0;...,&#x00A0;xn]&#x00A0;==&#x00A0;[f&#x00A0;x1,&#x00A0;f&#x00A0;x2,&#x00A0;...,&#x00A0;f&#x00A0;xn]
+&#x00A0;<br />&#x00A0;map&#x00A0;f&#x00A0;[x1,&#x00A0;x2,&#x00A0;...]&#x00A0;==&#x00A0;[f&#x00A0;x1,&#x00A0;f&#x00A0;x2,&#x00A0;...]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-259" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-259-1g"><col 
+id="TBL-259-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-259-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-259-1-1"  
+class="td11"><span 
+class="pcrb7t-">reverse</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">reverse</span><a 
+ id="dx28-230002"></a><span 
+class="pcrr7t-">xs </span>returns the elements of <span 
+class="pcrr7t-">xs </span>in reverse order. <span 
+class="pcrr7t-">xs </span>must be finite.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-260" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-260-1g"><col 
+id="TBL-260-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-260-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-260-1-1"  
+class="td11"><span 
+class="pcrb7t-">intersperse</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">intersperse</span><a 
+ id="dx28-230003"></a> function takes an element and a list and &#8216;intersperses&#8217; that element between the
+     elements of the list. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-398">
+&#x00A0;intersperse&#x00A0;','&#x00A0;"abcde"&#x00A0;==&#x00A0;"a,b,c,d,e"
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-261" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-261-1g"><col 
+id="TBL-261-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-261-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-261-1-1"  
+class="td11"><span 
+class="pcrb7t-">intercalate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">intercalate</span><a 
+ id="dx28-230004"></a> <span 
+class="pcrr7t-">xs</span><span 
+class="pcrr7t-">&#x00A0;xss </span>is  equivalent  to  <span 
+class="pcrr7t-">(concat</span><span 
+class="pcrr7t-">&#x00A0;(intersperse</span><span 
+class="pcrr7t-">&#x00A0;xs</span><span 
+class="pcrr7t-">&#x00A0;xss))</span>.  It  inserts  the
+     list <span 
+class="pcrr7t-">xs </span>in between the lists in <span 
+class="pcrr7t-">xss </span>and concatenates the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-262" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-262-1g"><col 
+id="TBL-262-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-262-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-262-1-1"  
+class="td11"><span 
+class="pcrb7t-">transpose</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[[a]]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">transpose</span><a 
+ id="dx28-230005"></a> function transposes the rows and columns of its argument. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-399">
+&#x00A0;transpose&#x00A0;[[1,2,3],[4,5,6]]&#x00A0;==&#x00A0;[[1,4],[2,5],[3,6]]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-263" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-263-1g"><col 
+id="TBL-263-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-263-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-263-1-1"  
+class="td11"><span 
+class="pcrb7t-">subsequences</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">subsequences</span><a 
+ id="dx28-230006"></a> function returns the list of all subsequences of the argument.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-400">
+&#x00A0;subsequences&#x00A0;"abc"&#x00A0;==&#x00A0;["","a","b","ab","c","ac","bc","abc"]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-264" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-264-1g"><col 
+id="TBL-264-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-264-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-264-1-1"  
+class="td11"><span 
+class="pcrb7t-">permutations</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">permutations</span><a 
+ id="dx28-230007"></a> function returns the list of all permutations of the argument.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-401">
+&#x00A0;permutations&#x00A0;"abc"&#x00A0;==&#x00A0;["abc","bac","cba","bca","cab","acb"]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.3    </span> <a 
+ id="x28-23100020.3"></a>Reducing lists (folds) </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-265" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-265-1g"><col 
+id="TBL-265-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-265-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-265-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldl</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx28-231001"></a>, applied to a binary operator, a starting value (typically the left-identity of the operator), and a
+     list, reduces the list using the binary operator, from left to right:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-402">
+&#x00A0;foldl&#x00A0;f&#x00A0;z&#x00A0;[x1,&#x00A0;x2,&#x00A0;...,&#x00A0;xn]&#x00A0;==&#x00A0;(...((z&#x00A0;&#8216;f&#8216;&#x00A0;x1)&#x00A0;&#8216;f&#8216;&#x00A0;x2)&#x00A0;&#8216;f&#8216;...)&#x00A0;&#8216;f&#8216;&#x00A0;xn
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> The list must be finite.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-266" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-266-1g"><col 
+id="TBL-266-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-266-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-266-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldl'</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     A strict version of <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx28-231002"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-267" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-267-1g"><col 
+id="TBL-267-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-267-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-267-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldl1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">foldl1</span><a 
+ id="dx28-231003"></a> is  a  variant  of  <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx28-231004"></a> that  has  no  starting  value  argument,  and  thus  must  be  applied  to
+     non-empty lists.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-268" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-268-1g"><col 
+id="TBL-268-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-268-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-268-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldl1'</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     A strict version of <span 
+class="pcrr7t-">foldl1</span><a 
+ id="dx28-231005"></a>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-269" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-269-1g"><col 
+id="TBL-269-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-269-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-269-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-231006"></a>, applied to a binary operator, a starting value (typically the right-identity of the operator), and
+     a list, reduces the list using the binary operator, from right to left:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-403">
+&#x00A0;foldr&#x00A0;f&#x00A0;z&#x00A0;[x1,&#x00A0;x2,&#x00A0;...,&#x00A0;xn]&#x00A0;==&#x00A0;x1&#x00A0;&#8216;f&#8216;&#x00A0;(x2&#x00A0;&#8216;f&#8216;&#x00A0;...&#x00A0;(xn&#x00A0;&#8216;f&#8216;&#x00A0;z)...)
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-270" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-270-1g"><col 
+id="TBL-270-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-270-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-270-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldr1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">foldr1</span><a 
+ id="dx28-231007"></a> is  a  variant  of  <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-231008"></a> that  has  no  starting  value  argument,  and  thus  must  be  applied  to
+     non-empty lists.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.3.1    </span> <a 
+ id="x28-23200020.3.1"></a>Special folds </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-271" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-271-1g"><col 
+id="TBL-271-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-271-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-271-1-1"  
+class="td11"><span 
+class="pcrb7t-">concat</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[[a]]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Concatenate a list of lists.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-272" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-272-1g"><col 
+id="TBL-272-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-272-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-272-1-1"  
+class="td11"><span 
+class="pcrb7t-">concatMap</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b])</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Map a function over a list and concatenate the results.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-273" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-273-1g"><col 
+id="TBL-273-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-273-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-273-1-1"  
+class="td11"><span 
+class="pcrb7t-">and</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[Bool]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">and</span><a 
+ id="dx28-232001"></a> returns  the  conjunction  of  a  Boolean  list.  For  the  result  to  be  <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232002"></a>,  the  list  must  be  finite;
+     <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232003"></a>, however, results from a <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232004"></a> value at a finite index of a finite or infinite list.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-274" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-274-1g"><col 
+id="TBL-274-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-274-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-274-1-1"  
+class="td11"><span 
+class="pcrb7t-">or</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[Bool]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">or</span><a 
+ id="dx28-232005"></a> returns the disjunction of a Boolean list. For the result to be <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232006"></a>, the list must be finite; <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232007"></a>,
+     however, results from a <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232008"></a> value at a finite index of a finite or infinite list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-275" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-275-1g"><col 
+id="TBL-275-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-275-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-275-1-1"  
+class="td11"><span 
+class="pcrb7t-">any</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Applied to a predicate and a list, <span 
+class="pcrr7t-">any</span><a 
+ id="dx28-232009"></a> determines if any element of the list satisfies the predicate. For
+     the result to be <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232010"></a>, the list must be finite; <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232011"></a>, however, results from a <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232012"></a> value for the
+     predicate applied to an element at a finite index of a finite or infinite list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-276" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-276-1g"><col 
+id="TBL-276-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-276-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-276-1-1"  
+class="td11"><span 
+class="pcrb7t-">all</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Applied to a predicate and a list, <span 
+class="pcrr7t-">all</span><a 
+ id="dx28-232013"></a> determines if all elements of the list satisfy the predicate. For
+     the result to be <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-232014"></a>, the list must be finite; <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232015"></a>, however, results from a <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-232016"></a> value for the
+     predicate applied to an element at a finite index of a finite or infinite list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-277" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-277-1g"><col 
+id="TBL-277-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-277-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-277-1-1"  
+class="td11"><span 
+class="pcrb7t-">sum</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">sum</span><a 
+ id="dx28-232017"></a> function computes the sum of a finite list of numbers.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-278" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-278-1g"><col 
+id="TBL-278-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-278-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-278-1-1"  
+class="td11"><span 
+class="pcrb7t-">product</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">product</span><a 
+ id="dx28-232018"></a> function computes the product of a finite list of numbers.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-279" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-279-1g"><col 
+id="TBL-279-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-279-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-279-1-1"  
+class="td11"><span 
+class="pcrb7t-">maximum</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">maximum</span><a 
+ id="dx28-232019"></a> returns  the  maximum  value  from  a  list,  which  must  be  non-empty,  finite,  and  of  an
+     ordered type. It is a special case of <span 
+class="pcrr7t-">maximumBy</span><a 
+ id="dx28-232020"></a>, which allows the programmer to supply their own
+     comparison function.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-280" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-280-1g"><col 
+id="TBL-280-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-280-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-280-1-1"  
+class="td11"><span 
+class="pcrb7t-">minimum</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">minimum</span><a 
+ id="dx28-232021"></a> returns the minimum value from a list, which must be non-empty, finite, and of an ordered
+     type. It is a special case of <span 
+class="pcrr7t-">minimumBy</span><a 
+ id="dx28-232022"></a>, which allows the programmer to supply their own comparison
+     function.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.4    </span> <a 
+ id="x28-23300020.4"></a>Building lists </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.4.1    </span> <a 
+ id="x28-23400020.4.1"></a>Scans </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-281" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-281-1g"><col 
+id="TBL-281-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-281-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-281-1-1"  
+class="td11"><span 
+class="pcrb7t-">scanl</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">scanl</span><a 
+ id="dx28-234001"></a> is similar to <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx28-234002"></a>, but returns a list of successive reduced values from the left:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-404">
+&#x00A0;scanl&#x00A0;f&#x00A0;z&#x00A0;[x1,&#x00A0;x2,&#x00A0;...]&#x00A0;==&#x00A0;[z,&#x00A0;z&#x00A0;&#8216;f&#8216;&#x00A0;x1,&#x00A0;(z&#x00A0;&#8216;f&#8216;&#x00A0;x1)&#x00A0;&#8216;f&#8216;&#x00A0;x2,&#x00A0;...]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Note that
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-405">
+&#x00A0;last&#x00A0;(scanl&#x00A0;f&#x00A0;z&#x00A0;xs)&#x00A0;==&#x00A0;foldl&#x00A0;f&#x00A0;z&#x00A0;xs.
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-282" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-282-1g"><col 
+id="TBL-282-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-282-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-282-1-1"  
+class="td11"><span 
+class="pcrb7t-">scanl1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">scanl1</span><a 
+ id="dx28-234003"></a> is a variant of <span 
+class="pcrr7t-">scanl</span><a 
+ id="dx28-234004"></a> that has no starting value argument:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-406">
+&#x00A0;scanl1&#x00A0;f&#x00A0;[x1,&#x00A0;x2,&#x00A0;...]&#x00A0;==&#x00A0;[x1,&#x00A0;x1&#x00A0;&#8216;f&#8216;&#x00A0;x2,&#x00A0;...]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-283" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-283-1g"><col 
+id="TBL-283-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-283-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-283-1-1"  
+class="td11"><span 
+class="pcrb7t-">scanr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">scanr</span><a 
+ id="dx28-234005"></a> is the right-to-left dual of <span 
+class="pcrr7t-">scanl</span><a 
+ id="dx28-234006"></a>. Note that
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-407">
+&#x00A0;head&#x00A0;(scanr&#x00A0;f&#x00A0;z&#x00A0;xs)&#x00A0;==&#x00A0;foldr&#x00A0;f&#x00A0;z&#x00A0;xs.
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-284" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-284-1g"><col 
+id="TBL-284-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-284-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-284-1-1"  
+class="td11"><span 
+class="pcrb7t-">scanr1</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">scanr1</span><a 
+ id="dx28-234007"></a> is a variant of <span 
+class="pcrr7t-">scanr</span><a 
+ id="dx28-234008"></a> that has no starting value argument.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.4.2    </span> <a 
+ id="x28-23500020.4.2"></a>Accumulating maps </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-285" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-285-1g"><col 
+id="TBL-285-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-285-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-285-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapAccumL</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(acc</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;x</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(acc,</span><span 
+class="pcrb7t-">&#x00A0;y))</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;acc</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[x]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(acc,</span><span 
+class="pcrb7t-">&#x00A0;[y]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">mapAccumL</span><a 
+ id="dx28-235001"></a> function behaves like a combination of <span 
+class="pcrr7t-">map</span><a 
+ id="dx28-235002"></a> and <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx28-235003"></a>; it applies a function to
+     each element of a list, passing an accumulating parameter from left to right, and returning a final value
+     of this accumulator together with the new list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-286" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-286-1g"><col 
+id="TBL-286-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-286-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-286-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapAccumR</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(acc</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;x</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(acc,</span><span 
+class="pcrb7t-">&#x00A0;y))</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;acc</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[x]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(acc,</span><span 
+class="pcrb7t-">&#x00A0;[y]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">mapAccumR</span><a 
+ id="dx28-235004"></a> function behaves like a combination of <span 
+class="pcrr7t-">map</span><a 
+ id="dx28-235005"></a> and <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-235006"></a>; it applies a function to
+     each element of a list, passing an accumulating parameter from right to left, and returning a final value
+     of this accumulator together with the new list.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.4.3    </span> <a 
+ id="x28-23600020.4.3"></a>Infinite lists </h4>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-287" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-287-1g"><col 
+id="TBL-287-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-287-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-287-1-1"  
+class="td11"><span 
+class="pcrb7t-">iterate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">iterate</span><a 
+ id="dx28-236001"></a><span 
+class="pcrr7t-">f</span><span 
+class="pcrr7t-">&#x00A0;x </span>returns an infinite list of repeated applications of <span 
+class="pcrr7t-">f </span>to <span 
+class="pcrr7t-">x</span>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-408">
+&#x00A0;iterate&#x00A0;f&#x00A0;x&#x00A0;==&#x00A0;[x,&#x00A0;f&#x00A0;x,&#x00A0;f&#x00A0;(f&#x00A0;x),&#x00A0;...]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-288" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-288-1g"><col 
+id="TBL-288-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-288-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-288-1-1"  
+class="td11"><span 
+class="pcrb7t-">repeat</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">repeat</span><a 
+ id="dx28-236002"></a><span 
+class="pcrr7t-">x </span>is an infinite list, with <span 
+class="pcrr7t-">x </span>the value of every element.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-289" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-289-1g"><col 
+id="TBL-289-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-289-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-289-1-1"  
+class="td11"><span 
+class="pcrb7t-">replicate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">replicate</span><a 
+ id="dx28-236003"></a><span 
+class="pcrr7t-">n</span><span 
+class="pcrr7t-">&#x00A0;x </span>is a list of length <span 
+class="pcrr7t-">n </span>with <span 
+class="pcrr7t-">x </span>the value of every element. It is an instance of the more
+     general <span 
+class="pcrr7t-">Data.List.genericReplicate</span>, in which <span 
+class="pcrr7t-">n </span>may be of any integral type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-290" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-290-1g"><col 
+id="TBL-290-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-290-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-290-1-1"  
+class="td11"><span 
+class="pcrb7t-">cycle</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">cycle</span><a 
+ id="dx28-236004"></a> ties a finite list into a circular one, or equivalently, the infinite repetition of the original list. It
+     is the identity on infinite lists.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.4.4    </span> <a 
+ id="x28-23700020.4.4"></a>Unfolding </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-291" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-291-1g"><col 
+id="TBL-291-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-291-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-291-1-1"  
+class="td11"><span 
+class="pcrb7t-">unfoldr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;(a,</span><span 
+class="pcrb7t-">&#x00A0;b))</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">unfoldr</span><a 
+ id="dx28-237001"></a> function  is  a  &#8216;dual&#8217;  to  <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-237002"></a>:  while  <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-237003"></a> reduces  a  list  to  a  summary  value,
+     <span 
+class="pcrr7t-">unfoldr</span><a 
+ id="dx28-237004"></a> builds a list from a seed value. The function takes the element and returns <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx28-237005"></a> if it
+     is done producing the list or returns <span 
+class="pcrr7t-">Just</span><a 
+ id="dx28-237006"></a><span 
+class="pcrr7t-">(a,b)</span>, in which case, <span 
+class="pcrr7t-">a </span>is a prepended to the list and <span 
+class="pcrr7t-">b </span>is
+     used as the next element in a recursive call. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-409">
+&#x00A0;iterate&#x00A0;f&#x00A0;==&#x00A0;unfoldr&#x00A0;(\x&#x00A0;-&#x003E;&#x00A0;Just&#x00A0;(x,&#x00A0;f&#x00A0;x))
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> In some cases, <span 
+class="pcrr7t-">unfoldr</span><a 
+ id="dx28-237007"></a> can undo a <span 
+class="pcrr7t-">foldr</span><a 
+ id="dx28-237008"></a> operation:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-410">
+&#x00A0;unfoldr&#x00A0;f'&#x00A0;(foldr&#x00A0;f&#x00A0;z&#x00A0;xs)&#x00A0;==&#x00A0;xs
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> if the following holds:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-411">
+&#x00A0;f'&#x00A0;(f&#x00A0;x&#x00A0;y)&#x00A0;=&#x00A0;Just&#x00A0;(x,y)
+&#x00A0;<br />&#x00A0;f'&#x00A0;z&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;Nothing
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> A simple use of unfoldr:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-412">
+&#x00A0;unfoldr&#x00A0;(\b&#x00A0;-&#x003E;&#x00A0;if&#x00A0;b&#x00A0;==&#x00A0;0&#x00A0;then&#x00A0;Nothing&#x00A0;else&#x00A0;Just&#x00A0;(b,&#x00A0;b-1))&#x00A0;10
+&#x00A0;<br />&#x00A0;&#x00A0;[10,9,8,7,6,5,4,3,2,1]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.5    </span> <a 
+ id="x28-23800020.5"></a>Sublists </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.5.1    </span> <a 
+ id="x28-23900020.5.1"></a>Extracting sublists </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-292" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-292-1g"><col 
+id="TBL-292-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-292-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-292-1-1"  
+class="td11"><span 
+class="pcrb7t-">take</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">take</span><a 
+ id="dx28-239001"></a><span 
+class="pcrr7t-">n</span>, applied to a list <span 
+class="pcrr7t-">xs</span>, returns the prefix of <span 
+class="pcrr7t-">xs </span>of length <span 
+class="pcrr7t-">n</span>, or <span 
+class="pcrr7t-">xs </span>itself if <span 
+class="pcrr7t-">n</span><span 
+class="pcrr7t-">&#x00A0;&#x003E;</span><span 
+class="pcrr7t-">&#x00A0;length</span><span 
+class="pcrr7t-">&#x00A0;xs</span>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-413">
+&#x00A0;take&#x00A0;5&#x00A0;"Hello&#x00A0;World!"&#x00A0;==&#x00A0;"Hello"
+&#x00A0;<br />&#x00A0;take&#x00A0;3&#x00A0;[1,2,3,4,5]&#x00A0;==&#x00A0;[1,2,3]
+&#x00A0;<br />&#x00A0;take&#x00A0;3&#x00A0;[1,2]&#x00A0;==&#x00A0;[1,2]
+&#x00A0;<br />&#x00A0;take&#x00A0;3&#x00A0;[]&#x00A0;==&#x00A0;[]
+&#x00A0;<br />&#x00A0;take&#x00A0;(-1)&#x00A0;[1,2]&#x00A0;==&#x00A0;[]
+&#x00A0;<br />&#x00A0;take&#x00A0;0&#x00A0;[1,2]&#x00A0;==&#x00A0;[]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is an instance of the more general <span 
+class="pcrr7t-">Data.List.genericTake</span>, in which <span 
+class="pcrr7t-">n </span>may be of any integral
+     type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-293" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-293-1g"><col 
+id="TBL-293-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-293-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-293-1-1"  
+class="td11"><span 
+class="pcrb7t-">drop</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">drop</span><a 
+ id="dx28-239002"></a><span 
+class="pcrr7t-">n</span><span 
+class="pcrr7t-">&#x00A0;xs </span>returns the suffix of <span 
+class="pcrr7t-">xs </span>after the first <span 
+class="pcrr7t-">n </span>elements, or <span 
+class="pcrr7t-">[] </span>if <span 
+class="pcrr7t-">n</span><span 
+class="pcrr7t-">&#x00A0;&#x003E;</span><span 
+class="pcrr7t-">&#x00A0;length</span><span 
+class="pcrr7t-">&#x00A0;xs</span>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-414">
+&#x00A0;drop&#x00A0;6&#x00A0;"Hello&#x00A0;World!"&#x00A0;==&#x00A0;"World!"
+&#x00A0;<br />&#x00A0;drop&#x00A0;3&#x00A0;[1,2,3,4,5]&#x00A0;==&#x00A0;[4,5]
+&#x00A0;<br />&#x00A0;drop&#x00A0;3&#x00A0;[1,2]&#x00A0;==&#x00A0;[]
+&#x00A0;<br />&#x00A0;drop&#x00A0;3&#x00A0;[]&#x00A0;==&#x00A0;[]
+&#x00A0;<br />&#x00A0;drop&#x00A0;(-1)&#x00A0;[1,2]&#x00A0;==&#x00A0;[1,2]
+&#x00A0;<br />&#x00A0;drop&#x00A0;0&#x00A0;[1,2]&#x00A0;==&#x00A0;[1,2]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is an instance of the more general <span 
+class="pcrr7t-">Data.List.genericDrop</span>, in which <span 
+class="pcrr7t-">n </span>may be of any integral
+     type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-294" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-294-1g"><col 
+id="TBL-294-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-294-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-294-1-1"  
+class="td11"><span 
+class="pcrb7t-">splitAt</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[a]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">splitAt</span><a 
+ id="dx28-239003"></a><span 
+class="pcrr7t-">n</span><span 
+class="pcrr7t-">&#x00A0;xs </span>returns a tuple where first element is <span 
+class="pcrr7t-">xs </span>prefix of length <span 
+class="pcrr7t-">n </span>and second element is the
+     remainder of the list:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-415">
+&#x00A0;splitAt&#x00A0;6&#x00A0;"Hello&#x00A0;World!"&#x00A0;==&#x00A0;("Hello&#x00A0;","World!")
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;3&#x00A0;[1,2,3,4,5]&#x00A0;==&#x00A0;([1,2,3],[4,5])
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;1&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([1],[2,3])
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;3&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([1,2,3],[])
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;4&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([1,2,3],[])
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;0&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([],[1,2,3])
+&#x00A0;<br />&#x00A0;splitAt&#x00A0;(-1)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([],[1,2,3])
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is equivalent to <span 
+class="pcrr7t-">(take</span><span 
+class="pcrr7t-">&#x00A0;n</span><span 
+class="pcrr7t-">&#x00A0;xs,</span><span 
+class="pcrr7t-">&#x00A0;drop</span><span 
+class="pcrr7t-">&#x00A0;n</span><span 
+class="pcrr7t-">&#x00A0;xs)</span>. <span 
+class="pcrr7t-">splitAt</span><a 
+ id="dx28-239004"></a> is an instance of the more general
+     <span 
+class="pcrr7t-">Data.List.genericSplitAt</span>, in which <span 
+class="pcrr7t-">n </span>may be of any integral type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-295" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-295-1g"><col 
+id="TBL-295-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-295-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-295-1-1"  
+class="td11"><span 
+class="pcrb7t-">takeWhile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">takeWhile</span><a 
+ id="dx28-239005"></a>, applied to a predicate <span 
+class="pcrr7t-">p </span>and a list <span 
+class="pcrr7t-">xs</span>, returns the longest prefix (possibly empty) of <span 
+class="pcrr7t-">xs</span>
+     of elements that satisfy <span 
+class="pcrr7t-">p</span>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-416">
+&#x00A0;takeWhile&#x00A0;(&#x003C;&#x00A0;3)&#x00A0;[1,2,3,4,1,2,3,4]&#x00A0;==&#x00A0;[1,2]
+&#x00A0;<br />&#x00A0;takeWhile&#x00A0;(&#x003C;&#x00A0;9)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;[1,2,3]
+&#x00A0;<br />&#x00A0;takeWhile&#x00A0;(&#x003C;&#x00A0;0)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;[]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-296" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-296-1g"><col 
+id="TBL-296-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-296-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-296-1-1"  
+class="td11"><span 
+class="pcrb7t-">dropWhile</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">dropWhile</span><a 
+ id="dx28-239006"></a><span 
+class="pcrr7t-">p</span><span 
+class="pcrr7t-">&#x00A0;xs </span>returns the suffix remaining after <span 
+class="pcrr7t-">takeWhile</span><a 
+ id="dx28-239007"></a><span 
+class="pcrr7t-">p</span><span 
+class="pcrr7t-">&#x00A0;xs</span>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-417">
+&#x00A0;dropWhile&#x00A0;(&#x003C;&#x00A0;3)&#x00A0;[1,2,3,4,5,1,2,3]&#x00A0;==&#x00A0;[3,4,5,1,2,3]
+&#x00A0;<br />&#x00A0;dropWhile&#x00A0;(&#x003C;&#x00A0;9)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;[]
+&#x00A0;<br />&#x00A0;dropWhile&#x00A0;(&#x003C;&#x00A0;0)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;[1,2,3]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-297" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-297-1g"><col 
+id="TBL-297-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-297-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-297-1-1"  
+class="td11"><span 
+class="pcrb7t-">span</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[a]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">span</span><a 
+ id="dx28-239008"></a>,  applied  to  a  predicate  <span 
+class="pcrr7t-">p </span>and  a  list  <span 
+class="pcrr7t-">xs</span>,  returns  a  tuple  where  first  element  is  longest  prefix
+     (possibly empty) of <span 
+class="pcrr7t-">xs </span>of elements that satisfy <span 
+class="pcrr7t-">p </span>and second element is the remainder of the list:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-418">
+&#x00A0;span&#x00A0;(&#x003C;&#x00A0;3)&#x00A0;[1,2,3,4,1,2,3,4]&#x00A0;==&#x00A0;([1,2],[3,4,1,2,3,4])
+&#x00A0;<br />&#x00A0;span&#x00A0;(&#x003C;&#x00A0;9)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([1,2,3],[])
+&#x00A0;<br />&#x00A0;span&#x00A0;(&#x003C;&#x00A0;0)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([],[1,2,3])
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"><span 
+class="pcrr7t-">span</span><a 
+ id="dx28-239009"></a><span 
+class="pcrr7t-">p</span><span 
+class="pcrr7t-">&#x00A0;xs </span>is equivalent to <span 
+class="pcrr7t-">(takeWhile</span><span 
+class="pcrr7t-">&#x00A0;p</span><span 
+class="pcrr7t-">&#x00A0;xs,</span><span 
+class="pcrr7t-">&#x00A0;dropWhile</span><span 
+class="pcrr7t-">&#x00A0;p</span><span 
+class="pcrr7t-">&#x00A0;xs)</span>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-298" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-298-1g"><col 
+id="TBL-298-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-298-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-298-1-1"  
+class="td11"><span 
+class="pcrb7t-">break</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[a]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">break</span><a 
+ id="dx28-239010"></a>, applied to a predicate <span 
+class="pcrr7t-">p </span>and a list <span 
+class="pcrr7t-">xs</span>, returns a tuple where first element is longest prefix
+     (possibly empty) of <span 
+class="pcrr7t-">xs </span>of elements that <span 
+class="ptmri7t-">do not satisfy </span><span 
+class="pcrr7t-">p </span>and second element is the remainder of the
+     list:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-419">
+&#x00A0;break&#x00A0;(&#x003E;&#x00A0;3)&#x00A0;[1,2,3,4,1,2,3,4]&#x00A0;==&#x00A0;([1,2,3],[4,1,2,3,4])
+&#x00A0;<br />&#x00A0;break&#x00A0;(&#x003C;&#x00A0;9)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([],[1,2,3])
+&#x00A0;<br />&#x00A0;break&#x00A0;(&#x003E;&#x00A0;9)&#x00A0;[1,2,3]&#x00A0;==&#x00A0;([1,2,3],[])
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"><span 
+class="pcrr7t-">break</span><a 
+ id="dx28-239011"></a><span 
+class="pcrr7t-">p </span>is equivalent to <span 
+class="pcrr7t-">span</span><span 
+class="pcrr7t-">&#x00A0;(not</span><span 
+class="pcrr7t-">&#x00A0;.</span><span 
+class="pcrr7t-">&#x00A0;p)</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-299" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-299-1g"><col 
+id="TBL-299-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-299-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-299-1-1"  
+class="td11"><span 
+class="pcrb7t-">stripPrefix</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">stripPrefix</span><a 
+ id="dx28-239012"></a> function drops the given prefix from a list. It returns <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx28-239013"></a> if the list did not
+     start with the prefix given, or <span 
+class="pcrr7t-">Just</span><a 
+ id="dx28-239014"></a> the list after the prefix, if it does.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-420">
+&#x00A0;stripPrefix&#x00A0;"foo"&#x00A0;"foobar"&#x00A0;==&#x00A0;Just&#x00A0;"bar"
+&#x00A0;<br />&#x00A0;stripPrefix&#x00A0;"foo"&#x00A0;"foo"&#x00A0;==&#x00A0;Just&#x00A0;""
+&#x00A0;<br />&#x00A0;stripPrefix&#x00A0;"foo"&#x00A0;"barfoo"&#x00A0;==&#x00A0;Nothing
+&#x00A0;<br />&#x00A0;stripPrefix&#x00A0;"foo"&#x00A0;"barfoobaz"&#x00A0;==&#x00A0;Nothing
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-300" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-300-1g"><col 
+id="TBL-300-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-300-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-300-1-1"  
+class="td11"><span 
+class="pcrb7t-">group</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">group</span><a 
+ id="dx28-239015"></a> function takes a list and returns a list of lists such that the concatenation of the result is
+     equal to the argument. Moreover, each sublist in the result contains only equal elements. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-421">
+&#x00A0;group&#x00A0;"Mississippi"&#x00A0;=&#x00A0;["M","i","ss","i","ss","i","pp","i"]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is a special case of <span 
+class="pcrr7t-">groupBy</span><a 
+ id="dx28-239016"></a>, which allows the programmer to supply their own equality
+     test.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-301" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-301-1g"><col 
+id="TBL-301-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-301-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-301-1-1"  
+class="td11"><span 
+class="pcrb7t-">inits</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">inits</span><a 
+ id="dx28-239017"></a> function returns all initial segments of the argument, shortest first. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-422">
+&#x00A0;inits&#x00A0;"abc"&#x00A0;==&#x00A0;["","a","ab","abc"]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-302" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-302-1g"><col 
+id="TBL-302-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-302-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-302-1-1"  
+class="td11"><span 
+class="pcrb7t-">tails</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">tails</span><a 
+ id="dx28-239018"></a> function returns all final segments of the argument, longest first. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-423">
+&#x00A0;tails&#x00A0;"abc"&#x00A0;==&#x00A0;["abc",&#x00A0;"bc",&#x00A0;"c",""]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.5.2    </span> <a 
+ id="x28-24000020.5.2"></a>Predicates </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-303" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-303-1g"><col 
+id="TBL-303-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-303-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-303-1-1"  
+class="td11"><span 
+class="pcrb7t-">isPrefixOf</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">isPrefixOf</span><a 
+ id="dx28-240001"></a> function takes two lists and returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-240002"></a> iff the first list is a prefix of the second.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-304" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-304-1g"><col 
+id="TBL-304-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-304-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-304-1-1"  
+class="td11"><span 
+class="pcrb7t-">isSuffixOf</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">isSuffixOf</span><a 
+ id="dx28-240003"></a> function takes two lists and returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-240004"></a> iff the first list is a suffix of the second.
+     Both lists must be finite.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-305" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-305-1g"><col 
+id="TBL-305-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-305-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-305-1-1"  
+class="td11"><span 
+class="pcrb7t-">isInfixOf</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">isInfixOf</span><a 
+ id="dx28-240005"></a> function takes two lists and returns <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-240006"></a> iff the first list is contained, wholly and
+     intact, anywhere within the second.
+     <p class="noindent"> Example:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-424">
+isInfixOf&#x00A0;"Haskell"&#x00A0;"I&#x00A0;really&#x00A0;like&#x00A0;Haskell."&#x00A0;==&#x00A0;True
+&#x00A0;<br />isInfixOf&#x00A0;"Ial"&#x00A0;"I&#x00A0;really&#x00A0;like&#x00A0;Haskell."&#x00A0;==&#x00A0;False
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.6    </span> <a 
+ id="x28-24100020.6"></a>Searching lists </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.6.1    </span> <a 
+ id="x28-24200020.6.1"></a>Searching by equality </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-306" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-306-1g"><col 
+id="TBL-306-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-306-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-306-1-1"  
+class="td11"><span 
+class="pcrb7t-">elem</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">elem</span><a 
+ id="dx28-242001"></a> is the list membership predicate, usually written in infix form, e.g., <span 
+class="pcrr7t-">x</span><span 
+class="pcrr7t-">&#x00A0;&#8216;elem&#8216;</span><span 
+class="pcrr7t-">&#x00A0;xs</span>. For the
+     result to be <span 
+class="pcrr7t-">False</span><a 
+ id="dx28-242002"></a>, the list must be finite; <span 
+class="pcrr7t-">True</span><a 
+ id="dx28-242003"></a>, however, results from an element equal to <span 
+class="pcrr7t-">x </span>found
+     at a finite index of a finite or infinite list.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-307" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-307-1g"><col 
+id="TBL-307-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-307-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-307-1-1"  
+class="td11"><span 
+class="pcrb7t-">notElem</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">notElem</span><a 
+ id="dx28-242004"></a> is the negation of <span 
+class="pcrr7t-">elem</span><a 
+ id="dx28-242005"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-308" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-308-1g"><col 
+id="TBL-308-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-308-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-308-1-1"  
+class="td11"><span 
+class="pcrb7t-">lookup</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">lookup</span><a 
+ id="dx28-242006"></a><span 
+class="pcrr7t-">key</span><span 
+class="pcrr7t-">&#x00A0;assocs </span>looks up a key in an association list.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.6.2    </span> <a 
+ id="x28-24300020.6.2"></a>Searching with a predicate </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-309" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-309-1g"><col 
+id="TBL-309-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-309-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-309-1-1"  
+class="td11"><span 
+class="pcrb7t-">find</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">find</span><a 
+ id="dx28-243001"></a> function takes a predicate and a list and returns the first element in the list matching the
+     predicate, or <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx28-243002"></a> if there is no such element.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-310" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-310-1g"><col 
+id="TBL-310-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-310-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-310-1-1"  
+class="td11"><span 
+class="pcrb7t-">filter</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">filter</span><a 
+ id="dx28-243003"></a>, applied to a predicate and a list, returns the list of those elements that satisfy the predicate;
+     i.e.,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-425">
+&#x00A0;filter&#x00A0;p&#x00A0;xs&#x00A0;=&#x00A0;[&#x00A0;x&#x00A0;|&#x00A0;x&#x00A0;&#x003C;-&#x00A0;xs,&#x00A0;p&#x00A0;x]
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-311" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-311-1g"><col 
+id="TBL-311-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-311-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-311-1-1"  
+class="td11"><span 
+class="pcrb7t-">partition</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[a]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">partition</span><a 
+ id="dx28-243004"></a> function takes a predicate a list and returns the pair of lists of elements which do
+     and do not satisfy the predicate, respectively; i.e.,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-426">
+&#x00A0;partition&#x00A0;p&#x00A0;xs&#x00A0;==&#x00A0;(filter&#x00A0;p&#x00A0;xs,&#x00A0;filter&#x00A0;(not&#x00A0;.&#x00A0;p)&#x00A0;xs)
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.7    </span> <a 
+ id="x28-24400020.7"></a>Indexing lists </h3>
+<p class="noindent"> These functions treat a list <span 
+class="pcrr7t-">xs </span>as a indexed collection, with indices ranging from 0 to <span 
+class="pcrr7t-">length</span><span 
+class="pcrr7t-">&#x00A0;xs</span><span 
+class="pcrr7t-">&#x00A0;-</span><span 
+class="pcrr7t-">&#x00A0;1</span>.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-312" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-312-1g"><col 
+id="TBL-312-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-312-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-312-1-1"  
+class="td11"><span 
+class="pcrb7t-">(!!)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     List   index   (subscript)   operator,   starting   from   0.   It   is   an   instance   of   the   more   general
+     <span 
+class="pcrr7t-">Data.List.genericIndex</span>, which takes an index of any integral type.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-313" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-313-1g"><col 
+id="TBL-313-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-313-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-313-1-1"  
+class="td11"><span 
+class="pcrb7t-">elemIndex</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">elemIndex</span><a 
+ id="dx28-244001"></a> function returns the index of the first element in the given list which is equal (by
+     <span 
+class="pcrr7t-">==</span><a 
+ id="dx28-244002"></a>) to the query element, or <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx28-244003"></a> if there is no such element.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-314" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-314-1g"><col 
+id="TBL-314-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-314-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-314-1-1"  
+class="td11"><span 
+class="pcrb7t-">elemIndices</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[Int] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">elemIndices</span><a 
+ id="dx28-244004"></a> function extends <span 
+class="pcrr7t-">elemIndex</span><a 
+ id="dx28-244005"></a>, by returning the indices of all elements equal to
+     the query element, in ascending order.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-315" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-315-1g"><col 
+id="TBL-315-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-315-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-315-1-1"  
+class="td11"><span 
+class="pcrb7t-">findIndex</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Maybe</span><span 
+class="pcrb7t-">&#x00A0;Int </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">findIndex</span><a 
+ id="dx28-244006"></a> function takes a predicate and a list and returns the index of the first element in the
+     list satisfying the predicate, or <span 
+class="pcrr7t-">Nothing</span><a 
+ id="dx28-244007"></a> if there is no such element.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-316" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-316-1g"><col 
+id="TBL-316-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-316-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-316-1-1"  
+class="td11"><span 
+class="pcrb7t-">findIndices</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[Int] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">findIndices</span><a 
+ id="dx28-244008"></a> function extends <span 
+class="pcrr7t-">findIndex</span><a 
+ id="dx28-244009"></a>, by returning the indices of all elements satisfying
+     the predicate, in ascending order.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.8    </span> <a 
+ id="x28-24500020.8"></a>Zipping and unzipping lists </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-317" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-317-1g"><col 
+id="TBL-317-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-317-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-317-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245001"></a> takes two lists and returns a list of corresponding pairs. If one input list is short, excess elements
+     of the longer list are discarded.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-318" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-318-1g"><col 
+id="TBL-318-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-318-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-318-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip3</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">zip3</span><a 
+ id="dx28-245002"></a> takes three lists and returns a list of triples, analogous to <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245003"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-319" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-319-1g"><col 
+id="TBL-319-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-319-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-319-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip4</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zip4</span><a 
+ id="dx28-245004"></a> function takes four lists and returns a list of quadruples, analogous to <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245005"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-320" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-320-1g"><col 
+id="TBL-320-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-320-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-320-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip5</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zip5</span><a 
+ id="dx28-245006"></a> function takes five lists and returns a list of five-tuples, analogous to <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245007"></a>.
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-321" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-321-1g"><col 
+id="TBL-321-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-321-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-321-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip6</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]                                                       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-321-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-321-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[f]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e,</span><span 
+class="pcrb7t-">&#x00A0;f)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zip6</span><a 
+ id="dx28-245008"></a> function takes six lists and returns a list of six-tuples, analogous to <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245009"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-322" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-322-1g"><col 
+id="TBL-322-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-322-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-322-1-1"  
+class="td11"><span 
+class="pcrb7t-">zip7</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[a]                                                             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-322-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-322-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]                                                           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-322-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-322-3-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[f]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[g]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e,</span><span 
+class="pcrb7t-">&#x00A0;f,</span><span 
+class="pcrb7t-">&#x00A0;g)] </span></td>
+</tr></table>                                                                                      </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zip7</span><a 
+ id="dx28-245010"></a> function takes seven lists and returns a list of seven-tuples, analogous to <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245011"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-323" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-323-1g"><col 
+id="TBL-323-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-323-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-323-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245012"></a> generalises <span 
+class="pcrr7t-">zip</span><a 
+ id="dx28-245013"></a> by zipping with the function given as the first argument, instead of a tupling
+     function. For example, <span 
+class="pcrr7t-">zipWith</span><span 
+class="pcrr7t-">&#x00A0;(+) </span>is applied to two lists to produce the list of corresponding
+     sums.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-324" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-324-1g"><col 
+id="TBL-324-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-324-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-324-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith3</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;d)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zipWith3</span><a 
+ id="dx28-245014"></a> function takes a function which combines three elements, as well as three lists and
+     returns a list of their point-wise combination, analogous to <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245015"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-325" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-325-1g"><col 
+id="TBL-325-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-325-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-325-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith4</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;d</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e)           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-325-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-325-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zipWith4</span><a 
+ id="dx28-245016"></a> function takes a function which combines four elements, as well as four lists and
+     returns a list of their point-wise combination, analogous to <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245017"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-326" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-326-1g"><col 
+id="TBL-326-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-326-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-326-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith5</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;d</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f)             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-326-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-326-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[f] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">zipWith5</span><a 
+ id="dx28-245018"></a> function  takes  a  function  which  combines  five  elements,  as  well  as  five  lists  and
+     returns a list of their point-wise combination, analogous to <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245019"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-327" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-327-1g"><col 
+id="TBL-327-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-327-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-327-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith6</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;d</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;g)               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-327-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-327-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[f]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[g] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zipWith6</span><a 
+ id="dx28-245020"></a> function takes a function which combines six elements, as well as six lists and returns
+     a list of their point-wise combination, analogous to <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245021"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-328" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-328-1g"><col 
+id="TBL-328-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-328-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-328-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWith7</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;c</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;d</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;g</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;h)                 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-328-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-328-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[c]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[d]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[f]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[g]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[h] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zipWith7</span><a 
+ id="dx28-245022"></a> function takes a function which combines seven elements, as well as seven lists and
+     returns a list of their point-wise combination, analogous to <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx28-245023"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-329" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-329-1g"><col 
+id="TBL-329-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-329-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-329-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245024"></a> transforms a list of pairs into a list of first components and a list of second components.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-330" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-330-1g"><col 
+id="TBL-330-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-330-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-330-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip3</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b],</span><span 
+class="pcrb7t-">&#x00A0;[c]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unzip3</span><a 
+ id="dx28-245025"></a> function takes a list of triples and returns three lists, analogous to <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245026"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-331" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-331-1g"><col 
+id="TBL-331-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-331-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-331-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip4</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b],</span><span 
+class="pcrb7t-">&#x00A0;[c],</span><span 
+class="pcrb7t-">&#x00A0;[d]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unzip4</span><a 
+ id="dx28-245027"></a> function takes a list of quadruples and returns four lists, analogous to <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245028"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-332" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-332-1g"><col 
+id="TBL-332-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-332-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-332-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip5</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b],</span><span 
+class="pcrb7t-">&#x00A0;[c],</span><span 
+class="pcrb7t-">&#x00A0;[d],</span><span 
+class="pcrb7t-">&#x00A0;[e]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unzip5</span><a 
+ id="dx28-245029"></a> function takes a list of five-tuples and returns five lists, analogous to <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245030"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-333" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-333-1g"><col 
+id="TBL-333-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-333-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-333-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip6</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e,</span><span 
+class="pcrb7t-">&#x00A0;f)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b],</span><span 
+class="pcrb7t-">&#x00A0;[c],</span><span 
+class="pcrb7t-">&#x00A0;[d],</span><span 
+class="pcrb7t-">&#x00A0;[e],</span><span 
+class="pcrb7t-">&#x00A0;[f]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unzip6</span><a 
+ id="dx28-245031"></a> function takes a list of six-tuples and returns six lists, analogous to <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245032"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-334" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-334-1g"><col 
+id="TBL-334-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-334-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-334-1-1"  
+class="td11"><span 
+class="pcrb7t-">unzip7</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[(a,</span><span 
+class="pcrb7t-">&#x00A0;b,</span><span 
+class="pcrb7t-">&#x00A0;c,</span><span 
+class="pcrb7t-">&#x00A0;d,</span><span 
+class="pcrb7t-">&#x00A0;e,</span><span 
+class="pcrb7t-">&#x00A0;f,</span><span 
+class="pcrb7t-">&#x00A0;g)]               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-334-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-334-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([a],</span><span 
+class="pcrb7t-">&#x00A0;[b],</span><span 
+class="pcrb7t-">&#x00A0;[c],</span><span 
+class="pcrb7t-">&#x00A0;[d],</span><span 
+class="pcrb7t-">&#x00A0;[e],</span><span 
+class="pcrb7t-">&#x00A0;[f],</span><span 
+class="pcrb7t-">&#x00A0;[g]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unzip7</span><a 
+ id="dx28-245033"></a> function takes a list of seven-tuples and returns seven lists, analogous to <span 
+class="pcrr7t-">unzip</span><a 
+ id="dx28-245034"></a>.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.9    </span> <a 
+ id="x28-24600020.9"></a>Special lists </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.9.1    </span> <a 
+ id="x28-24700020.9.1"></a>Functions on strings </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-335" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-335-1g"><col 
+id="TBL-335-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-335-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-335-1-1"  
+class="td11"><span 
+class="pcrb7t-">lines</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[String] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">lines</span><a 
+ id="dx28-247001"></a> breaks  a  string  up  into  a  list  of  strings  at  newline  characters.  The  resulting  strings  do  not
+     contain newlines.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-336" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-336-1g"><col 
+id="TBL-336-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-336-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-336-1-1"  
+class="td11"><span 
+class="pcrb7t-">words</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[String] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">words</span><a 
+ id="dx28-247002"></a> breaks a string up into a list of words, which were delimited by white space.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-337" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-337-1g"><col 
+id="TBL-337-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-337-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-337-1-1"  
+class="td11"><span 
+class="pcrb7t-">unlines</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[String]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">unlines</span><a 
+ id="dx28-247003"></a> is an inverse operation to <span 
+class="pcrr7t-">lines</span><a 
+ id="dx28-247004"></a>. It joins lines, after appending a terminating newline to
+     each.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-338" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-338-1g"><col 
+id="TBL-338-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-338-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-338-1-1"  
+class="td11"><span 
+class="pcrb7t-">unwords</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;[String]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;String </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">unwords</span><a 
+ id="dx28-247005"></a> is an inverse operation to <span 
+class="pcrr7t-">words</span><a 
+ id="dx28-247006"></a>. It joins words with separating spaces.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.9.2    </span> <a 
+ id="x28-24800020.9.2"></a>&#8221;Set&#8221; operations </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-339" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-339-1g"><col 
+id="TBL-339-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-339-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-339-1-1"  
+class="td11"><span 
+class="pcrb7t-">nub</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="ptmri7t-">O(n^2)</span>. The <span 
+class="pcrr7t-">nub</span><a 
+ id="dx28-248001"></a> function removes duplicate elements from a list. In particular, it keeps only the first
+     occurrence of each element. (The name <span 
+class="pcrr7t-">nub</span><a 
+ id="dx28-248002"></a> means &#8216;essence&#8217;.) It is a special case of <span 
+class="pcrr7t-">nubBy</span><a 
+ id="dx28-248003"></a>, which
+     allows the programmer to supply their own equality test.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-340" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-340-1g"><col 
+id="TBL-340-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-340-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-340-1-1"  
+class="td11"><span 
+class="pcrb7t-">delete</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">delete</span><a 
+ id="dx28-248004"></a><span 
+class="pcrr7t-">x </span>removes the first occurrence of <span 
+class="pcrr7t-">x </span>from its list argument. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-427">
+&#x00A0;delete&#x00A0;'a'&#x00A0;"banana"&#x00A0;==&#x00A0;"bnana"
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is a special case of <span 
+class="pcrr7t-">deleteBy</span><a 
+ id="dx28-248005"></a>, which allows the programmer to supply their own equality
+     test.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-341" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-341-1g"><col 
+id="TBL-341-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-341-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-341-1-1"  
+class="td11"><span 
+class="pcrb7t-">(\\)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">\\</span><a 
+ id="dx28-248006"></a> function is list difference ((non-associative). In the result of <span 
+class="pcrr7t-">xs\\</span><a 
+ id="dx28-248007"></a><span 
+class="pcrr7t-">ys</span>, the first occurrence of
+     each element of <span 
+class="pcrr7t-">ys </span>in turn (if any) has been removed from <span 
+class="pcrr7t-">xs</span>. Thus
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-428">
+&#x00A0;(xs&#x00A0;++&#x00A0;ys)&#x00A0;\\&#x00A0;xs&#x00A0;==&#x00A0;ys.
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is a special case of <span 
+class="pcrr7t-">deleteFirstsBy</span><a 
+ id="dx28-248008"></a>, which allows the programmer to supply their own equality
+     test.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-342" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-342-1g"><col 
+id="TBL-342-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-342-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-342-1-1"  
+class="td11"><span 
+class="pcrb7t-">union</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">union</span><a 
+ id="dx28-248009"></a> function returns the list union of the two lists. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-429">
+&#x00A0;"dog"&#x00A0;&#8216;union&#8216;&#x00A0;"cow"&#x00A0;==&#x00A0;"dogcw"
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Duplicates, and elements of the first list, are removed from the the second list, but if the first list contains
+     duplicates, so will the result. It is a special case of <span 
+class="pcrr7t-">unionBy</span><a 
+ id="dx28-248010"></a>, which allows the programmer to supply their
+     own equality test.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-343" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-343-1g"><col 
+id="TBL-343-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-343-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-343-1-1"  
+class="td11"><span 
+class="pcrb7t-">intersect</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">intersect</span><a 
+ id="dx28-248011"></a> function takes the list intersection of two lists. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-430">
+&#x00A0;[1,2,3,4]&#x00A0;&#8216;intersect&#8216;&#x00A0;[2,4,6,8]&#x00A0;==&#x00A0;[2,4]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> If the first list contains duplicates, so will the result.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-431">
+&#x00A0;[1,2,2,3,4]&#x00A0;&#8216;intersect&#8216;&#x00A0;[6,4,4,2]&#x00A0;==&#x00A0;[2,2,4]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> It is a special case of <span 
+class="pcrr7t-">intersectBy</span><a 
+ id="dx28-248012"></a>, which allows the programmer to supply their own equality
+     test.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.9.3    </span> <a 
+ id="x28-24900020.9.3"></a>Ordered lists </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-344" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-344-1g"><col 
+id="TBL-344-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-344-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-344-1-1"  
+class="td11"><span 
+class="pcrb7t-">sort</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">sort</span><a 
+ id="dx28-249001"></a> function  implements  a  stable  sorting  algorithm.  It  is  a  special  case  of  <span 
+class="pcrr7t-">sortBy</span><a 
+ id="dx28-249002"></a>,  which
+     allows the programmer to supply their own comparison function.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-345" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-345-1g"><col 
+id="TBL-345-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-345-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-345-1-1"  
+class="td11"><span 
+class="pcrb7t-">insert</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">insert</span><a 
+ id="dx28-249003"></a> function  takes  an  element  and  a  list  and  inserts  the  element  into  the  list  at  the  last
+     position where it is still less than or equal to the next element. In particular, if the list is sorted before
+     the call, the result will also be sorted. It is a special case of <span 
+class="pcrr7t-">insertBy</span><a 
+ id="dx28-249004"></a>, which allows the programmer
+     to supply their own comparison function.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">20.10    </span> <a 
+ id="x28-25000020.10"></a>Generalized functions </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.10.1    </span> <a 
+ id="x28-25100020.10.1"></a>The &#8221;<span 
+class="pcrr7t-">By</span>&#8221; operations </h4>
+<p class="noindent"> By convention, overloaded functions have a non-overloaded counterpart whose name is suffixed with
+&#8216;<span 
+class="pcrr7t-">By</span>&#8217;.
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h5 class="subsubsectionHead"><span class="titlemark">20.10.1.1    </span> <a 
+ id="x28-25200020.10.1.1"></a>User-supplied equality (replacing an <span 
+class="pcrr7t-">Eq </span>context) </h5>
+<p class="noindent"> The predicate is assumed to define an equivalence.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-346" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-346-1g"><col 
+id="TBL-346-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-346-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-346-1-1"  
+class="td11"><span 
+class="pcrb7t-">nubBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">nubBy</span><a 
+ id="dx28-252001"></a> function behaves just like <span 
+class="pcrr7t-">nub</span><a 
+ id="dx28-252002"></a>, except it uses a user-supplied equality predicate instead of
+     the overloaded <span 
+class="pcrr7t-">==</span><a 
+ id="dx28-252003"></a> function.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-347" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-347-1g"><col 
+id="TBL-347-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-347-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-347-1-1"  
+class="td11"><span 
+class="pcrb7t-">deleteBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">deleteBy</span><a 
+ id="dx28-252004"></a> function behaves like <span 
+class="pcrr7t-">delete</span><a 
+ id="dx28-252005"></a>, but takes a user-supplied equality predicate.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-348" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-348-1g"><col 
+id="TBL-348-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-348-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-348-1-1"  
+class="td11"><span 
+class="pcrb7t-">deleteFirstsBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">deleteFirstsBy</span><a 
+ id="dx28-252006"></a> function takes a predicate and two lists and returns the first list with the first
+     occurrence of each element of the second list removed.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-349" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-349-1g"><col 
+id="TBL-349-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-349-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-349-1-1"  
+class="td11"><span 
+class="pcrb7t-">unionBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">unionBy</span><a 
+ id="dx28-252007"></a> function is the non-overloaded version of <span 
+class="pcrr7t-">union</span><a 
+ id="dx28-252008"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-350" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-350-1g"><col 
+id="TBL-350-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-350-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-350-1-1"  
+class="td11"><span 
+class="pcrb7t-">intersectBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">intersectBy</span><a 
+ id="dx28-252009"></a> function is the non-overloaded version of <span 
+class="pcrr7t-">intersect</span><a 
+ id="dx28-252010"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-351" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-351-1g"><col 
+id="TBL-351-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-351-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-351-1-1"  
+class="td11"><span 
+class="pcrb7t-">groupBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[[a]] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">groupBy</span><a 
+ id="dx28-252011"></a> function is the non-overloaded version of <span 
+class="pcrr7t-">group</span><a 
+ id="dx28-252012"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h5 class="subsubsectionHead"><span class="titlemark">20.10.1.2    </span> <a 
+ id="x28-25300020.10.1.2"></a>User-supplied comparison (replacing an <span 
+class="pcrr7t-">Ord </span>context) </h5>
+<p class="noindent"> The function is assumed to define a total ordering.
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-352" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-352-1g"><col 
+id="TBL-352-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-352-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-352-1-1"  
+class="td11"><span 
+class="pcrb7t-">sortBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ordering)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">sortBy</span><a 
+ id="dx28-253001"></a> function is the non-overloaded version of <span 
+class="pcrr7t-">sort</span><a 
+ id="dx28-253002"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-353" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-353-1g"><col 
+id="TBL-353-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-353-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-353-1-1"  
+class="td11"><span 
+class="pcrb7t-">insertBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ordering)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The non-overloaded version of <span 
+class="pcrr7t-">insert</span><a 
+ id="dx28-253003"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-354" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-354-1g"><col 
+id="TBL-354-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-354-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-354-1-1"  
+class="td11"><span 
+class="pcrb7t-">maximumBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ordering)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">maximumBy</span><a 
+ id="dx28-253004"></a> function takes a comparison function and a list and returns the greatest element of
+     the list by the comparison function. The list must be finite and non-empty.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-355" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-355-1g"><col 
+id="TBL-355-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-355-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-355-1-1"  
+class="td11"><span 
+class="pcrb7t-">minimumBy</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ordering)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">minimumBy</span><a 
+ id="dx28-253005"></a> function takes a comparison function and a list and returns the least element of the
+     list by the comparison function. The list must be finite and non-empty.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">20.10.2    </span> <a 
+ id="x28-25400020.10.2"></a>The &#8221;<span 
+class="pcrr7t-">generic</span>&#8221; operations </h4>
+<p class="noindent"> The prefix &#8216;<span 
+class="pcrr7t-">generic</span>&#8217; indicates an overloaded function that is a generalized version of a <span 
+class="pcrr7t-">Prelude</span>
+function.
+ <p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-356" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-356-1g"><col 
+id="TBL-356-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-356-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-356-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericLength</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">genericLength</span><a 
+ id="dx28-254001"></a> function  is  an  overloaded  version  of  <span 
+class="pcrr7t-">length</span><a 
+ id="dx28-254002"></a>.  In  particular,  instead  of
+     returning an <span 
+class="pcrr7t-">Int</span><a 
+ id="dx28-254003"></a>, it returns any type which is an instance of <span 
+class="pcrr7t-">Num</span><a 
+ id="dx28-254004"></a>. It is, however, less efficient than
+     <span 
+class="pcrr7t-">length</span><a 
+ id="dx28-254005"></a>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-357" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-357-1g"><col 
+id="TBL-357-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-357-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-357-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericTake</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">genericTake</span><a 
+ id="dx28-254006"></a> function is an overloaded version of <span 
+class="pcrr7t-">take</span><a 
+ id="dx28-254007"></a>, which accepts any <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx28-254008"></a> value
+     as the number of elements to take.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-358" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-358-1g"><col 
+id="TBL-358-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-358-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-358-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericDrop</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">genericDrop</span><a 
+ id="dx28-254009"></a> function is an overloaded version of <span 
+class="pcrr7t-">drop</span><a 
+ id="dx28-254010"></a>, which accepts any <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx28-254011"></a> value
+     as the number of elements to drop.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-359" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-359-1g"><col 
+id="TBL-359-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-359-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-359-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericSplitAt</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;([b],</span><span 
+class="pcrb7t-">&#x00A0;[b]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The  <span 
+class="pcrr7t-">genericSplitAt</span><a 
+ id="dx28-254012"></a> function  is  an  overloaded  version  of  <span 
+class="pcrr7t-">splitAt</span><a 
+ id="dx28-254013"></a>,  which  accepts  any
+     <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx28-254014"></a> value as the position at which to split.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-360" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-360-1g"><col 
+id="TBL-360-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-360-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-360-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericIndex</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">genericIndex</span><a 
+ id="dx28-254015"></a> function is an overloaded version of <span 
+class="pcrr7t-">!!</span><a 
+ id="dx28-254016"></a>, which accepts any <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx28-254017"></a> value
+     as the index.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-361" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-361-1g"><col 
+id="TBL-361-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-361-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-361-1-1"  
+class="td11"><span 
+class="pcrb7t-">genericReplicate</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">genericReplicate</span><a 
+ id="dx28-254018"></a> function is an overloaded version of <span 
+class="pcrr7t-">replicate</span><a 
+ id="dx28-254019"></a>, which accepts any
+     <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx28-254020"></a> value as the number of repetitions to make.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch21.html" >next</a>] [<a 
+href="haskellch19.html" >prev</a>] [<a 
+href="haskellch19.html#tailhaskellch19.html" >prev-tail</a>] [<a 
+href="haskellch20.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch20.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch20.html"></a>    
+</body></html> 

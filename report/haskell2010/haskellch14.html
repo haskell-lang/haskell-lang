@@ -1,0 +1,755 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>14 Data.Array</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch15.html" >next</a>] [<a 
+href="haskellch13.html" >prev</a>] [<a 
+href="haskellch13.html#tailhaskellch13.html" >prev-tail</a>] [<a 
+href="#tailhaskellch14.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch14.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;14</span><br /><a 
+ id="x22-20100014"></a><span 
+class="pcrr7t-">Data.Array</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-377">
+module&#x00A0;Data.Array&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;module&#x00A0;Data.Ix,&#x00A0;&#x00A0;Array,&#x00A0;&#x00A0;array,&#x00A0;&#x00A0;listArray,&#x00A0;&#x00A0;accumArray,&#x00A0;&#x00A0;(!),&#x00A0;&#x00A0;bounds,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;indices,&#x00A0;&#x00A0;elems,&#x00A0;&#x00A0;assocs,&#x00A0;&#x00A0;(//),&#x00A0;&#x00A0;accum,&#x00A0;&#x00A0;ixmap
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">14.1    </span> <a 
+ id="x22-20200014.1"></a>Immutable non-strict arrays </h3>
+<p class="noindent"> Haskell provides indexable <span 
+class="ptmri7t-">arrays</span>, which may be thought of as functions whose domains are isomorphic to
+contiguous subsets of the integers. Functions restricted in this way can be implemented efficiently; in particular, a
+programmer may reasonably expect rapid access to the components. To ensure the possibility of such an
+implementation, arrays are treated as data, not as general functions.
+ <p class="noindent"> Since most array functions involve the class <span 
+class="pcrr7t-">Ix</span><a 
+ id="dx22-202001"></a>, the contents of the module <span 
+class="pcrr7t-">Data.Ix </span>are re-exported from
+<span 
+class="pcrr7t-">Data.Array </span>for convenience:
+ <p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-152" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-152-1g"><col 
+id="TBL-152-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-152-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-152-1-1"  
+class="td11"><span 
+class="pcrb7t-">module</span><span 
+class="pcrb7t-">&#x00A0;Data.Ix </span></td></tr></table>                                                              </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-153" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-153-1g"><col 
+id="TBL-153-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-153-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-153-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The type of immutable non-strict (boxed) arrays with indices in <span 
+class="pcrr7t-">i </span>and elements in <span 
+class="pcrr7t-">e</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-154" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-154-1g"><col 
+id="TBL-154-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-154-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-154-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;i)                 </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-154-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-154-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;i,</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;e)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e)             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-154-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-154-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;i,</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;e)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e)           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-154-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-154-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;b) </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-154-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-154-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;b) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">14.2    </span> <a 
+ id="x22-20300014.2"></a>Array construction </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-155" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-155-1g"><col 
+id="TBL-155-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-155-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-155-1-1"  
+class="td11"><span 
+class="pcrb7t-">array </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-156" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-156-1g"><col 
+id="TBL-156-1" /><col 
+id="TBL-156-2" /><col 
+id="TBL-156-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-156-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-156-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-156-1-2"  
+class="td11"> <span 
+class="pcrb7t-">Ix i      </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-156-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-156-2-1"  
+class="td11"> <span 
+class="pcrb7t-">=&#x003E; </span></td> <td  style="white-space:nowrap; text-align:left;" id="TBL-156-2-2"  
+class="td11"> <span 
+class="pcrb7t-">(i, i) </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-156-2-3"  
+class="td11"> a pair of <span 
+class="ptmri7t-">bounds</span>, each of the index type of the array. These bounds are the lowest and highest indices in the array, in that order. For example, a one-origin vector of length &#8217;10&#8217; has bounds &#8217;(1,10)&#8217;, and a one-origin &#8217;10&#8217; by &#8217;10&#8217; matrix has bounds &#8217;((1,1),(10,10))&#8217;.  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-156-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-156-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-156-3-2"  
+class="td11"> <span 
+class="pcrb7t-">[(i, e)]  </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-156-3-3"  
+class="td11"> a list of <span 
+class="ptmri7t-">associations </span>of the form (<span 
+class="ptmri7t-">index</span>, <span 
+class="ptmri7t-">value</span>). Typically, this list will be expressed as a comprehension. An association &#8217;(i, x)&#8217; defines the value of the array at index <span 
+class="pcrr7t-">i </span>to be <span 
+class="pcrr7t-">x</span>.                                                                                                                                           </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-156-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-156-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-156-4-2"  
+class="td11"> <span 
+class="pcrb7t-">Array i e </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-156-4-3"  
+class="td11">                                                                                                                                                                                </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-156-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-156-5-1"  
+class="td11">    </td></tr></table>
+     </div>
+     <p class="noindent"> Construct an array with the specified bounds and containing values for given indices within these
+     bounds.
+     <p class="noindent"> The array is undefined (i.e. bottom) if any index in the list is out of bounds. If any two associations in the list
+     have the same index, the value at that index is undefined (i.e. bottom).
+     <p class="noindent"> Because the indices must be checked for these errors, <span 
+class="pcrr7t-">array</span><a 
+ id="dx22-203001"></a> is strict in the bounds argument and in the
+     indices of the association list, but non-strict in the values. Thus, recurrences such as the following are
+     possible:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-378">
+&#x00A0;a&#x00A0;=&#x00A0;array&#x00A0;(1,100)&#x00A0;((1,1)&#x00A0;:&#x00A0;[(i,&#x00A0;i&#x00A0;&#x22C6;&#x00A0;a!(i-1))&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;[2..100]])
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Not every index within the bounds of the array need appear in the association list, but the values associated
+     with indices that do not appear will be undefined (i.e. bottom).
+     <p class="noindent"> If, in any dimension, the lower bound is greater than the upper bound, then the array is legal, but empty.
+     Indexing an empty array always gives an array-bounds error, but <span 
+class="pcrr7t-">bounds</span><a 
+ id="dx22-203002"></a> still yields the bounds with which
+     the array was constructed.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-157" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-157-1g"><col 
+id="TBL-157-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-157-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-157-1-1"  
+class="td11"><span 
+class="pcrb7t-">listArray</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(i,</span><span 
+class="pcrb7t-">&#x00A0;i)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Construct an array from a pair of bounds and a list of values in index order.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-158" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-158-1g"><col 
+id="TBL-158-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-158-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-158-1-1"  
+class="td11"><span 
+class="pcrb7t-">accumArray </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-159" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-159-1g"><col 
+id="TBL-159-1" /><col 
+id="TBL-159-2" /><col 
+id="TBL-159-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-159-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-1-1"  
+class="td11"> <span 
+class="pcrb7t-">:: </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-159-1-2"  
+class="td11"> <span 
+class="pcrb7t-">Ix i          </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-2-1"  
+class="td11"> <span 
+class="pcrb7t-">=&#x003E; </span></td> <td  style="white-space:nowrap; text-align:left;" id="TBL-159-2-2"  
+class="td11"> <span 
+class="pcrb7t-">(e -&#x003E; a -&#x003E; e)</span></td><td  style="white-space:wrap; text-align:left;" id="TBL-159-2-3"  
+class="td11"> accumulating function  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-3-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-159-3-2"  
+class="td11"> <span 
+class="pcrb7t-">e             </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-159-3-3"  
+class="td11"> initial value                   </td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-4-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td> <td  style="white-space:nowrap; text-align:left;" id="TBL-159-4-2"  
+class="td11"> <span 
+class="pcrb7t-">(i, i) </span></td> <td  style="white-space:wrap; text-align:left;" id="TBL-159-4-3"  
+class="td11"> bounds of the array</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-5-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-159-5-2"  
+class="td11"> <span 
+class="pcrb7t-">[(i, a)]      </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-159-5-3"  
+class="td11"> association list               </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-6-1"  
+class="td11"> <span 
+class="pcrb7t-">-&#x003E; </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-159-6-2"  
+class="td11"> <span 
+class="pcrb7t-">Array i e     </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-159-6-3"  
+class="td11">                 </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-159-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-159-7-1"  
+class="td11">    </td></tr></table>
+     </div>
+     <p class="noindent"> The <span 
+class="pcrr7t-">accumArray</span><a 
+ id="dx22-203003"></a> function deals with repeated indices in the association list using an <span 
+class="ptmri7t-">accumulating function</span>
+     which combines the values of associations with the same index. For example, given a list of values of some
+     index type, <span 
+class="pcrr7t-">hist </span>produces a histogram of the number of occurrences of each index within a specified
+     range:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-379">
+&#x00A0;hist&#x00A0;::&#x00A0;(Ix&#x00A0;a,&#x00A0;Num&#x00A0;b)&#x00A0;=&#x003E;&#x00A0;(a,a)&#x00A0;-&#x003E;&#x00A0;[a]&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;hist&#x00A0;bnds&#x00A0;is&#x00A0;=&#x00A0;accumArray&#x00A0;(+)&#x00A0;0&#x00A0;bnds&#x00A0;[(i,&#x00A0;1)&#x00A0;|&#x00A0;i&#x003C;-is,&#x00A0;inRange&#x00A0;bnds&#x00A0;i]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> If the accumulating function is strict, then <span 
+class="pcrr7t-">accumArray</span><a 
+ id="dx22-203004"></a> is strict in the values, as well as the indices, in the
+     association list. Thus, unlike ordinary arrays built with <span 
+class="pcrr7t-">array</span><a 
+ id="dx22-203005"></a>, accumulated arrays should not in general be
+     recursive.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">14.3    </span> <a 
+ id="x22-20400014.3"></a>Accessing arrays </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-160" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-160-1g"><col 
+id="TBL-160-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-160-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-160-1-1"  
+class="td11"><span 
+class="pcrb7t-">(!)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The value at the given index in an array.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-161" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-161-1g"><col 
+id="TBL-161-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-161-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-161-1-1"  
+class="td11"><span 
+class="pcrb7t-">bounds</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(i,</span><span 
+class="pcrb7t-">&#x00A0;i) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The bounds with which an array was constructed.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-162" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-162-1g"><col 
+id="TBL-162-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-162-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-162-1-1"  
+class="td11"><span 
+class="pcrb7t-">indices</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[i] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The list of indices of an array in ascending order.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-163" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-163-1g"><col 
+id="TBL-163-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-163-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-163-1-1"  
+class="td11"><span 
+class="pcrb7t-">elems</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[e] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The list of elements of an array in index order.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-164" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-164-1g"><col 
+id="TBL-164-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-164-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-164-1-1"  
+class="td11"><span 
+class="pcrb7t-">assocs</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(i,</span><span 
+class="pcrb7t-">&#x00A0;e)] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The list of associations of an array in index order.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">14.4    </span> <a 
+ id="x22-20500014.4"></a>Incremental array updates </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-165" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-165-1g"><col 
+id="TBL-165-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-165-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-165-1-1"  
+class="td11"><span 
+class="pcrb7t-">(//)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(i,</span><span 
+class="pcrb7t-">&#x00A0;e)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Constructs an array identical to the first argument except that it has been updated by the associations
+     in the right argument. For example, if <span 
+class="pcrr7t-">m </span>is a 1-origin, <span 
+class="pcrr7t-">n </span>by <span 
+class="pcrr7t-">n </span>matrix, then
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-380">
+&#x00A0;m//[((i,i),&#x00A0;0)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;[1..n]]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> is the same matrix, except with the diagonal zeroed.
+     <p class="noindent"> Repeated indices in the association list are handled as for <span 
+class="pcrr7t-">array</span><a 
+ id="dx22-205001"></a>: the resulting array is undefined (i.e.
+     bottom),
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-166" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-166-1g"><col 
+id="TBL-166-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-166-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-166-1-1"  
+class="td11"><span 
+class="pcrb7t-">accum</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;e)                        </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-166-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-166-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[(i,</span><span 
+class="pcrb7t-">&#x00A0;a)]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">accum</span><span 
+class="pcrr7t-">&#x00A0;f </span>takes an array and an association list and accumulates pairs from the list into the array with
+     the accumulating function <span 
+class="pcrr7t-">f</span>. Thus <span 
+class="pcrr7t-">accumArray</span><a 
+ id="dx22-205002"></a> can be defined using <span 
+class="pcrr7t-">accum</span><a 
+ id="dx22-205003"></a>:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-381">
+&#x00A0;accumArray&#x00A0;f&#x00A0;z&#x00A0;b&#x00A0;=&#x00A0;accum&#x00A0;f&#x00A0;(array&#x00A0;b&#x00A0;[(i,&#x00A0;z)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;range&#x00A0;b])
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">14.5    </span> <a 
+ id="x22-20600014.5"></a>Derived arrays </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-167" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-167-1g"><col 
+id="TBL-167-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-167-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-167-1-1"  
+class="td11"><span 
+class="pcrb7t-">ixmap</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(Ix</span><span 
+class="pcrb7t-">&#x00A0;i,</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;j)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(i,</span><span 
+class="pcrb7t-">&#x00A0;i)                               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-167-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-167-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(i</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;j)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;j</span><span 
+class="pcrb7t-">&#x00A0;e</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Array</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;e </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">ixmap</span><a 
+ id="dx22-206001"></a> allows  for  transformations  on  array  indices.  It  may  be  thought  of  as  providing  function
+     composition on the right with the mapping that the original array embodies.
+     <p class="noindent"> A similar transformation of array values may be achieved using <span 
+class="pcrr7t-">fmap</span><a 
+ id="dx22-206002"></a> from the <span 
+class="pcrr7t-">Array</span><a 
+ id="dx22-206003"></a> instance of
+     the <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx22-206004"></a> class.
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">14.6    </span> <a 
+ id="x22-20700014.6"></a>Specification </h3>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-382">
+&#x00A0;module&#x00A0;&#x00A0;Array&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;module&#x00A0;Data.Ix,&#x00A0;&#x00A0;--&#x00A0;export&#x00A0;all&#x00A0;of&#x00A0;Data.Ix
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Array,&#x00A0;array,&#x00A0;listArray,&#x00A0;(!),&#x00A0;bounds,&#x00A0;indices,&#x00A0;elems,&#x00A0;assocs,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;accumArray,&#x00A0;(//),&#x00A0;accum,&#x00A0;ixmap&#x00A0;)&#x00A0;where
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;import&#x00A0;Data.Ix
+&#x00A0;<br />&#x00A0;import&#x00A0;Data.List(&#x00A0;(\\)&#x00A0;)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;infixl&#x00A0;9&#x00A0;&#x00A0;!,&#x00A0;//
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;data&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;=&#x00A0;MkArray&#x00A0;(a,a)&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;deriving&#x00A0;()
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;array&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;(a,a)&#x00A0;-&#x003E;&#x00A0;[(a,b)]&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;array&#x00A0;b&#x00A0;ivs
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;|&#x00A0;any&#x00A0;(not&#x00A0;.&#x00A0;inRange&#x00A0;b.&#x00A0;fst)&#x00A0;ivs
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;error&#x00A0;"Data.Array.array:&#x00A0;out-of-range&#x00A0;array&#x00A0;association"
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;|&#x00A0;otherwise
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;MkArray&#x00A0;b&#x00A0;arr
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;arr&#x00A0;j&#x00A0;=&#x00A0;case&#x00A0;[&#x00A0;v&#x00A0;|&#x00A0;(i,v)&#x00A0;&#x003C;-&#x00A0;ivs,&#x00A0;i&#x00A0;==&#x00A0;j&#x00A0;]&#x00A0;of
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;[v]&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;v
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;[]&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;error&#x00A0;"Data.Array.!:&#x00A0;undefined&#x00A0;array&#x00A0;element"
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;_&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;error&#x00A0;"Data.Array.!:&#x00A0;multiply&#x00A0;defined&#x00A0;array&#x00A0;element"
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;listArray&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;(a,a)&#x00A0;-&#x003E;&#x00A0;[b]&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;listArray&#x00A0;b&#x00A0;vs&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;array&#x00A0;b&#x00A0;(zipWith&#x00A0;(\&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;(a,b))&#x00A0;(range&#x00A0;b)&#x00A0;vs)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;(!)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;b
+&#x00A0;<br />&#x00A0;(!)&#x00A0;(MkArray&#x00A0;_&#x00A0;f)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;f
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;bounds&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;(a,a)
+&#x00A0;<br />&#x00A0;bounds&#x00A0;(MkArray&#x00A0;b&#x00A0;_)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;b
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;indices&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;[a]
+&#x00A0;<br />&#x00A0;indices&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;range&#x00A0;.&#x00A0;bounds
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;elems&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;[b]
+&#x00A0;<br />&#x00A0;elems&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;[a!i&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;indices&#x00A0;a]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;assocs&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;[(a,b)]
+&#x00A0;<br />&#x00A0;assocs&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;[(i,&#x00A0;a!i)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;indices&#x00A0;a]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;(//)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;[(a,b)]&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;a&#x00A0;//&#x00A0;new_ivs&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;array&#x00A0;(bounds&#x00A0;a)&#x00A0;(old_ivs&#x00A0;++&#x00A0;new_ivs)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;old_ivs&#x00A0;=&#x00A0;[(i,a!i)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;indices&#x00A0;a,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;i&#x00A0;&#8216;notElem&#8216;&#x00A0;new_is]
+                                                                                   
+
+                                                                                   
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;new_is&#x00A0;&#x00A0;=&#x00A0;[i&#x00A0;|&#x00A0;(i,_)&#x00A0;&#x003C;-&#x00A0;new_ivs]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;accum&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;(b&#x00A0;-&#x003E;&#x00A0;c&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b&#x00A0;-&#x003E;&#x00A0;[(a,c)]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;accum&#x00A0;f&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;foldl&#x00A0;(\a&#x00A0;(i,v)&#x00A0;-&#x003E;&#x00A0;a&#x00A0;//&#x00A0;[(i,f&#x00A0;(a!i)&#x00A0;v)])
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;accumArray&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;(b&#x00A0;-&#x003E;&#x00A0;c&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;b&#x00A0;-&#x003E;&#x00A0;(a,a)&#x00A0;-&#x003E;&#x00A0;[(a,c)]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;b
+&#x00A0;<br />&#x00A0;accumArray&#x00A0;f&#x00A0;z&#x00A0;b&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;accum&#x00A0;f&#x00A0;(array&#x00A0;b&#x00A0;[(i,z)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;range&#x00A0;b])
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;ixmap&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Ix&#x00A0;a,&#x00A0;Ix&#x00A0;b)&#x00A0;=&#x003E;&#x00A0;(a,a)&#x00A0;-&#x003E;&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;b&#x00A0;c
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;Array&#x00A0;a&#x00A0;c
+&#x00A0;<br />&#x00A0;ixmap&#x00A0;b&#x00A0;f&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;array&#x00A0;b&#x00A0;[(i,&#x00A0;a&#x00A0;!&#x00A0;f&#x00A0;i)&#x00A0;|&#x00A0;i&#x00A0;&#x003C;-&#x00A0;range&#x00A0;b]
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x003E;&#x00A0;Functor&#x00A0;(Array&#x00A0;a)&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fmap&#x00A0;fn&#x00A0;(MkArray&#x00A0;b&#x00A0;f)&#x00A0;=&#x00A0;&#x00A0;MkArray&#x00A0;b&#x00A0;(fn&#x00A0;.&#x00A0;f)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a,&#x00A0;Eq&#x00A0;b)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Eq&#x00A0;(Array&#x00A0;a&#x00A0;b)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;a&#x00A0;==&#x00A0;a'&#x00A0;=&#x00A0;&#x00A0;assocs&#x00A0;a&#x00A0;==&#x00A0;assocs&#x00A0;a'
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a,&#x00A0;Ord&#x00A0;b)&#x00A0;=&#x003E;&#x00A0;Ord&#x00A0;(Array&#x00A0;a&#x00A0;b)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;a&#x00A0;&#x003C;=&#x00A0;a'&#x00A0;=&#x00A0;&#x00A0;assocs&#x00A0;a&#x00A0;&#x003C;=&#x00A0;assocs&#x00A0;a'
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a,&#x00A0;Show&#x00A0;a,&#x00A0;Show&#x00A0;b)&#x00A0;=&#x003E;&#x00A0;Show&#x00A0;(Array&#x00A0;a&#x00A0;b)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;p&#x00A0;a&#x00A0;=&#x00A0;showParen&#x00A0;(p&#x00A0;&#x003E;&#x00A0;arrPrec)&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showString&#x00A0;"array&#x00A0;"&#x00A0;.
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;(arrPrec+1)&#x00A0;(bounds&#x00A0;a)&#x00A0;.&#x00A0;showChar&#x00A0;'&#x00A0;'&#x00A0;.
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;(arrPrec+1)&#x00A0;(assocs&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Ix&#x00A0;a,&#x00A0;Read&#x00A0;a,&#x00A0;Read&#x00A0;b)&#x00A0;=&#x003E;&#x00A0;Read&#x00A0;(Array&#x00A0;a&#x00A0;b)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;readsPrec&#x00A0;p&#x00A0;=&#x00A0;readParen&#x00A0;(p&#x00A0;&#x003E;&#x00A0;arrPrec)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(\r&#x00A0;-&#x003E;&#x00A0;[&#x00A0;(array&#x00A0;b&#x00A0;as,&#x00A0;u)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;("array",s)&#x00A0;&#x003C;-&#x00A0;lex&#x00A0;r,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(b,t)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x003C;-&#x00A0;readsPrec&#x00A0;(arrPrec+1)&#x00A0;s,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(as,u)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x003C;-&#x00A0;readsPrec&#x00A0;(arrPrec+1)&#x00A0;t&#x00A0;])
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;--&#x00A0;Precedence&#x00A0;of&#x00A0;the&#x00A0;'array'&#x00A0;function&#x00A0;is&#x00A0;that&#x00A0;of&#x00A0;application&#x00A0;itself
+&#x00A0;<br />&#x00A0;arrPrec&#x00A0;=&#x00A0;10
+</div>
+     <p class="noindent"></div>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch15.html" >next</a>] [<a 
+href="haskellch13.html" >prev</a>] [<a 
+href="haskellch13.html#tailhaskellch13.html" >prev-tail</a>] [<a 
+href="haskellch14.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch14.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch14.html"></a>   
+</body> </html> 

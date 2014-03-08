@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>Preface</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 4--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellpa1.html" >next</a>] [<a 
+href="haskellli1.html" >prev</a>] [<a 
+href="haskellli1.html#tailhaskellli1.html" >prev-tail</a>] [<a 
+href="#tailhaskellli2.html">tail</a>] [<a 
+href="haskell.html#haskellli2.html" >up</a>] </p></div>
+<h2 class="likechapterHead"><a 
+ id="x3-2000"></a>Preface</h2>
+     <div class="quote">
+     <p class="noindent"> &#8220;<span 
+class="ptmri7t-">Some half dozen persons have written technically on combinatory logic, and most of these,</span>
+     <span 
+class="ptmri7t-">including ourselves, have published something erroneous. Since some of our fellow sinners are</span>
+     <span 
+class="ptmri7t-">among the most careful and competent logicians on the contemporary scene, we regard</span>
+     <span 
+class="ptmri7t-">this as evidence that the subject is refractory. Thus fullness of exposition is necessary for</span>
+     <span 
+class="ptmri7t-">accuracy; and excessive condensation would be false economy here, even more than it is</span>
+     <span 
+class="ptmri7t-">ordinarily.</span>&#8221;
+                                                                              <div class="flushright" 
+>
+ <p class="noindent">
+ Haskell B.&#x00A0;Curry and Robert Feys<br />
+in the Preface to <span 
+class="ptmri7t-">Combinatory Logic </span><span class="cite">[<a 
+href="haskellli3.html#Xcurry&feys:book">3</a>]</span>, May 31, 1956</div>
+     </div>
+<p class="noindent"> In September of 1987 a meeting was held at the conference on Functional Programming Languages and Computer
+Architecture (FPCA&#x00A0;&#8217;87) in Portland, Oregon, to discuss an unfortunate situation in the functional programming
+community: there had come into being more than a dozen non-strict, purely functional programming languages, all
+similar in expressive power and semantic underpinnings. There was a strong consensus at this meeting
+that more widespread use of this class of functional languages<a 
+ id="dx3-2001"></a> was being hampered by the lack of a
+common language. It was decided that a committee should be formed to design such a language, providing
+faster communication of new ideas, a stable foundation for real applications development, and a vehicle
+through which others would be encouraged to use functional languages. This document describes the
+result of that (and subsequent) committee&#8217;s efforts: a purely functional programming language called
+Haskell, <a 
+ id="dx3-2002"></a>named after the logician Haskell B.&#x00A0;Curry<a 
+ id="dx3-2003"></a> whose work provides the logical basis for much of
+ours.
+<h3 class="likesectionHead"><a 
+ id="x3-3000"></a>Goals</h3>
+<p class="noindent"> The committee&#8217;s primary goal was to design a language that satisfied these constraints:
+                                                                                   
+
+                                                                                   
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x3-3002x1">It should be suitable for teaching, research, and applications, including building large systems.
+     </li>
+     <li 
+  class="enumerate" id="x3-3004x2">It should be completely described via the publication of a formal syntax and semantics.
+     </li>
+     <li 
+  class="enumerate" id="x3-3006x3">It should be freely available. Anyone should be permitted to implement the language and distribute it
+     to whomever they please.
+     </li>
+     <li 
+  class="enumerate" id="x3-3008x4">It should be based on ideas that enjoy a wide consensus.
+     </li>
+     <li 
+  class="enumerate" id="x3-3010x5">It should reduce unnecessary diversity in functional programming languages.</li></ol>
+<p class="noindent">
+<h3 class="likesectionHead"><a 
+ id="x3-4000"></a>Haskell 2010: language and libraries</h3>
+<p class="noindent"> The committee intended that Haskell would serve as a basis for future research in language design, and hoped that
+extensions or variants of the language would appear, incorporating experimental features.
+ <p class="noindent"> Haskell has indeed evolved continuously since its original publication. By the middle of 1997, there
+had been five versions of the language design (from Haskell 1.0 &#8211; 1.4). At the 1997 Haskell Workshop
+in Amsterdam, it was decided that a stable variant of Haskell was needed; this became &#8220;Haskell 98&#8221;
+and was published in February 1999. The fixing of minor bugs led to the <span 
+class="ptmri7t-">Revised </span>Haskell 98 Report in
+2002.
+ <p class="noindent"> At the 2005 Haskell Workshop, the consensus was that so many extensions to the official language were widely used
+(and supported by multiple implementations), that it was worthwhile to define another iteration of the language
+standard, essentially to codify (and legitimise) the status quo.
+ <p class="noindent"> The Haskell Prime effort was thus conceived as a relatively conservative extension of Haskell 98, taking on board
+new features only where they were well understood and widely agreed upon. It too was intended to be a
+&#8220;stable&#8221; language, yet reflecting the considerable progress in research on language design in recent
+years.
+ <p class="noindent"> After several years exploring the design space, it was decided that a single monolithic revision of the
+language was too large a task, and the best way to make progress was to evolve the language in small
+incremental steps, each revision integrating only a small number of well-understood extensions and changes.
+Haskell 2010 is the first revision to be created in this way, and new revisions are expected once per year. 
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="likesectionHead"><a 
+ id="x3-5000"></a>Extensions to Haskell 98</h3>
+<p class="noindent"> The most significant language changes in Haskell 2010 relative to Haskell 98 are listed here.
+ <p class="noindent"> New language features:
+     <ul class="itemize1">
+     <li class="itemize">A Foreign Function Interface (FFI).
+     </li>
+     <li class="itemize">Hierarchical module names, e.g. <span 
+class="pcrr7t-">Data.Bool</span>.
+     </li>
+     <li class="itemize">Pattern guards.</li></ul>
+ <p class="noindent"> Removed language features:
+     <ul class="itemize1">
+     <li class="itemize">The <span 
+class="cmr-10">(</span><span 
+class="cmmi-10">n </span><span 
+class="cmr-10">+ </span><span 
+class="cmmi-10">k</span><span 
+class="cmr-10">) </span>pattern syntax.</li></ul>
+<p class="noindent">
+<h3 class="likesectionHead"><a 
+ id="x3-6000"></a>Haskell Resources</h3>
+<a 
+ id="x3-6000doc"></a>
+<p class="noindent"> The Haskell web site <a 
+href="http://haskell.org" class="url" ><span 
+class="pcrr7t-">http://haskell.org</span></a> gives access to many useful resources, including:
+     <ul class="itemize1">
+     <li class="itemize">Online versions of the language and library definitions.
+     </li>
+     <li class="itemize">Tutorial material on Haskell.
+     </li>
+     <li class="itemize">Details of the Haskell mailing list.
+     </li>
+     <li class="itemize">Implementations of Haskell.
+     </li>
+     <li class="itemize">Contributed Haskell tools and libraries.
+     </li>
+     <li class="itemize">Applications of Haskell.
+     </li>
+     <li class="itemize">User-contributed wiki pages.
+                                                                                   
+
+                                                                                   
+     </li>
+     <li class="itemize">News and events in the Haskell community.</li></ul>
+<p class="noindent"> You are welcome to comment on, suggest improvements to, and criticise the language or its presentation in the
+report, via the Haskell mailing list, or the Haskell wiki.
+<p class="noindent">
+<h3 class="likesectionHead"><a 
+ id="x3-7000"></a>Building the language</h3>
+<p class="noindent"> Haskell was created, and continues to be sustained, by an active community of researchers and application
+programmers. Those who served on the Language and Library committees, in particular, devoted a
+huge amount of time and energy to the language. Here they are, with their affiliation(s) for the relevant
+period:
+<div class="center" 
+>
+ <p class="noindent">
+ <p class="noindent"> Arvind (MIT)<br />
+Lennart Augustsson (Chalmers University)<br />
+Dave Barton (Mitre Corp)<br />
+Brian Boutel (Victoria University of Wellington)<br />
+Warren Burton (Simon Fraser University)<br />
+Manuel M T Chakravarty (University of New South Wales)<br />
+Duncan Coutts (Well-Typed LLP)<br />
+Jon Fairbairn (University of Cambridge)<br />
+Joseph Fasel (Los Alamos National Laboratory)<br />
+John Goerzen<br />
+Andy Gordon (University of Cambridge)<br />
+Maria Guzman (Yale University)<br />
+Kevin Hammond [editor] (University of Glasgow)<br />
+Bastiaan Heeren (Utrecht University)<br />
+Ralf Hinze (University of Bonn)<br />
+Paul Hudak [editor] (Yale University)<br />
+John Hughes [editor] (University of Glasgow; Chalmers University)<br />
+Thomas Johnsson (Chalmers University)<br />
+Isaac Jones (Galois, inc.)<br />
+Mark Jones (Yale University, University of Nottingham, Oregon Graduate Institute)<br />
+Dick Kieburtz (Oregon Graduate Institute)<br />
+John Launchbury (University of Glasgow; Oregon Graduate Institute; Galois, inc.)<br />
+Andres Löh (Utrecht University)<br />
+Ian Lynagh (Well-Typed LLP)<br />
+Simon Marlow [editor] (Microsoft Research)<br />
+John Meacham<br />
+                                                                                   
+
+                                                                                   
+Erik Meijer (Utrecht University)<br />
+Ravi Nanavati (Bluespec, inc.)<br />
+Rishiyur Nikhil (MIT)<br />
+Henrik Nilsson (University of Nottingham)<br />
+Ross Paterson (City University, London)<br />
+John Peterson [editor] (Yale University)<br />
+Simon Peyton Jones [editor] (University of Glasgow; Microsoft Research Ltd)<br />
+Mike Reeve (Imperial College)<br />
+Alastair Reid (University of Glasgow)<br />
+Colin Runciman (University of York)<br />
+Don Stewart (Galois, inc.)<br />
+Martin Sulzmann (Informatik Consulting Systems AG)<br />
+Audrey Tang<br />
+Simon Thompson (University of Kent)<br />
+Philip Wadler [editor] (University of Glasgow)<br />
+Malcolm Wallace (University of York)<br />
+Stephanie Weirich (University of Pennsylvania)<br />
+David Wise (Indiana University)<br />
+Jonathan Young (Yale University)</div>
+ <p class="noindent"> Those marked [editor] served as the co-ordinating editor for one or more revisions of the language.
+ <p class="noindent"> In addition, dozens of other people made helpful contributions, some small but many substantial. They are as
+follows: Hans Aberg, Kris Aerts, Sten Anderson, Richard Bird, Tom Blenko, Stephen Blott, Duke Briscoe, Paul
+Callaghan, Magnus Carlsson, Mark Carroll, Franklin Chen, Olaf Chitil, Chris Clack, Guy Cousineau, Tony Davie,
+Craig Dickson, Chris Dornan, Laura Dutton, Chris Fasel, Pat Fasel, Sigbjorn Finne, Michael Fryers, Peter Gammie,
+Andy Gill, Mike Gunter, Cordy Hall, Mark Hall, Thomas Hallgren, Matt Harden, Klemens Hemm,
+Fergus Henderson, Dean Herington, Bob Hiromoto, Nic Holt, Ian Holyer, Randy Hudson, Alexander
+Jacobson, Patrik Jansson, Robert Jeschofnik, Orjan Johansen, Simon B.&#x00A0;Jones, Stef Joosten, Mike Joy,
+Wolfram Kahl, Stefan Kahrs, Antti-Juhani Kaijanaho, Jerzy Karczmarczuk, Kent Karlsson, Martin D.
+Kealey, Richard Kelsey, Siau-Cheng Khoo, Amir Kishon, Feliks Kluzniak, Jan Kort, Marcin Kowalczyk,
+Jose Labra, Jeff Lewis, Mark Lillibridge, Bjorn Lisper, Sandra Loosemore, Pablo Lopez, Olaf Lubeck,
+Christian Maeder, Ketil Malde, Michael Marte, Jim Mattson, John Meacham, Sergey Mechveliani,
+Gary Memovich, Randy Michelsen, Rick Mohr, Andy Moran, Graeme Moss, Arthur Norman, Nick
+North, Chris Okasaki, Bjarte M. Østvold, Paul Otto, Sven Panne, Dave Parrott, Larne Pekowsky, Rinus
+Plasmeijer, Ian Poole, Stephen Price, John Robson, Andreas Rossberg, George Russell, Patrick Sansom,
+Michael Schneider, Felix Schroeter, Julian Seward, Nimish Shah, Christian Sievers, Libor Skarvada, Jan
+Skibinski, Lauren Smith, Raman Sundaresh, Josef Svenningsson, Ken Takusagawa, Wolfgang Thaller,
+Satish Thatte, Tom Thomson, Tommy Thorn, Dylan Thurston, Mike Thyer, Mark Tullsen, David Tweed,
+Pradeep Varma, Keith Wansbrough, Tony Warnock, Michael Webber, Carl Witty, Stuart Wray, and Bonnie
+Yantis.
+ <p class="noindent"> Finally, aside from the important foundational work laid by Church, Rosser, Curry, and others on the lambda
+calculus, it is right to acknowledge the influence of many noteworthy programming languages developed over the
+years. Although it is difficult to pinpoint the origin of many ideas, the following languages were particularly
+influential: Lisp (and its modern-day incarnations Common Lisp and Scheme); Landin&#8217;s ISWIM; APL; Backus&#8217;s FP
+<span class="cite">[<a 
+href="haskellli3.html#Xback78">1</a>]</span>; ML and Standard ML; Hope and Hope<sup><span 
+class="cmr-7">+</span></sup>; Clean; Id; Gofer; Sisal; and Turner&#8217;s series of languages culminating in
+                                                                                   
+
+                                                                                   
+Miranda<span class="footnote-mark"><a 
+href="haskell4.html#fn1x0"><sup class="textsuperscript">1</sup></a></span><a 
+ id="x3-7001f1"></a> .
+Without these forerunners Haskell would not have been possible.
+ <p class="noindent"> Simon Marlow <br 
+class="newline" />Cambridge, April 2010
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+<!--l. 444--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellpa1.html" >next</a>] [<a 
+href="haskellli1.html" >prev</a>] [<a 
+href="haskellli1.html#tailhaskellli1.html" >prev-tail</a>] [<a 
+href="haskellli2.html" >front</a>] [<a 
+href="haskell.html#haskellli2.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellli2.html"></a>   
+</body></html> 

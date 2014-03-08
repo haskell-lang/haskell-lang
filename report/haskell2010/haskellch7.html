@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>7 Basic Input/Output</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 11--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch8.html" >next</a>] [<a 
+href="haskellch6.html" >prev</a>] [<a 
+href="haskellch6.html#tailhaskellch6.html" >prev-tail</a>] [<a 
+href="#tailhaskellch7.html">tail</a>] [<a 
+href="haskellpa1.html#haskellch7.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;7</span><br /><a 
+ id="x14-1420007"></a>Basic Input/Output</h2> <a 
+ id="dx14-142001"></a>
+<p class="noindent"> The I/O system in Haskell is purely functional, yet has all of the expressive power found in conventional
+programming languages. To achieve this, Haskell uses a <span 
+class="cmmi-10">monad</span> to integrate I/O operations into a purely functional
+context.
+ <p class="noindent"> The I/O monad used by Haskell mediates between the <span 
+class="cmmi-10">values</span> natural to a functional language and the <span 
+class="cmmi-10">actions</span>
+that characterize I/O operations and imperative programming in general. The order of evaluation of
+expressions in Haskell is constrained only by data dependencies; an implementation has a great deal of
+freedom in choosing this order. Actions, however, must be ordered in a well-defined manner for program
+execution &#8211; and I/O in particular &#8211; to be meaningful. Haskell&#8217;s I/O monad provides the user with a
+way to specify the sequential chaining of actions, and an implementation is obliged to preserve this
+order.
+<a 
+ id="dx14-142002"></a>
+ <p class="noindent"> The term <span 
+class="cmmi-10">monad</span> comes from a branch of mathematics known as <span 
+class="ptmri7t-">category theory</span>. From the perspective of a Haskell
+programmer, however, it is best to think of a monad as an <span 
+class="ptmri7t-">abstract datatype</span>. In the case of the I/O monad, the
+abstract values are the <span 
+class="cmmi-10">actions</span> mentioned above. Some operations are primitive actions, corresponding
+to conventional I/O operations. Special operations (methods in the class <span 
+class="pcrr7t-">Monad</span>, see Section&#x00A0;<a 
+href="haskellch6.html#x13-1330006.3.6">6.3.6<!--tex4ht:ref: monad-class --></a>)
+sequentially compose actions, corresponding to sequencing operators (such as the semicolon) in imperative
+languages.
+<h3 class="sectionHead"><span class="titlemark">7.1    </span> <a 
+ id="x14-1430007.1"></a>Standard I/O Functions</h3>
+<p class="noindent"> Although Haskell provides fairly sophisticated I/O facilities, as defined in the <span 
+class="pcrr7t-">IO</span> library, it is possible to write many
+Haskell programs using only the few simple functions that are exported from the Prelude, and which are described in
+this section.
+ <p class="noindent"> All I/O functions defined here are character oriented. The treatment of the newline character will vary on different
+systems. For example, two characters of input, return and linefeed, may read as a single newline character. These
+functions cannot be used portably for binary I/O.
+ <p class="noindent"> In the following, recall that <span 
+class="pcrr7t-">String</span> is a synonym for <span 
+class="pcrr7t-">[Char]</span> (Section&#x00A0;<a 
+href="haskellch6.html#x13-1190006.1.2">6.1.2<!--tex4ht:ref: characters --></a>).
+<p class="noindent"> <span class="likeparagraphHead"><a 
+ id="x14-1440007.1"></a>Output Functions</span>
+These functions write to the standard output device (this is normally the user&#8217;s terminal).
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-133">
+&#x00A0;&#x00A0;putChar&#x00A0;&#x00A0;::&#x00A0;Char&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+&#x00A0;<br />&#x00A0;&#x00A0;putStr&#x00A0;&#x00A0;&#x00A0;::&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+&#x00A0;<br />&#x00A0;&#x00A0;putStrLn&#x00A0;::&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()&#x00A0;&#x00A0;--&#x00A0;adds&#x00A0;a&#x00A0;newline
+&#x00A0;<br />&#x00A0;&#x00A0;print&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Show&#x00A0;a&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-144001"></a>
+<a 
+ id="dx14-144002"></a>
+<a 
+ id="dx14-144003"></a>
+<a 
+ id="dx14-144004"></a>
+<p class="noindent"> The <span 
+class="pcrr7t-">print</span> function outputs a value of any printable type to the standard output device. Printable types are those that
+are instances of class <span 
+class="pcrr7t-">Show</span>; <span 
+class="pcrr7t-">print</span> converts values to strings for output using the <span 
+class="pcrr7t-">show</span> operation and adds a
+newline.
+ <p class="noindent"> For example, a program to print the first 20 integers and their powers of 2 could be written as:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-134">
+main&#x00A0;=&#x00A0;print&#x00A0;([(n,&#x00A0;2^n)&#x00A0;|&#x00A0;n&#x00A0;&#x003C;-&#x00A0;[0..19]])
+</div>
+     <p class="noindent"></div>
+<p class="noindent"><span class="likeparagraphHead"><a 
+ id="x14-1450007.1"></a>Input Functions</span>
+These functions read input from the standard input device (normally the user&#8217;s terminal).
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-135">
+&#x00A0;&#x00A0;getChar&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;IO&#x00A0;Char
+&#x00A0;<br />&#x00A0;&#x00A0;getLine&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;IO&#x00A0;String
+&#x00A0;<br />&#x00A0;&#x00A0;getContents&#x00A0;::&#x00A0;IO&#x00A0;String
+&#x00A0;<br />&#x00A0;&#x00A0;interact&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(String&#x00A0;-&#x003E;&#x00A0;String)&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+&#x00A0;<br />&#x00A0;&#x00A0;readIO&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Read&#x00A0;a&#x00A0;=&#x003E;&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;a
+&#x00A0;<br />&#x00A0;&#x00A0;readLn&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;Read&#x00A0;a&#x00A0;=&#x003E;&#x00A0;IO&#x00A0;a
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-145001"></a>
+<a 
+ id="dx14-145002"></a>
+<a 
+ id="dx14-145003"></a>
+<a 
+ id="dx14-145004"></a>
+<a 
+ id="dx14-145005"></a>
+<a 
+ id="dx14-145006"></a>
+<p class="noindent"> The <span 
+class="pcrr7t-">getChar</span> operation raises an exception (Section&#x00A0;<a 
+href="#x14-1480007.3">7.3<!--tex4ht:ref: io-exceptions --></a>) on end-of-file; a predicate <span 
+class="pcrr7t-">isEOFError</span> that identifies
+this exception is defined in the <span 
+class="pcrr7t-">IO</span> library. The <span 
+class="pcrr7t-">getLine</span> operation raises an exception under the same circumstances
+as <span 
+class="pcrr7t-">hGetLine</span>, defined the <span 
+class="pcrr7t-">IO</span> library.
+ <p class="noindent"> The <span 
+class="pcrr7t-">getContents</span> operation returns all user input as a single string, which is read lazily as it is needed. The
+<span 
+class="pcrr7t-">interact</span> function takes a function of type <span 
+class="pcrr7t-">String-&#x003E;String</span> as its argument. The entire input from the standard
+input device is passed to this function as its argument, and the resulting string is output on the standard output
+device.
+ <p class="noindent"> Typically, the <span 
+class="pcrr7t-">read</span> operation from class <span 
+class="pcrr7t-">Read</span> is used to convert the string to a value. The <span 
+class="pcrr7t-">readIO</span> function is
+similar to <span 
+class="pcrr7t-">read</span> except that it signals parse failure to the I/O monad instead of terminating the program. The <span 
+class="pcrr7t-">readLn</span>
+function combines <span 
+class="pcrr7t-">getLine</span> and <span 
+class="pcrr7t-">readIO</span>.
+ <p class="noindent"> The following program simply removes all non-ASCII characters from its standard input and echoes the result on its
+standard output. (The <span 
+class="pcrr7t-">isAscii</span> function is defined in a library.)
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-136">
+main&#x00A0;=&#x00A0;interact&#x00A0;(filter&#x00A0;isAscii)
+</div>
+     <p class="noindent"></div>
+<p class="noindent"><span class="likeparagraphHead"><a 
+ id="x14-1460007.1"></a>Files</span>
+These functions operate on files of characters. Files are named by strings using some implementation-specific method
+to resolve strings as file names.
+ <p class="noindent"> The <span 
+class="pcrr7t-">writeFile</span> and <span 
+class="pcrr7t-">appendFile</span> functions write or append the string, their second argument, to the file, their
+first argument. The <span 
+class="pcrr7t-">readFile</span> function reads a file and returns the contents of the file as a string. The file is read
+lazily, on demand, as with <span 
+class="pcrr7t-">getContents</span>.
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-137">
+&#x00A0;&#x00A0;type&#x00A0;FilePath&#x00A0;=&#x00A0;&#x00A0;String
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;writeFile&#x00A0;&#x00A0;::&#x00A0;FilePath&#x00A0;-&#x003E;&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+&#x00A0;<br />&#x00A0;&#x00A0;appendFile&#x00A0;::&#x00A0;FilePath&#x00A0;-&#x003E;&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;()
+&#x00A0;<br />&#x00A0;&#x00A0;readFile&#x00A0;&#x00A0;&#x00A0;::&#x00A0;FilePath&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;String
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-146001"></a>
+<a 
+ id="dx14-146002"></a>
+<a 
+ id="dx14-146003"></a>
+<a 
+ id="dx14-146004"></a>
+<p class="noindent"> Note that <span 
+class="pcrr7t-">writeFile</span> and <span 
+class="pcrr7t-">appendFile</span> write a literal string to a file. To write a value of any printable type, as
+with <span 
+class="pcrr7t-">print</span>, use the <span 
+class="pcrr7t-">show</span> function to convert the value to a string first.
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-138">
+main&#x00A0;=&#x00A0;appendFile&#x00A0;"squares"&#x00A0;(show&#x00A0;[(x,x&#x22C6;x)&#x00A0;|&#x00A0;x&#x00A0;&#x003C;-&#x00A0;[0,0.1..2]])
+</div>
+     <p class="noindent"></div>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">7.2    </span> <a 
+ id="x14-1470007.2"></a>Sequencing I/O Operations</h3>
+<a 
+ id="dx14-147001"></a>
+<a 
+ id="dx14-147002"></a>
+<p class="noindent"> The type constructor <span 
+class="pcrr7t-">IO</span> is an instance of the <span 
+class="pcrr7t-">Monad</span> class. The two monadic binding functions, methods in the
+<span 
+class="pcrr7t-">Monad</span> class, are used to compose a series of I/O operations. The <span 
+class="pcrr7t-">&#x003E;&#x003E;</span> function is used where the result of the first
+operation is uninteresting, for example when it is <span 
+class="pcrr7t-">()</span>. The <span 
+class="pcrr7t-">&#x003E;&#x003E;=</span> operation passes the result of the first operation as an
+argument to the second operation.
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-139">
+&#x00A0;&#x00A0;(&#x003E;&#x003E;=)&#x00A0;::&#x00A0;IO&#x00A0;a&#x00A0;-&#x003E;&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;b)&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;b
+&#x00A0;<br />&#x00A0;&#x00A0;(&#x003E;&#x003E;)&#x00A0;&#x00A0;::&#x00A0;IO&#x00A0;a&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;b&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;b
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> For example,
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-140">
+main&#x00A0;=&#x00A0;readFile&#x00A0;"input-file"&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x003E;&#x003E;=&#x00A0;\&#x00A0;s&#x00A0;-&#x003E;
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;writeFile&#x00A0;"output-file"&#x00A0;(filter&#x00A0;isAscii&#x00A0;s)&#x00A0;&#x00A0;&#x003E;&#x003E;
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;putStr&#x00A0;"Filtering&#x00A0;successful\n"
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> is similar to the previous example using <span 
+class="pcrr7t-">interact</span>, but takes its input from <span 
+class="pcrr7t-">"input-file"</span> and
+writes its output to <span 
+class="pcrr7t-">"output-file"</span>. A message is printed on the standard output before the program
+completes.
+<a 
+ id="dx14-147003"></a>
+ <p class="noindent"> The <span 
+class="pcrr7t-">do</span> notation allows programming in a more imperative syntactic style. A slightly more elaborate version of the
+previous example would be:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-141">
+main&#x00A0;=&#x00A0;do
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;putStr&#x00A0;"Input&#x00A0;file:&#x00A0;"
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;ifile&#x00A0;&#x003C;-&#x00A0;getLine
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;putStr&#x00A0;"Output&#x00A0;file:&#x00A0;"
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;ofile&#x00A0;&#x003C;-&#x00A0;getLine
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;s&#x00A0;&#x003C;-&#x00A0;readFile&#x00A0;ifile
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;writeFile&#x00A0;ofile&#x00A0;(filter&#x00A0;isAscii&#x00A0;s)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;putStr&#x00A0;"Filtering&#x00A0;successful\n"
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The <span 
+class="pcrr7t-">return</span> function is used to define the result of an I/O operation. For example, <span 
+class="pcrr7t-">getLine</span> is defined in terms of
+<span 
+class="pcrr7t-">getChar</span>, using <span 
+class="pcrr7t-">return</span> to define the result:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-142">
+getLine&#x00A0;::&#x00A0;IO&#x00A0;String
+&#x00A0;<br />getLine&#x00A0;=&#x00A0;do&#x00A0;c&#x00A0;&#x003C;-&#x00A0;getChar
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;c&#x00A0;==&#x00A0;'\n'&#x00A0;then&#x00A0;return&#x00A0;""
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;else&#x00A0;do&#x00A0;s&#x00A0;&#x003C;-&#x00A0;getLine
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;(c:s)
+</div>
+     <p class="noindent"></div>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">7.3    </span> <a 
+ id="x14-1480007.3"></a>Exception Handling in the I/O Monad</h3>
+<a 
+ id="dx14-148001"></a>
+<p class="noindent"> The I/O monad includes a simple exception handling system. Any I/O operation may raise an exception instead of
+returning a result.
+ <p class="noindent"> Exceptions in the I/O monad are represented by values of type <span 
+class="pcrr7t-">IOError</span>. This is an abstract type: its constructors
+are hidden from the user. The <span 
+class="pcrr7t-">IO</span> library defines functions that construct and examine <span 
+class="pcrr7t-">IOError</span> values. The only
+Prelude function that creates an <span 
+class="pcrr7t-">IOError</span> value is <span 
+class="pcrr7t-">userError</span>. User error values include a string describing the
+error.
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-143">
+&#x00A0;&#x00A0;userError&#x00A0;::&#x00A0;String&#x00A0;-&#x003E;&#x00A0;IOError
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-148002"></a>
+<p class="noindent"> Exceptions are raised and caught using the following functions:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-144">
+&#x00A0;&#x00A0;ioError&#x00A0;::&#x00A0;IOError&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;a
+&#x00A0;<br />&#x00A0;&#x00A0;catch&#x00A0;&#x00A0;&#x00A0;::&#x00A0;IO&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;(IOError&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;a)&#x00A0;-&#x003E;&#x00A0;IO&#x00A0;a&#x00A0;
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-148003"></a>
+<a 
+ id="dx14-148004"></a>
+<p class="noindent"> The <span 
+class="pcrr7t-">ioError</span> function raises an exception; the <span 
+class="pcrr7t-">catch</span> function establishes a handler that receives any exception
+raised in the action protected by <span 
+class="pcrr7t-">catch</span>. An exception is caught by the most recent handler established by <span 
+class="pcrr7t-">catch</span>.
+These handlers are not selective: all exceptions are caught. Exception propagation must be explicitly provided in a
+handler by re-raising any unwanted exceptions. For example, in
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-145">
+f&#x00A0;=&#x00A0;catch&#x00A0;g&#x00A0;(\e&#x00A0;-&#x003E;&#x00A0;if&#x00A0;IO.isEOFError&#x00A0;e&#x00A0;then&#x00A0;return&#x00A0;[]&#x00A0;else&#x00A0;ioError&#x00A0;e)
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> the function <span 
+class="pcrr7t-">f</span> returns <span 
+class="pcrr7t-">[]</span> when an end-of-file exception occurs in <span 
+class="pcrr7t-">g</span>; otherwise, the exception is propagated to the
+next outer handler. The <span 
+class="pcrr7t-">isEOFError</span> function is part of <span 
+class="pcrr7t-">IO</span> library.
+ <p class="noindent"> When an exception propagates outside the main program, the Haskell system prints the associated <span 
+class="pcrr7t-">IOError</span> value
+and exits the program.
+ <p class="noindent"> The <span 
+class="pcrr7t-">fail</span> method of the <span 
+class="pcrr7t-">IO</span> instance of the <span 
+class="pcrr7t-">Monad</span> class (Section&#x00A0;<a 
+href="haskellch6.html#x13-1330006.3.6">6.3.6<!--tex4ht:ref: monad-class --></a>) raises a <span 
+class="pcrr7t-">userError</span>, thus:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-146">
+&#x00A0;&#x00A0;instance&#x00A0;Monad&#x00A0;IO&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;...bindings&#x00A0;for&#x00A0;return,&#x00A0;(&#x003E;&#x003E;=),&#x00A0;(&#x003E;&#x003E;)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;fail&#x00A0;s&#x00A0;=&#x00A0;ioError&#x00A0;(userError&#x00A0;s)
+</div>
+     <p class="noindent"></div>
+<a 
+ id="dx14-148005"></a>
+<p class="noindent"> The exceptions raised by the I/O functions in the Prelude are defined in Chapter&#x00A0;<a 
+href="haskellch42.html#x50-34100042">42<!--tex4ht:ref: module:System.IO.Error --></a>.
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+<!--l. 153--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch8.html" >next</a>] [<a 
+href="haskellch6.html" >prev</a>] [<a 
+href="haskellch6.html#tailhaskellch6.html" >prev-tail</a>] [<a 
+href="haskellch7.html" >front</a>] [<a 
+href="haskellpa1.html#haskellch7.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch7.html"></a>   
+</body></html> 

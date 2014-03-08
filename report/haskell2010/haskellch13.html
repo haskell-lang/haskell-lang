@@ -1,0 +1,1494 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>13 Control.Monad</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch14.html" >next</a>] [<a 
+href="#tailhaskellch13.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch13.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;13</span><br /><a 
+ id="x21-19300013"></a><span 
+class="pcrr7t-">Control.Monad</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-363">
+module&#x00A0;Control.Monad&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Functor(fmap),&#x00A0;&#x00A0;Monad((&#x003E;&#x003E;=),&#x00A0;(&#x003E;&#x003E;),&#x00A0;return,&#x00A0;fail),&#x00A0;&#x00A0;MonadPlus(mzero,&#x00A0;mplus),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;mapM,&#x00A0;&#x00A0;mapM_,&#x00A0;&#x00A0;forM,&#x00A0;&#x00A0;forM_,&#x00A0;&#x00A0;sequence,&#x00A0;&#x00A0;sequence_,&#x00A0;&#x00A0;(=&#x003C;&#x003C;),&#x00A0;&#x00A0;(&#x003E;=&#x003E;),&#x00A0;&#x00A0;(&#x003C;=&#x003C;),
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;forever,&#x00A0;&#x00A0;void,&#x00A0;&#x00A0;join,&#x00A0;&#x00A0;msum,&#x00A0;&#x00A0;filterM,&#x00A0;&#x00A0;mapAndUnzipM,&#x00A0;&#x00A0;zipWithM,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;zipWithM_,&#x00A0;&#x00A0;foldM,&#x00A0;&#x00A0;foldM_,&#x00A0;&#x00A0;replicateM,&#x00A0;&#x00A0;replicateM_,&#x00A0;&#x00A0;guard,&#x00A0;&#x00A0;when,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;unless,&#x00A0;&#x00A0;liftM,&#x00A0;&#x00A0;liftM2,&#x00A0;&#x00A0;liftM3,&#x00A0;&#x00A0;liftM4,&#x00A0;&#x00A0;liftM5,&#x00A0;&#x00A0;ap
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The <span 
+class="pcrr7t-">Control.Monad </span>module provides the <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx21-193001"></a>, <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx21-193002"></a> and <span 
+class="pcrr7t-">MonadPlus</span><a 
+ id="dx21-193003"></a> classes, together with some
+useful operations on monads.
+<h3 class="sectionHead"><span class="titlemark">13.1    </span> <a 
+ id="x21-19400013.1"></a>Functor and monad classes </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-109" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-109-1g"><col 
+id="TBL-109-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-109-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-109-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                                      </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx21-194001"></a> class is used for types that can be mapped over. Instances of <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx21-194002"></a> should satisfy
+     the following laws:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-364">
+&#x00A0;fmap&#x00A0;id&#x00A0;&#x00A0;==&#x00A0;&#x00A0;id
+&#x00A0;<br />&#x00A0;fmap&#x00A0;(f&#x00A0;.&#x00A0;g)&#x00A0;&#x00A0;==&#x00A0;&#x00A0;fmap&#x00A0;f&#x00A0;.&#x00A0;fmap&#x00A0;g
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> The instances of <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx21-194003"></a> for lists, <span 
+class="pcrr7t-">Data.Maybe.Maybe </span>and <span 
+class="pcrr7t-">System.IO.IO </span>satisfy these
+     laws.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-110" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-110-1g"><col 
+id="TBL-110-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-110-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-110-1-1"  
+class="td11"><span 
+class="pcrb7t-">fmap</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;b </span></td></tr></table>                                      </div> <dd class="haddockdesc">
+         </dl>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-111" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-111-1g"><col 
+id="TBL-111-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-111-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-111-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;[]               </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-111-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-111-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;IO                </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-111-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-111-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;Maybe             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-111-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-111-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ix</span><span 
+class="pcrb7t-">&#x00A0;i</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;(Array</span><span 
+class="pcrb7t-">&#x00A0;i) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-112" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-112-1g"><col 
+id="TBL-112-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-112-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-112-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                                        </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx21-194004"></a> class defines the basic operations over a <span 
+class="ptmri7t-">monad</span>, a concept from a branch of mathematics
+     known as <span 
+class="ptmri7t-">category theory</span>. From the perspective of a Haskell programmer, however, it is best to think
+     of a monad as an <span 
+class="ptmri7t-">abstract datatype </span>of actions. Haskell&#8217;s <span 
+class="pcrr7t-">do </span>expressions provide a convenient syntax
+     for writing monadic expressions.
+     <p class="noindent"> Minimal complete definition: <span 
+class="pcrr7t-">&#x003E;&#x003E;=</span><a 
+ id="dx21-194005"></a> and <span 
+class="pcrr7t-">return</span><a 
+ id="dx21-194006"></a>.
+     <p class="noindent"> Instances of <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx21-194007"></a> should satisfy the following laws:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-365">
+&#x00A0;return&#x00A0;a&#x00A0;&#x003E;&#x003E;=&#x00A0;k&#x00A0;&#x00A0;==&#x00A0;&#x00A0;k&#x00A0;a
+&#x00A0;<br />&#x00A0;m&#x00A0;&#x003E;&#x003E;=&#x00A0;return&#x00A0;&#x00A0;==&#x00A0;&#x00A0;m
+&#x00A0;<br />&#x00A0;m&#x00A0;&#x003E;&#x003E;=&#x00A0;(\x&#x00A0;-&#x003E;&#x00A0;k&#x00A0;x&#x00A0;&#x003E;&#x003E;=&#x00A0;h)&#x00A0;&#x00A0;==&#x00A0;&#x00A0;(m&#x00A0;&#x003E;&#x003E;=&#x00A0;k)&#x00A0;&#x003E;&#x003E;=&#x00A0;h
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> Instances of both <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx21-194008"></a> and <span 
+class="pcrr7t-">Functor</span><a 
+ id="dx21-194009"></a> should additionally satisfy the law:
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-366">
+&#x00A0;fmap&#x00A0;f&#x00A0;xs&#x00A0;&#x00A0;==&#x00A0;&#x00A0;xs&#x00A0;&#x003E;&#x003E;=&#x00A0;return&#x00A0;.&#x00A0;f
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> The instances of <span 
+class="pcrr7t-">Monad</span><a 
+ id="dx21-194010"></a> for lists, <span 
+class="pcrr7t-">Data.Maybe.Maybe </span>and <span 
+class="pcrr7t-">System.IO.IO </span>defined in the <span 
+class="pcrr7t-">Prelude</span>
+     satisfy these laws.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-113" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-113-1g"><col 
+id="TBL-113-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-113-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-113-1-1"  
+class="td11"><span 
+class="pcrb7t-">(&#x003E;&#x003E;=)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b </span></td></tr></table>                                   </div> <dd class="haddockdesc">
+         Sequentially compose two actions, passing any value produced by the first as an argument to the
+         second.
+         </dl>
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-114" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-114-1g"><col 
+id="TBL-114-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-114-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-114-1-1"  
+class="td11"><span 
+class="pcrb7t-">(&#x003E;&#x003E;)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b </span></td></tr></table>                                           </div> <dd class="haddockdesc">
+         Sequentially compose two actions, discarding any value produced by the first, like sequencing
+         operators (such as the semicolon) in imperative languages.
+         </dl>
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-115" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-115-1g"><col 
+id="TBL-115-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-115-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-115-1-1"  
+class="td11"><span 
+class="pcrb7t-">return</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                  </div> <dd class="haddockdesc">
+         Inject a value into the monadic type.
+         </dl>
+     <p class="noindent">
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-116" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-116-1g"><col 
+id="TBL-116-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-116-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-116-1-1"  
+class="td11"><span 
+class="pcrb7t-">fail</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;String</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                               </div> <dd class="haddockdesc">
+         Fail with a message. This operation is not part of the mathematical definition of a monad, but is
+         invoked on pattern-match failure in a <span 
+class="pcrr7t-">do </span>expression.
+         </dl>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-117" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-117-1g"><col 
+id="TBL-117-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-117-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-117-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;[]   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-117-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-117-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;IO    </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-117-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-117-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;Maybe </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-118" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-118-1g"><col 
+id="TBL-118-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-118-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-118-1-1"  
+class="td11"><span 
+class="pcrb7t-">class</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;where </span></td></tr></table>                                       </div> <dd class="haddockdesc">
+     Monads that also support choice and failure.
+     <p class="noindent"> <span 
+class="ptmb7t-">Methods</span>
+         <dl> <dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular">  <table id="TBL-119" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-119-1g"><col 
+id="TBL-119-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-119-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-119-1-1"  
+class="td11"><span 
+class="pcrb7t-">mzero</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                        </div> <dd class="haddockdesc">
+         the identity of <span 
+class="pcrr7t-">mplus</span><a 
+ id="dx21-194011"></a>. It should also satisfy the equations
+         <p class="noindent">
+             <div class="quote">
+                                                                                   
+
+                                                                                   
+             <div class="verbatim" id="verbatim-367">
+&#x00A0;mzero&#x00A0;&#x003E;&#x003E;=&#x00A0;f&#x00A0;&#x00A0;=&#x00A0;&#x00A0;mzero
+&#x00A0;<br />&#x00A0;v&#x00A0;&#x003E;&#x003E;&#x00A0;mzero&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;mzero</div>
+             <p class="noindent"></div>
+         </dl>
+     <p class="noindent">
+         <dl><dt class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"> <table id="TBL-120" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-120-1g"><col 
+id="TBL-120-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-120-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-120-1-1"  
+class="td11"><span 
+class="pcrb7t-">mplus</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                          </div> <dd class="haddockdesc">
+         an associative operation
+         </dl>
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-121" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-121-1g"><col 
+id="TBL-121-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-121-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-121-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;[]   </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-121-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-121-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;Maybe </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">13.2    </span> <a 
+ id="x21-19500013.2"></a>Functions </h3>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">13.2.1    </span> <a 
+ id="x21-19600013.2.1"></a>Naming conventions </h4>
+<p class="noindent"> The functions in this library use the following naming conventions:
+     <ul class="itemize1">
+     <li class="itemize">A postfix &#8217;<span 
+class="pcrr7t-">M</span>&#8217; always stands for a function in the Kleisli category: The monad type constructor <span 
+class="pcrr7t-">m </span>is
+     added to function results (modulo currying) and nowhere else. So, for example,
+     </li></ul>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-368">
+&#x00A0;&#x00A0;filter&#x00A0;&#x00A0;::&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;&#x00A0;&#x00A0;Bool)&#x00A0;-&#x003E;&#x00A0;[a]&#x00A0;-&#x003E;&#x00A0;&#x00A0;&#x00A0;[a]
+&#x00A0;<br />&#x00A0;&#x00A0;filterM&#x00A0;::&#x00A0;(Monad&#x00A0;m)&#x00A0;=&#x003E;&#x00A0;(a&#x00A0;-&#x003E;&#x00A0;m&#x00A0;Bool)&#x00A0;-&#x003E;&#x00A0;[a]&#x00A0;-&#x003E;&#x00A0;m&#x00A0;[a]
+</div>
+     <p class="noindent"></div>
+     <ul class="itemize1">
+     <li class="itemize">A postfix &#8217;<span 
+class="pcrr7t-">_</span>&#8217; changes the result type from <span 
+class="pcrr7t-">(m</span><span 
+class="pcrr7t-">&#x00A0;a) </span>to <span 
+class="pcrr7t-">(m</span><span 
+class="pcrr7t-">&#x00A0;())</span>. Thus, for example:
+     </li></ul>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-369">
+&#x00A0;&#x00A0;sequence&#x00A0;&#x00A0;::&#x00A0;Monad&#x00A0;m&#x00A0;=&#x003E;&#x00A0;[m&#x00A0;a]&#x00A0;-&#x003E;&#x00A0;m&#x00A0;[a]
+&#x00A0;<br />&#x00A0;&#x00A0;sequence_&#x00A0;::&#x00A0;Monad&#x00A0;m&#x00A0;=&#x003E;&#x00A0;[m&#x00A0;a]&#x00A0;-&#x003E;&#x00A0;m&#x00A0;()
+</div>
+     <p class="noindent"></div>
+     <ul class="itemize1">
+     <li class="itemize">A prefix &#8217;<span 
+class="pcrr7t-">m</span>&#8217; generalizes an existing function to a monadic form. Thus, for example:
+     </li></ul>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-370">
+&#x00A0;&#x00A0;sum&#x00A0;&#x00A0;::&#x00A0;Num&#x00A0;a&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x003E;&#x00A0;[a]&#x00A0;&#x00A0;&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;&#x00A0;msum&#x00A0;::&#x00A0;MonadPlus&#x00A0;m&#x00A0;=&#x003E;&#x00A0;[m&#x00A0;a]&#x00A0;-&#x003E;&#x00A0;m&#x00A0;a
+</div>
+     <p class="noindent"></div>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">13.2.2    </span> <a 
+ id="x21-19700013.2.2"></a>Basic <span 
+class="pcrr7t-">Monad </span>functions </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-122" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-122-1g"><col 
+id="TBL-122-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-122-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-122-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">mapM</span><span 
+class="pcrr7t-">&#x00A0;f </span>is equivalent to <span 
+class="pcrr7t-">sequence</span><span 
+class="pcrr7t-">&#x00A0;.</span><span 
+class="pcrr7t-">&#x00A0;map</span><span 
+class="pcrr7t-">&#x00A0;f</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-123" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-123-1g"><col 
+id="TBL-123-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-123-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-123-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapM_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">mapM_</span><span 
+class="pcrr7t-">&#x00A0;f </span>is equivalent to <span 
+class="pcrr7t-">sequence_</span><span 
+class="pcrr7t-">&#x00A0;.</span><span 
+class="pcrr7t-">&#x00A0;map</span><span 
+class="pcrr7t-">&#x00A0;f</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-124" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-124-1g"><col 
+id="TBL-124-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-124-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-124-1-1"  
+class="td11"><span 
+class="pcrb7t-">forM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[b] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">forM</span><a 
+ id="dx21-197001"></a> is <span 
+class="pcrr7t-">mapM</span><a 
+ id="dx21-197002"></a> with its arguments flipped
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-125" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-125-1g"><col 
+id="TBL-125-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-125-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-125-1-1"  
+class="td11"><span 
+class="pcrb7t-">forM_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">forM_</span><a 
+ id="dx21-197003"></a> is <span 
+class="pcrr7t-">mapM_</span><a 
+ id="dx21-197004"></a> with its arguments flipped
+     </dl>
+<p class="noindent">
+                                                                                   
+
+                                                                                   
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-126" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-126-1g"><col 
+id="TBL-126-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-126-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-126-1-1"  
+class="td11"><span 
+class="pcrb7t-">sequence</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[m</span><span 
+class="pcrb7t-">&#x00A0;a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Evaluate each action in the sequence from left to right, and collect the results.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-127" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-127-1g"><col 
+id="TBL-127-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-127-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-127-1-1"  
+class="td11"><span 
+class="pcrb7t-">sequence_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[m</span><span 
+class="pcrb7t-">&#x00A0;a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Evaluate each action in the sequence from left to right, and ignore the results.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-128" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-128-1g"><col 
+id="TBL-128-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-128-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-128-1-1"  
+class="td11"><span 
+class="pcrb7t-">(=&#x003C;&#x003C;)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Same as <span 
+class="pcrr7t-">&#x003E;&#x003E;=</span><a 
+ id="dx21-197005"></a>, but with the arguments interchanged.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-129" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-129-1g"><col 
+id="TBL-129-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-129-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-129-1-1"  
+class="td11"><span 
+class="pcrb7t-">(&#x003E;=&#x003E;)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Left-to-right Kleisli composition of monads.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-130" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-130-1g"><col 
+id="TBL-130-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-130-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-130-1-1"  
+class="td11"><span 
+class="pcrb7t-">(&#x003C;=&#x003C;)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Right-to-left Kleisli composition of monads. <span 
+class="pcrr7t-">(&#x003E;=&#x003E;)</span>, with the arguments flipped
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-131" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-131-1g"><col 
+id="TBL-131-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-131-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-131-1-1"  
+class="td11"><span 
+class="pcrb7t-">forever</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b </span></td></tr></table>                                         </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">forever</span><span 
+class="pcrr7t-">&#x00A0;act </span>repeats the action infinitely.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-132" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-132-1g"><col 
+id="TBL-132-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-132-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-132-1-1"  
+class="td11"><span 
+class="pcrb7t-">void</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Functor</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;f</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">void</span><span 
+class="pcrr7t-">&#x00A0;value </span>discards or ignores the result of evaluation, such as the return value of an <span 
+class="pcrr7t-">IO</span><a 
+ id="dx21-197006"></a> action.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">13.2.3    </span> <a 
+ id="x21-19800013.2.3"></a>Generalisations of list functions </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-133" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-133-1g"><col 
+id="TBL-133-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-133-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-133-1-1"  
+class="td11"><span 
+class="pcrb7t-">join</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;(m</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">join</span><a 
+ id="dx21-198001"></a> function is the conventional monad join operator. It is used to remove one level of monadic
+     structure, projecting its bound argument into the outer level.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-134" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-134-1g"><col 
+id="TBL-134-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-134-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-134-1-1"  
+class="td11"><span 
+class="pcrb7t-">msum</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[m</span><span 
+class="pcrb7t-">&#x00A0;a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This generalizes the list-based <span 
+class="pcrr7t-">concat</span><a 
+ id="dx21-198002"></a> function.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-135" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-135-1g"><col 
+id="TBL-135-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-135-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-135-1-1"  
+class="td11"><span 
+class="pcrb7t-">filterM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;Bool)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     This generalizes the list-based <span 
+class="pcrr7t-">filter</span><a 
+ id="dx21-198003"></a> function.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-136" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-136-1g"><col 
+id="TBL-136-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-136-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-136-1-1"  
+class="td11"><span 
+class="pcrb7t-">mapAndUnzipM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;(b,</span><span 
+class="pcrb7t-">&#x00A0;c))</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;([b],</span><span 
+class="pcrb7t-">&#x00A0;[c]) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">mapAndUnzipM</span><a 
+ id="dx21-198004"></a> function maps its first argument over a list, returning the result as a pair of lists.
+     This function is mainly used with complicated data structures or a state-transforming monad.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-137" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-137-1g"><col 
+id="TBL-137-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-137-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-137-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWithM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[c] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">zipWithM</span><a 
+ id="dx21-198005"></a> function generalizes <span 
+class="pcrr7t-">zipWith</span><a 
+ id="dx21-198006"></a> to arbitrary monads.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-138" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-138-1g"><col 
+id="TBL-138-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-138-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-138-1-1"  
+class="td11"><span 
+class="pcrb7t-">zipWithM_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;c)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[a]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">zipWithM_</span><a 
+ id="dx21-198007"></a> is the extension of <span 
+class="pcrr7t-">zipWithM</span><a 
+ id="dx21-198008"></a> which ignores the final result.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-139" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-139-1g"><col 
+id="TBL-139-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-139-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-139-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The <span 
+class="pcrr7t-">foldM</span><a 
+ id="dx21-198009"></a> function is analogous to <span 
+class="pcrr7t-">foldl</span><a 
+ id="dx21-198010"></a>, except that its result is encapsulated in a monad. Note
+     that <span 
+class="pcrr7t-">foldM</span><a 
+ id="dx21-198011"></a> works from left-to-right over the list arguments. This could be an issue where <span 
+class="pcrr7t-">(&#x003E;&#x003E;) </span>and
+     the &#8216;folded function&#8217; are not commutative.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-371">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;foldM&#x00A0;f&#x00A0;a1&#x00A0;[x1,&#x00A0;x2,&#x00A0;...,&#x00A0;xm]
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> ==
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-372">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;do
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;a2&#x00A0;&#x003C;-&#x00A0;f&#x00A0;a1&#x00A0;x1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;a3&#x00A0;&#x003C;-&#x00A0;f&#x00A0;a2&#x00A0;x2
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;...
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;f&#x00A0;am&#x00A0;xm
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> If right-to-left evaluation is required, the input list should be reversed.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-140" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-140-1g"><col 
+id="TBL-140-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-140-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-140-1-1"  
+class="td11"><span 
+class="pcrb7t-">foldM_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;[b]</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">foldM</span><a 
+ id="dx21-198012"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-141" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-141-1g"><col 
+id="TBL-141-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-141-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-141-1-1"  
+class="td11"><span 
+class="pcrb7t-">replicateM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;[a] </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">replicateM</span><span 
+class="pcrr7t-">&#x00A0;n</span><span 
+class="pcrr7t-">&#x00A0;act </span>performs the action <span 
+class="pcrr7t-">n </span>times, gathering the results.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-142" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-142-1g"><col 
+id="TBL-142-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-142-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-142-1-1"  
+class="td11"><span 
+class="pcrb7t-">replicateM_</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Int</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Like <span 
+class="pcrr7t-">replicateM</span><a 
+ id="dx21-198013"></a>, but discards the result.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">13.2.4    </span> <a 
+ id="x21-19900013.2.4"></a>Conditional execution of monadic expressions </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-143" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-143-1g"><col 
+id="TBL-143-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-143-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-143-1-1"  
+class="td11"><span 
+class="pcrb7t-">guard</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;MonadPlus</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">guard</span><span 
+class="pcrr7t-">&#x00A0;b </span>is <span 
+class="pcrr7t-">return</span><span 
+class="pcrr7t-">&#x00A0;() </span>if <span 
+class="pcrr7t-">b </span>is <span 
+class="pcrr7t-">True</span><a 
+ id="dx21-199001"></a>, and <span 
+class="pcrr7t-">mzero</span><a 
+ id="dx21-199002"></a> if <span 
+class="pcrr7t-">b </span>is <span 
+class="pcrr7t-">False</span><a 
+ id="dx21-199003"></a>.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-144" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-144-1g"><col 
+id="TBL-144-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-144-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-144-1-1"  
+class="td11"><span 
+class="pcrb7t-">when</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;()</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Conditional execution of monadic expressions. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-373">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;when&#x00A0;debug&#x00A0;(putStr&#x00A0;"Debugging\n")
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> will output the string <span 
+class="pcrr7t-">Debugging\n </span>if the Boolean value <span 
+class="pcrr7t-">debug </span>is <span 
+class="pcrr7t-">True</span><a 
+ id="dx21-199004"></a>, and otherwise do
+     nothing.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-145" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-145-1g"><col 
+id="TBL-145-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-145-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-145-1-1"  
+class="td11"><span 
+class="pcrb7t-">unless</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Bool</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;()</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The reverse of <span 
+class="pcrr7t-">when</span><a 
+ id="dx21-199005"></a>.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">13.2.5    </span> <a 
+ id="x21-20000013.2.5"></a>Monadic lifting operators </h4>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-146" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-146-1g"><col 
+id="TBL-146-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-146-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-146-1-1"  
+class="td11"><span 
+class="pcrb7t-">liftM</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;r)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;r </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Promote a function to a monad.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-147" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-147-1g"><col 
+id="TBL-147-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-147-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-147-1-1"  
+class="td11"><span 
+class="pcrb7t-">liftM2</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;r)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;r </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Promote a function to a monad, scanning the monadic arguments from left to right. For example,
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-374">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;liftM2&#x00A0;(+)&#x00A0;[0,1]&#x00A0;[0,2]&#x00A0;=&#x00A0;[0,2,1,3]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;liftM2&#x00A0;(+)&#x00A0;(Just&#x00A0;1)&#x00A0;Nothing&#x00A0;=&#x00A0;Nothing
+</div>
+         <p class="noindent"></div>
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-148" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-148-1g"><col 
+id="TBL-148-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-148-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-148-1-1"  
+class="td11"><span 
+class="pcrb7t-">liftM3</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;r)         </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-148-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-148-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;r</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Promote a function to a monad, scanning the monadic arguments from left to right (cf. <span 
+class="pcrr7t-">liftM2</span><a 
+ id="dx21-200001"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-149" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-149-1g"><col 
+id="TBL-149-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-149-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-149-1-1"  
+class="td11"><span 
+class="pcrb7t-">liftM4</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a4</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;r)           </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-149-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-149-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a4</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;r</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Promote a function to a monad, scanning the monadic arguments from left to right (cf. <span 
+class="pcrr7t-">liftM2</span><a 
+ id="dx21-200002"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-150" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-150-1g"><col 
+id="TBL-150-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-150-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-150-1-1"  
+class="td11"><span 
+class="pcrb7t-">liftM5</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;(a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a4</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a5</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;r)             </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-150-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-150-2-1"  
+class="td11"><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a1</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a2</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a3</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a4</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a5</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;r</span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Promote a function to a monad, scanning the monadic arguments from left to right (cf. <span 
+class="pcrr7t-">liftM2</span><a 
+ id="dx21-200003"></a>).
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-151" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-151-1g"><col 
+id="TBL-151-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-151-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-151-1-1"  
+class="td11"><span 
+class="pcrb7t-">ap</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Monad</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;(a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;b)</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;m</span><span 
+class="pcrb7t-">&#x00A0;b </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     In many situations, the <span 
+class="pcrr7t-">liftM</span><a 
+ id="dx21-200004"></a> operations can be replaced by uses of <span 
+class="pcrr7t-">ap</span><a 
+ id="dx21-200005"></a>, which promotes function
+     application.
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-375">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;f&#x00A0;&#8216;ap&#8216;&#x00A0;x1&#x00A0;&#8216;ap&#8216;&#x00A0;...&#x00A0;&#8216;ap&#8216;&#x00A0;xn
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> is equivalent to
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-376">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;liftMn&#x00A0;f&#x00A0;x1&#x00A0;x2&#x00A0;...&#x00A0;xn
+</div>
+         <p class="noindent"></div>
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch14.html" >next</a>] [<a 
+href="haskellch13.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch13.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch13.html"></a>    
+</body></html> 

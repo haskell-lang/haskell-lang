@@ -1,0 +1,407 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>22 Data.Ratio</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch23.html" >next</a>] [<a 
+href="haskellch21.html" >prev</a>] [<a 
+href="haskellch21.html#tailhaskellch21.html" >prev-tail</a>] [<a 
+href="#tailhaskellch22.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch22.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;22</span><br /><a 
+ id="x30-25800022"></a><span 
+class="pcrr7t-">Data.Ratio</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-434">
+module&#x00A0;Data.Ratio&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;Ratio,&#x00A0;&#x00A0;Rational,&#x00A0;&#x00A0;(%),&#x00A0;&#x00A0;numerator,&#x00A0;&#x00A0;denominator,&#x00A0;&#x00A0;approxRational
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-374" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-374-1g"><col 
+id="TBL-374-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-374-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-374-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ratio</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Rational numbers, with numerator and denominator of some <span 
+class="pcrr7t-">Integral</span><a 
+ id="dx30-258001"></a> type.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-375" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-375-1g"><col 
+id="TBL-375-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-375-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Enum</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)          </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)             </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Fractional</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)     </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Num</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-5-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)            </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-6-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-6-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;(Integral</span><span 
+class="pcrb7t-">&#x00A0;a,</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;a)</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-7-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-7-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Real</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)           </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-8-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-8-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;RealFrac</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)       </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-375-9-"><td  style="white-space:nowrap; text-align:left;" id="TBL-375-9-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;(Ratio</span><span 
+class="pcrb7t-">&#x00A0;a)           </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-376" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-376-1g"><col 
+id="TBL-376-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-376-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-376-1-1"  
+class="td11"><span 
+class="pcrb7t-">type</span><span 
+class="pcrb7t-">&#x00A0;Rational</span><span 
+class="pcrb7t-">&#x00A0;=</span><span 
+class="pcrb7t-">&#x00A0;Ratio</span><span 
+class="pcrb7t-">&#x00A0;Integer </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Arbitrary-precision  rational  numbers,  represented  as  a  ratio  of  two  <span 
+class="pcrr7t-">Integer</span><a 
+ id="dx30-258002"></a> values.  A  rational
+     number may be constructed using the <span 
+class="pcrr7t-">%</span><a 
+ id="dx30-258003"></a> operator.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-377" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-377-1g"><col 
+id="TBL-377-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-377-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-377-1-1"  
+class="td11"><span 
+class="pcrb7t-">(%)</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ratio</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Forms the ratio of two integral numbers.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-378" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-378-1g"><col 
+id="TBL-378-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-378-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-378-1-1"  
+class="td11"><span 
+class="pcrb7t-">numerator</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ratio</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extract the numerator of the ratio in reduced form: the numerator and denominator have no common
+     factor and the denominator is positive.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-379" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-379-1g"><col 
+id="TBL-379-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-379-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-379-1-1"  
+class="td11"><span 
+class="pcrb7t-">denominator</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Integral</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ratio</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Extract the denominator of the ratio in reduced form: the numerator and denominator have no common
+     factor and the denominator is positive.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-380" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-380-1g"><col 
+id="TBL-380-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-380-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-380-1-1"  
+class="td11"><span 
+class="pcrb7t-">approxRational</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;RealFrac</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;=&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Rational </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     <span 
+class="pcrr7t-">approxRational</span><a 
+ id="dx30-258004"></a>, applied to two real fractional numbers <span 
+class="pcrr7t-">x </span>and <span 
+class="pcrr7t-">epsilon</span>, returns the simplest
+     rational number within <span 
+class="pcrr7t-">epsilon </span>of <span 
+class="pcrr7t-">x</span>. A rational number <span 
+class="pcrr7t-">y </span>is said to be <span 
+class="ptmri7t-">simpler </span>than another <span 
+class="pcrr7t-">y' </span>if
+                                                                                   
+
+                                                                                   
+         <ul class="itemize1">
+         <li class="itemize"><span 
+class="pcrr7t-">abs</span><span 
+class="pcrr7t-">&#x00A0;(numerator</span><span 
+class="pcrr7t-">&#x00A0;y)</span><span 
+class="pcrr7t-">&#x00A0;&#x003C;=</span><span 
+class="pcrr7t-">&#x00A0;abs</span><span 
+class="pcrr7t-">&#x00A0;(numerator</span><span 
+class="pcrr7t-">&#x00A0;y')</span>, and
+         </li>
+         <li class="itemize"><span 
+class="pcrr7t-">denominator</span><span 
+class="pcrr7t-">&#x00A0;y</span><span 
+class="pcrr7t-">&#x00A0;&#x003C;=</span><span 
+class="pcrr7t-">&#x00A0;denominator</span><span 
+class="pcrr7t-">&#x00A0;y'</span>.
+         </li></ul>
+     <p class="noindent"> Any real interval contains a unique simplest rational; in particular, note that <span 
+class="pcrr7t-">0/1 </span>is the simplest rational of
+     all.
+     </dl>
+<h3 class="sectionHead"><span class="titlemark">22.1    </span> <a 
+ id="x30-25900022.1"></a>Specification </h3>
+<p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-435">
+&#x00A0;module&#x00A0;&#x00A0;Data.Ratio&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Ratio,&#x00A0;Rational,&#x00A0;(%),&#x00A0;numerator,&#x00A0;denominator,&#x00A0;approxRational&#x00A0;)&#x00A0;where
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;infixl&#x00A0;7&#x00A0;&#x00A0;%
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;ratPrec&#x00A0;=&#x00A0;7&#x00A0;::&#x00A0;Int
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;data&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x003E;&#x00A0;Ratio&#x00A0;a&#x00A0;=&#x00A0;!a&#x00A0;:%&#x00A0;!a&#x00A0;&#x00A0;deriving&#x00A0;(Eq)
+&#x00A0;<br />&#x00A0;type&#x00A0;&#x00A0;Rational&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;Ratio&#x00A0;Integer
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;(%)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(Integral&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Ratio&#x00A0;a
+&#x00A0;<br />&#x00A0;numerator,&#x00A0;denominator&#x00A0;&#x00A0;::&#x00A0;(Integral&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;Ratio&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />&#x00A0;approxRational&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;::&#x00A0;(RealFrac&#x00A0;a)&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;Rational
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;--&#x00A0;"reduce"&#x00A0;is&#x00A0;a&#x00A0;subsidiary&#x00A0;function&#x00A0;used&#x00A0;only&#x00A0;in&#x00A0;this&#x00A0;module.
+&#x00A0;<br />&#x00A0;--&#x00A0;It&#x00A0;normalises&#x00A0;a&#x00A0;ratio&#x00A0;by&#x00A0;dividing&#x00A0;both&#x00A0;numerator
+&#x00A0;<br />&#x00A0;--&#x00A0;and&#x00A0;denominator&#x00A0;by&#x00A0;their&#x00A0;greatest&#x00A0;common&#x00A0;divisor.
+&#x00A0;<br />&#x00A0;--
+&#x00A0;<br />&#x00A0;--&#x00A0;E.g.,&#x00A0;12&#x00A0;&#8216;reduce&#8216;&#x00A0;8&#x00A0;&#x00A0;&#x00A0;&#x00A0;==&#x00A0;&#x00A0;3&#x00A0;:%&#x00A0;&#x00A0;&#x00A0;2
+&#x00A0;<br />&#x00A0;--&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;12&#x00A0;&#8216;reduce&#8216;&#x00A0;(-8)&#x00A0;==&#x00A0;&#x00A0;3&#x00A0;:%&#x00A0;(-2)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;reduce&#x00A0;_&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;error&#x00A0;"Data.Ratio.%&#x00A0;:&#x00A0;zero&#x00A0;denominator"
+&#x00A0;<br />&#x00A0;reduce&#x00A0;x&#x00A0;y&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(x&#x00A0;&#8216;quot&#8216;&#x00A0;d)&#x00A0;:%&#x00A0;(y&#x00A0;&#8216;quot&#8216;&#x00A0;d)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;d&#x00A0;=&#x00A0;gcd&#x00A0;x&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;x&#x00A0;%&#x00A0;y&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;reduce&#x00A0;(x&#x00A0;&#x22C6;&#x00A0;signum&#x00A0;y)&#x00A0;(abs&#x00A0;y)
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;numerator&#x00A0;(x&#x00A0;:%&#x00A0;_)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;denominator&#x00A0;(_&#x00A0;:%&#x00A0;y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Ord&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:%y)&#x00A0;&#x003C;=&#x00A0;(x':%y')&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x&#x00A0;&#x22C6;&#x00A0;y'&#x00A0;&#x003C;=&#x00A0;x'&#x00A0;&#x22C6;&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:%y)&#x00A0;&#x003C;&#x00A0;&#x00A0;(x':%y')&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x&#x00A0;&#x22C6;&#x00A0;y'&#x00A0;&#x003C;&#x00A0;&#x00A0;x'&#x00A0;&#x22C6;&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Num&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:%y)&#x00A0;+&#x00A0;(x':%y')&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;reduce&#x00A0;(x&#x22C6;y'&#x00A0;+&#x00A0;x'&#x22C6;y)&#x00A0;(y&#x22C6;y')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:%y)&#x00A0;&#x22C6;&#x00A0;(x':%y')&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;reduce&#x00A0;(x&#x00A0;&#x22C6;&#x00A0;x')&#x00A0;(y&#x00A0;&#x22C6;&#x00A0;y')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;negate&#x00A0;(x:%y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(-x)&#x00A0;:%&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;abs&#x00A0;(x:%y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;abs&#x00A0;x&#x00A0;:%&#x00A0;y
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;signum&#x00A0;(x:%y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;signum&#x00A0;x&#x00A0;:%&#x00A0;1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromInteger&#x00A0;x&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;fromInteger&#x00A0;x&#x00A0;:%&#x00A0;1
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Real&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;toRational&#x00A0;(x:%y)&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;toInteger&#x00A0;x&#x00A0;:%&#x00A0;toInteger&#x00A0;y
+                                                                                   
+
+                                                                                   
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Fractional&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(x:%y)&#x00A0;/&#x00A0;(x':%y')&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(x&#x22C6;y')&#x00A0;%&#x00A0;(y&#x22C6;x')
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;recip&#x00A0;(x:%y)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;y&#x00A0;%&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromRational&#x00A0;(x:%y)&#x00A0;=&#x00A0;&#x00A0;fromInteger&#x00A0;x&#x00A0;:%&#x00A0;fromInteger&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;RealFrac&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;properFraction&#x00A0;(x:%y)&#x00A0;=&#x00A0;(fromIntegral&#x00A0;q,&#x00A0;r:%y)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;(q,r)&#x00A0;=&#x00A0;quotRem&#x00A0;x&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Enum&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;succ&#x00A0;x&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x+1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pred&#x00A0;x&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;x-1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;toEnum&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;fromIntegral
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fromEnum&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;fromInteger&#x00A0;.&#x00A0;truncate&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;May&#x00A0;overflow
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;enumFrom&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;numericEnumFrom&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;These&#x00A0;numericEnumXXX&#x00A0;functions
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;enumFromThen&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;numericEnumFromThen&#x00A0;&#x00A0;&#x00A0;--&#x00A0;are&#x00A0;as&#x00A0;defined&#x00A0;in&#x00A0;Prelude.hs
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;enumFromTo&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;numericEnumFromTo&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;but&#x00A0;not&#x00A0;exported&#x00A0;from&#x00A0;it!
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;enumFromThenTo&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;numericEnumFromThenTo
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Read&#x00A0;a,&#x00A0;Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Read&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;readsPrec&#x00A0;p&#x00A0;&#x00A0;=&#x00A0;&#x00A0;readParen&#x00A0;(p&#x00A0;&#x003E;&#x00A0;ratPrec)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(\r&#x00A0;-&#x003E;&#x00A0;[(x%y,u)&#x00A0;|&#x00A0;(x,s)&#x00A0;&#x00A0;&#x00A0;&#x003C;-&#x00A0;readsPrec&#x00A0;(ratPrec+1)&#x00A0;r,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;("%",t)&#x00A0;&#x003C;-&#x00A0;lex&#x00A0;s,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(y,u)&#x00A0;&#x00A0;&#x00A0;&#x003C;-&#x00A0;readsPrec&#x00A0;(ratPrec+1)&#x00A0;t&#x00A0;])
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;instance&#x00A0;&#x00A0;(Integral&#x00A0;a)&#x00A0;&#x00A0;=&#x003E;&#x00A0;Show&#x00A0;(Ratio&#x00A0;a)&#x00A0;&#x00A0;where
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;p&#x00A0;(x:%y)&#x00A0;&#x00A0;=&#x00A0;&#x00A0;showParen&#x00A0;(p&#x00A0;&#x003E;&#x00A0;ratPrec)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;(ratPrec+1)&#x00A0;x&#x00A0;.
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showString&#x00A0;"&#x00A0;%&#x00A0;"&#x00A0;.
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;showsPrec&#x00A0;(ratPrec+1)&#x00A0;y)
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;approxRational&#x00A0;x&#x00A0;eps&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;simplest&#x00A0;(x-eps)&#x00A0;(x+eps)
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;simplest&#x00A0;x&#x00A0;y&#x00A0;|&#x00A0;y&#x00A0;&#x003C;&#x00A0;x&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;simplest&#x00A0;y&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;x&#x00A0;==&#x00A0;y&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;xr
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;x&#x00A0;&#x003E;&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;simplest'&#x00A0;n&#x00A0;d&#x00A0;n'&#x00A0;d'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;y&#x00A0;&#x003C;&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;-&#x00A0;simplest'&#x00A0;(-n')&#x00A0;d'&#x00A0;(-n)&#x00A0;d
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;otherwise&#x00A0;&#x00A0;=&#x00A0;&#x00A0;0&#x00A0;:%&#x00A0;1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;xr@(n:%d)&#x00A0;=&#x00A0;toRational&#x00A0;x
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(n':%d')&#x00A0;&#x00A0;=&#x00A0;toRational&#x00A0;y
+&#x00A0;<br />
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;simplest'&#x00A0;n&#x00A0;d&#x00A0;n'&#x00A0;d'&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;--&#x00A0;assumes&#x00A0;0&#x00A0;&#x003C;&#x00A0;n%d&#x00A0;&#x003C;&#x00A0;n'%d'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;r&#x00A0;==&#x00A0;0&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;q&#x00A0;:%&#x00A0;1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;q&#x00A0;/=&#x00A0;q'&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(q+1)&#x00A0;:%&#x00A0;1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;|&#x00A0;otherwise&#x00A0;&#x00A0;=&#x00A0;&#x00A0;(q&#x22C6;n''+d'')&#x00A0;:%&#x00A0;n''
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;where&#x00A0;(q,r)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;quotRem&#x00A0;n&#x00A0;d
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(q',r')&#x00A0;&#x00A0;&#x00A0;&#x00A0;=&#x00A0;&#x00A0;quotRem&#x00A0;n'&#x00A0;d'
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(n'':%d'')&#x00A0;=&#x00A0;&#x00A0;simplest'&#x00A0;d'&#x00A0;r'&#x00A0;d&#x00A0;r
+</div>
+                                                                                   
+
+                                                                                   
+     <p class="noindent"></div>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch23.html" >next</a>] [<a 
+href="haskellch21.html" >prev</a>] [<a 
+href="haskellch21.html#tailhaskellch21.html" >prev-tail</a>] [<a 
+href="haskellch22.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch22.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch22.html"></a>   
+</body></html> 

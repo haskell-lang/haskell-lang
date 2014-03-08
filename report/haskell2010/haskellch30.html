@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>30 Foreign.Marshal</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch31.html" >next</a>] [<a 
+href="haskellch29.html" >prev</a>] [<a 
+href="haskellch29.html#tailhaskellch29.html" >prev-tail</a>] [<a 
+href="#tailhaskellch30.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch30.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;30</span><br /><a 
+ id="x38-28500030"></a><span 
+class="pcrr7t-">Foreign.Marshal</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-444">
+module&#x00A0;Foreign.Marshal&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;module&#x00A0;Foreign.Marshal.Alloc,&#x00A0;&#x00A0;module&#x00A0;Foreign.Marshal.Array,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;module&#x00A0;Foreign.Marshal.Error,&#x00A0;&#x00A0;module&#x00A0;Foreign.Marshal.Utils,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;unsafeLocalState
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> The module <span 
+class="pcrr7t-">Foreign.Marshal </span>re-exports the other modules in the <span 
+class="pcrr7t-">Foreign.Marshal </span>hierarchy:
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-522" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-522-1g"><col 
+id="TBL-522-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-522-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-522-1-1"  
+class="td11"><span 
+class="pcrb7t-">module</span><span 
+class="pcrb7t-">&#x00A0;Foreign.Marshal.Alloc </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-522-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-522-2-1"  
+class="td11"><span 
+class="pcrb7t-">module</span><span 
+class="pcrb7t-">&#x00A0;Foreign.Marshal.Array  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-522-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-522-3-1"  
+class="td11"><span 
+class="pcrb7t-">module</span><span 
+class="pcrb7t-">&#x00A0;Foreign.Marshal.Error  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-522-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-522-4-1"  
+class="td11"><span 
+class="pcrb7t-">module</span><span 
+class="pcrb7t-">&#x00A0;Foreign.Marshal.Utils  </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent"> and provides one function:
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-523" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-523-1g"><col 
+id="TBL-523-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-523-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-523-1-1"  
+class="td11"><span 
+class="pcrb7t-">unsafeLocalState</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                             </div> <dd class="haddockdesc">
+     Sometimes  an  external  entity  is  a  pure  function,  except  that  it  passes  arguments  and/or  results
+     via  pointers.  The  function  <span 
+class="pcrr7t-">unsafeLocalState </span>permits  the  packaging  of  such  entities  as  pure
+     functions.
+      <p class="noindent">  The  only  IO  operations  allowed  in  the  IO  action  passed  to  <span 
+class="pcrr7t-">unsafeLocalState </span>are  (a)
+     local  allocation  (<span 
+class="pcrr7t-">alloca</span>,  <span 
+class="pcrr7t-">allocaBytes </span>and  derived  operations  such  as  <span 
+class="pcrr7t-">withArray </span>and
+     <span 
+class="pcrr7t-">withCString</span>),  and  (b)  pointer  operations  (<span 
+class="pcrr7t-">Foreign.Storable </span>and  <span 
+class="pcrr7t-">Foreign.Ptr</span>)  on  the
+     pointers to local storage, and (c) foreign functions whose only observable effect is to read and/or write
+     the locally allocated memory. Passing an IO operation that does not obey these rules results in undefined
+     behaviour.
+     <p class="noindent"> It is expected that this operation will be replaced in a future revision of Haskell.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch31.html" >next</a>] [<a 
+href="haskellch29.html" >prev</a>] [<a 
+href="haskellch29.html#tailhaskellch29.html" >prev-tail</a>] [<a 
+href="haskellch30.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch30.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch30.html"></a>  
+</body></html> 

@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>36 Foreign.StablePtr</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch37.html" >next</a>] [<a 
+href="haskellch35.html" >prev</a>] [<a 
+href="haskellch35.html#tailhaskellch35.html" >prev-tail</a>] [<a 
+href="#tailhaskellch36.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch36.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;36</span><br /><a 
+ id="x44-31000036"></a><span 
+class="pcrr7t-">Foreign.StablePtr</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-454">
+module&#x00A0;Foreign.StablePtr&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;StablePtr,&#x00A0;&#x00A0;newStablePtr,&#x00A0;&#x00A0;deRefStablePtr,&#x00A0;&#x00A0;freeStablePtr,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;castStablePtrToPtr,&#x00A0;&#x00A0;castPtrToStablePtr
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+<h3 class="sectionHead"><span class="titlemark">36.1    </span> <a 
+ id="x44-31100036.1"></a>Stable references to Haskell values </h3>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-591" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-591-1g"><col 
+id="TBL-591-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-591-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-591-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                            </div> <dd class="haddockdesc">
+     A <span 
+class="ptmri7t-">stable pointer </span>is a reference to a Haskell expression that is guaranteed not to be affected by garbage
+     collection, i.e., it will neither be deallocated nor will the value of the stable pointer itself change during
+     garbage collection (ordinary references may be relocated during garbage collection). Consequently,
+     stable pointers can be passed to foreign code, which can treat it as an opaque reference to a Haskell
+     value.
+     <p class="noindent"> A value of type <span 
+class="pcrr7t-">StablePtr</span><span 
+class="pcrr7t-">&#x00A0;a </span>is a stable pointer to a Haskell expression of type <span 
+class="pcrr7t-">a</span>.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-592" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-592-1g"><col 
+id="TBL-592-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-592-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-592-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;(StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a)      </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-592-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-592-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Storable</span><span 
+class="pcrb7t-">&#x00A0;(StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+<p class="noindent">
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-593" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-593-1g"><col 
+id="TBL-593-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-593-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-593-1-1"  
+class="td11"><span 
+class="pcrb7t-">newStablePtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;(StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a) </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Create a stable pointer referring to the given Haskell value.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-594" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-594-1g"><col 
+id="TBL-594-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-594-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-594-1-1"  
+class="td11"><span 
+class="pcrb7t-">deRefStablePtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                    </div> <dd class="haddockdesc">
+     Obtain the Haskell value referenced by a stable pointer, i.e., the same value that was passed to the
+     corresponding call to <span 
+class="pcrr7t-">makeStablePtr</span>. If the argument to <span 
+class="pcrr7t-">deRefStablePtr</span><a 
+ id="dx44-311001"></a> has already been
+     freed using <span 
+class="pcrr7t-">freeStablePtr</span><a 
+ id="dx44-311002"></a>, the behaviour of <span 
+class="pcrr7t-">deRefStablePtr</span><a 
+ id="dx44-311003"></a> is undefined.
+     </dl>
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-595" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-595-1g"><col 
+id="TBL-595-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-595-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-595-1-1"  
+class="td11"><span 
+class="pcrb7t-">freeStablePtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Dissolve the association between the stable pointer and the Haskell value. Afterwards, if the stable
+     pointer is passed to <span 
+class="pcrr7t-">deRefStablePtr</span><a 
+ id="dx44-311004"></a> or <span 
+class="pcrr7t-">freeStablePtr</span><a 
+ id="dx44-311005"></a>, the behaviour is undefined. However,
+     the stable pointer may still be passed to <span 
+class="pcrr7t-">castStablePtrToPtr</span><a 
+ id="dx44-311006"></a>, but the <span 
+class="pcrr7t-">Foreign.Ptr.Ptr</span><span 
+class="pcrr7t-">&#x00A0;()</span>
+     value  returned  by  <span 
+class="pcrr7t-">castStablePtrToPtr</span><a 
+ id="dx44-311007"></a>,  in  this  case,  is  undefined  (in  particular,  it  may  be
+     <span 
+class="pcrr7t-">Foreign.Ptr.nullPtr</span>). Nevertheless, the call to <span 
+class="pcrr7t-">castStablePtrToPtr</span><a 
+ id="dx44-311008"></a> is guaranteed not to
+     diverge.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-596" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-596-1g"><col 
+id="TBL-596-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-596-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-596-1-1"  
+class="td11"><span 
+class="pcrb7t-">castStablePtrToPtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;() </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     Coerce a stable pointer to an address. No guarantees are made about the resulting value, except that
+     the original stable pointer can be recovered by <span 
+class="pcrr7t-">castPtrToStablePtr</span><a 
+ id="dx44-311009"></a>. In particular, the address
+     may not refer to an accessible memory location and any attempt to pass it to the member functions of
+     the class <span 
+class="pcrr7t-">Foreign.Storable.Storable </span>leads to undefined behaviour.
+     </dl>
+<p class="noindent">
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-597" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-597-1g"><col 
+id="TBL-597-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-597-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-597-1-1"  
+class="td11"><span 
+class="pcrb7t-">castPtrToStablePtr</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;Ptr</span><span 
+class="pcrb7t-">&#x00A0;()</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;StablePtr</span><span 
+class="pcrb7t-">&#x00A0;a </span></td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     The inverse of <span 
+class="pcrr7t-">castStablePtrToPtr</span><a 
+ id="dx44-311010"></a>, i.e., we have the identity
+     <p class="noindent">
+         <div class="quote">
+                                                                                   
+
+                                                                                   
+         <div class="verbatim" id="verbatim-455">
+&#x00A0;sp&#x00A0;==&#x00A0;castPtrToStablePtr&#x00A0;(castStablePtrToPtr&#x00A0;sp)
+</div>
+         <p class="noindent"></div>
+     <p class="noindent"> for any stable pointer <span 
+class="pcrr7t-">sp </span>on which <span 
+class="pcrr7t-">freeStablePtr</span><a 
+ id="dx44-311011"></a> has not been executed yet. Moreover,
+     <span 
+class="pcrr7t-">castPtrToStablePtr</span><a 
+ id="dx44-311012"></a> may only be applied to pointers that have been produced by <span 
+class="pcrr7t-">castStablePtrToPtr</span><a 
+ id="dx44-311013"></a>.
+     </dl>
+<p class="noindent">
+<h4 class="subsectionHead"><span class="titlemark">36.1.1    </span> <a 
+ id="x44-31200036.1.1"></a>The C-side interface </h4>
+<p class="noindent"> The following definition is available to C programs inter-operating with Haskell code when including the header
+<span 
+class="pcrr7t-">HsFFI.h</span>.
+ <p class="noindent">
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-456">
+&#x00A0;typedef&#x00A0;void&#x00A0;&#x22C6;HsStablePtr;
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Note that no assumptions may be made about the values representing stable pointers. In fact, they need not even be
+valid memory addresses. The only guarantee provided is that if they are passed back to Haskell land, the
+function <span 
+class="pcrr7t-">deRefStablePtr</span><a 
+ id="dx44-312001"></a> will be able to reconstruct the Haskell value referred to by the stable
+pointer.
+                                                                                   
+
+                                                                                   
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch37.html" >next</a>] [<a 
+href="haskellch35.html" >prev</a>] [<a 
+href="haskellch35.html#tailhaskellch35.html" >prev-tail</a>] [<a 
+href="haskellch36.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch36.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch36.html"></a>    
+</body></html> 

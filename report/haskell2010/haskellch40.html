@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>40 System.Exit</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch41.html" >next</a>] [<a 
+href="haskellch39.html" >prev</a>] [<a 
+href="haskellch39.html#tailhaskellch39.html" >prev-tail</a>] [<a 
+href="#tailhaskellch40.html">tail</a>] [<a 
+href="haskellpa2.html#haskellch40.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;40</span><br /><a 
+ id="x48-31900040"></a><span 
+class="pcrr7t-">System.Exit</span></h2>
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-468">
+module&#x00A0;System.Exit&#x00A0;(
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;ExitCode(ExitSuccess,&#x00A0;ExitFailure),&#x00A0;&#x00A0;exitWith,&#x00A0;&#x00A0;exitFailure,&#x00A0;&#x00A0;exitSuccess
+&#x00A0;<br />&#x00A0;&#x00A0;)&#x00A0;where
+</div>
+     <p class="noindent"></div>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-631" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-631-1g"><col 
+id="TBL-631-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-631-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-631-1-1"  
+class="td11"><span 
+class="pcrb7t-">data</span><span 
+class="pcrb7t-">&#x00A0;ExitCode </span></td></tr></table>                                                               </div> <dd class="haddockdesc">
+     <!--tex4ht:inline--><div class="tabular"><table id="TBL-632" class="tabulary" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-632-1g"><col 
+id="TBL-632-1" /><col 
+id="TBL-632-2" /><col 
+id="TBL-632-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-632-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-632-1-1"  
+class="td11"> <span 
+class="pcrb7t-">= </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-632-1-2"  
+class="td11"> <span 
+class="pcrb7t-">ExitSuccess     </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-632-1-3"  
+class="td11"> indicates successful termination;                                                                                                                                                                                                                                                                        </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-632-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-632-2-1"  
+class="td11"> <span 
+class="pcrb7t-">| </span></td><td  style="white-space:nowrap; text-align:left;" id="TBL-632-2-2"  
+class="td11"> <span 
+class="pcrb7t-">ExitFailure Int </span></td><td  style="white-space:wrap; text-align:left;" id="TBL-632-2-3"  
+class="td11"> indicates program failure with an exit code. The exact interpretation of the code is operating-system dependent. In particular, some values may be prohibited (e.g. 0 on a POSIX-compliant system).  </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-632-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-632-3-1"  
+class="td11">   </td></tr></table>
+     </div>
+     <p class="noindent"> Defines the exit codes that a program can return.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-633" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-633-1g"><col 
+id="TBL-633-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-633-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-633-1-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Eq</span><span 
+class="pcrb7t-">&#x00A0;ExitCode  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-633-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-633-2-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Ord</span><span 
+class="pcrb7t-">&#x00A0;ExitCode  </span></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-633-3-"><td  style="white-space:nowrap; text-align:left;" id="TBL-633-3-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Read</span><span 
+class="pcrb7t-">&#x00A0;ExitCode</span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-633-4-"><td  style="white-space:nowrap; text-align:left;" id="TBL-633-4-1"  
+class="td11"><span 
+class="pcrb7t-">instance</span><span 
+class="pcrb7t-">&#x00A0;Show</span><span 
+class="pcrb7t-">&#x00A0;ExitCode </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-633-5-"><td  style="white-space:nowrap; text-align:left;" id="TBL-633-5-1"  
+class="td11">                       </td>
+</tr></table>                                                                                   </div> <dd class="haddockdesc">
+     </dl>
+     <dl><dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-634" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-634-1g"><col 
+id="TBL-634-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-634-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-634-1-1"  
+class="td11"><span 
+class="pcrb7t-">exitWith</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;ExitCode</span><span 
+class="pcrb7t-">&#x00A0;-&#x003E;</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                              </div> <dd class="haddockdesc">
+     Computation   <span 
+class="pcrr7t-">exitWith</span><span 
+class="pcrr7t-">&#x00A0;code </span>terminates   the   program,   returning   <span 
+class="pcrr7t-">code </span>to   the   program&#8217;s
+     caller.  The  caller  may  interpret  the  return  code  as  it  wishes,  but  the  program  should  return
+     <span 
+class="pcrr7t-">ExitSuccess</span><a 
+ id="dx48-319001"></a> to  mean  normal  completion,  and  <span 
+class="pcrr7t-">ExitFailure</span><span 
+class="pcrr7t-">&#x00A0;n </span>to  mean  that  the  program
+     encountered  a  problem  from  which  it  could  not  recover.  The  value  <span 
+class="pcrr7t-">exitFailure</span><a 
+ id="dx48-319002"></a> is  equal  to
+     <span 
+class="pcrr7t-">exitWith</span><span 
+class="pcrr7t-">&#x00A0;(ExitFailure</span><span 
+class="pcrr7t-">&#x00A0;exitfail)</span>,   where   <span 
+class="pcrr7t-">exitfail </span>is   implementation-dependent.
+     <span 
+class="pcrr7t-">exitWith</span><a 
+ id="dx48-319003"></a> bypasses the error handling in the I/O monad and cannot be intercepted by <span 
+class="pcrr7t-">catch</span><a 
+ id="dx48-319004"></a> from
+     the <span 
+class="pcrr7t-">Prelude</span>.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-635" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-635-1g"><col 
+id="TBL-635-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-635-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-635-1-1"  
+class="td11"><span 
+class="pcrb7t-">exitFailure</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                        </div> <dd class="haddockdesc">
+     The  computation  <span 
+class="pcrr7t-">exitFailure</span><a 
+ id="dx48-319005"></a> is  equivalent  to  <span 
+class="pcrr7t-">exitWith</span><a 
+ id="dx48-319006"></a> <span 
+class="pcrr7t-">(ExitFailure</span><a 
+ id="dx48-319007"></a> <span 
+class="ptmri7t-">exitfail</span><span 
+class="pcrr7t-">)</span>,  where
+     <span 
+class="ptmri7t-">exitfail </span>is implementation-dependent.
+     </dl>
+     <dl> <dt class="haddockdesc">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-636" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-636-1g"><col 
+id="TBL-636-1" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-636-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-636-1-1"  
+class="td11"><span 
+class="pcrb7t-">exitSuccess</span><span 
+class="pcrb7t-">&#x00A0;::</span><span 
+class="pcrb7t-">&#x00A0;IO</span><span 
+class="pcrb7t-">&#x00A0;a </span></td></tr></table>                                                        </div> <dd class="haddockdesc">
+     The  computation  <span 
+class="pcrr7t-">exitSuccess</span><a 
+ id="dx48-319008"></a> is  equivalent  to  <span 
+class="pcrr7t-">exitWith</span><a 
+ id="dx48-319009"></a> <span 
+class="pcrr7t-">ExitSuccess</span><a 
+ id="dx48-319010"></a>,  It  terminates  the
+     program successfully.
+     </dl>
+<!--l. 1--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch41.html" >next</a>] [<a 
+href="haskellch39.html" >prev</a>] [<a 
+href="haskellch39.html#tailhaskellch39.html" >prev-tail</a>] [<a 
+href="haskellch40.html" >front</a>] [<a 
+href="haskellpa2.html#haskellch40.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch40.html"></a>  
+</body> </html> 

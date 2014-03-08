@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>1 Introduction</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 7--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch2.html" >next</a>] [<a 
+href="#tailhaskellch1.html">tail</a>] [<a 
+href="haskellpa1.html#haskellch1.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;1</span><br /><a 
+ id="x6-90001"></a>Introduction</h2>
+<p class="noindent"> Haskell<a 
+ id="dx6-9001"></a> is a general purpose, purely functional programming language incorporating many recent innovations in
+programming language design. Haskell provides higher-order functions, non-strict semantics, static polymorphic
+typing, user-defined algebraic datatypes, pattern-matching, list comprehensions, a module system, a monadic I/O
+system, and a rich set of primitive datatypes, including lists, arrays, arbitrary and fixed precision integers, and
+floating-point numbers. Haskell is both the culmination and solidification of many years of research on non-strict
+functional languages.
+ <p class="noindent"> This report defines the syntax for Haskell programs and an informal abstract semantics for the meaning
+of such programs. <a 
+ id="dx6-9002"></a>We leave as implementation dependent the ways in which Haskell programs are to
+be manipulated, interpreted, compiled, etc. This includes such issues as the nature of programming
+environments and the error messages returned for undefined programs (i.e.&#x00A0;programs that formally evaluate to
+<span 
+class="cmsy-10">&perp;</span>).
+<h3 class="sectionHead"><span class="titlemark">1.1    </span> <a 
+ id="x6-100001.1"></a>Program Structure</h3>
+<a 
+ id="dx6-10001"></a>
+<p class="noindent"> In this section, we describe the abstract syntactic and semantic structure of Haskell, as well as how it relates to the
+organization of the rest of the report.
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x6-10003x1">At the topmost level a Haskell program is a set of <span 
+class="ptmri7t-">modules</span>, described in Chapter&#x00A0;<a 
+href="haskellch5.html#x11-980005">5<!--tex4ht:ref: modules --></a>. Modules provide
+     a way to control namespaces and to re-use software in large programs.
+     </li>
+     <li 
+  class="enumerate" id="x6-10005x2">The top level of a module consists of a collection of <span 
+class="ptmri7t-">declarations</span>, of which there are several kinds, all
+     described in Chapter&#x00A0;<a 
+href="haskellch4.html#x10-620004">4<!--tex4ht:ref: declarations --></a>. Declarations define things such as ordinary values, datatypes, type classes, and
+     fixity information.
+     </li>
+     <li 
+  class="enumerate" id="x6-10007x3">At the next lower level are <span 
+class="ptmri7t-">expressions</span>, described in Chapter&#x00A0;<a 
+href="haskellch3.html#x8-220003">3<!--tex4ht:ref: expressions --></a>. An expression denotes a <span 
+class="ptmri7t-">value </span>and has
+     a <span 
+class="ptmri7t-">static type</span>; expressions are at the heart of Haskell programming &#8220;in the small.&#8221;
+     </li>
+     <li 
+  class="enumerate" id="x6-10009x4">At the bottom level is Haskell&#8217;s <span 
+class="ptmri7t-">lexical structure</span>, defined in Chapter&#x00A0;<a 
+href="haskellch2.html#x7-140002">2<!--tex4ht:ref: lexical-structure --></a>. The lexical structure captures
+     the concrete representation of Haskell programs in text files.
+     </li></ol>
+<p class="noindent"> This report proceeds bottom-up with respect to Haskell&#8217;s syntactic structure.
+ <p class="noindent"> The chapters not mentioned above are Chapter&#x00A0;<a 
+href="haskellch6.html#x13-1160006">6<!--tex4ht:ref: basic-types-and-classes --></a>, which describes the standard built-in datatypes and classes in
+Haskell, and Chapter&#x00A0;<a 
+href="haskellch7.html#x14-1420007">7<!--tex4ht:ref: io --></a>, which discusses the I/O facility in Haskell (i.e.&#x00A0;how Haskell programs communicate
+with the outside world). Also, there are several chapters describing the Prelude, the concrete syntax,
+literate programming, the specification of derived instances, and pragmas supported by most Haskell
+compilers.
+                                                                                   
+
+                                                                                   
+ <p class="noindent"> Examples of Haskell program fragments in running text are given in typewriter font:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-1">
+&#x00A0;let&#x00A0;x&#x00A0;=&#x00A0;1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;z&#x00A0;=&#x00A0;x+y
+&#x00A0;<br />&#x00A0;in&#x00A0;&#x00A0;z+1
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> &#8220;Holes&#8221; in program fragments representing arbitrary pieces of Haskell code are written in italics, as in
+<span 
+class="pcrr7t-">if</span><span 
+class="cmmi-10">&#x00A0;e</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">then</span><span 
+class="cmmi-10">&#x00A0;e</span><sub><span 
+class="cmr-7">2</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">else</span><span 
+class="cmmi-10">&#x00A0;e</span><sub><span 
+class="cmr-7">3</span></sub>. Generally the italicized names are mnemonic, such as <span 
+class="cmmi-10">e</span> for expressions, <span 
+class="cmmi-10">d</span> for
+declarations, <span 
+class="cmmi-10">t</span> for types, etc.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">1.2    </span> <a 
+ id="x6-110001.2"></a>The Haskell Kernel</h3>
+<a 
+ id="dx6-11001"></a>
+<p class="noindent"> Haskell has adopted many of the convenient syntactic structures that have become popular in functional
+programming. In this Report, the meaning of such syntactic sugar is given by translation into simpler constructs. If
+these translations are applied exhaustively, the result is a program written in a small subset of Haskell that we call the
+Haskell <span 
+class="ptmri7t-">kernel</span>.
+ <p class="noindent"> Although the kernel is not formally specified, it is essentially a slightly sugared variant of the lambda calculus with a
+straightforward denotational semantics. The translation of each syntactic structure into the kernel is given as the
+syntax is introduced. This modular design facilitates reasoning about Haskell programs and provides useful
+guidelines for implementors of the language.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">1.3    </span> <a 
+ id="x6-120001.3"></a>Values and Types</h3>
+<a 
+ id="dx6-12001"></a>
+<a 
+ id="dx6-12002"></a>
+<a 
+ id="dx6-12003"></a>
+<p class="noindent"> An expression<a 
+ id="dx6-12004"></a> evaluates to a <span 
+class="ptmri7t-">value </span>and has a static <span 
+class="ptmri7t-">type</span>. Values and types are not mixed in Haskell. However, the
+type system allows user-defined datatypes of various sorts, and permits not only parametric polymorphism<a 
+ id="dx6-12005"></a> (using a
+traditional Hindley-Milner<a 
+ id="dx6-12006"></a> type structure) but also <span 
+class="ptmri7t-">ad hoc </span>polymorphism, or <span 
+class="ptmri7t-">overloading </span>(using <span 
+class="ptmri7t-">type</span>
+<span 
+class="ptmri7t-">classes</span>).<a 
+ id="dx6-12007"></a>
+ <p class="noindent"> Errors in Haskell are semantically equivalent to <span 
+class="cmsy-10">&perp; </span>(&#8220;bottom&#8221;<a 
+ id="dx6-12008"></a>). Technically, they are indistinguishable from
+nontermination, so the language includes no mechanism for detecting or acting upon errors. However,
+implementations will probably try to provide useful information about errors. See Section&#x00A0;<a 
+href="haskellch3.html#x8-230003.1">3.1<!--tex4ht:ref: basic-errors --></a>.
+                                                                                   
+
+                                                                                   
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">1.4    </span> <a 
+ id="x6-130001.4"></a>Namespaces</h3>
+<a 
+ id="dx6-13001"></a>
+<p class="noindent"> There are six kinds of names in Haskell: those for <span 
+class="ptmri7t-">variables </span>and <span 
+class="ptmri7t-">constructors </span>denote values; those for <span 
+class="ptmri7t-">type variables</span>,
+<span 
+class="ptmri7t-">type constructors</span>, and <span 
+class="ptmri7t-">type classes </span>refer to entities related to the type system; and <span 
+class="ptmri7t-">module names </span>refer to modules.
+There are two constraints on naming:
+     <ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x6-13003x1">Names for variables and type variables are identifiers beginning with lowercase letters or underscore;
+     the other four kinds of names are identifiers beginning with uppercase letters.
+     </li>
+     <li 
+  class="enumerate" id="x6-13005x2">An identifier must not be used as the name of a type constructor and a class in the same scope.</li></ol>
+<p class="noindent"> These are the only constraints; for example, <span 
+class="pcrr7t-">Int</span> may simultaneously be the name of a module, class, and
+constructor within a single scope.
+                                                                                   
+
+                                                                                   
+                                                                                   
+
+                                                                                   
+<!--l. 7--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch2.html" >next</a>] [<a 
+href="haskellch1.html" >front</a>] [<a 
+href="haskellpa1.html#haskellch1.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch1.html"></a>   
+</body></html> 

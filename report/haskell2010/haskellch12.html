@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<!--http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd-->  
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>12 Compiler Pragmas</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- 2,html,xhtml --> 
+<meta name="src" content="haskell.tex" /> 
+<meta name="date" content="2010-07-20 13:11:00" /> 
+<link rel="stylesheet" type="text/css" href="haskell.css" /> 
+</head><body 
+>
+<!--l. 6--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch11.html" >prev</a>] [<a 
+href="haskellch11.html#tailhaskellch11.html" >prev-tail</a>] [<a 
+href="#tailhaskellch12.html">tail</a>] [<a 
+href="haskellpa1.html#haskellch12.html" >up</a>] </p></div>
+<h2 class="chapterHead"><span class="titlemark">Chapter&#x00A0;12</span><br /><a 
+ id="x19-18800012"></a>Compiler Pragmas</h2> <a 
+ id="dx19-188001"></a>
+<p class="noindent"> Some compiler implementations support compiler <span 
+class="ptmri7t-">pragmas</span>, which are used to give additional instructions or hints to
+the compiler, but which do not form part of the Haskell language proper and do not change a program&#8217;s semantics.
+This chapter summarizes this existing practice. An implementation is not required to respect any pragma, although
+pragmas that are not recognised by the implementation should be ignored. Implementations are strongly encouraged
+to support the LANGUAGE pragma described below as there are many language extensions being used in
+practice.
+ <p class="noindent"> Lexically, pragmas appear as comments, except that the enclosing syntax is <span 
+class="pcrr7t-">{-#</span><span 
+class="pcrr7t-">#-}</span>.
+<h3 class="sectionHead"><span class="titlemark">12.1    </span> <a 
+ id="x19-18900012.1"></a>Inlining</h3>
+<a 
+ id="dx19-189001"></a>
+<div class="flushleft" 
+>
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-107" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-107-1g"><col 
+id="TBL-107-1" /><col 
+id="TBL-107-2" /><col 
+id="TBL-107-3" /><col 
+id="TBL-107-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-107-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-107-1-1"  
+class="td11"> <span 
+class="cmmi-10">decl  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-107-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-107-1-3"  
+class="td11"> <span 
+class="pcrr7t-">{-#</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">INLINE</span><span 
+class="cmmi-10">&#x00A0;qvars</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">#-}</span>   </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-107-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-107-2-1"  
+class="td11"> <span 
+class="cmmi-10">decl  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-107-2-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-107-2-3"  
+class="td11"> <span 
+class="pcrr7t-">{-#</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">NOINLINE</span><span 
+class="cmmi-10">&#x00A0;qvars</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">#-}</span> </td>
+</tr></table></div></div>
+<p class="noindent"> The <span 
+class="pcrr7t-">INLINE</span> pragma instructs the compiler to inline the specified variables at their use sites. Compilers will often
+automatically inline simple expressions. This may be prevented by the <span 
+class="pcrr7t-">NOINLINE</span> pragma.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">12.2    </span> <a 
+ id="x19-19000012.2"></a>Specialization</h3>
+<div class="flushleft" 
+>
+ <p class="noindent">
+<!--tex4ht:inline--><div class="tabular"> <table id="TBL-108" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-108-1g"><col 
+id="TBL-108-1" /><col 
+id="TBL-108-2" /><col 
+id="TBL-108-3" /><col 
+id="TBL-108-4" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-108-1-"><td  style="white-space:nowrap; text-align:left;" id="TBL-108-1-1"  
+class="td11"> <span 
+class="cmmi-10">decl  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-108-1-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-108-1-3"  
+class="td11"> <span 
+class="pcrr7t-">{-#</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">SPECIALIZE</span><span 
+class="cmmi-10">&#x00A0;spec</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="cmmi-10">&hellip;</span><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">,</span><span 
+class="cmmi-10">&#x00A0;spec</span><sub><span 
+class="cmmi-7">k</span></sub><span 
+class="cmmi-10">&#x00A0;</span><span 
+class="pcrr7t-">#-}</span> </td><td  style="white-space:nowrap; text-align:left;" id="TBL-108-1-4"  
+class="td11"> <span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="ptmri7t-">&#x00A0;</span><span 
+class="cmr-10">(</span><span 
+class="cmmi-10">k </span><span 
+class="cmsy-10">&ge; </span><span 
+class="cmr-10">1)  </span></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-108-2-"><td  style="white-space:nowrap; text-align:left;" id="TBL-108-2-1"  
+class="td11"> <span 
+class="cmmi-10">spec  </span></td><td  style="white-space:nowrap; text-align:center;" id="TBL-108-2-2"  
+class="td11">   <span 
+class="cmsy-10">&rarr;</span>  </td><td  style="white-space:nowrap; text-align:left;" id="TBL-108-2-3"  
+class="td11"> <span 
+class="cmmi-10">vars</span><span 
+class="cmmi-10">&#x00A0; </span><span 
+class="cmr-10">::</span> <span 
+class="cmmi-10">&#x00A0;type                                     </span></td>
+</tr></table></div></div>
+<p class="noindent"> Specialization is used to avoid inefficiencies involved in dispatching overloaded functions. For example, in
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-359">
+factorial&#x00A0;::&#x00A0;Num&#x00A0;a&#x00A0;=&#x003E;&#x00A0;a&#x00A0;-&#x003E;&#x00A0;a
+&#x00A0;<br />factorial&#x00A0;0&#x00A0;=&#x00A0;0
+&#x00A0;<br />factorial&#x00A0;n&#x00A0;=&#x00A0;n&#x00A0;&#x22C6;&#x00A0;factorial&#x00A0;(n-1)
+&#x00A0;<br />{-#&#x00A0;SPECIALIZE&#x00A0;factorial&#x00A0;::&#x00A0;Int&#x00A0;-&#x003E;&#x00A0;Int,
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;factorial&#x00A0;::&#x00A0;Integer&#x00A0;-&#x003E;&#x00A0;Integer&#x00A0;#-}
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> calls to <span 
+class="pcrr7t-">factorial</span> in which the compiler can detect that the parameter is either <span 
+class="pcrr7t-">Int</span> or <span 
+class="pcrr7t-">Integer</span> will use
+specialized versions of <span 
+class="pcrr7t-">factorial</span> which do not involve overloaded numeric operations.
+<p class="noindent">
+<h3 class="sectionHead"><span class="titlemark">12.3    </span> <a 
+ id="x19-19100012.3"></a>Language extensions</h3>
+<p class="noindent"> The <span 
+class="pcrr7t-">LANGUAGE</span> pragma is a file-header pragma. A file-header pragma must precede the module keyword in a source
+file. There can be as many file-header pragmas as you please, and they can be preceded or followed by comments. An
+individual language pragma begins with the keyword <span 
+class="pcrr7t-">LANGUAGE</span> and is followed by a comma-separated list of
+named language features.
+ <p class="noindent"> For example, to enable scoped type variables and preprocessing with CPP, if your Haskell implementation supports
+these extensions:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-360">
+{-#&#x00A0;LANGUAGE&#x00A0;ScopedTypeVariables,&#x00A0;CPP&#x00A0;#-}
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> If a Haskell implementation does not recognize or support a particular language feature that a source file requests (or
+cannot support the combination of language features requested), any attempt to compile or otherwise use that file with
+that Haskell implementation must fail with an error.
+ <p class="noindent"> In the interests of portability, multiple attempts to enable the same, supported language features (e.g. via
+command-line arguments, implementation-specific features dependencies or non-standard pragmas) are specifically
+permitted. Haskell 2010 implementations that support the <span 
+class="pcrr7t-">LANGUAGE</span> pragma are required to support
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-361">
+{-#&#x00A0;LANGUAGE&#x00A0;Haskell2010&#x00A0;#-}
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> Those implementations are also encouraged to support the following named language features:
+     <div class="quote">
+                                                                                   
+
+                                                                                   
+     <div class="verbatim" id="verbatim-362">
+PatternGuards,&#x00A0;NoNPlusKPatterns,&#x00A0;RelaxedPolyRec,
+&#x00A0;<br />EmptyDataDecls,&#x00A0;ForeignFunctionInterface
+</div>
+     <p class="noindent"></div>
+<p class="noindent"> These are the named language extensions supported by some pre-Haskell 2010 implementations, that have been
+integrated into this report.
+                                                                                   
+
+                                                                                   
+<!--l. 465--><div class="crosslinks"><p class="noindent">[<a 
+href="haskellch11.html" >prev</a>] [<a 
+href="haskellch11.html#tailhaskellch11.html" >prev-tail</a>] [<a 
+href="haskellch12.html" >front</a>] [<a 
+href="haskellpa1.html#haskellch12.html" >up</a>] </p></div>
+ <p class="noindent"> <a 
+ id="tailhaskellch12.html"></a>   
+</body></html> 
