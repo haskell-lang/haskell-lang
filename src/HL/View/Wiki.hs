@@ -8,18 +8,23 @@ module HL.View.Wiki where
 import HL.Foundation
 import HL.View.Template
 
-import Blaze.Prelude
 import Blaze.Bootstrap
+import Blaze.Prelude
+import Data.Text (Text)
 
 -- | Wiki view.
-wikiV :: Blaze App
-wikiV =
+wikiV :: Either Text (Text,Html) -> Blaze App
+wikiV result =
   template
     [(WikiR "","Wiki")]
     (\_ ->
        container
          (row
             (span12
-               (do h1 [] "Wiki"
-                   p []
-                     "Insert wiki here."))))
+               (case result of
+                  Left err ->
+                    do h1 [] "Wiki page retrieval problem!"
+                       p [] (toHtml err)
+                  Right (title,html) ->
+                    do h1 [] (toHtml title)
+                       html))))
