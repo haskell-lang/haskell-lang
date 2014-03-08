@@ -16,6 +16,7 @@ reportV :: Blaze App
 reportV =
   template
     [(ReportR 2010,"Report")]
+    "Report"
     (\url ->
        container
          (row

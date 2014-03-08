@@ -16,6 +16,7 @@ homeV :: Blaze App
 homeV =
   template
     [(HomeR,"Home")]
+    "Home"
     (\_ ->
        container
          (row

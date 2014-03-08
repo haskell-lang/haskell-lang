@@ -18,6 +18,9 @@ wikiV result =
   template
     ([(WikiHomeR,"Wiki")] ++
      [(WikiR name,name) | Right (name,_) <- [result]])
+    (case result of
+       Left{} -> "Wiki error!"
+       Right (title,_) -> title)
     (\_ ->
        container
          (row

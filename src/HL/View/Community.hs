@@ -16,6 +16,7 @@ communityV :: Blaze App
 communityV =
   template
     [(CommunityR,"Community")]
+    "Community"
     (\_ ->
        container
          (row

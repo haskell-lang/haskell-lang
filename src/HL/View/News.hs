@@ -16,6 +16,7 @@ newsV :: Blaze App
 newsV =
   template
     [(NewsR,"News")]
+    "News"
     (\_ ->
        container
          (row

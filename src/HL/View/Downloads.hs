@@ -16,6 +16,7 @@ downloadsV :: Blaze App
 downloadsV =
   template
     [(DownloadsR,"Downloads")]
+    "Downloads"
     (\_ ->
        container
          (row

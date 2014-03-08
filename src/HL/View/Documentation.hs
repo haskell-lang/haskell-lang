@@ -16,6 +16,7 @@ documentationV :: Blaze App
 documentationV =
   template
     [(DocumentationR,"Documentation")]
+    "Documentation"
     (\url ->
        container
          (row

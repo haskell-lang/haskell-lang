@@ -17,12 +17,13 @@ import           Data.Text (Text)
 -- | Render a template.
 template
   :: [(Route App,Text)]
+  -> Text
   -> ((Route App -> AttributeValue) -> Html)
   -> Blaze App
-template crumbs inner cur url =
+template crumbs ptitle inner cur url =
   docTypeHtml
     (do head []
-             (do headtitle "Haskell"
+             (do headtitle (toHtml ptitle)
                  meta [charset "utf-8"]
                  meta [httpEquiv "X-UA-Compatible",content "IE edge"]
                  meta [name "viewport",content "width=device-width, initial-scale=1"]
