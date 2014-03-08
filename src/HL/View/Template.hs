@@ -69,7 +69,8 @@ navigation cur url =
                          [(DownloadsR,"Downloads")
                          ,(CommunityR,"Community")
                          ,(DocumentationR,"Documentation")
-                         ,(NewsR,"News")]))
+                         ,(NewsR,"News")
+                         ,(WikiR "","Wiki")]))
           where item route title = li theclass (a [href (url route)] title)
                   where theclass
                           | Just route == cur = [class_ "active"]

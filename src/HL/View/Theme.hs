@@ -30,7 +30,7 @@ main =
      rule ".wrap"
           (do background "#ffffff"
               paddingBottom "2em")
-     rule "p"
+     rule "p,ul,li"
           (do fontSize "15px")
      rule "h1"
           (do marginTop "0.1em"

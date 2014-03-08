@@ -65,3 +65,9 @@ li = with E.li
 
 p :: [E.Attribute] -> Html -> Html
 p = with E.p
+
+pre :: [E.Attribute] -> Html -> Html
+pre = with E.pre
+
+code :: [E.Attribute] -> Html -> Html
+code = with E.code

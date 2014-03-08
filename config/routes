@@ -6,3 +6,5 @@
 /community CommunityR GET
 /documentation DocumentationR GET
 /news NewsR GET
+/report/#Int ReportR GET
+/wiki/#Text WikiR GET

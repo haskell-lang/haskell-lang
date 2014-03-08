@@ -18,6 +18,7 @@ module HL.Foundation
 import HL.Static
 
 import Control.Concurrent.Chan
+import Data.Text (Text)
 import Network.Wai.Logger
 import System.Log.FastLogger
 import Yesod
