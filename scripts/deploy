@@ -1,0 +1,6 @@
+#!/bin/bash -ex
+cabal build
+strip dist/build/hl/hl
+tar czf hl.tar.gz dist/build/hl/hl scripts/restart static/
+scp hl.tar.gz herz:
+ssh herz 'mkdir -p hl && cd hl && tar xf ../hl.tar.gz && killall hl -w && rm ../hl.tar.gz'

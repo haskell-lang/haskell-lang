@@ -8,11 +8,9 @@ module HL.View.Template where
 import           HL.Foundation
 
 import           Blaze (AttributeValue)
-import qualified Blaze.Attributes as A
 import           Blaze.Bootstrap
 import qualified Blaze.Elements as E
 import           Blaze.Prelude
-import           Blaze.Senza
 import           Control.Monad
 import           Data.Text (Text)
 

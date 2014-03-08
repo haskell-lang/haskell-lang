@@ -1,5 +1,6 @@
 {-# LANGUAGE NoMonomorphismRestriction #-}
 {-# LANGUAGE OverloadedStrings #-}
+{-# OPTIONS -fno-warn-missing-signatures #-}
 
 -- | CSS theme.
 

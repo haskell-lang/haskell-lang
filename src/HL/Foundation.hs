@@ -1,5 +1,6 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# OPTIONS -fno-warn-name-shadowing #-}
 
 -- | Yesod foundation.
@@ -35,7 +36,8 @@ mkYesodData "App" $(parseRoutesFile "config/routes")
 
 -- | Don't log anything to stdout.
 instance Yesod App where
-  makeLogger _ = do set <- newFileLoggerSet 1000 "/dev/null"
-                    (date,_) <- clockDateCacher
-                    return (Logger {loggerSet = set
-                                   ,loggerDate = date})
+  makeLogger _ =
+    do set <- newFileLoggerSet 1000 "/dev/null"
+       (date,_) <- clockDateCacher
+       return (Logger {loggerSet = set
+                      ,loggerDate = date})

@@ -27,4 +27,5 @@ executable hl
                      base >= 4 && < 5,
                      foreign-store == 0.0,
                      blaze == 0.0.2,
-                     css == 0.1
+                     css == 0.1,
+                     directory == 1.1.0.2

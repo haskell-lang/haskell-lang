@@ -3,7 +3,6 @@
 module HL.Controller.Reload where
 
 import HL.Foundation
-import HL.View.Home
 
 import Control.Concurrent.Chan.Lifted
 
