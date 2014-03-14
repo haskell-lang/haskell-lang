@@ -4,10 +4,9 @@
 
 module HL.C.Community where
 
-import HL.C.Markdown
 import HL.C
+import HL.V.Community
 
 -- | Community controller.
 getCommunityR :: C Html
-getCommunityR =
-  markdownPage CommunityR "Community" "community.md"
+getCommunityR = blaze communityV

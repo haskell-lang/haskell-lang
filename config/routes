@@ -4,6 +4,7 @@
 /reload ReloadR GET
 /downloads DownloadsR GET
 /community CommunityR GET
+/mailing-lists MailingListsR GET
 /documentation DocumentationR GET
 /news NewsR GET
 /report/#Int ReportR GET

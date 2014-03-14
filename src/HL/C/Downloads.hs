@@ -10,4 +10,4 @@ import HL.C
 -- | Downloads controller.
 getDownloadsR :: C Html
 getDownloadsR =
-  markdownPage DownloadsR "Downloads" "downloads.md"
+  markdownPage [DownloadsR] "Downloads" "downloads.md"

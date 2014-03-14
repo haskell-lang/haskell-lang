@@ -9,7 +9,7 @@ import           HL.M.Markdown
 import           HL.V.Markdown
 
 -- | Render a simple markdown page.
-markdownPage :: Route App -> Text -> FilePath -> C Html
-markdownPage route t name =
+markdownPage :: [Route App] -> Text -> FilePath -> C Html
+markdownPage crumbs t name =
   do content <- getMarkdown name
-     blaze (markdownV route t content)
+     blaze (markdownV crumbs t content)

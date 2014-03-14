@@ -12,7 +12,7 @@ import HL.V.Template
 newsV :: Blaze App
 newsV =
   template
-    [(NewsR,"News")]
+    [NewsR]
     "News"
     (\_ ->
        container

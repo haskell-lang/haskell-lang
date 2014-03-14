@@ -14,6 +14,7 @@ import HL.C.Reload
 import HL.C.Report
 import HL.C.Theme
 import HL.C.Wiki
+import HL.C.MailingLists
 import HL.Foundation
 
 import Yesod

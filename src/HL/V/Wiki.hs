@@ -22,8 +22,8 @@ import Text.Pandoc.Writers.HTML
 wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> Blaze App
 wikiV urlr result =
   template
-    ([(WikiHomeR,"Wiki")] ++
-     [(WikiR n,n) | Right (n,_) <- [result]])
+    ([WikiHomeR] ++
+     [WikiR n | Right (n,_) <- [result]])
     (case result of
        Left{} -> "Wiki error!"
        Right (t,_) -> t)

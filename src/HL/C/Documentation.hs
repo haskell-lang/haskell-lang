@@ -10,4 +10,4 @@ import HL.C
 -- | Documentation controller.
 getDocumentationR :: C Html
 getDocumentationR =
-  markdownPage DocumentationR "Documentation" "documentation.md"
+  markdownPage [DocumentationR] "Documentation" "documentation.md"

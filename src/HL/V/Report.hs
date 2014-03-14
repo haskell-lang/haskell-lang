@@ -12,7 +12,7 @@ import HL.V.Template
 reportV :: Blaze App
 reportV =
   template
-    [(ReportR 2010,"Report")]
+    [ReportR 2010]
     "Report"
     (\_ ->
        container

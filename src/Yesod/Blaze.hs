@@ -10,7 +10,6 @@ import Blaze
 
 -- | A blaze generator.
 type Blaze a =
-  Maybe (Route a) ->
   (Route a -> AttributeValue) ->
   Html
 
@@ -18,7 +17,5 @@ type Blaze a =
 blaze :: MonadHandler m => Blaze (HandlerSite m) -> m Html
 blaze cont =
   do render <- getUrlRender
-     current <- getCurrentRoute
      return
-       (cont current
-             (toValue . render))
+       (cont (toValue . render))

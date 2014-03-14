@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 
@@ -8,14 +9,16 @@ module HL.V.Template where
 import           HL.V hiding (item)
 
 import qualified Blaze.Elements as E
+import           Data.Maybe
+import           Data.Monoid
 
 -- | Render a template.
 template
-  :: [(Route App,Text)]
+  :: [Route App]
   -> Text
   -> ((Route App -> AttributeValue) -> Html)
   -> Blaze App
-template crumbs ptitle inner cur url =
+template crumbs ptitle inner url =
   docTypeHtml
     (do head []
              (do headtitle (toHtml ptitle)
@@ -31,7 +34,7 @@ template crumbs ptitle inner cur url =
                         ,ThemeR])
         body []
              (do div [class_ "wrap"]
-                     (do navigation cur url
+                     (do navigation (listToMaybe crumbs) url
                          container (bread url crumbs)
                          inner url)
                  div [class_ "footer"]
@@ -53,7 +56,7 @@ template crumbs ptitle inner cur url =
                     ,href (url route)])
 
 -- | Main navigation.
-navigation :: Blaze App
+navigation :: Maybe (Route App) -> Blaze App
 navigation cur url =
   nav [class_ "navbar navbar-default"]
       (div [class_ "container"]
@@ -82,10 +85,24 @@ navigation cur url =
                      "Haskell"))
 
 -- | Breadcrumb.
-bread :: (t -> E.AttributeValue) -> [(t,Text)] -> Html
+bread :: (Route App -> E.AttributeValue) -> [Route App] -> Html
 bread url crumbs =
   ol [class_ "breadcrumb"]
      (forM_ crumbs
-            (\(route,t) ->
+            (\route ->
                li [] (a [href (url route)]
-                        (toHtml t))))
+                        (toHtml (fromRoute route)))))
+  where fromRoute r =
+          case r of
+            CommunityR     -> "Community"
+            DocumentationR -> "Documentation"
+            ThemeR         -> "Theme"
+            HomeR          -> "Home"
+            ReloadR        -> "Reload"
+            MailingListsR  -> "Mailing Lists"
+            NewsR          -> "News"
+            StaticR{}      -> "Static"
+            DownloadsR     -> "Downloads"
+            WikiR t        -> "Wiki: " <> t
+            ReportR{}      -> "Report"
+            WikiHomeR{}    -> "Wiki"

@@ -8,9 +8,9 @@ import HL.V
 import HL.V.Template
 
 -- | Render a simple page.
-markdownV :: Route App -> Text -> Html -> Blaze App
-markdownV route t inner =
+markdownV :: [Route App] -> Text -> Html -> Blaze App
+markdownV routes t inner =
   template
-    [(route,t)]
+    routes
     t
     (const (container (row (span12 inner))))
