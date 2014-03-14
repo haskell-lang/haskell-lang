@@ -9,6 +9,7 @@ import           HL.C.Theme
 import           Control.Concurrent.Chan
 import qualified Data.Text.Lazy.IO as L
 import           System.Directory
+import           Yesod
 import           Yesod.Static
 
 -- | Main entry point.
@@ -19,6 +20,7 @@ main =
      setupCache
      warp 2001 (App s c)
 
+setupCache :: IO ()
 setupCache =
   do createDirectoryIfMissing True "cache/"
      L.writeFile "cache/theme.css" (themeCss)
