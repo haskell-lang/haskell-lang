@@ -4,7 +4,7 @@
 
 -- | CSS theme.
 
-module HL.View.Theme
+module HL.V.Theme
   (theme)
   where
 
@@ -64,15 +64,15 @@ navbar =
      rule ".navbar-header .navbar-brand:hover"
           (color "#fff")
      rule ".navbar-default .navbar-nav > .active > a"
-          (do theme
+          (do theme'
               backgroundColor "#312b3f"
               borderBottom "0.3em solid #465787")
      rule ".navbar-default .navbar-nav > .active > a:hover"
-          (do theme
+          (do theme'
               backgroundColor "#312b3f")
      rule ".navbar-default .navbar-nav > li > a"
-          theme
-  where theme =
+          theme'
+  where theme' =
           do color "#d1cddc !important"
              backgroundColor "inherit"
 

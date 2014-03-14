@@ -4,6 +4,7 @@ module Blaze.Prelude
   (module Blaze.Attributes
   ,module Blaze.Senza
   ,module Prelude
+  ,AttributeValue
   ,docTypeHtml)
   where
 

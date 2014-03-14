@@ -3,16 +3,11 @@
 
 -- | Templates.
 
-module HL.View.Template where
+module HL.V.Template where
 
-import           HL.Foundation
+import           HL.V hiding (item)
 
-import           Blaze (AttributeValue)
-import           Blaze.Bootstrap
 import qualified Blaze.Elements as E
-import           Blaze.Prelude
-import           Control.Monad
-import           Data.Text (Text)
 
 -- | Render a template.
 template
@@ -64,31 +59,33 @@ navigation cur url =
       (div [class_ "container"]
            (do brand
                items))
-  where items =
-          div [class_ "collapse navbar-collapse"]
-              (ul [class_ "nav navbar-nav"]
-                  (mapM_ (uncurry item)
-                         [(DownloadsR,"Downloads")
-                         ,(CommunityR,"Community")
-                         ,(DocumentationR,"Documentation")
-                         ,(NewsR,"News")
-                         ,(WikiHomeR,"Wiki")]))
-          where item route title = li theclass (a [href (url route)] title)
-                  where theclass
-                          | Just route == cur = [class_ "active"]
-                          | otherwise = []
-        brand =
-          div [class_ "navbar-header"]
-               (do a [class_ "navbar-brand"
-                     ,href (url HomeR)]
-                     (do span [class_ "logo"]
-                              "\xe000"
-                         "Haskell"))
+  where
+    items =
+      div [class_ "collapse navbar-collapse"]
+          (ul [class_ "nav navbar-nav"]
+              (mapM_ (uncurry item)
+                     [(DownloadsR,"Downloads")
+                     ,(CommunityR,"Community")
+                     ,(DocumentationR,"Documentation")
+                     ,(NewsR,"News")
+                     ,(WikiHomeR,"Wiki")]))
+      where item route t = li theclass (a [href (url route)] t)
+              where theclass
+                      | Just route == cur = [class_ "active"]
+                      | otherwise = []
+    brand =
+      div [class_ "navbar-header"]
+           (do a [class_ "navbar-brand"
+                 ,href (url HomeR)]
+                 (do span [class_ "logo"]
+                          "\xe000"
+                     "Haskell"))
 
 -- | Breadcrumb.
 bread :: (t -> E.AttributeValue) -> [(t,Text)] -> Html
 bread url crumbs =
   ol [class_ "breadcrumb"]
      (forM_ crumbs
-            (\(route,title) -> li [] (a [href (url route)]
-                                        (toHtml title))))
+            (\(route,t) ->
+               li [] (a [href (url route)]
+                        (toHtml t))))

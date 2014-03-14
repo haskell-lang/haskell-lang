@@ -1,15 +1,13 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE NoImplicitPrelude #-}
+{-# OPTIONS -fno-warn-unused-do-bind #-}
 
 -- | Documentation page view.
 
-module HL.View.Documentation where
+module HL.V.Documentation where
 
-import HL.Foundation
-import HL.View.Template
-
-import Blaze.Prelude
-import Blaze.Bootstrap
+import HL.V
+import HL.V.Template
 
 -- | Documentation view.
 documentationV :: Blaze App
@@ -22,15 +20,17 @@ documentationV =
          (row
             (span12
                (do h1 [] "Documentation"
-                   online url
+                   online
                    report url))))
 
-online url =
+online :: Html
+online =
   do h2 [] "Online Resources"
      p [] "There are various online resources for learning Haskell; books, \
           \articles, videos, etc. below are some of the highlights:"
 
 
+report :: (Route App -> AttributeValue) -> Html
 report url =
   do h2 [] "Language Report"
      p []

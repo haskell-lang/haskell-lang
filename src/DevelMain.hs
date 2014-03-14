@@ -2,13 +2,14 @@
 
 module DevelMain where
 
-import HL.Foundation
 import HL.Dispatch ()
+import HL.Foundation
 
 import Control.Concurrent
 import Data.IORef
 import Foreign.Store
 import Network.Wai.Handler.Warp
+import Yesod
 import Yesod.Static
 
 -- | Start the web server.
@@ -25,9 +26,9 @@ main =
                     do handler <- readIORef ref
                        handler req))
      _ <- newStore tid
-     ref <- newStore ref
-     newStore c
-     return ref
+     ref' <- newStore ref
+     _ <- newStore c
+     return ref'
 
 -- | Update the server, start it if not running.
 update :: IO (Store (IORef Application))

@@ -4,7 +4,7 @@ module Main where
 
 import           HL.Foundation
 import           HL.Dispatch ()
-import           HL.Controller.Theme
+import           HL.C.Theme
 
 import           Control.Concurrent.Chan
 import qualified Data.Text.Lazy.IO as L

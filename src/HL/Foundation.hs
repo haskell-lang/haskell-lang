@@ -1,3 +1,4 @@
+{-# OPTIONS -fno-warn-orphans #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -7,7 +8,6 @@
 
 module HL.Foundation
   (module HL.Static
-  ,module Yesod.Blaze
   ,App(..)
   ,Route(..)
   ,Handler
@@ -16,21 +16,14 @@ module HL.Foundation
   where
 
 import HL.Static
+import HL.Types
 
-import Control.Concurrent.Chan
 import Data.Text (Text)
 import Network.Wai.Logger
 import System.Log.FastLogger
 import Yesod
-import Yesod.Blaze
 import Yesod.Core.Types
 import Yesod.Static
-
--- | Application state.
-data App = App
-  { appStatic :: Static
-  , appReload :: Chan ()
-  }
 
 -- | Generate boilerplate.
 mkYesodData "App" $(parseRoutesFile "config/routes")

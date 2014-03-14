@@ -3,13 +3,10 @@
 
 -- | News page view.
 
-module HL.View.News where
+module HL.V.News where
 
-import HL.Foundation
-import HL.View.Template
-
-import Blaze.Prelude
-import Blaze.Bootstrap
+import HL.V
+import HL.V.Template
 
 -- | News view.
 newsV :: Blaze App

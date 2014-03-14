@@ -1,13 +1,13 @@
 -- | Reload poller.
 
-module HL.Controller.Reload where
+module HL.C.Reload where
 
-import HL.Foundation
+import HL.C
 
 import Control.Concurrent.Chan.Lifted
 
 -- | Reload controller.
-getReloadR :: Handler ()
+getReloadR :: C ()
 getReloadR =
   do reload <- fmap appReload getYesod
      dupChan reload >>= readChan

@@ -3,13 +3,10 @@
 
 -- | Report page view.
 
-module HL.View.Report where
+module HL.V.Report where
 
-import HL.Foundation
-import HL.View.Template
-
-import Blaze.Prelude
-import Blaze.Bootstrap
+import HL.V
+import HL.V.Template
 
 -- | Report view.
 reportV :: Blaze App
@@ -17,7 +14,7 @@ reportV =
   template
     [(ReportR 2010,"Report")]
     "Report"
-    (\url ->
+    (\_ ->
        container
          (row
             (span12
