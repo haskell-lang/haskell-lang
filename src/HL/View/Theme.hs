@@ -53,11 +53,12 @@ navbar =
               border "0"
               marginBottom "0.5em")
      rule ".navbar-header .navbar-brand"
-          (do color "#d1cddc"
+          (do color "#fff"
               fontSize "inherit"
               fontWeight "bold"
               rule ".logo"
                    (do marginRight "0.5em"
+                       color "#fff"
                        fontFamily "haskell"
                        fontWeight "normal"))
      rule ".navbar-header .navbar-brand:hover"
@@ -72,7 +73,7 @@ navbar =
      rule ".navbar-default .navbar-nav > li > a"
           theme
   where theme =
-          do color "#ffffff !important"
+          do color "#d1cddc !important"
              backgroundColor "inherit"
 
 breadcrumb =

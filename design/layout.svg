@@ -423,15 +423,6 @@
          offset="1"
          id="stop3628" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4426-1-2">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.4552154"
-         id="feGaussianBlur4428-1-4" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3924-0-1-0-7-0-6">
@@ -468,19 +459,6 @@
          id="path3955-1-6-8-1-2-5-9-7"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10518"
-       x="-0.086902373"
-       width="1.1738048"
-       y="-0.12288539"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10520" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3854-8-0-29-50-32-2-7">
@@ -490,19 +468,6 @@
          id="path3856-8-7-4-6-02-3-3"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10514"
-       x="-0.08690238"
-       width="1.1738048"
-       y="-0.12288539"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10516" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient6027-36-6-2"
@@ -532,19 +497,6 @@
          id="path3926-1-2-6-1-4-6"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10510"
-       x="-0.08690238"
-       width="1.1738048"
-       y="-0.1228854"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10512" />
-    </filter>
     <linearGradient
        id="linearGradient3655">
       <stop
@@ -556,32 +508,6 @@
          offset="1"
          id="stop3659" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10506"
-       x="-0.011305742"
-       width="1.0226115"
-       y="-0.26734021"
-       height="1.5346804">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.532252"
-         id="feGaussianBlur10508" />
-    </filter>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10502"
-       x="-0.086531527"
-       width="1.1730632"
-       y="-0.12220326"
-       height="1.2444065">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="12.488041"
-         id="feGaussianBlur10504" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3924-0-1-0-7-0-7-2">
@@ -609,19 +535,6 @@
          id="path3955-1-6-8-1-7-6-1-2-3"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10498"
-       x="-0.037203819"
-       width="1.0744076"
-       y="-0.1554617"
-       height="1.3109235">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.532252"
-         id="feGaussianBlur10500" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient9951"
@@ -741,15 +654,6 @@
          offset="1"
          id="stop4190" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4426-1-2-0">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.4552154"
-         id="feGaussianBlur4428-1-4-0" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3924-0-1-0-7-0-6-0">
@@ -786,19 +690,6 @@
          id="path3955-1-6-8-1-2-5-9-7-8"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10518-8"
-       x="-0.086902373"
-       width="1.1738048"
-       y="-0.12288539"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10520-9" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3854-8-0-29-50-32-2-7-8">
@@ -808,19 +699,6 @@
          id="path3856-8-7-4-6-02-3-3-2"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10514-8"
-       x="-0.08690238"
-       width="1.1738048"
-       y="-0.12288539"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10516-2" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient6027-36-6-2-3"
@@ -850,19 +728,6 @@
          id="path3926-1-2-6-1-4-6-3"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10510-3"
-       x="-0.08690238"
-       width="1.1738048"
-       y="-0.1228854"
-       height="1.2457708">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="21.38387"
-         id="feGaussianBlur10512-7" />
-    </filter>
     <linearGradient
        inkscape:collect="always"
        xlink:href="#linearGradient6027-36-6-2-3"
@@ -883,19 +748,6 @@
          offset="1"
          id="stop4221" />
     </linearGradient>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10502-0"
-       x="-0.086531527"
-       width="1.1730632"
-       y="-0.12220326"
-       height="1.2444065">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="12.488041"
-         id="feGaussianBlur10504-1" />
-    </filter>
     <clipPath
        clipPathUnits="userSpaceOnUse"
        id="clipPath3924-0-1-0-7-0-7-2-3">
@@ -923,35 +775,6 @@
          id="path3955-1-6-8-1-7-6-1-2-3-8"
          inkscape:connector-curvature="0" />
     </clipPath>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter10498-9"
-       x="-0.037203819"
-       width="1.0744076"
-       y="-0.1554617"
-       height="1.3109235">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.532252"
-         id="feGaussianBlur10500-6" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter5475">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="4.005"
-         id="feGaussianBlur5477" />
-    </filter>
-    <filter
-       inkscape:collect="always"
-       id="filter5518">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="23.43"
-         id="feGaussianBlur5520" />
-    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -961,8 +784,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="1"
-     inkscape:cx="975.57519"
-     inkscape:cy="596.89648"
+     inkscape:cx="962.57519"
+     inkscape:cy="599.89648"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -998,7 +821,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -1013,15 +836,7 @@
        height="972"
        width="630"
        id="rect5473"
-       style="opacity:1;color:#000000;fill:#f7f7f7;fill-opacity:0.98039215999999996;fill-rule:nonzero;stroke:none;stroke-width:0.79500002000000003;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
-    <rect
-       style="opacity:0.03283584;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79500002;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter5518);enable-background:accumulate"
-       id="rect5490"
-       width="1371"
-       height="972"
-       x="-1372"
-       y="-58.637821"
-       transform="matrix(-0.90967088,0,0,1,129.01094,0)" />
+       style="opacity:1;color:#000000;fill:#f7f7f7;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79500002000000003;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate" />
     <rect
        transform="scale(-1,1)"
        y="-58.637821"
@@ -1156,7 +971,7 @@
        height="136.50854"
        width="1998.9641"
        id="rect4974-9"
-       style="color:#000000;fill:#262626;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79500002000000003;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
+       style="color:#000000;fill:#474747;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.79500002000000003;marker:none;visibility:visible;display:inline;overflow:visible;enable-background:accumulate"
        rx="0"
        ry="0" />
     <text
@@ -1188,7 +1003,7 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot5316"
-       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sawasdee;-inkscape-font-specification:Sawasdee Bold"
+       style="font-size:40px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#6e618d;fill-opacity:1;stroke:none;font-family:Sawasdee;-inkscape-font-specification:Sawasdee Bold"
        transform="translate(0,-137.63782)"><flowRegion
          id="flowRegion5318"><rect
            id="rect5320"
@@ -1196,7 +1011,7 @@
            height="67"
            x="206"
            y="169"
-           style="font-weight:bold;-inkscape-font-specification:Sawasdee Bold" /></flowRegion><flowPara
+           style="font-weight:bold;-inkscape-font-specification:Sawasdee Bold;fill:#6e618d;fill-opacity:1" /></flowRegion><flowPara
          id="flowPara5322">Haskell Platform</flowPara></flowRoot>    <flowRoot
        xml:space="preserve"
        id="flowRoot5324"
