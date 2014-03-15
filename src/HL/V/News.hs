@@ -9,15 +9,14 @@ import HL.V
 import HL.V.Template
 
 -- | News view.
-newsV :: Blaze App
-newsV =
+newsV :: Html -> Blaze App
+newsV inner =
   template
     [NewsR]
     "News"
     (\_ ->
        container
-         (row
-            (span12
-               (do h1 [] "News"
-                   p []
-                     "Insert news here."))))
+         (do row
+               (span12
+                  (do h1 [] "News"))
+             inner))

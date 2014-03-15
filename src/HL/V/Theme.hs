@@ -17,6 +17,7 @@ theme =
      navbar
      footer
      codes
+     news
 
 main =
   do rule "html"
@@ -102,3 +103,9 @@ codes =
               color "#366354")
      rule "pre"
           (do fontSize "14px")
+
+news =
+  do rule ".container > .row"
+          (maxWidth "none")
+     rule ".span6"
+          (paddingLeft "0")

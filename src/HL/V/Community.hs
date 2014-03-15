@@ -24,10 +24,11 @@ communityV =
                      \and around the world!"
                    h2 [] "Online Communities"
                    p [] "Haskellers are active on a number of online areas, but the most busy are below:"
-                   ul [] (list url)
+                   ul [] (items url)
                    h2 [] ""))))
 
-list url =
+items :: (Route App -> AttributeValue) -> Html
+items url =
   do li [] (a [href (url MailingListsR)] "The Haskell mailing lists")
      li [] (a [href (url IrcR)] "IRC (online chat)")
      li [] (a [href "http://stackoverflow.com/questions/tagged?tagnames=haskell"] "StackOverflow")

@@ -95,6 +95,8 @@ bread url crumbs =
                li [] (a [href (url route)]
                         (toHtml (fromRoute route)))))
 
+-- | Generate a human-readable string from a route.
+fromRoute :: Route App -> Text
 fromRoute r =
   case r of
     CommunityR     -> "Community"
