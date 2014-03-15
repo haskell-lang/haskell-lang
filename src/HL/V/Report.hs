@@ -10,7 +10,7 @@ import HL.V.Template
 
 -- | Report view.
 reportV :: Int -> FilePath -> Html -> Blaze App
-reportV year page inner =
+reportV year _ inner =
   template
     [DocumentationR
     ,ReportHomeR year]
