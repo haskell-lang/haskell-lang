@@ -14,11 +14,11 @@ import           System.FilePath
 import           Text.Markdown
 
 -- | Get the HTML for the given markdown static file.
-getMarkdown :: FilePath -> C Html
+getMarkdown :: FilePath -> IO Html
 getMarkdown name =
-  do exists <- io (doesFileExist fp)
+  do exists <- doesFileExist fp
      if exists
-        then do text <- io (LT.readFile fp)
+        then do text <- LT.readFile fp
                 let !html = markdown def text
                 return html
         else throw (MarkdownFileUnavailable name)

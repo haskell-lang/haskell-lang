@@ -13,7 +13,7 @@ import HL.V.Template
 documentationV :: Blaze App
 documentationV =
   template
-    [(DocumentationR,"Documentation")]
+    [DocumentationR]
     "Documentation"
     (\url ->
        container
@@ -35,7 +35,7 @@ report url =
   do h2 [] "Language Report"
      p []
        (do "The Haskell 2010 language report is available online "
-           a [href (url (ReportR 2010))]
+           a [href (url (ReportHomeR 2010))]
              "here"
            ".")
      p []

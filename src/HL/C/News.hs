@@ -11,5 +11,5 @@ import HL.V.News
 -- | News controller.
 getNewsR :: C Html
 getNewsR =
-  do html <- getHaskellNews
+  do html <- io getHaskellNews
      blaze (newsV html)

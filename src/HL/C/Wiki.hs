@@ -21,5 +21,5 @@ getWikiHomeR =
 getWikiR :: Text -> C Html
 getWikiR name =
   do url <- getUrlRender
-     result <- getWikiPage name
+     result <- io (getWikiPage name)
      blaze (wikiV url result)

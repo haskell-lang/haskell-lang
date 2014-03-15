@@ -4,10 +4,10 @@
 
 module HL.C.Documentation where
 
-import HL.C.Markdown
 import HL.C
+import HL.V.Documentation
 
 -- | Documentation controller.
 getDocumentationR :: C Html
 getDocumentationR =
-  markdownPage [DocumentationR] "Documentation" "documentation.md"
+  blaze documentationV

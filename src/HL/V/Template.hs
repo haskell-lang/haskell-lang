@@ -11,6 +11,7 @@ import           HL.V hiding (item)
 import qualified Blaze.Elements as E
 import           Data.Maybe
 import           Data.Monoid
+import           Data.Text (pack)
 
 -- | Render a template.
 template
@@ -110,5 +111,6 @@ fromRoute r =
     StaticR{}      -> "Static"
     DownloadsR     -> "Downloads"
     WikiR t        -> "Wiki: " <> t
-    ReportR{}      -> "Report"
+    ReportR i _    -> "Report " <> pack (show i)
+    ReportHomeR{}  -> "Report"
     WikiHomeR{}    -> "Wiki"

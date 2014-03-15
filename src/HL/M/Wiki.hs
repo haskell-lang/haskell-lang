@@ -26,7 +26,7 @@ import Text.XML.Cursor
 
 -- | Get the MediaWiki markup of a wiki page and then convert it to
 -- HTML.
-getWikiPage :: Text -> C (Either Text (Text,Pandoc))
+getWikiPage :: Text -> IO (Either Text (Text,Pandoc))
 getWikiPage article =
   do request <- parseUrl ("http://www.haskell.org/haskellwiki/Special:Export/" <> unpack article)
      withManager $ \manager -> do

@@ -11,5 +11,5 @@ import           HL.V.Markdown
 -- | Render a simple markdown page.
 markdownPage :: [Route App] -> Text -> FilePath -> C Html
 markdownPage crumbs t name =
-  do content <- getMarkdown name
+  do content <- io (getMarkdown name)
      blaze (markdownV crumbs t content)

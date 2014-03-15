@@ -9,13 +9,14 @@ import HL.V
 import HL.V.Template
 
 -- | Report view.
-reportV :: Blaze App
-reportV =
+reportV :: Int -> FilePath -> Html -> Blaze App
+reportV year page inner =
   template
-    [ReportR 2010]
+    [DocumentationR
+    ,ReportR year page]
     "Report"
     (\_ ->
        container
          (row
             (span12
-               (do p [] "Insert report here."))))
+               inner)))
