@@ -5,7 +5,7 @@
 
 module HL.V.Community where
 
-import HL.V
+import HL.V hiding (list)
 import HL.V.Template
 
 -- | Community view.
@@ -22,9 +22,15 @@ communityV =
                    p []
                      "The Haskell community is spread out online across several mediums \
                      \and around the world!"
-                   ul []
-                      (do li [] (a [href (url MailingListsR)] "The Haskell mailing lists")
-                          li [] "StackOverflow"
-                          li [] "G+"
-                          li [] "Reddit"
-                          li [] "The Wiki")))))
+                   h2 [] "Online Communities"
+                   p [] "Haskellers are active on a number of online areas, but the most busy are below:"
+                   ul [] (list url)
+                   h2 [] ""))))
+
+list url =
+  do li [] (a [href (url MailingListsR)] "The Haskell mailing lists")
+     li [] (a [href (url IrcR)] "IRC (online chat)")
+     li [] (a [href "http://stackoverflow.com/questions/tagged?tagnames=haskell"] "StackOverflow")
+     li [] (a [href "https://plus.google.com/communities/104818126031270146189"] "Google+ community")
+     li [] (a [href "http://www.reddit.com/r/haskell"] "Reddit")
+     li [] (a [href "http://www.haskell.org/haskellwiki/Haskell"] "Wiki")

@@ -66,13 +66,15 @@ navigation cur url =
     items =
       div [class_ "collapse navbar-collapse"]
           (ul [class_ "nav navbar-nav"]
-              (mapM_ (uncurry item)
-                     [(DownloadsR,"Downloads")
-                     ,(CommunityR,"Community")
-                     ,(DocumentationR,"Documentation")
-                     ,(NewsR,"News")
-                     ,(WikiHomeR,"Wiki")]))
-      where item route t = li theclass (a [href (url route)] t)
+              (mapM_ item
+                     [DownloadsR
+                     ,CommunityR
+                     ,DocumentationR
+                     ,NewsR]))
+      where item route =
+              li theclass
+                 (a [href (url route)]
+                    (toHtml (fromRoute route)))
               where theclass
                       | Just route == cur = [class_ "active"]
                       | otherwise = []
@@ -92,17 +94,19 @@ bread url crumbs =
             (\route ->
                li [] (a [href (url route)]
                         (toHtml (fromRoute route)))))
-  where fromRoute r =
-          case r of
-            CommunityR     -> "Community"
-            DocumentationR -> "Documentation"
-            ThemeR         -> "Theme"
-            HomeR          -> "Home"
-            ReloadR        -> "Reload"
-            MailingListsR  -> "Mailing Lists"
-            NewsR          -> "News"
-            StaticR{}      -> "Static"
-            DownloadsR     -> "Downloads"
-            WikiR t        -> "Wiki: " <> t
-            ReportR{}      -> "Report"
-            WikiHomeR{}    -> "Wiki"
+
+fromRoute r =
+  case r of
+    CommunityR     -> "Community"
+    IrcR           -> "IRC"
+    DocumentationR -> "Documentation"
+    ThemeR         -> "Theme"
+    HomeR          -> "Home"
+    ReloadR        -> "Reload"
+    MailingListsR  -> "Mailing Lists"
+    NewsR          -> "News"
+    StaticR{}      -> "Static"
+    DownloadsR     -> "Downloads"
+    WikiR t        -> "Wiki: " <> t
+    ReportR{}      -> "Report"
+    WikiHomeR{}    -> "Wiki"
