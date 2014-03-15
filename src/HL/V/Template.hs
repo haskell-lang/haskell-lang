@@ -112,5 +112,5 @@ fromRoute r =
     DownloadsR     -> "Downloads"
     WikiR t        -> "Wiki: " <> t
     ReportR i _    -> "Report " <> pack (show i)
-    ReportHomeR{}  -> "Report"
+    ReportHomeR i  -> "Report " <> pack (show i)
     WikiHomeR{}    -> "Wiki"

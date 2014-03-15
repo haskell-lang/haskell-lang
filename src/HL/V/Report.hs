@@ -13,7 +13,7 @@ reportV :: Int -> FilePath -> Html -> Blaze App
 reportV year page inner =
   template
     [DocumentationR
-    ,ReportR year page]
+    ,ReportHomeR year]
     "Report"
     (\_ ->
        container
