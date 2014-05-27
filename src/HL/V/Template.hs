@@ -22,7 +22,7 @@ template
 template crumbs ptitle inner url =
   docTypeHtml
     (do head []
-             (do headtitle (toHtml ptitle)
+             (do title (toHtml ptitle)
                  meta [charset "utf-8"]
                  meta [httpEquiv "X-UA-Compatible",content "IE edge"]
                  meta [name "viewport",content "width=device-width, initial-scale=1"]
@@ -32,7 +32,7 @@ template crumbs ptitle inner url =
                  styles [StaticR css_bootstrap_min_css
                         ,StaticR css_haskell_font_css
                         ,StaticR css_hscolour_css
-                        ,ThemeR])
+                        ,StaticR css_hl_css])
         body []
              (do div [class_ "wrap"]
                      (do navigation (listToMaybe crumbs) url
@@ -103,7 +103,6 @@ fromRoute r =
     CommunityR     -> "Community"
     IrcR           -> "IRC"
     DocumentationR -> "Documentation"
-    ThemeR         -> "Theme"
     HomeR          -> "Home"
     ReloadR        -> "Reload"
     MailingListsR  -> "Mailing Lists"

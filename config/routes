@@ -1,5 +1,4 @@
 /static StaticR Static appStatic
-/theme.css ThemeR GET
 / HomeR GET
 /reload ReloadR GET
 /downloads DownloadsR GET

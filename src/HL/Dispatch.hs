@@ -12,7 +12,6 @@ import HL.C.Home
 import HL.C.News
 import HL.C.Reload
 import HL.C.Report
-import HL.C.Theme
 import HL.C.Wiki
 import HL.C.Irc
 import HL.C.MailingLists
