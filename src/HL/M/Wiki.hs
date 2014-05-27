@@ -29,13 +29,14 @@ import Text.XML.Cursor
 getWikiPage :: Text -> IO (Either Text (Text,Pandoc))
 getWikiPage article =
   do request <- parseUrl ("http://www.haskell.org/haskellwiki/Special:Export/" <> unpack article)
-     withManager $ \manager -> do
-       response <- http request manager
-       doc <- catch (fmap Just (responseBody response $$+- sinkDoc def))
-                    (\(_::UnresolvedEntityException) -> return Nothing)
-       case doc >>= parse of
-         Nothing -> return (Left "Unable to parse XML from haskell.org.")
-         Just (title,pan) -> return (Right (title,pan))
+     withManager
+       (\manager ->
+          do response <- http request manager
+             doc <- catch (fmap Just (responseBody response $$+- sinkDoc def))
+                          (\(_::UnresolvedEntityException) -> return Nothing)
+             case doc >>= parse of
+               Nothing -> return (Left "Unable to parse XML from haskell.org.")
+               Just (title,pan) -> return (Right (title,pan)))
   where
     parse doc =
       do let cursor = fromDocument doc

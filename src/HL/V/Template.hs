@@ -93,8 +93,9 @@ bread url crumbs =
   ol [class_ "breadcrumb"]
      (forM_ crumbs
             (\route ->
-               li [] (a [href (url route)]
-                        (toHtml (fromRoute route)))))
+               li []
+                  (a [href (url route)]
+                     (toHtml (fromRoute route)))))
 
 -- | Generate a human-readable string from a route.
 fromRoute :: Route App -> Text

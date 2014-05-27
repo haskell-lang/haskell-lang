@@ -1,4 +1,4 @@
--- | Blaze without attribute operators
+-- | Blaze without attribute operators.
 
 module Blaze.Senza where
 
