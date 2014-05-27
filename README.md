@@ -55,3 +55,14 @@ If you use Emacs, you can just bind it to a key:
 ```
 
 Just hit f12 to recompile and restart.
+
+## Architecture
+
+It uses Yesod and an MVC organization.
+
+* HL.M.* -- [models](https://github.com/chrisdone/hl/tree/master/src/HL/M)
+* HL.V.* -- [views](https://github.com/chrisdone/hl/tree/master/src/HL/V)
+* HL.C.* -- [controllers](https://github.com/chrisdone/hl/tree/master/src/HL/C)
+
+Templates are written in [senza](https://github.com/chrisdone/senza),
+a convenience wrapper to blaze-html. There is presently no database.
