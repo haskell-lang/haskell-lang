@@ -20,7 +20,7 @@ getMarkdown :: FilePath -> IO Html
 getMarkdown name =
   do exists <- doesFileExist fp
      if exists
-        then do text <- fmap L.toLazy (ST.readFile fp)
+        then do text <- fmap L.fromStrict (ST.readFile fp)
                 let !html = markdown def text
                 return html
         else throw (MarkdownFileUnavailable name)
