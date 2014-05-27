@@ -81,11 +81,11 @@ navigation cur url =
                       | otherwise = []
     brand =
       div [class_ "navbar-header"]
-           (do a [class_ "navbar-brand"
-                 ,href (url HomeR)]
-                 (do span [class_ "logo"]
-                          "\xe000"
-                     "Haskell"))
+          (do a [class_ "navbar-brand"
+                ,href (url HomeR)]
+                (do span [class_ "logo"]
+                         "\xe000"
+                    "Haskell"))
 
 -- | Breadcrumb.
 bread :: (Route App -> E.AttributeValue) -> [Route App] -> Html
