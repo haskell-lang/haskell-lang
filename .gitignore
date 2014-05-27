@@ -10,3 +10,4 @@ tags
 client_session_key.aes
 .cabal-sandbox
 hl.tar.gz
+.hsenv*
