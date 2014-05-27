@@ -22,7 +22,7 @@ template
 template crumbs ptitle inner url =
   docTypeHtml
     (do head []
-             (do title (toHtml ptitle)
+             (do headtitle (toHtml ptitle)
                  meta [charset "utf-8"]
                  meta [httpEquiv "X-UA-Compatible",content "IE edge"]
                  meta [name "viewport",content "width=device-width, initial-scale=1"]
