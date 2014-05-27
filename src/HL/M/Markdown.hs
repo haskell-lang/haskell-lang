@@ -8,6 +8,8 @@ import           HL.C
 import           HL.Types
 
 import           Control.Exception
+import qualified Data.Text.IO      as ST
+import qualified Data.Text.Lazy    as L
 import qualified Data.Text.Lazy.IO as LT
 import           System.Directory
 import           System.FilePath
@@ -18,7 +20,7 @@ getMarkdown :: FilePath -> IO Html
 getMarkdown name =
   do exists <- doesFileExist fp
      if exists
-        then do text <- LT.readFile fp
+        then do text <- fmap L.toLazy (ST.readFile fp)
                 let !html = markdown def text
                 return html
         else throw (MarkdownFileUnavailable name)
