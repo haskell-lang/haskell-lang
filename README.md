@@ -51,7 +51,8 @@ Running from inside GHCi:
     > :l DevelMain
     > DevelMain.update
 
-Run this every time you want to restart.
+Run this every time you want to update the web handler in-place, as in
+[this demo](https://github.com/chrisdone/ghci-reload-demo).
 
 If you use Emacs, you can just bind it to a key:
 
