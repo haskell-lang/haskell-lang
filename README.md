@@ -31,6 +31,13 @@ Install project:
 
     $ cabal install . submodules/senza
 
+
+**OR** just run:
+
+    $ sh scripts/pull-build
+
+To do the above cabal update, submodule, install, etc.
+
 Done!
 
 ## Running
