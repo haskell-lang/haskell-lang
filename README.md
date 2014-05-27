@@ -3,7 +3,7 @@ haskell-lang
 
 Haskell web site.
 
-### Building
+## Building
 
 Clone the repo:
 
@@ -66,3 +66,8 @@ It uses Yesod and an MVC organization.
 
 Templates are written in [senza](https://github.com/chrisdone/senza),
 a convenience wrapper to blaze-html. There is presently no database.
+
+## Style
+
+I use [this style](https://github.com/chrisdone/haskell-style-guide)
+for code.
