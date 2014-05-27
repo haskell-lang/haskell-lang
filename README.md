@@ -19,7 +19,7 @@ Get the right packakge set:
 
 Add the following to your `.hsenv/cabal/config`, replacing the Hackage reference:
 
-   remote-repo: stackage:http://www.stackage.org/stackage/1ba546f8f281c02d135ec3babd86516f726b4453
+    remote-repo: stackage:http://www.stackage.org/stackage/1ba546f8f281c02d135ec3babd86516f726b4453
 
 Update with Stackage packages and grab submodules:
 
