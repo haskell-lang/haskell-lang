@@ -1,0 +1,112 @@
+html {
+  position:relative;
+  min-height:100%;
+}
+
+body {
+  background:#fff;
+  font-family:Open Sans;
+  font-size:13px;
+  margin:0 0 4em;
+  padding:0;
+}
+
+.wrap {
+  background:#fff;
+  padding-bottom:2em;
+}
+
+p,ul,li {
+  font-size:15px;
+}
+
+h1 {
+  margin-top:.1em;
+  margin-left:0;
+  text-indent:-.05em;
+}
+
+h2 {
+  color:#6e618d;
+}
+
+.container > .row {
+  margin-left:0;
+  margin-right:0;
+  max-width:none;
+}
+
+.breadcrumb {
+  margin-left:0;
+  padding-left:0;
+  background-color:inherit;
+  margin-bottom:0;
+}
+
+.navbar {
+  background-color:#352f44;
+  border-radius:0;
+  border:0;
+  margin-bottom:.5em;
+}
+
+.navbar-header .navbar-brand {
+  color:#fff;
+  font-size:inherit;
+  font-weight:700;
+}
+
+.navbar-header .navbar-brand .logo {
+  margin-right:.5em;
+  color:#fff;
+  font-family:haskell;
+  font-weight:400;
+}
+
+.navbar-header .navbar-brand:hover {
+  color:#fff;
+}
+
+.navbar-default .navbar-nav > .active > a {
+  color:#d1cddc!important;
+  background-color:#312b3f;
+  border-bottom:.3em solid #465787;
+}
+
+.navbar-default .navbar-nav > .active > a:hover {
+  color:#d1cddc!important;
+  background-color:#312b3f;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color:#d1cddc!important;
+  background-color:inherit;
+}
+
+.footer {
+  background-color:#323232;
+  color:#999;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:4em;
+  line-height:2em;
+}
+
+.footer p {
+  margin-top:1em;
+  font-size:13px;
+}
+
+code {
+  background-color:#f5f5f5;
+  color:#366354;
+}
+
+pre {
+  font-size:14px;
+}
+
+.span6 {
+  padding-left:0;
+}
