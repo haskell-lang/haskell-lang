@@ -9,10 +9,10 @@ Clone the repo:
 
     $ git clone git@github.com:chrisdone/hl.git
 
-You need this GHC version:
+You need one of these GHC versions:
 
-    $ ghc --version
-    The Glorious Glasgow Haskell Compilation System, version 7.6.2
+* GHC 7.6
+* GHC 7.8
 
 Create an [hsenv](http://hackage.haskell.org/package/hsenv):
 
@@ -20,24 +20,17 @@ Create an [hsenv](http://hackage.haskell.org/package/hsenv):
     $ hsenv
     $ source .hsenv/bin/activate
 
-Get the right packakge set:
+You need the right package set. Add the following to your
+`.hsenv/cabal/config`, replacing the Hackage reference:
 
-Add the following to your `.hsenv/cabal/config`, replacing the Hackage reference:
+* If you have GHC 7.6:
 
-    remote-repo: stackage:http://www.stackage.org/stackage/1ba546f8f281c02d135ec3babd86516f726b4453
+        remote-repo: stackage:http://www.stackage.org/stackage/1ba546f8f281c02d135ec3babd86516f726b4453
+* If you have GHC 7.8:
 
-Update with Stackage packages and grab submodules:
+        remote-repo: stackage:http://www.stackage.org/stackage/160b97ce7459820d4de720d6a867b85297ab4351
 
-    $ cabal update
-    $ git submodule init
-    $ git submodule update
-
-Install project:
-
-    $ cabal install . submodules/senza
-
-
-**OR** just run:
+Now just run:
 
     $ sh scripts/pull-build
 
