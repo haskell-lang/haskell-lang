@@ -9,6 +9,11 @@ Clone the repo:
 
     $ git clone git@github.com:chrisdone/hl.git
 
+You need this GHC version:
+
+    $ ghc --version
+    The Glorious Glasgow Haskell Compilation System, version 7.6.2
+
 Create an [hsenv](http://hackage.haskell.org/package/hsenv):
 
     $ cd hl
