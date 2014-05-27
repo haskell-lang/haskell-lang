@@ -9,7 +9,7 @@ Clone the repo:
 
     $ git clone git@github.com:chrisdone/hl.git
 
-Create an hsenv:
+Create an [hsenv](http://hackage.haskell.org/package/hsenv):
 
     $ cd hl
     $ hsenv
