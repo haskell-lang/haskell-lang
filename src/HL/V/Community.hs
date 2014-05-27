@@ -9,7 +9,7 @@ import HL.V hiding (list)
 import HL.V.Template
 
 -- | Community view.
-communityV :: Blaze App
+communityV :: FromSenza App
 communityV =
   template
     [CommunityR]

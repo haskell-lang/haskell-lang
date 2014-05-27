@@ -10,7 +10,7 @@ import HL.V
 import HL.V.Template
 
 -- | Documentation view.
-documentationV :: Blaze App
+documentationV :: FromSenza App
 documentationV =
   template
     [DocumentationR]

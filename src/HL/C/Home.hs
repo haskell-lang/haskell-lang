@@ -10,4 +10,4 @@ import HL.C
 -- | Home controller.
 getHomeR :: C Html
 getHomeR =
-  markdownPage [HomeR] "Home" "home.md"
+  markdownPage [] "Home" "home.md"

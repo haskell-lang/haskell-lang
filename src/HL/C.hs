@@ -13,7 +13,7 @@ import HL.Foundation as C (Route(..),App(..))
 import Control.Monad.Extra
 import Data.Text as C (Text)
 import Yesod as C
-import Yesod.Blaze as C
+import Yesod.Senza as C
 
 -- | Controller type.
 type C = Handler

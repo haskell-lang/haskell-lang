@@ -8,7 +8,7 @@ import HL.V
 import HL.V.Template
 
 -- | Render a simple page.
-markdownV :: [Route App] -> Text -> Html -> Blaze App
+markdownV :: [Route App] -> Text -> Html -> FromSenza App
 markdownV routes t inner =
   template
     routes

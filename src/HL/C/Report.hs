@@ -10,7 +10,7 @@ import HL.M.Report
 getReportR :: Int -> FilePath -> C Html
 getReportR year page =
   do content <- io (getReportPage year page)
-     blaze (reportV year page content)
+     senza (reportV year page content)
 
 -- | Default page to go to for the given year.
 getReportHomeR :: Int -> C Html

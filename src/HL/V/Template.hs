@@ -6,19 +6,18 @@
 
 module HL.V.Template where
 
-import           HL.V hiding (item)
+import HL.V hiding (item)
 
-import qualified Blaze.Elements as E
-import           Data.Maybe
-import           Data.Monoid
-import           Data.Text (pack)
+import Data.Maybe
+import Data.Monoid
+import Data.Text (pack)
 
 -- | Render a template.
 template
   :: [Route App]
   -> Text
   -> ((Route App -> AttributeValue) -> Html)
-  -> Blaze App
+  -> FromSenza App
 template crumbs ptitle inner url =
   docTypeHtml
     (do head []
@@ -57,7 +56,7 @@ template crumbs ptitle inner url =
                     ,href (url route)])
 
 -- | Main navigation.
-navigation :: Maybe (Route App) -> Blaze App
+navigation :: Maybe (Route App) -> FromSenza App
 navigation cur url =
   nav [class_ "navbar navbar-default"]
       (div [class_ "container"]
@@ -88,7 +87,7 @@ navigation cur url =
                     "Haskell"))
 
 -- | Breadcrumb.
-bread :: (Route App -> E.AttributeValue) -> [Route App] -> Html
+bread :: (Route App -> AttributeValue) -> [Route App] -> Html
 bread url crumbs =
   ol [class_ "breadcrumb"]
      (forM_ crumbs

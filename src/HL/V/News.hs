@@ -9,7 +9,7 @@ import HL.V
 import HL.V.Template
 
 -- | News view.
-newsV :: Html -> Blaze App
+newsV :: Html -> FromSenza App
 newsV inner =
   template
     [NewsR]

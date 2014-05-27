@@ -19,7 +19,7 @@ import Text.Pandoc.Walk
 import Text.Pandoc.Writers.HTML
 
 -- | Wiki view.
-wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> Blaze App
+wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromSenza App
 wikiV urlr result =
   template
     ([WikiHomeR] ++

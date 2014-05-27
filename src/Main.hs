@@ -2,14 +2,12 @@
 
 module Main where
 
-import           HL.Foundation
-import           HL.Dispatch ()
+import HL.Dispatch ()
+import HL.Foundation
 
-import           Control.Concurrent.Chan
-import qualified Data.Text.Lazy.IO as L
-import           System.Directory
-import           Yesod
-import           Yesod.Static
+import Control.Concurrent.Chan
+import Yesod
+import Yesod.Static
 
 -- | Main entry point.
 main :: IO ()

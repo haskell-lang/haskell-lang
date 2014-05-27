@@ -22,4 +22,4 @@ getWikiR :: Text -> C Html
 getWikiR name =
   do url <- getUrlRender
      result <- io (getWikiPage name)
-     blaze (wikiV url result)
+     senza (wikiV url result)
