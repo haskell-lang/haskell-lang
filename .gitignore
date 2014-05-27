@@ -8,3 +8,5 @@ TAGS
 tags
 *.tag
 client_session_key.aes
+.cabal-sandbox
+hl.tar.gz
