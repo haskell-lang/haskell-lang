@@ -1,3 +1,5 @@
+* Arguments against haskell.org
+http://stackoverflow.com/questions/23848648/text-html-vs-blaze-html
 * What do all existing language sites have?
 ** A theme
 ** Logo
