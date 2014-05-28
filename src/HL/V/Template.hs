@@ -21,7 +21,7 @@ template
 template crumbs ptitle inner =
   skeleton
     ptitle
-    (\cur url -> return ())
+    (\_ _ -> return ())
     (\cur url ->
        div [class_ "template"]
            (do navigation True cur url
@@ -206,6 +206,8 @@ footer r =
             Nothing ->
               a [href "http://www.haskell.org/haskellwiki/"]
                 "Go to haskell.org wiki"
-            Just page ->
-              a [href (toValue ("http://www.haskell.org/haskellwiki/index.php?title=" <> page <> "&action=edit"))]
+            Just pn ->
+              a [href (toValue ("http://www.haskell.org/haskellwiki/index.php?title=" <>
+                                pn <>
+                                "&action=edit"))]
                 "Edit this page"
