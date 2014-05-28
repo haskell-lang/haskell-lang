@@ -18,6 +18,7 @@ communityV =
        container
          (row
             (span12
+               []
                (do h1 [] "Community"
                    p []
                      "The Haskell community is spread out online across several mediums \

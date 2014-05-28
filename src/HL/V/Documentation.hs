@@ -19,6 +19,7 @@ documentationV =
        container
          (row
             (span12
+               []
                (do h1 [] "Documentation"
                    online
                    report url))))

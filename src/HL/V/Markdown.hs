@@ -13,4 +13,4 @@ markdownV routes t inner =
   template
     routes
     t
-    (const (container (row (span12 inner))))
+    (const (container (row (span12 [] inner))))

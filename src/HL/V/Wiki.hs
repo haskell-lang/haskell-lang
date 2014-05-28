@@ -32,6 +32,7 @@ wikiV urlr result =
        container
          (row
             (span12
+               []
                (case result of
                   Left err ->
                     do h1 [] "Wiki page retrieval problem!"

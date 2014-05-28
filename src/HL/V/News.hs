@@ -18,5 +18,6 @@ newsV inner =
        container
          (do row
                (span12
+                  []
                   (do h1 [] "News"))
              inner))

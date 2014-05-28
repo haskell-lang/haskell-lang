@@ -18,5 +18,4 @@ reportV year _ inner =
     (\_ ->
        container
          (row
-            (span12
-               inner)))
+            (span12 [] inner)))
