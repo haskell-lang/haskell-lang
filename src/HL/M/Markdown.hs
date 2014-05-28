@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE BangPatterns #-}
 
 -- | Markdown files.
@@ -6,6 +7,8 @@ module HL.M.Markdown where
 
 import           HL.C
 import           HL.Types
+import           HL.V.Code
+
 
 import           Control.Exception
 import qualified Data.Text.IO as ST
@@ -20,7 +23,11 @@ getMarkdown name =
   do exists <- doesFileExist fp
      if exists
         then do text <- fmap L.fromStrict (ST.readFile fp)
-                let !html = markdown def text
+                let !html = markdown def { msBlockCodeRenderer = renderer } text
                 return html
         else throw (MarkdownFileUnavailable name)
   where fp = "static" </> "markdown" </> name
+        renderer lang (src,_) =
+          if lang == Just "haskell"
+             then haskellPre src
+             else toHtml src
