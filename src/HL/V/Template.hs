@@ -59,9 +59,7 @@ skeleton ptitle innerhead innerbody mroute url =
     bodyinner =
       do div [class_ "wrap"]
              (innerbody mroute url)
-         div [class_ "footer"]
-             (div [class_ "container"]
-                  (p [] (do "Copyright © 2014 haskell-lang.org")))
+         footer mroute
          scripts url
                  [js_jquery_js
                  ,js_bootstrap_min_js]
@@ -183,3 +181,31 @@ routeToSlug r =
 background :: (Route App -> AttributeValue) -> Route Static -> Attribute
 background url route =
   style ("background-image: url(" <> url (StaticR route) <> ")")
+
+-- | Footer across the whole site.
+footer :: Maybe (Route App) -> Senza
+footer r =
+  div [class_ "footer"]
+      (div [class_ "container"]
+           (p [] (do case r of
+                       Just (WikiR page) -> wikiLicense (Just page)
+                       Just (WikiHomeR{}) -> wikiLicense (Nothing :: Maybe Text)
+                       _ -> "Copyright © 2014 haskell-lang.org"
+                     "")))
+  where
+    wikiLicense page =
+      do span [class_ "item"]
+              wikiLink
+         span [class_ "item"]
+              (do "Wiki content is available under "
+                  a [href "http://www.haskell.org/haskellwiki/HaskellWiki:Copyrights"]
+                    "a simple permissive license.")
+      where
+        wikiLink =
+          case page of
+            Nothing ->
+              a [href "http://www.haskell.org/haskellwiki/"]
+                "Go to haskell.org wiki"
+            Just page ->
+              a [href (toValue ("http://www.haskell.org/haskellwiki/index.php?title=" <> page <> "&action=edit"))]
+                "Edit this page"

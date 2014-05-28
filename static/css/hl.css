@@ -49,6 +49,14 @@ h2 {
   font-size:13px;
 }
 
+.footer a {
+  color: #fff;
+}
+
+.footer .item + .item {
+  margin-left: 2em;
+}
+
 .logo {
   font-family:haskell;
   font-weight:400;
