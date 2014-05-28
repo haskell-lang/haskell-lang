@@ -11,6 +11,7 @@ import HL.V hiding (item)
 import Data.Maybe
 import Data.Monoid
 import Data.Text (pack)
+import Yesod.Static (Static)
 
 -- | Render a template.
 template
@@ -18,49 +19,73 @@ template
   -> Text
   -> ((Route App -> AttributeValue) -> Html)
   -> FromSenza App
-template crumbs ptitle inner url =
+template crumbs ptitle inner =
+  skeleton
+    ptitle
+    (\cur url ->
+       do navigation True cur url
+          container (bread url crumbs)
+          inner url)
+
+-- | Render the basic site skeleton.
+skeleton
+  :: Text
+  -> FromSenza App
+  -> FromSenza App
+skeleton ptitle inner mroute url =
   docTypeHtml
-    (do head []
-             (do headtitle (toHtml ptitle)
-                 meta [charset "utf-8"]
-                 meta [httpEquiv "X-UA-Compatible",content "IE edge"]
-                 meta [name "viewport",content "width=device-width, initial-scale=1"]
-                 link [rel "stylesheet"
-                      ,type_ "text/css"
-                      ,href "http://fonts.googleapis.com/css?family=Open+Sans"]
-                 styles [StaticR css_bootstrap_min_css
-                        ,StaticR css_haskell_font_css
-                        ,StaticR css_hscolour_css
-                        ,StaticR css_hl_css])
-        body []
-             (do div [class_ "wrap"]
-                     (do navigation (listToMaybe crumbs) url
-                         container (bread url crumbs)
-                         inner url)
-                 div [class_ "footer"]
-                     (div [class_ "container"]
-                          (p [] (do "Copyright © 2014 haskell-lang.org")))
-                 scripts [js_jquery_js
-                         ,js_jquery_cookie_js
-                         ,js_bootstrap_min_js
-                         ,js_warp_reload_js]))
+    (do head [] headinner
+        body (maybe []
+                    (\route -> [class_ (toValue ("page-" <> routeToSlug route))])
+                    mroute)
+             bodyinner)
   where
-    scripts =
-      mapM_ (\route ->
-               script [src (url (StaticR route))]
-                      (return ()))
-    styles =
-      mapM_ (\route ->
-               link [rel "stylesheet"
-                    ,type_ "text/css"
-                    ,href (url route)])
+    headinner =
+      do headtitle (toHtml ptitle)
+         meta [charset "utf-8"]
+         meta [httpEquiv "X-UA-Compatible",content "IE edge"]
+         meta [name "viewport",content "width=device-width, initial-scale=1"]
+         link [rel "stylesheet"
+              ,type_ "text/css"
+              ,href "http://fonts.googleapis.com/css?family=Open+Sans"]
+         styles url
+                [StaticR css_bootstrap_min_css
+                ,StaticR css_haskell_font_css
+                ,StaticR css_hscolour_css
+                ,StaticR css_hl_css]
+    bodyinner =
+      do div [class_ "wrap"]
+             (inner mroute url)
+         div [class_ "footer"]
+             (div [class_ "container"]
+                  (p [] (do "Copyright © 2014 haskell-lang.org")))
+         scripts url
+                 [js_jquery_js
+                 ,js_jquery_cookie_js
+                 ,js_bootstrap_min_js
+                 ,js_warp_reload_js]
+
+-- | Make a list of scripts.
+scripts :: (Route App -> AttributeValue) -> [Route Static] -> Senza
+scripts url =
+  mapM_ (\route ->
+           script [src (url (StaticR route))]
+                  (return ()))
+
+-- | Make a list of style links.
+styles :: (a -> AttributeValue) -> [a] -> Senza
+styles url =
+  mapM_ (\route ->
+           link [rel "stylesheet"
+                ,type_ "text/css"
+                ,href (url route)])
 
 -- | Main navigation.
-navigation :: Maybe (Route App) -> FromSenza App
-navigation cur url =
+navigation :: Bool -> FromSenza App
+navigation showBrand mroute url =
   nav [class_ "navbar navbar-default"]
       (div [class_ "container"]
-           (do brand
+           (do when showBrand brand
                items))
   where
     items =
@@ -74,17 +99,22 @@ navigation cur url =
       where item route =
               li theclass
                  (a [href (url route)]
-                    (toHtml (fromRoute route)))
+                    (toHtml (routeToHuman route)))
               where theclass
-                      | Just route == cur = [class_ "active"]
+                      | Just route == mroute = [class_ "active"]
                       | otherwise = []
     brand =
       div [class_ "navbar-header"]
           (do a [class_ "navbar-brand"
                 ,href (url HomeR)]
-                (do span [class_ "logo"]
-                         "\xe000"
+                (do logo
                     "Haskell"))
+
+-- | The logo character in the right font. Style it with an additional
+-- class or wrapper as you wish.
+logo =
+  span [class_ "logo"]
+       "\xe000"
 
 -- | Breadcrumb.
 bread :: (Route App -> AttributeValue) -> [Route App] -> Html
@@ -94,11 +124,11 @@ bread url crumbs =
             (\route ->
                li []
                   (a [href (url route)]
-                     (toHtml (fromRoute route)))))
+                     (toHtml (routeToHuman route)))))
 
 -- | Generate a human-readable string from a route.
-fromRoute :: Route App -> Text
-fromRoute r =
+routeToHuman :: Route App -> Text
+routeToHuman r =
   case r of
     CommunityR     -> "Community"
     IrcR           -> "IRC"
@@ -113,3 +143,21 @@ fromRoute r =
     ReportR i _    -> "Report " <> pack (show i)
     ReportHomeR i  -> "Report " <> pack (show i)
     WikiHomeR{}    -> "Wiki"
+
+-- | Generate a slug string from a route.
+routeToSlug :: Route App -> Text
+routeToSlug r =
+  case r of
+    CommunityR     -> "community"
+    IrcR           -> "irc"
+    DocumentationR -> "documentation"
+    HomeR          -> "home"
+    ReloadR        -> "reload"
+    MailingListsR  -> "mailing-lists"
+    NewsR          -> "news"
+    StaticR{}      -> "static"
+    DownloadsR     -> "downloads"
+    WikiR t        -> "wiki"
+    ReportR i _    -> "report"
+    ReportHomeR i  -> "report"
+    WikiHomeR{}    -> "wiki"

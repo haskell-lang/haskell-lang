@@ -10,6 +10,7 @@ import Yesod
 
 -- | A senza generator.
 type FromSenza a =
+  Maybe (Route a) ->
   (Route a -> AttributeValue) ->
   Senza
 
@@ -17,5 +18,6 @@ type FromSenza a =
 senza :: MonadHandler m => FromSenza (HandlerSite m) -> m Html
 senza cont =
   do render <- getUrlRender
+     route <- getCurrentRoute
      return
-       (cont (toValue . render))
+       (cont route (toValue . render))

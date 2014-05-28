@@ -59,6 +59,9 @@ h2 {
 .navbar-header .navbar-brand .logo {
   margin-right:.5em;
   color:#fff;
+}
+
+.logo {
   font-family:haskell;
   font-weight:400;
 }
@@ -107,6 +110,19 @@ pre {
   font-size:14px;
 }
 
-.span6 {
+.page-news .span6 {
   padding-left:0;
+}
+
+.landing-header {
+  height: 30em;
+  color: #fff;
+  background: #19111f; /* Old browsers */
+  background: -moz-linear-gradient(left, #19111f 0%, #2c1e37 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, right top, color-stop(0%,#19111f), color-stop(100%,#2c1e37)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(left, #19111f 0%,#2c1e37 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(left, #19111f 0%,#2c1e37 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(left, #19111f 0%,#2c1e37 100%); /* IE10+ */
+  background: linear-gradient(to right, #19111f 0%,#2c1e37 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#19111f', endColorstr='#2c1e37',GradientType=1 ); /* IE6-9 */
 }
