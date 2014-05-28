@@ -87,4 +87,5 @@ a convenience wrapper to blaze-html. There is presently no database.
 ## Style
 
 I use [this style](https://github.com/chrisdone/haskell-style-guide)
-for code.
+for code. You don't have to use this style, I can reformat patches as
+they come in.
