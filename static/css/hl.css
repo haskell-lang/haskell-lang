@@ -34,6 +34,31 @@ h2 {
   color:#6e618d;
 }
 
+.footer {
+  background-color:#323232;
+  color:#999;
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:4em;
+  line-height:2em;
+}
+
+.footer p {
+  margin-top:1em;
+  font-size:13px;
+}
+
+.logo {
+  font-family:haskell;
+  font-weight:400;
+}
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+   Navigation
+   */
+
 .navbar {
   background-color:#352f44;
   border-radius:0;
@@ -49,11 +74,6 @@ h2 {
 .navbar-header .navbar-brand .logo {
   margin-right:.5em;
   color:#fff;
-}
-
-.logo {
-  font-family:haskell;
-  font-weight:400;
 }
 
 .navbar-header .navbar-brand:hover {
@@ -76,19 +96,21 @@ h2 {
   background-color:inherit;
 }
 
-.footer {
-  background-color:#323232;
-  color:#999;
-  position:absolute;
-  bottom:0;
-  width:100%;
-  height:4em;
-  line-height:2em;
+.navbar a:hover {
+  color: #c3a6e0;
 }
 
-.footer p {
-  margin-top:1em;
-  font-size:13px;
+.navbar > div > .collapse {
+  display: block;
+  margin-left: -15px;
+}
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form {
+  border: 0;
+}
+
+.navbar-collapse .active > a {
+  border: 0 !important;
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
