@@ -57,7 +57,7 @@ Run this every time you want to update the web handler in-place, as in
 If you use Emacs, you can just bind it to a key:
 
 ``` lisp
-(define-key html-mode-map [f12] 'haskell-process-reload-devel-main))
+(define-key html-mode-map [f12] 'haskell-process-reload-devel-main)
 ```
 
 Just hit f12 to recompile and restart.
