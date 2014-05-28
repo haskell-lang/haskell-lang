@@ -10,7 +10,7 @@ import HL.C
 import Data.Text.Lazy.Encoding
 import Data.Text.Lazy (toStrict)
 import Network.HTTP.Conduit
-import Prelude hiding (readFile,catch)
+import Prelude hiding (readFile)
 
 getHaskellNews :: IO Html
 getHaskellNews =

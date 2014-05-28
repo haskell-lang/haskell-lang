@@ -21,7 +21,7 @@ main =
      ref <- newIORef app
      tid <- forkIO
               (runSettings
-                 (defaultSettings { settingsPort = 1990 })
+                 (setPort 1990 defaultSettings)
                  (\req ->
                     do handler <- readIORef ref
                        handler req))

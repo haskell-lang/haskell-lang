@@ -7,12 +7,13 @@
 module HL.V.Wiki where
 
 import HL.V
+import HL.V.Code
 import HL.V.Template
 
 import Data.List (isPrefixOf)
 import Data.Text (unpack,pack)
 import Language.Haskell.HsColour.CSS (hscolour)
-import Prelude hiding (readFile,catch)
+import Prelude hiding (readFile)
 import Text.Pandoc.Definition
 import Text.Pandoc.Options
 import Text.Pandoc.Walk
@@ -62,10 +63,5 @@ highlightBlock = walk codes
 highlightInline :: Pandoc -> Pandoc
 highlightInline = walk codes
   where codes (Code ("",["haskell"],[]) text) =
-          RawInline "html" (codeEl (stripCPre (stripPre (hscolour False text))))
+          RawInline "html" (preToCode (hscolour False text))
         codes x = x
-        stripPre ('<':'p':'r':'e':'>':xs) = xs
-        stripPre xs = xs
-        stripCPre (reverse -> ('<':'/':'p':'r':'e':'>':xs)) = reverse xs
-        stripCPre xs = xs
-        codeEl xs = "<code>" ++ xs ++ "</code>"

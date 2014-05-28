@@ -8,9 +8,8 @@ import           HL.C
 import           HL.Types
 
 import           Control.Exception
-import qualified Data.Text.IO      as ST
-import qualified Data.Text.Lazy    as L
-import qualified Data.Text.Lazy.IO as LT
+import qualified Data.Text.IO as ST
+import qualified Data.Text.Lazy as L
 import           System.Directory
 import           System.FilePath
 import           Text.Markdown

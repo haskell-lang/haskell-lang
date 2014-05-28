@@ -8,7 +8,6 @@ module HL.V.Template where
 
 import HL.V hiding (item)
 
-import Data.Maybe
 import Data.Monoid
 import Data.Text (pack)
 import Yesod.Static (Static)
@@ -23,9 +22,10 @@ template crumbs ptitle inner =
   skeleton
     ptitle
     (\cur url ->
-       do navigation True cur url
-          container (bread url crumbs)
-          inner url)
+       div [class_ "template"]
+           (do navigation True cur url
+               container (bread url crumbs)
+               inner url))
 
 -- | Render the basic site skeleton.
 skeleton
@@ -112,6 +112,7 @@ navigation showBrand mroute url =
 
 -- | The logo character in the right font. Style it with an additional
 -- class or wrapper as you wish.
+logo :: Senza
 logo =
   span [class_ "logo"]
        "\xe000"
@@ -157,7 +158,12 @@ routeToSlug r =
     NewsR          -> "news"
     StaticR{}      -> "static"
     DownloadsR     -> "downloads"
-    WikiR t        -> "wiki"
-    ReportR i _    -> "report"
-    ReportHomeR i  -> "report"
+    WikiR{}        -> "wiki"
+    ReportR{}      -> "report"
+    ReportHomeR{}  -> "report"
     WikiHomeR{}    -> "wiki"
+
+-- | Set the background image for an element.
+background :: (Route App -> AttributeValue) -> Route Static -> Attribute
+background url route =
+  style ("background-image: url(" <> url (StaticR route) <> ")")

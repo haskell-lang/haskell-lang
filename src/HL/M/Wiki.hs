@@ -16,7 +16,7 @@ import Data.Monoid
 import Data.Text (unpack)
 
 import Network.HTTP.Conduit
-import Prelude hiding (readFile,catch)
+import Prelude hiding (readFile)
 import Text.Pandoc.Definition
 import Text.Pandoc.Options
 import Text.Pandoc.Readers.MediaWiki
