@@ -14,6 +14,8 @@ homeV :: FromSenza App
 homeV =
   skeleton
     "Haskell Programming Language"
+    (\_ _ ->
+       linkcss "http://fonts.googleapis.com/css?family=Ubuntu:700")
     (\_ url ->
        do navigation False Nothing url
           header url

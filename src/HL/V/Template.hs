@@ -21,6 +21,7 @@ template
 template crumbs ptitle inner =
   skeleton
     ptitle
+    (\cur url -> return ())
     (\cur url ->
        div [class_ "template"]
            (do navigation True cur url
@@ -32,7 +33,8 @@ skeleton
   :: Text
   -> FromSenza App
   -> FromSenza App
-skeleton ptitle inner mroute url =
+  -> FromSenza App
+skeleton ptitle innerhead innerbody mroute url =
   docTypeHtml
     (do head [] headinner
         body (maybe []
@@ -45,17 +47,16 @@ skeleton ptitle inner mroute url =
          meta [charset "utf-8"]
          meta [httpEquiv "X-UA-Compatible",content "IE edge"]
          meta [name "viewport",content "width=device-width, initial-scale=1"]
-         link [rel "stylesheet"
-              ,type_ "text/css"
-              ,href "http://fonts.googleapis.com/css?family=Open+Sans"]
+         linkcss "http://fonts.googleapis.com/css?family=Open+Sans"
          styles url
                 [StaticR css_bootstrap_min_css
                 ,StaticR css_haskell_font_css
                 ,StaticR css_hscolour_css
                 ,StaticR css_hl_css]
+         innerhead mroute url
     bodyinner =
       do div [class_ "wrap"]
-             (inner mroute url)
+             (innerbody mroute url)
          div [class_ "footer"]
              (div [class_ "container"]
                   (p [] (do "Copyright © 2014 haskell-lang.org")))
@@ -76,9 +77,14 @@ scripts url =
 styles :: (a -> AttributeValue) -> [a] -> Senza
 styles url =
   mapM_ (\route ->
-           link [rel "stylesheet"
-                ,type_ "text/css"
-                ,href (url route)])
+           linkcss (url route))
+
+-- | A link to CSSxs
+linkcss :: AttributeValue -> Senza
+linkcss uri =
+  link [rel "stylesheet"
+       ,type_ "text/css"
+       ,href uri]
 
 -- | Main navigation.
 navigation :: Bool -> FromSenza App
