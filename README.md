@@ -3,7 +3,9 @@ haskell-lang
 
 Haskell web site.
 
-## I'm just here to edit a markdown page
+## Editing pages
+
+If you're just here to contribute a content change, read this section.
 
 All pages that are produced by markdown
 [are here](https://github.com/chrisdone/hl/tree/master/static/markdown).
