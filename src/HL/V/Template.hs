@@ -40,7 +40,9 @@ skeleton ptitle innerhead innerbody mroute url =
         body (maybe []
                     (\route -> [class_ (toValue ("page-" <> routeToSlug route))])
                     mroute)
-             bodyinner)
+             (do bodyinner
+                 analytics)
+             )
   where
     headinner =
       do headtitle (toHtml ptitle)
@@ -65,6 +67,16 @@ skeleton ptitle innerhead innerbody mroute url =
                  ,js_jquery_cookie_js
                  ,js_bootstrap_min_js
                  ,js_warp_reload_js]
+    -- TODO: pop this in a config file later.
+    analytics =
+      script []
+             "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\n\
+             \  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\n\
+             \  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)\n\
+             \  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');\n\
+             \\n\
+             \  ga('create', 'UA-51440536-1', 'haskell-lang.org');\n\
+             \  ga('send', 'pageview');"
 
 -- | Make a list of scripts.
 scripts :: (Route App -> AttributeValue) -> [Route Static] -> Senza
