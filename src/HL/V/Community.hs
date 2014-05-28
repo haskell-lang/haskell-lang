@@ -12,7 +12,7 @@ import HL.V.Template
 communityV :: FromSenza App
 communityV =
   template
-    [CommunityR]
+    []
     "Community"
     (\url ->
        container

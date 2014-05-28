@@ -12,7 +12,7 @@ import HL.V.Template
 newsV :: Html -> FromSenza App
 newsV inner =
   template
-    [NewsR]
+    []
     "News"
     (\_ ->
        container

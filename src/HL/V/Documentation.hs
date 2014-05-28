@@ -13,7 +13,7 @@ import HL.V.Template
 documentationV :: FromSenza App
 documentationV =
   template
-    [DocumentationR]
+    []
     "Documentation"
     (\url ->
        container
