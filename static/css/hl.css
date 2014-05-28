@@ -54,6 +54,10 @@ h2 {
   font-weight:400;
 }
 
+.span12 ul li + li {
+  margin-top: 0.5em;
+}
+
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Navigation
