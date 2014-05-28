@@ -190,9 +190,15 @@ footer r =
            (p [] (do case r of
                        Just (WikiR page) -> wikiLicense (Just page)
                        Just (WikiHomeR{}) -> wikiLicense (Nothing :: Maybe Text)
-                       _ -> "Copyright © 2014 haskell-lang.org"
+                       _ -> hlCopy
                      "")))
   where
+    hlCopy = do span [class_ "item"]
+                    "Copyright © 2014 haskell-lang.org"
+                span [class_ "item"]
+                     (do "Got changes to contribute? "
+                         a [href "https://github.com/chrisdone/hl"]
+                           "Fork on Github" )
     wikiLicense page =
       do span [class_ "item"]
               wikiLink
