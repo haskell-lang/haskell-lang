@@ -65,8 +65,7 @@ skeleton ptitle innerhead innerbody mroute url =
          scripts url
                  [js_jquery_js
                  ,js_jquery_cookie_js
-                 ,js_bootstrap_min_js
-                 ,js_warp_reload_js]
+                 ,js_bootstrap_min_js]
     -- TODO: pop this in a config file later.
     analytics =
       script []
