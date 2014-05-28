@@ -16,11 +16,21 @@ If you want to edit a page which has some custom code in it, you'll
 want to see the next sections for building and running
 instructions. Maybe also take a look at [architecture](#architecture).
 
-If you want to include Haskell code samples, use:
+If you want to include Haskell code samples in markdown, use:
 
     ``` haskell
     main = putStrLn "Hello, World!"
     ```
+
+If you want to include Haskell code samples in Haskell code pages,
+use:
+
+``` haskell
+haskellPre "main = print 123"
+haskellCode "peyton `simon` jones"
+```
+
+Pre for `<pre>` block, code for `<code>` span snippet.
 
 ## Building
 
