@@ -16,6 +16,12 @@ If you want to edit a page which has some custom code in it, you'll
 want to see the next sections for building and running
 instructions. Maybe also take a look at [architecture](#architecture).
 
+If you want to include Haskell code samples, use:
+
+    ``` haskell
+    main = putStrLn "Hello, World!"
+    ```
+
 ## Building
 
 Clone the repo:
