@@ -100,18 +100,19 @@ h2 {
   color: #c3a6e0;
 }
 
-.navbar > div > .collapse {
-  display: block;
-  margin-left: -15px;
+@media (max-width: 767px){
+  .navbar > div > .collapse {
+    display: block;
+    margin-left: -15px;
+  }
+  .navbar-collapse .active > a {
+    border: 0 !important;
+  }
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: 0;
+  }
 }
 
-.navbar-default .navbar-collapse, .navbar-default .navbar-form {
-  border: 0;
-}
-
-.navbar-collapse .active > a {
-  border: 0 !important;
-}
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Template
