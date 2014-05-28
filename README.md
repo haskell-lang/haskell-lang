@@ -3,6 +3,17 @@ haskell-lang
 
 Haskell web site.
 
+## I'm just here to edit a markdown page
+
+All pages that are produced by markdown
+[are here](https://github.com/chrisdone/hl/tree/master/static/markdown).
+
+To contribute changes simply fork this repo and open a pull
+request. It will be merged and redeployed in short order.
+
+If you want to edit a page which has some custom code in it, you'll
+want to see the next sections for building and running instructions.
+
 ## Building
 
 Clone the repo:
