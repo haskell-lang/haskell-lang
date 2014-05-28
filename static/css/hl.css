@@ -100,20 +100,6 @@ h2 {
   color: #c3a6e0;
 }
 
-@media (max-width: 767px){
-  .navbar > div > .collapse {
-    display: block;
-    margin-left: -15px;
-  }
-  .navbar-collapse .active > a {
-    border: 0 !important;
-  }
-  .navbar-default .navbar-collapse, .navbar-default .navbar-form {
-    border: 0;
-  }
-}
-
-
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Template
    */
@@ -307,4 +293,33 @@ h2 {
 
 .page-home .features {
   margin-bottom: 40px;
+}
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+   Responsiveness
+   */
+
+@media (max-width: 767px){
+  .page-home .header .branding {
+    margin-top: 20px;
+  }
+  .page-home .header {
+    padding-bottom: 20px;
+  }
+  .navbar > div > .collapse {
+    display: block;
+    margin-left: -15px;
+  }
+  .navbar-collapse .active > a {
+    border: 0 !important;
+  }
+  .navbar-default .navbar-collapse, .navbar-default .navbar-form {
+    border: 0;
+  }
+}
+
+@media (max-width: 480px){
+  .navbar {
+    display: none;
+  }
 }
