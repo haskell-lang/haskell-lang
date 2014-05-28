@@ -78,7 +78,9 @@ try =
                   " or"
                   haskellCode "foldr (:) [] [1,2,3]"
                   " or "
-                  haskellCode "do line <- getLine; putStrLn line or readFile \"/welcome\"")
+                  haskellCode "do line <- getLine; putStrLn line"
+                  " or "
+                  haskellCode "readFile \"/welcome\"")
          p [] (do a [href "https://hackage.haskell.org/package/pure-io-0.2.0/docs/PureIO.html#g:2"]
                     "These"
                   " IO actions are supported in this app.")
