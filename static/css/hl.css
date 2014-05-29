@@ -71,6 +71,9 @@ h2 {
    Navigation
    */
 
+.mobile > .navbar {
+  display: none;
+}
 .navbar {
   background-color:#352f44;
   border-radius:0;
@@ -329,13 +332,29 @@ h2 {
   .navbar-default .navbar-collapse, .navbar-default .navbar-form {
     border: 0;
   }
+  .footer-contribute {
+    display: none;
+  }
 }
 
 @media (max-width: 480px){
   .navbar {
     display: none;
   }
-  .footer-contribute {
-    display: none;
+  .mobile > .navbar {
+    display: block;
+  }
+  .wrap {
+    padding-bottom: 0;
+  }
+  .footer {
+    background: #150e1a; /* Old browsers */
+    background: -moz-linear-gradient(left, #150e1a 0%, #22172a 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#150e1a), color-stop(100%,#22172a)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left, #150e1a 0%,#22172a 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left, #150e1a 0%,#22172a 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left, #150e1a 0%,#22172a 100%); /* IE10+ */
+    background: linear-gradient(to right, #150e1a 0%,#22172a 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#150e1a', endColorstr='#22172a',GradientType=1 ); /* IE6-9 */
   }
 }

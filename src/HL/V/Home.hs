@@ -16,13 +16,15 @@ homeV =
     "Haskell Programming Language"
     (\_ _ ->
        linkcss "http://fonts.googleapis.com/css?family=Ubuntu:700")
-    (\_ url ->
+    (\cur url ->
        do navigation False Nothing url
           header url
           try
           community url
           features
-          events)
+          events
+          div [class_ "mobile"]
+              (navigation False cur url))
 
 header :: (Route App -> AttributeValue) -> Senza
 header url =
