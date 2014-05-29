@@ -335,4 +335,7 @@ h2 {
   .navbar {
     display: none;
   }
+  .footer-contribute {
+    display: none;
+  }
 }

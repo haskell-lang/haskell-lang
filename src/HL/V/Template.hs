@@ -195,7 +195,7 @@ footer r =
   where
     hlCopy = do span [class_ "item"]
                     "Copyright © 2014 haskell-lang.org"
-                span [class_ "item"]
+                span [class_ "item footer-contribute"]
                      (do "Got changes to contribute? "
                          a [href "https://github.com/chrisdone/hl"]
                            "Fork on Github" )
