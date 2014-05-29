@@ -92,7 +92,7 @@ try =
 community :: (Route App -> AttributeValue) -> Senza
 community url =
   div [class_ "community"
-      ,background url img_community_png]
+      ,background url img_community_jpg]
       (do container
             (do row
                   (span8 []
