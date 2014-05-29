@@ -8,7 +8,8 @@ module HL.C
   where
 
 import HL.Foundation (Handler)
-import HL.Foundation as C (Route(..),App(..))
+import HL.Foundation as C (Route(..))
+import HL.Types as C
 
 import Control.Monad.Extra
 import Data.Text as C (Text)

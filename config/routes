@@ -2,6 +2,7 @@
 / HomeR GET
 /reload ReloadR GET
 /downloads DownloadsR GET
+/downloads/#OS DownloadsForR GET
 /community CommunityR GET
 /irc IrcR GET
 /mailing-lists MailingListsR GET

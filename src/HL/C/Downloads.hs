@@ -4,10 +4,13 @@
 
 module HL.C.Downloads where
 
-import HL.C.Markdown
 import HL.C
+import HL.V.Downloads
 
 -- | Downloads controller.
 getDownloadsR :: C Html
-getDownloadsR =
-  markdownPage [] "Downloads" "downloads.md"
+getDownloadsR = senza downloadsV
+
+-- | Downloads for particular OS.
+getDownloadsForR :: OS -> C Html
+getDownloadsForR = senza . downloadsForV

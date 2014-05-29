@@ -8,7 +8,6 @@
 module HL.M.Report where
 
 import           HL.C
-import           HL.Types
 
 import           Control.Exception
 import qualified Data.ByteString as S

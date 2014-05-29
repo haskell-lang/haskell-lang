@@ -6,8 +6,9 @@ module HL.V
   ,module V)
   where
 
-import HL.Foundation as V (Route(..),App)
+import HL.Foundation as V (Route(..),App,Human(..),Slug(..))
 import HL.Static as V
+import HL.Types as C
 
 import Control.Monad as V
 import Data.Text as V (Text)

@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleInstances #-}
 {-# OPTIONS -fno-warn-orphans #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE TemplateHaskell #-}
@@ -12,9 +13,13 @@ module HL.Foundation
   ,Route(..)
   ,Handler
   ,Widget
-  ,resourcesApp)
+  ,resourcesApp
+  ,Slug(..)
+  ,Human(..))
   where
 
+import Data.Monoid
+import Data.Text (pack)
 import HL.Static
 import HL.Types
 
@@ -35,3 +40,39 @@ instance Yesod App where
        (date,_) <- clockDateCacher
        return (Logger {loggerSet = set
                       ,loggerDate = date})
+
+instance Human (Route App) where
+  toHuman r =
+    case r of
+      CommunityR       -> "Community"
+      IrcR             -> "IRC"
+      DocumentationR   -> "Documentation"
+      HomeR            -> "Home"
+      ReloadR          -> "Reload"
+      MailingListsR    -> "Mailing Lists"
+      NewsR            -> "News"
+      StaticR{}        -> "Static"
+      DownloadsR       -> "Downloads"
+      DownloadsForR os -> "Downloads for " <> toHuman os
+      WikiR t          -> "Wiki: " <> t
+      ReportR i _      -> "Report " <> pack (show i)
+      ReportHomeR i    -> "Report " <> pack (show i)
+      WikiHomeR{}      -> "Wiki"
+
+instance Slug (Route App) where
+  toSlug r =
+    case r of
+      CommunityR      -> "community"
+      IrcR            -> "irc"
+      DocumentationR  -> "documentation"
+      HomeR           -> "home"
+      ReloadR         -> "reload"
+      MailingListsR   -> "mailing-lists"
+      NewsR           -> "news"
+      StaticR{}       -> "static"
+      DownloadsR      -> "downloads"
+      WikiR{}         -> "wiki"
+      ReportR{}       -> "report"
+      ReportHomeR{}   -> "report"
+      WikiHomeR{}     -> "wiki"
+      DownloadsForR{} -> "downloads"

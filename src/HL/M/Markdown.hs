@@ -6,9 +6,7 @@
 module HL.M.Markdown where
 
 import           HL.C
-import           HL.Types
 import           HL.V.Code
-
 
 import           Control.Exception
 import qualified Data.Text.IO as ST

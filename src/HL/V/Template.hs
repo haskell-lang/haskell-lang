@@ -6,10 +6,10 @@
 
 module HL.V.Template where
 
+import HL.Types
 import HL.V hiding (item)
 
 import Data.Monoid
-import Data.Text (pack)
 import Yesod.Static (Static)
 
 -- | Render a template.
@@ -38,7 +38,7 @@ skeleton ptitle innerhead innerbody mroute url =
   docTypeHtml
     (do head [] headinner
         body (maybe []
-                    (\route -> [class_ (toValue ("page-" <> routeToSlug route))])
+                    (\route -> [class_ (toValue ("page-" <> toSlug route))])
                     mroute)
              (do bodyinner
                  analytics)
@@ -113,7 +113,7 @@ navigation showBrand mroute url =
       where item route =
               li theclass
                  (a [href (url route)]
-                    (toHtml (routeToHuman route)))
+                    (toHtml (toHuman route)))
               where theclass
                       | Just route == mroute = [class_ "active"]
                       | otherwise = []
@@ -139,43 +139,7 @@ bread url crumbs =
             (\route ->
                li []
                   (a [href (url route)]
-                     (toHtml (routeToHuman route)))))
-
--- | Generate a human-readable string from a route.
-routeToHuman :: Route App -> Text
-routeToHuman r =
-  case r of
-    CommunityR     -> "Community"
-    IrcR           -> "IRC"
-    DocumentationR -> "Documentation"
-    HomeR          -> "Home"
-    ReloadR        -> "Reload"
-    MailingListsR  -> "Mailing Lists"
-    NewsR          -> "News"
-    StaticR{}      -> "Static"
-    DownloadsR     -> "Downloads"
-    WikiR t        -> "Wiki: " <> t
-    ReportR i _    -> "Report " <> pack (show i)
-    ReportHomeR i  -> "Report " <> pack (show i)
-    WikiHomeR{}    -> "Wiki"
-
--- | Generate a slug string from a route.
-routeToSlug :: Route App -> Text
-routeToSlug r =
-  case r of
-    CommunityR     -> "community"
-    IrcR           -> "irc"
-    DocumentationR -> "documentation"
-    HomeR          -> "home"
-    ReloadR        -> "reload"
-    MailingListsR  -> "mailing-lists"
-    NewsR          -> "news"
-    StaticR{}      -> "static"
-    DownloadsR     -> "downloads"
-    WikiR{}        -> "wiki"
-    ReportR{}      -> "report"
-    ReportHomeR{}  -> "report"
-    WikiHomeR{}    -> "wiki"
+                     (toHtml (toHuman route)))))
 
 -- | Set the background image for an element.
 background :: (Route App -> AttributeValue) -> Route Static -> Attribute

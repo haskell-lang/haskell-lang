@@ -1,5 +1,13 @@
 # Downloads
 
+## Compiler and base libraries
+
+Downloads are available on a per operating system basis:
+
+* Windows
+* OS X
+* Linux
+
 ## Package manager
 
 If you are using an operating system which has an up-to-date package
