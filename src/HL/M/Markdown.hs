@@ -15,6 +15,7 @@ import qualified Data.Text.IO as ST
 import qualified Data.Text.Lazy as L
 import           System.Directory
 import           System.FilePath
+import           Text.Blaze.Html5 (pre)
 import           Text.Markdown
 
 -- | Get the HTML for the given markdown static file.
@@ -30,4 +31,4 @@ getMarkdown name =
         renderer lang (src,_) =
           if lang == Just "haskell"
              then haskellPre src
-             else toHtml src
+             else pre $ toHtml src
