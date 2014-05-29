@@ -34,6 +34,10 @@ h2 {
   color:#6e618d;
 }
 
+.muted {
+  opacity: 0.6;
+}
+
 .footer {
   background-color:#323232;
   color:#999;
@@ -245,10 +249,6 @@ h2 {
 .page-home .header .code-sample .hs-layout,
 .page-home .header .code-sample .hs-keyglyph {
   color: #4c4c4c;
-}
-
-.page-home .muted {
-  opacity: 0.6;
 }
 
 .page-home .try {
