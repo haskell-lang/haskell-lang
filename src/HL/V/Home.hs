@@ -79,7 +79,7 @@ try =
          p [] (do haskellCode "23 * 36"
                   " or "
                   haskellCode "reverse \"hello\""
-                  " or"
+                  " or "
                   haskellCode "foldr (:) [] [1,2,3]"
                   " or "
                   haskellCode "do line <- getLine; putStrLn line"
