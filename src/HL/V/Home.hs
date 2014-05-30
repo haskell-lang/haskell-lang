@@ -68,7 +68,7 @@ try =
   where
     repl =
       do h2 [] "Try it"
-         p [class_ "muted"] "Coming soon."
+         todo "Coming soon."
     rhs =
       do h2 [] "Got 5 minutes?"
          p [] (do "Type "

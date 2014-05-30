@@ -29,7 +29,7 @@ online =
   do h2 [] "Online Resources"
      p [] "There are various online resources for learning Haskell; books, \
           \articles, videos, etc. below are some of the highlights:"
-     p [class_ "muted"] "Coming soon."
+     todo "Coming soon."
 
 report :: (Route App -> AttributeValue) -> Html
 report url =
@@ -38,7 +38,8 @@ report url =
        (do "The Haskell 2010 language report is available online "
            a [href (url (ReportHomeR 2010))]
              "here"
-           ".")
+           ". "
+           todo "(But the formatting is not quite right yet.)")
      p []
        (do "A PDF version is available "
            a [href "http://haskell.org/definition/haskell2010.pdf"]
