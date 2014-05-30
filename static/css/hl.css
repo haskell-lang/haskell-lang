@@ -9,7 +9,7 @@ html {
 
 body {
   background:#fff;
-  font-family:Open Sans;
+  font-family: "Open Sans";
   font-size:13px;
   margin:0 0 4em;
   padding:0;
@@ -62,7 +62,7 @@ h2 {
 }
 
 .logo {
-  font-family:haskell;
+  font-family: Haskell;
   font-weight:400;
 }
 
@@ -89,6 +89,7 @@ h2 {
   font-size:inherit;
   font-weight:700;
   margin-left: 0 !important;
+  font-family: Ubuntu;
 }
 
 .navbar-header .navbar-brand .logo {
@@ -131,12 +132,10 @@ h2 {
 .template code {
   background-color:#f5f5f5;
   color:#366354;
-  font-family: monospace;
 }
 
 .template pre {
   font-size:14px;
-  font-family: monospace;
 }
 
 .template .container > .row {
@@ -203,10 +202,9 @@ h2 {
 .page-home .header .branding .name {
   display: block;
   font-size: 50px;
-  font-family: ubuntu;
+  font-family: Ubuntu;
   line-height: 50px;
   padding-left: 80px;
-  font-family: ubuntu;
   font-weight: bold;
   background-position: left;
   background-repeat: no-repeat;
@@ -227,7 +225,6 @@ h2 {
 .page-home .header .code-sample pre {
   background: inherit;
   border: 0;
-  font-family: monospace;
 }
 
 .page-home .header .code-sample * {
