@@ -43,7 +43,12 @@ You need one of these GHC versions:
 * GHC 7.6
 * GHC 7.8
 
-Create an [hsenv](http://hackage.haskell.org/package/hsenv):
+***Heads up***: hsenv doesn't currently work on GHC 7.8. To get around
+   this, you can instead try just making a cabal sandbox and using the
+   hl-ghc7.8.cabal file to setup all direct and transient dependencies.
+
+Create an [hsenv](http://hackage.haskell.org/package/hsenv) (cabal
+sandbox [doesn't support specifying a repo yet](https://github.com/haskell/cabal/issues/1884)):
 
     $ cd hl
     $ hsenv
