@@ -69,7 +69,7 @@ codeSample =
 
 -- | Try Haskell section.
 try :: (Route App -> AttributeValue) -> Senza
-try url =
+try _ =
   div [class_ "try"]
       (container
          (row
@@ -97,10 +97,10 @@ community url vids =
      div [class_ "videos"]
          (container (row (span12 [] (ul [] (forM_ vids vid)))))
   where
-    vid (name,url,thumb) =
+    vid (n,u,thumb) =
       li []
-         (a [href (toValue url)
-            ,title (toValue name)]
+         (a [href (toValue u)
+            ,title (toValue n)]
             (img [src (toValue thumb)]))
 
 -- | Events section.

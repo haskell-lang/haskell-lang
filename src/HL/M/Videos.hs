@@ -2,7 +2,9 @@
 
 -- | Model for videos.
 
-module HL.M.Videos where
+module HL.M.Videos
+  (getHomeVideos)
+  where
 
 import Data.Text (Text)
 
