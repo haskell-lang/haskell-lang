@@ -267,7 +267,7 @@ h2 {
   font-weight:bold
 }
 .jquery-console-inner {
-  height: 20em;
+  max-height: 20em;
   overflow: auto;
   word-wrap: break-word;
 }
