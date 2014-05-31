@@ -75,6 +75,7 @@ Plain text logs are also available at
 <tr><th>Channel</th><th>Purpose</th></tr>
 <tr><td>#darcs </td><td>Darcs revision control system</td></tr>
 <tr><td>#diagrams  </td><td>Diagrams EDSL</td></tr>
+<tr><td>#disciplined</td><td>The Disciplined Disciple Compiler (DDC)</td></tr>
 <tr><td>#hackage   </td><td> Haskell's software distribution infrastructure</td></tr>
 <tr><td>#haskell-lens  </td><td>Lens discussions</td></tr>
 <tr><td>#happs </td><td>Happstack web framework</td></tr>
