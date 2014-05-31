@@ -172,8 +172,7 @@ tryhaskell.pages.list =
                 "<code>fst " + villain + "</code>"
         },
          trigger:function(result){
-             return result.expr.match(/\([0-9]+,[ ]*"[^"]+"\)/) &&
-                 result.type.match(/\(?Num [a-z]\)? => \([a-z], \[Char\]\)$/);
+             return result.type.match(/\(?Num [a-z]\)? => \([a-z], \[Char\]\)$/);
          }
         },
         // Summary of lesson 2
