@@ -350,6 +350,36 @@ h2 {
   color: #fff;
 }
 
+.page-home .videos {
+  background: #111111;
+}
+
+.page-home .videos ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.page-home .videos li {
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.page-home .videos li + li {
+  margin-left: 15px;
+}
+
+.page-home .videos {
+  max-height: 110px;
+  overflow: hidden;
+}
+
+.page-home .videos li a {
+  padding: 3px;
+  border: 1px solid #333;
+  display: inline-block;
+}
+
 /* * * * * * * * * * * * * * * * * * * *
    Features
    */

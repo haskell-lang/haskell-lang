@@ -11,8 +11,8 @@ import HL.V.Template
 import HL.V.Home.Features
 
 -- | Home view.
-homeV :: FromSenza App
-homeV =
+homeV :: [(Text, Text, Text)] -> FromSenza App
+homeV vids =
   skeleton
     "Haskell Programming Language"
     (\_ _ ->
@@ -21,7 +21,7 @@ homeV =
        do navigation False Nothing url
           header url
           try url
-          community url
+          community url vids
           features
           events
           div [class_ "mobile"]
@@ -82,18 +82,26 @@ try url =
 
 -- | Community section.
 -- TOOD: Should contain a list of thumbnail videos. See mockup.
-community :: (Route App -> AttributeValue) -> Senza
-community url =
-  div [class_ "community"
-      ,background url img_community_jpg]
-      (do container
-            (do row
+community :: (Route App -> AttributeValue) -> [(Text, Text, Text)] -> Senza
+community url vids =
+  do div [class_ "community"
+         ,background url img_community_jpg]
+         (do container
+               (row
                   (span8 []
                          (do h1 []
                                 "An open source community effort for over 20 years"
                              p [class_ "learn-more"]
                                (a [href (url CommunityR)]
                                   "Learn more")))))
+     div [class_ "videos"]
+         (container (row (span12 [] (ul [] (forM_ vids vid)))))
+  where
+    vid (name,url,thumb) =
+      li []
+         (a [href (toValue url)
+            ,title (toValue name)]
+            (img [src (toValue thumb)]))
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?
