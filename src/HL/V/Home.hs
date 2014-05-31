@@ -19,12 +19,17 @@ homeV =
     (\cur url ->
        do navigation False Nothing url
           header url
-          try
+          try url
           community url
           features
           events
           div [class_ "mobile"]
               (navigation False cur url))
+    (\_ url ->
+       scripts url
+               [js_jquery_console_js
+               ,js_tryhaskell_js
+               ,js_tryhaskell_pages_js])
 
 -- | Top header section with the logo and code sample.
 header :: (Route App -> AttributeValue) -> Senza
@@ -62,18 +67,17 @@ codeSample =
   \      p : sieve [x | x <- xs, x `mod` p /= 0]"
 
 -- | Try Haskell section.
--- TOOD: Link up to tryhaskell.org somehow.
-try :: Senza
-try =
+try :: (Route App -> AttributeValue) -> Senza
+try url =
   div [class_ "try"]
       (container
          (row
             (do span6 [] repl
-                span6 [] rhs)))
+                span6 [id "guide"] rhs)))
   where
     repl =
       do h2 [] "Try it"
-         todo "Coming soon."
+         div [id "console"] (return ())
     rhs =
       do h2 [] "Got 5 minutes?"
          p [] (do "Type "

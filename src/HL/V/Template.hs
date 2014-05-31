@@ -27,6 +27,7 @@ template crumbs ptitle inner =
            (do navigation True cur url
                container (bread url crumbs)
                inner url))
+    (\_ _ -> return ())
 
 -- | Render the basic site skeleton.
 skeleton
@@ -34,7 +35,8 @@ skeleton
   -> FromSenza App
   -> FromSenza App
   -> FromSenza App
-skeleton ptitle innerhead innerbody mroute url =
+  -> FromSenza App
+skeleton ptitle innerhead innerbody bodyender mroute url =
   docTypeHtml
     (do head [] headinner
         body (maybe []
@@ -63,6 +65,7 @@ skeleton ptitle innerhead innerbody mroute url =
          scripts url
                  [js_jquery_js
                  ,js_bootstrap_min_js]
+         bodyender mroute url
     -- TODO: pop this in a config file later.
     analytics =
       script []

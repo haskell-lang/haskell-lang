@@ -178,6 +178,10 @@ h2 {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#150e1a', endColorstr='#22172a',GradientType=1 ); /* IE6-9 */
 }
 
+/* * * * * * * * * * * * * * * * * * * *
+   Header
+   */
+
 .page-home .header {
   color: #fff;
   background: #19111f; /* Old browsers */
@@ -247,6 +251,55 @@ h2 {
   color: #4c4c4c;
 }
 
+/* * * * * * * * * * * * * * * * * * * *
+   Try Haskell
+   */
+
+#console {
+  font-family: monospace;
+}
+.jquery-console-nofocus {
+  opacity: 0.8;
+}
+.jquery-console-focus .jquery-console-cursor {
+  background:#aaa;
+  color:#eee
+  font-weight:bold
+}
+.jquery-console-inner {
+  height: 20em;
+  overflow: auto;
+  word-wrap: break-word;
+}
+.jquery-console-prompt-label {
+  color: #8f4e8b;
+  font-weight: bold;
+}
+.jquery-console-error {
+  color: #8f4e8b;
+}
+.jquery-console-value {
+  color: #2e659c;
+}
+.jquery-console-stdout {
+  color: #216f42;
+}
+.jquery-console-type {
+  color: #777;
+}
+.jquery-console-welcome {
+  color: #888;
+  margin-bottom: 0.5em;
+}
+
+#guide .spoiler {
+  color: #f7f7f9;
+  background: #f7f7f9;
+}
+#guide .spoiler:hover {
+  color: #d14;
+}
+
 .page-home .try {
   margin-top: 10px;
   margin-bottom: 30px;
@@ -267,6 +320,10 @@ h2 {
   color: #000;
   margin-bottom: 20px;
 }
+
+/* * * * * * * * * * * * * * * * * * * *
+   Community
+   */
 
 .page-home .community {
   margin-top: 30px;
@@ -292,6 +349,10 @@ h2 {
 .page-home .community .learn-more a {
   color: #fff;
 }
+
+/* * * * * * * * * * * * * * * * * * * *
+   Features
+   */
 
 .page-home .features h1 {
   margin-top: 40px;
