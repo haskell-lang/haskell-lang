@@ -34,6 +34,7 @@ data App = App
   , appReload :: !(Chan ())
   }
 
+-- | Operating system. Used for downloads, for example.
 data OS = Windows | OSX | Linux
   deriving (Read,Show,Typeable,Eq,Enum,Bounded)
 

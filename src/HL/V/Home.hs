@@ -26,6 +26,7 @@ homeV =
           div [class_ "mobile"]
               (navigation False cur url))
 
+-- | Top header section with the logo and code sample.
 header :: (Route App -> AttributeValue) -> Senza
 header url =
   div [class_ "header"]
@@ -52,12 +53,16 @@ header url =
         sample = div [class_ "code-sample"]
                      (haskellPre codeSample)
 
+-- | Code sample.
+-- TODO: should be rotatable and link to some article.
 codeSample :: Text
 codeSample =
   "primes = sieve [2..]\n\
   \    where sieve (p:xs) = \n\
   \      p : sieve [x | x <- xs, x `mod` p /= 0]"
 
+-- | Try Haskell section.
+-- TOOD: Link up to tryhaskell.org somehow.
 try :: Senza
 try =
   div [class_ "try"]
@@ -89,6 +94,8 @@ try =
                     "These"
                   " IO actions are supported in this app.")
 
+-- | Community section.
+-- TOOD: Should contain a list of thumbnail videos. See mockup.
 community :: (Route App -> AttributeValue) -> Senza
 community url =
   div [class_ "community"
@@ -102,6 +109,8 @@ community url =
                                (a [href (url CommunityR)]
                                   "Learn more")))))
 
+-- | Features section explains what's notable about Haskell as a
+-- language.
 features :: Senza
 features =
   div [class_ "features"]
@@ -114,6 +123,8 @@ features =
              row (do span6 [] lazy
                      span6 [] packages)))
 
+-- TODO: Features: tart up the wording.
+--
 -- Note: these below are me writing out the facts, for myself, rather
 -- than putting in a way that newbies will understand. The intention
 -- is to put *something* here and then rewrite the bits below to be
@@ -177,6 +188,8 @@ packages =
           \of packages available on the public package servers."
      p [] (a [] "View examples")
 
+-- | Events section.
+-- TODO: Take events section from Haskell News?
 events :: Senza
 events =
   return ()
