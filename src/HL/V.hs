@@ -56,4 +56,5 @@ span11 :: [Attribute] -> Senza -> Senza
 span12 xs = div ([class_ "span12 col-md-12"] ++ xs)
 span12 :: [Attribute] -> Senza -> Senza
 
+todo :: Senza -> Senza
 todo = span [class_ "muted"]
