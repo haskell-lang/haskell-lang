@@ -34,6 +34,7 @@ Plain text logs are also available at
 
 <table class="table">
 <tr><th>Channel</th><th>Purpose</th></tr>
+<tr><td>#haskell.au</td><td> Australian Haskell hackers</td></tr>
 <tr><td>#haskell-br</td><td> Brazilian Portuguese (pt_BR) speakers</td></tr>
 <tr><td>#haskell.cz</td><td> Czech speakers (UTF-8)</td></tr>
 <tr><td>#haskell.de</td><td> German speakers</td></tr>
