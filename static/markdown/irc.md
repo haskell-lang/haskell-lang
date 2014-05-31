@@ -88,6 +88,5 @@ Plain text logs are also available at
 <tr><td>#xmonad</td><td>Xmonad tiling window manager</td></tr>
 <tr><td>#yesod </td><td>Yesod web framework</td></tr>
 <tr><td>#haskell-distributed </td><td>Distributed Haskell discussion</td></tr>
-<tr><td><tr><td>#chicagohaskell</td><td>Chicago Haskell programmers
-group</td></tr>
+<tr><td>#chicagohaskell</td><td>Chicago Haskell programmers group</td></tr>
 </table>
