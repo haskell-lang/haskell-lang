@@ -258,44 +258,76 @@ h2 {
 #console {
   font-family: monospace;
 }
+
 .jquery-console-nofocus {
   opacity: 0.8;
 }
+
 .jquery-console-focus .jquery-console-cursor {
   background:#aaa;
-  color:#eee
-  font-weight:bold
+  color:#eee;
+  font-weight:bold;
 }
+
 .jquery-console-inner {
   max-height: 20em;
   overflow: auto;
   word-wrap: break-word;
 }
+
 .jquery-console-prompt-label {
   color: #8f4e8b;
   font-weight: bold;
 }
+
+.jquery-console-prompt-box {
+    clear: both;
+}
+
 .jquery-console-error {
   color: #8f4e8b;
+  clear: left;
 }
+
 .jquery-console-value {
   color: #2e659c;
+  clear: left;
+  float: left;
 }
+
 .jquery-console-stdout {
   color: #216f42;
+  clear: left;
+  float: left;
 }
+
 .jquery-console-type {
   color: #777;
 }
+
 .jquery-console-welcome {
   color: #888;
   margin-bottom: 0.5em;
+}
+
+.jquery-console-stdout + .jquery-console-type {
+    display: none !important;
+}
+
+.jquery-console-value:empty + .jquery-console-type {
+    visibility: visible;
+}
+
+.jquery-console-value + .jquery-console-type {
+    float: left;
+    margin-left: .5em;
 }
 
 #guide .spoiler {
   color: #f7f7f9;
   background: #f7f7f9;
 }
+
 #guide .spoiler:hover {
   color: #d14;
 }
