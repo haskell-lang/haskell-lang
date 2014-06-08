@@ -30,7 +30,7 @@
 <h3 id="build-from-source">Build from source</h2>
 <p>Download the source tarball for Unix-like systems: here</p>
 <ul>
-<li><a href="download/2013.2.0.0/haskell-platform-2013.2.0.0.tar.gz" onClick="javascript: pageTracker._trackPageview('/downloads/source'); ">haskell-platform-2013.2.0.0.tar.gz</a></strong> <br /><small>SHA-1: <code>8669bb5add1826c0523fb130c095fb8bf23a30ce</code></small></li>
+<li><a href="http://www.haskell.org/platform/download/2013.2.0.0/haskell-platform-2013.2.0.0.tar.gz" onClick="javascript: pageTracker._trackPageview('/downloads/source'); ">haskell-platform-2013.2.0.0.tar.gz</a></strong> <br /><small>SHA-1: <code>8669bb5add1826c0523fb130c095fb8bf23a30ce</code></small></li>
 </ul>
 <p>Get and install GHC 7.6.3 prior to building the platform:</p>
 <ul>
