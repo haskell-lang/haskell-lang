@@ -66,9 +66,10 @@ You need the right package set. Add the following to your
 
 Now just run:
 
+    $ git submodule init
     $ sh scripts/pull-build
 
-To do the above cabal update, submodule, install, etc.
+To do the cabal update, submodule, install, etc.
 
 Done!
 
