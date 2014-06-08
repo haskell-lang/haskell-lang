@@ -21,15 +21,31 @@ documentationV =
             (span12
                []
                (do h1 [] "Documentation"
-                   online
+                   books
+                   manuals
                    report url))))
 
-online :: Html
-online =
-  do h2 [] "Online Resources"
-     p [] "There are various online resources for learning Haskell; books, \
-          \articles, videos, etc. below are some of the highlights:"
-     todo "Coming soon."
+books =
+  do h2 [] "Books"
+     p [] "Books for learning Haskell:"
+     links (modern ++ older)
+  where
+    modern =
+      [("Learn You a Haskell for Great Good!","http://learnyouahaskell.com/")
+      ,("Real World Haskell","http://book.realworldhaskell.org/")
+      ,("Beginning haskell","http://www.apress.com/9781430262503")]
+    older =
+      [("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
+      ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")
+      ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
+
+
+manuals = do h2 [] "Manuals"
+             p [] "Manuals that cover common Haskell tooling:"
+             links tools
+  where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
+                ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
+                ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")]
 
 report :: (Route App -> AttributeValue) -> Html
 report url =
@@ -51,3 +67,9 @@ report url =
        (pre []
             (code []
                   "$ darcs get http://darcs.haskell.org/haskell2010-report"))
+
+links items =
+  ul []
+     (forM_ items
+            (\(title,url) ->
+               li [] (a [href url] title)))
