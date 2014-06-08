@@ -27,8 +27,10 @@ documentationV =
 
 books =
   do h2 [] "Books"
-     p [] "Books for learning Haskell:"
-     links (modern ++ older)
+     p [] "Latest books for learning Haskell:"
+     links modern
+     p [] "Older books:"
+     links older
   where
     modern =
       [("Learn You a Haskell for Great Good!","http://learnyouahaskell.com/")
@@ -45,7 +47,8 @@ manuals = do h2 [] "Manuals"
              links tools
   where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
                 ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
-                ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")]
+                ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")
+                ,("What I Wish I Knew When Learning Haskell","http://dev.stephendiehl.com/hask/#cabal")]
 
 report :: (Route App -> AttributeValue) -> Html
 report url =

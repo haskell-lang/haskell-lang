@@ -36,3 +36,4 @@ items url =
      li [] (a [href "https://plus.google.com/communities/104818126031270146189"] "Google+ community")
      li [] (a [href "http://www.reddit.com/r/haskell"] "Reddit")
      li [] (a [href "http://www.haskell.org/haskellwiki/Haskell"] "Wiki")
+     li [] (a [href "http://planet.haskell.org/"] "The blogosphere")
