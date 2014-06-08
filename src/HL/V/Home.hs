@@ -14,7 +14,7 @@ import HL.V.Home.Features
 homeV :: [(Text, Text, Text)] -> FromSenza App
 homeV vids =
   skeleton
-    "Haskell Programming Language"
+    "Haskell Language"
     (\_ _ ->
        linkcss "http://fonts.googleapis.com/css?family=Ubuntu:700")
     (\cur url ->
