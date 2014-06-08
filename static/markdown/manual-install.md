@@ -1,38 +1,3 @@
-# Downloads
-
-## Compiler and base libraries
-
-Downloads are available on a per operating system basis:
-
-* Windows
-* OS X
-* Linux
-
-## Package manager
-
-If you are using an operating system which has an up-to-date package
-set, you may be able to simply install everything via that.
-
-* [Arch Linux Haskell package guidelines](https://wiki.archlinux.org/index.php/Haskell_Package_Guidelines)
-
-## Haskell Platform
-
-The Haskell Platform is a comprehensive, robust development
-environment for programming in Haskell. For new users the platform
-makes it trivial to get up and running with a full Haskell development
-environment.
-
-For experienced developers, the platform provides a comprehensive,
-standard base for commercial and open source Haskell development that
-maximises interoperability and stability of your code.
-
-[Download now →](http://www.haskell.org/platform/)
-
-## Advanced setup
-
-Alternatively one can manually install GHC and Cabal packages, but
-note, is particularly easier on POSIX (e.g. Linux, BSD, OS X) systems.
-
 ### 1. Install GHC
 
 GHC has its own web site with license information, FAQ, download links
@@ -73,4 +38,10 @@ Now you should be able to run cabal:
     cabal-install version 1.18.0.2
     using version 1.18.1.2 of the Cabal library
 
-And can start writing Haskell programs and installing packages!
+You can now update your package set:
+
+    $ cabal update
+
+And install packages:
+
+    $ cabal install the-package-name
