@@ -51,6 +51,7 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
          meta [charset "utf-8"]
          meta [httpEquiv "X-UA-Compatible",content "IE edge"]
          meta [name "viewport",content "width=device-width, initial-scale=1"]
+         link [rel "shortcut icon",href (url (StaticR img_favicon_ico))]
          linkcss "http://fonts.googleapis.com/css?family=Open+Sans"
          styles url
                 [StaticR css_bootstrap_min_css
