@@ -43,15 +43,11 @@ downloadsForV os autoInstall manualInstall =
             (span12
                []
                (do h1 [] (toHtml ("Downloads for " <> toHuman os))
-                   h2 [] "Easy Install"
-                   p [] "Download a pre-prepared installer which includes \
-                        \both the GHC compiler, Cabal install and a set of \
-                        \vetted packages."
                    autoInstall
-                   unless (os == Windows)
-                          (do h2 [] "Advanced Install"
-                              p [] "To install GHC and Cabal manually, follow these steps."
-                              manualInstall)))))
+                   when (os == Linux)
+                        (do h2 [] "Manual install"
+                            p [] "To install GHC and Cabal manually, follow these steps."
+                            manualInstall)))))
 
 thirdParty =
   do h2 [] "Third party libraries"

@@ -1,6 +1,21 @@
-Download the Mac OS X installer here:
+This download is provided by
+[GHC for OS X](http://ghcformacosx.github.io/) for 64-bit Mac OS X
+10.9.
 
-* [Haskell Platform 2013.2.0.0 for Mac OS X, 64 bit (10.6 or later)](http://www.haskell.org/platform/download/2013.2.0.0/Haskell%20Platform%202013.2.0.0%2064bit.pkg)
-* [Haskell Platform 2013.2.0.0 for Mac OS X, 32 bit (10.6 or later)](http://www.haskell.org/platform/download/2013.2.0.0/Haskell%20Platform%202013.2.0.0%2032bit.pkg)
+## Steps to install
 
-For a more detailed page about OS X-specific issues, go [here](http://www.haskell.org/platform/mac.html).
+* Download and unzip [ghc-7.8.2-r6.zip](https://github.com/ghcformacosx/ghc-dot-app/releases/download/v7.8.2-r6/ghc-7.8.2-r6.zip) (162MB)
+* Move it to a stable location such as `/Applications`
+* Double-click for instructions to install Xcode add it to your Terminal's $PATH
+
+## What it includes
+
+* GHC 7.8.2
+* cabal-install 1.20.0.1
+* HTML documentation
+* man pages
+* A small GUI app wrapper to help you set up your environment for Haskell
+
+## Report issues
+
+You can report bugs for GHC for OS X [on the Github issue tracker](https://github.com/ghcformacosx/ghc-dot-app/issues).
