@@ -91,7 +91,6 @@ tryhaskell.makeController = function(){
                 tryhaskell.ajaxCommand(tryhaskell.io,report,tryhaskell.stdin);
             }
         },
-        autofocus: true,
         animateScroll: true,
         promptHistory: true,
         welcomeMessage: 'Type Haskell expressions in here.',
