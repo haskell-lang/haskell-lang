@@ -43,4 +43,6 @@ executable hl
                      text-icu,
                      bytestring,
                      mtl,
-                     tagstream-conduit
+                     tagstream-conduit,
+                     spoon,
+                     deepseq
