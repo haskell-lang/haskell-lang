@@ -8,7 +8,6 @@ import HL.V
 
 import Data.Text (unpack)
 import Language.Haskell.HsColour.CSS (hscolour)
-import Prelude hiding (readFile)
 import Text.Blaze.Html
 
 -- | Some syntax-highlighted code.

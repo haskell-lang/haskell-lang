@@ -6,18 +6,24 @@
 
 module HL.V.Wiki where
 
-import HL.V
-import HL.V.Code
-import HL.V.Template
+import           HL.V
+import           HL.V.Code
+import           HL.V.Template
 
-import Data.List (isPrefixOf)
-import Data.Text (unpack,pack)
-import Language.Haskell.HsColour.CSS (hscolour)
-import Prelude hiding (readFile)
-import Text.Pandoc.Definition
-import Text.Pandoc.Options
-import Text.Pandoc.Walk
-import Text.Pandoc.Writers.HTML
+import           Control.Monad.Identity
+import           Data.Conduit
+import qualified Data.Conduit.List as CL
+import           Data.List (isPrefixOf)
+import           Data.Monoid
+import           Data.Text (unpack,pack)
+import           Data.Text.Lazy (toStrict)
+import           Data.Text.Lazy.Builder
+import           Language.Haskell.HsColour.CSS (hscolour)
+import           Text.HTML.TagStream.Text
+import           Text.Pandoc.Definition
+import           Text.Pandoc.Options
+import           Text.Pandoc.Walk
+import           Text.Pandoc.Writers.HTML
 
 -- | Wiki view.
 wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromSenza App
@@ -65,4 +71,15 @@ highlightInline :: Pandoc -> Pandoc
 highlightInline = walk codes
   where codes (Code ("",["haskell"],[]) text) =
           RawInline "html" (preToCode (hscolour False text))
+        codes (Code x text) = Code x (unpack (decodeEntities (pack text)))
         codes x = x
+
+-- | Decode entities because for some reason MediaWiki syntax allows
+-- entities and decodes them inside a <code></code> block.
+decodeEntities :: Text -> Text
+decodeEntities t =
+  runIdentity (fmap (toStrict . toLazyText . mconcat)
+                    (CL.sourceList [t]
+                     $= tokenStream
+                     $= CL.map (showToken (\x ->x))
+                     $$ CL.consume))

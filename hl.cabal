@@ -41,4 +41,6 @@ executable hl
                      http-conduit,
                      hscolour,
                      text-icu,
-                     bytestring
+                     bytestring,
+                     mtl,
+                     tagstream-conduit
