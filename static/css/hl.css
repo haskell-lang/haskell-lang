@@ -135,6 +135,7 @@ h2 {
 
 .template pre {
   font-size:14px;
+  word-wrap: normal;
 }
 
 .template .container > .row {
