@@ -52,7 +52,7 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
          meta [httpEquiv "X-UA-Compatible",content "IE edge"]
          meta [name "viewport",content "width=device-width, initial-scale=1"]
          link [rel "shortcut icon",href (url (StaticR img_favicon_ico))]
-         linkcss "http://fonts.googleapis.com/css?family=Open+Sans"
+         linkcss "https://fonts.googleapis.com/css?family=Open+Sans"
          styles url
                 [StaticR css_bootstrap_min_css
                 ,StaticR css_haskell_font_css
@@ -69,16 +69,15 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
          bodyender mroute url
     -- TODO: pop this in a config file later.
     analytics =
-      script [] $ unlines
-             [ "var _gaq = _gaq || [];"
-             , "_gaq.push(['_setAccount', 'UA-15375175-1']);"
-             , "_gaq.push(['_trackPageview']);"
-             , "(function() {"
-             , "var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;"
-             , "ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';"
-             , "var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);"
-             , "})();"
-             ]
+      script []
+             "var _gaq = _gaq || [];\n\
+             \_gaq.push(['_setAccount', 'UA-15375175-1']);\n\
+             \_gaq.push(['_trackPageview']);\n\
+             \(function() {\n\
+             \ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n\
+             \ ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\n\
+             \ var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\n\
+             \})();\n"
 
 -- | Make a list of scripts.
 scripts :: (Route App -> AttributeValue) -> [Route Static] -> Senza
