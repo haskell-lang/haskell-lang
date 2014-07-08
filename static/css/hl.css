@@ -99,7 +99,8 @@ overflow: hidden;
   color:#fff;
 }
 
-.navbar-header .navbar-brand:hover {
+.navbar-header .navbar-brand:hover,
+.navbar-header .navbar-brand:focus {
   color:#fff;
 }
 
