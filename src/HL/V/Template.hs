@@ -163,11 +163,15 @@ footer r =
                      "")))
   where
     hlCopy = do span [class_ "item"]
-                    "Copyright © 2014 haskell-lang.org"
+                    "© 2014 haskell-lang.org"
                 span [class_ "item footer-contribute"]
                      (do "Got changes to contribute? "
-                         a [href "https://github.com/chrisdone/hl"]
-                           "Fork on Github" )
+                         a [href "https://github.com/haskell-infra/hl"]
+                           "Fork on Github")
+                span [class_ "item pull-right"]
+                     (do "Designed exclusively by "
+                         a [href "http://chrisdone.com/"]
+                           "Chris Done")
     wikiLicense page =
       do span [class_ "item"]
               wikiLink
