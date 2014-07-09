@@ -35,7 +35,7 @@ books =
     modern =
       [("Learn You a Haskell for Great Good!","http://learnyouahaskell.com/")
       ,("Real World Haskell","http://book.realworldhaskell.org/")
-      ,("Beginning haskell","http://www.apress.com/9781430262503")]
+      ,("Beginning Haskell","http://www.apress.com/9781430262503")]
     older =
       [("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
       ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")
