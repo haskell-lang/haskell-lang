@@ -80,7 +80,7 @@ hackage =
 stackage =
   do h3 [] "Stackage"
      p [] "Stackage is a stable repository of snapshots of package sets in \
-          \which only packages which build and pass test together are bundled \
+          \which only packages which build and pass tests together are bundled \
           \together into a snapshot."
      p [] (do "To use, in your "
               code [] ".cabal/config"
