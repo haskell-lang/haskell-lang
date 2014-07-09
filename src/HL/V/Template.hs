@@ -168,10 +168,6 @@ footer r =
                      (do "Got changes to contribute? "
                          a [href "https://github.com/haskell-infra/hl"]
                            "Fork on Github")
-                span [class_ "item pull-right"]
-                     (do "Designed exclusively by "
-                         a [href "http://chrisdone.com/"]
-                           "Chris Done")
     wikiLicense page =
       do span [class_ "item"]
               wikiLink
