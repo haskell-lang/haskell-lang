@@ -70,7 +70,9 @@ codeSample =
 -- | Try Haskell section.
 try :: (Route App -> AttributeValue) -> Senza
 try _ =
-  div [class_ "try"]
+  div [ class_ "try"
+      , onclick "tryhaskell.controller.inner.click()"
+      ]
       (container
          (row
             (do span6 [] repl
