@@ -54,7 +54,7 @@ thirdParty =
      p [] (do "In Haskell, packages are managed with the Cabal package \
               \system built into GHC (and other compilers). "
               "For more specific details, see "
-              (a [href "http://www.haskell.org/cabal/users-guide/"]
+              (a [href "https://www.haskell.org/cabal/users-guide/"]
                  "The Cabal User Guide")
               ".")
      hackage
@@ -75,7 +75,7 @@ hackage =
      p [] "You can install a package by merely running: "
      pre [] "$ cabal update \n\
             \$ cabal install the-package"
-     p [] (a [href "http://hackage.haskell.org/packages/"] "Go to Hackage →")
+     p [] (a [href "https://hackage.haskell.org/packages/"] "Go to Hackage →")
 
 stackage =
   do h3 [] "Stackage"
@@ -90,7 +90,7 @@ stackage =
      p [] "After that, you can install a package by merely running: "
      pre [] "$ cabal update \n\
             \$ cabal install the-package"
-     p [] (a [href "http://hackage.haskell.org/packages/"] "Go to Stackage →")
+     p [] (a [href "http://www.stackage.org/"] "Go to Stackage →")
 
 github =
   do h3 [] "From source control repositories"
