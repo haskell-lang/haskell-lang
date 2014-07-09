@@ -30,7 +30,7 @@ nulls =
 concurrency :: Senza
 concurrency =
   do h2 [] "Scaling Just Works"
-     p [] "You shouldn't have rewrite half your code base when it's time to scale. \
+     p [] "You shouldn't have to rewrite half your code base when it's time to scale. \
           \Haskell code is thread-safe by default, and the runtime efficiently handles concurrency for you. \
           \Software transactional memory comes standard."
      p [] (a [] "View examples")
