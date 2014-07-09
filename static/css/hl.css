@@ -236,24 +236,24 @@ overflow: hidden;
 }
 
 .page-home .header .code-sample * {
-  color: #c3c3c3;
+  color: #CCC;
 }
 
 .page-home .header .code-sample .hs-definition {
-  color: #9ec7e9;
+  color: #A2D1F9;
 }
 
 .page-home .header .code-sample .hs-num {
-  color: #c3a6e0;
+  color: #D8BCF5;
 }
 
 .page-home .header .code-sample .hs-keyword {
-  color: #fff;
+  color: #FFF;
 }
 
 .page-home .header .code-sample .hs-layout,
 .page-home .header .code-sample .hs-keyglyph {
-  color: #4c4c4c;
+  color: #FAFAFA;
 }
 
 /* * * * * * * * * * * * * * * * * * * *
