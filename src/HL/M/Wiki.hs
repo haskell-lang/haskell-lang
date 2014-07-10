@@ -39,7 +39,7 @@ getWikiPage article =
                Just (title,pan) ->
                  return
                    (fromMaybe (Left ("Unable to parse XML from haskell.org! And the \
-                                     \parser gave an an impure exception! Can you \
+                                     \parser gave us an impure exception! Can you \
                                      \believe it?"))
                               (showSpoon (Right (title,pan)))))
   where
