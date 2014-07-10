@@ -43,7 +43,7 @@ books =
       ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
 
 online =
-  do h2 [] "Online resources"
+  do h2 [] "Online Resources"
      p [] "Resources put together by the Haskell community at-large:"
      links resources
   where
