@@ -22,6 +22,7 @@ documentationV =
                []
                (do h1 [] "Documentation"
                    books
+                   online
                    manuals
                    report url))))
 
@@ -40,6 +41,16 @@ books =
       [("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
       ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")
       ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
+
+online =
+  do h2 [] "Online resources"
+     p [] "Resources put together by the Haskell community at-large:"
+     links resources
+  where
+    resources =
+      [("University of Pennsylvania's CIS 194","https://www.seas.upenn.edu/~cis194/")
+      ,("Chris Allen's List of Haskell Resources","https://github.com/bitemyapp/learnhaskell")
+      ]
 
 
 manuals = do h2 [] "Manuals"
