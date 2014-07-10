@@ -63,9 +63,9 @@ header url =
 -- TODO: should be rotatable and link to some article.
 codeSample :: Text
 codeSample =
-  "primes = sieve [2..]\n\
-  \    where sieve (p:xs) = \n\
-  \      p : sieve [x | x <- xs, x `mod` p /= 0]"
+  "fibonacci 0 = 0\n\
+  \fibonacci 1 = 1\n\
+  \fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)"
 
 -- | Try Haskell section.
 try :: (Route App -> AttributeValue) -> Senza
