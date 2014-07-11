@@ -53,13 +53,14 @@ online =
       ]
 
 
-manuals = do h2 [] "Manuals"
-             p [] "Manuals that cover common Haskell tooling:"
+manuals = do h2 [] "Manuals and Guides"
+             p [] "Manuals and guides that cover common Haskell tooling:"
              links tools
   where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
                 ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
                 ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")
-                ,("What I Wish I Knew When Learning Haskell","http://dev.stephendiehl.com/hask/#cabal")]
+                ,("What I Wish I Knew When Learning Haskell","http://dev.stephendiehl.com/hask/#cabal")
+                ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")]
 
 report :: (Route App -> AttributeValue) -> Html
 report url =
