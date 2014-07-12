@@ -62,7 +62,7 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
     bodyinner =
       do div [class_ "wrap"]
              (innerbody mroute url)
-         footer mroute
+         footer url mroute
          scripts url
                  [js_jquery_js
                  ,js_bootstrap_min_js]
@@ -152,8 +152,8 @@ background url route =
   style ("background-image: url(" <> url (StaticR route) <> ")")
 
 -- | Footer across the whole site.
-footer :: Maybe (Route App) -> Senza
-footer r =
+footer :: (Route App -> AttributeValue) -> Maybe (Route App) -> Senza
+footer url r =
   div [class_ "footer"]
       (div [class_ "container"]
            (p [] (do case r of
@@ -168,6 +168,13 @@ footer r =
                      (do "Got changes to contribute? "
                          a [href "https://github.com/haskell-infra/hl"]
                            "Fork on Github")
+                span [class_ "pull-right"] $ do
+                  span [] "Proudly hosted by "
+                  a [href "https://www.rackspace.com/"]
+                    (img [src (url $ StaticR img_rackspace_svg)
+                         ,alt "rackspace"
+                         ,height "20"
+                         ,width "20"])
     wikiLicense page =
       do span [class_ "item"]
               wikiLink
