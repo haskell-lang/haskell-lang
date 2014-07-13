@@ -8,7 +8,7 @@ Haskell web site.
 If you're just here to contribute a content change, read this section.
 
 All pages that are produced by markdown
-[are here](https://github.com/chrisdone/hl/tree/master/static/markdown). To
+[are here](https://github.com/haskell-infra/hl/tree/master/static/markdown). To
 contribute changes simply fork this repo and open a pull request. It
 will be merged and redeployed in short order.
 
@@ -36,7 +36,7 @@ Pre for `<pre>` block, code for `<code>` span snippet.
 
 Clone the repo:
 
-    $ git clone git@github.com:chrisdone/hl.git
+    $ git clone git@github.com:haskell-infra/hl.git
 
 You need one of these GHC versions:
 
@@ -101,15 +101,16 @@ Just hit f12 to recompile and restart.
 
 It uses Yesod and an MVC organization.
 
-* HL.M.* -- [models](https://github.com/chrisdone/hl/tree/master/src/HL/M)
-* HL.V.* -- [views](https://github.com/chrisdone/hl/tree/master/src/HL/V)
-* HL.C.* -- [controllers](https://github.com/chrisdone/hl/tree/master/src/HL/C)
+* HL.M.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/M)
+* HL.V.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/V)
+* HL.C.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/C)
 
 Templates are written in [senza](https://github.com/chrisdone/senza),
 a convenience wrapper to blaze-html. There is presently no database.
 
 ## Style
 
-I use [this style](https://github.com/chrisdone/haskell-style-guide)
-for code. You don't have to use this style, I can reformat patches as
+We generally use
+[this style](https://github.com/chrisdone/haskell-style-guide)
+for this project. You don't have to use this style, we can reformat patches as
 they come in.
