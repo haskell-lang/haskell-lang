@@ -12,4 +12,4 @@ import           HL.V.Markdown
 markdownPage :: [Route App] -> Text -> FilePath -> C Html
 markdownPage crumbs t name =
   do content <- io (getMarkdown name)
-     senza (markdownV crumbs t content)
+     blaze (markdownV crumbs t content)

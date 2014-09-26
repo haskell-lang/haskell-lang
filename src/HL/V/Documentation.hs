@@ -10,7 +10,7 @@ import HL.V
 import HL.V.Template
 
 -- | Documentation view.
-documentationV :: FromSenza App
+documentationV :: FromBlaze App
 documentationV =
   template
     []
@@ -19,18 +19,17 @@ documentationV =
        container
          (row
             (span12
-               []
-               (do h1 [] "Documentation"
+               (do h1 "Documentation"
                    books
                    online
                    manuals
                    report url))))
 
 books =
-  do h2 [] "Books"
-     p [] "Latest books for learning Haskell:"
+  do h2 "Books"
+     p "Latest books for learning Haskell:"
      links modern
-     p [] "Older books:"
+     p "Older books:"
      links older
   where
     modern =
@@ -43,8 +42,8 @@ books =
       ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
 
 online =
-  do h2 [] "Online Resources"
-     p [] "Resources put together by the Haskell community at-large:"
+  do h2 "Online Resources"
+     p "Resources put together by the Haskell community at-large:"
      links resources
   where
     resources =
@@ -53,8 +52,8 @@ online =
       ]
 
 
-manuals = do h2 [] "Manuals and Guides"
-             p [] "Manuals and guides that cover common Haskell tooling:"
+manuals = do h2 "Manuals and Guides"
+             p "Manuals and guides that cover common Haskell tooling:"
              links tools
   where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
                 ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
@@ -64,27 +63,23 @@ manuals = do h2 [] "Manuals and Guides"
 
 report :: (Route App -> AttributeValue) -> Html
 report url =
-  do h2 [] "Language Report"
-     p []
+  do h2 "Language Report"
+     p
        (do "The Haskell 2010 language report is available online "
-           a [href (url (ReportHomeR 2010))]
+           a ! href (url (ReportHomeR 2010)) $
              "here"
            ". "
            todo "(But the formatting is not quite right yet.)")
-     p []
+     p
        (do "A PDF version is available "
-           a [href "http://haskell.org/definition/haskell2010.pdf"]
+           a ! href "http://haskell.org/definition/haskell2010.pdf" $
              "here"
            ".")
-     p []
+     p
        "It can also be downloaded as a darcs repository: "
-     p []
-       (pre []
-            (code []
+     p
+       (pre
+            (code
                   "$ darcs get http://darcs.haskell.org/haskell2010-report"))
 
-links items =
-  ul []
-     (forM_ items
-            (\(title,url) ->
-               li [] (a [href url] title)))
+links items = ul (forM_ items (\(title,url) -> li (a ! href url $ title)))

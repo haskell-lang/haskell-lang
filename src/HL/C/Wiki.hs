@@ -10,8 +10,6 @@ import HL.C
 import HL.M.Wiki
 import HL.V.Wiki
 
-import Prelude hiding (readFile)
-
 -- | Wiki home (no page specified).
 getWikiHomeR :: C Html
 getWikiHomeR =
@@ -22,4 +20,4 @@ getWikiR :: Text -> C Html
 getWikiR name =
   do url <- getUrlRender
      result <- io (getWikiPage name)
-     senza (wikiV url result)
+     blaze (wikiV url result)

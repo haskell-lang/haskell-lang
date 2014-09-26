@@ -18,31 +18,31 @@ executable hl
                      -fno-warn-unused-do-bind
                      -fno-warn-type-defaults
   main-is:           Main.hs
-  build-depends:     blaze-html,
-                     monad-extras,
-                     filepath,
-                     markdown,
-                     xml-conduit,
-                     conduit,
-                     warp,
-                     wai-logger,
-                     fast-logger,
-                     yesod-core,
-                     text,
-                     lifted-base,
-                     yesod,
-                     yesod-static,
-                     base >= 4 && < 5,
-                     foreign-store,
-                     senza,
-                     directory,
-                     pandoc,
-                     pandoc-types,
-                     http-conduit,
-                     hscolour,
-                     text-icu,
-                     bytestring,
-                     mtl,
-                     tagstream-conduit,
-                     spoon,
-                     deepseq
+  build-depends:     base >= 4 && < 5
+                   , blaze-html
+                   , blaze-markup
+                   , bytestring
+                   , conduit
+                   , deepseq
+                   , directory
+                   , fast-logger
+                   , filepath
+                   , foreign-store
+                   , hscolour
+                   , http-conduit
+                   , lifted-base
+                   , markdown
+                   , monad-extras
+                   , mtl
+                   , pandoc
+                   , pandoc-types
+                   , spoon
+                   , tagstream-conduit
+                   , text
+                   , text-icu
+                   , wai-logger
+                   , warp
+                   , xml-conduit
+                   , yesod
+                   , yesod-core
+                   , yesod-static

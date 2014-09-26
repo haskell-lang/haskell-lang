@@ -5,17 +5,15 @@
 module HL.V.Code where
 
 import HL.V
-
 import Data.Text (unpack)
 import Language.Haskell.HsColour.CSS (hscolour)
-import Text.Blaze.Html
 
 -- | Some syntax-highlighted code.
-haskellPre :: Text -> Senza
+haskellPre :: Text -> Html
 haskellPre = preEscapedToHtml . hscolour False . unpack
 
 -- | Some syntax-highlighted code.
-haskellCode :: Text -> Senza
+haskellCode :: Text -> Html
 haskellCode = preEscapedToHtml . preToCode . hscolour False . unpack
 
 -- | Convert a <pre> tag code sample to <code>.

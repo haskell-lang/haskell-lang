@@ -26,7 +26,7 @@ import           Text.Pandoc.Walk
 import           Text.Pandoc.Writers.HTML
 
 -- | Wiki view.
-wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromSenza App
+wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromBlaze App
 wikiV urlr result =
   template
     ([WikiHomeR] ++
@@ -38,13 +38,12 @@ wikiV urlr result =
        container
          (row
             (span12
-               []
                (case result of
                   Left err ->
-                    do h1 [] "Wiki page retrieval problem!"
-                       p [] (toHtml err)
+                    do h1  "Wiki page retrieval problem!"
+                       p  (toHtml err)
                   Right (t,pan) ->
-                    do h1 [] (toHtml t)
+                    do h1  (toHtml t)
                        writeHtml writeOptions (cleanup urlr pan)))))
   where cleanup url = highlightBlock . highlightInline . relativize url
         writeOptions = def { writerTableOfContents = True }

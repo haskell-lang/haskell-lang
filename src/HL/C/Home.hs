@@ -10,4 +10,4 @@ import HL.V.Home
 getHomeR :: C Html
 getHomeR =
   do vids <- getHomeVideos
-     senza (homeV vids)
+     blaze (homeV vids)

@@ -12,4 +12,4 @@ import HL.V.News
 getNewsR :: C Html
 getNewsR =
   do html <- io getHaskellNews
-     senza (newsV html)
+     blaze (newsV html)

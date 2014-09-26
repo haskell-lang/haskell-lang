@@ -9,7 +9,7 @@ module HL.M.Wiki where
 
 import HL.C
 
-import Control.DeepSeq
+
 import Control.Exception.Lifted (catch)
 import Control.Spoon
 import Data.Conduit
