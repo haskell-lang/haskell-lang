@@ -9,7 +9,7 @@ import HL.V
 import HL.V.Template
 
 -- | Report view.
-reportV :: Int -> FilePath -> Html -> FromSenza App
+reportV :: Int -> FilePath -> Html -> FromBlaze App
 reportV year _ inner =
   template
     [DocumentationR
@@ -18,4 +18,4 @@ reportV year _ inner =
     (\_ ->
        container
          (row
-            (span12 [] inner)))
+            (span12 inner)))

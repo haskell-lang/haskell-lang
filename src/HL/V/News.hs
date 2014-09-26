@@ -9,15 +9,10 @@ import HL.V
 import HL.V.Template
 
 -- | News view.
-newsV :: Html -> FromSenza App
+newsV :: Html -> FromBlaze App
 newsV inner =
-  template
-    []
-    "News"
-    (\_ ->
-       container
-         (do row
-               (span12
-                  []
-                  (do h1 [] "News"))
-             inner))
+  template []
+           "News"
+           (\_ ->
+              container (do row (span12 (do h1 "News"))
+                            inner))

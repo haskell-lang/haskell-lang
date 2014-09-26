@@ -11,7 +11,7 @@ import HL.V.Template
 import HL.V.Home.Features
 
 -- | Home view.
-homeV :: [(Text, Text, Text)] -> FromSenza App
+homeV :: [(Text, Text, Text)] -> FromBlaze App
 homeV vids =
   skeleton
     "Haskell Language"
@@ -24,7 +24,7 @@ homeV vids =
           community url vids
           features
           events
-          div [class_ "mobile"]
+          div ! class_ "mobile" $
               (navigation False cur url))
     (\_ url ->
        scripts url
@@ -33,30 +33,30 @@ homeV vids =
                ,js_tryhaskell_pages_js])
 
 -- | Top header section with the logo and code sample.
-header :: (Route App -> AttributeValue) -> Senza
+header :: (Route App -> AttributeValue) -> Html
 header url =
-  div [class_ "header"]
+  div ! class_ "header" $
       (container
          (row
-            (do span6 []
-                      (div [class_ "branding"]
+            (do span6
+                      (div ! class_ "branding" $
                            (do branding
                                summation))
-                span6 []
-                      (div [class_ "branding"]
+                span6
+                      (div ! class_ "branding" $
                            (do tag
                                sample)))))
   where branding =
-          span [class_ "name"
-               ,background url img_logo_png]
+          span !class_ "name"
+               !background url img_logo_png$
                "Haskell"
         summation =
-          span [class_ "summary"]
+          span ! class_ "summary" $
                "An advanced purely-functional programming language"
         tag =
-          span [class_ "tag"]
+          span ! class_ "tag" $
                "Natural, declarative, statically typed code."
-        sample = div [class_ "code-sample"]
+        sample = div ! class_ "code-sample" $
                      (haskellPre codeSample)
 
 -- | Code sample.
@@ -68,45 +68,45 @@ codeSample =
   \fibonacci n = fibonacci (n - 1) + fibonacci (n - 2)"
 
 -- | Try Haskell section.
-try :: (Route App -> AttributeValue) -> Senza
+try :: (Route App -> AttributeValue) -> Html
 try _ =
-  div [ class_ "try"
-      , onclick "tryhaskell.controller.inner.click()"
-      ]
+  div ! class_ "try"
+      ! onclick "tryhaskell.controller.inner.click()"
+      $
       (container
          (row
-            (do span6 [] repl
-                span6 [id "guide"] (return ()))))
+            (do span6 repl
+                span6 ! id "guide" $ (return ()))))
   where
     repl =
-      do h2 [] "Try it"
-         div [id "console"] (return ())
+      do h2 "Try it"
+         div ! id "console" $ (return ())
 
 -- | Community section.
 -- TOOD: Should contain a list of thumbnail videos. See mockup.
-community :: (Route App -> AttributeValue) -> [(Text, Text, Text)] -> Senza
+community :: (Route App -> AttributeValue) -> [(Text, Text, Text)] -> Html
 community url vids =
-  do div [class_ "community"
-         ,background url img_community_jpg]
+  do div ! class_ "community"
+         ! background url img_community_jpg $
          (do container
                (row
-                  (span8 []
-                         (do h1 []
+                  (span8
+                         (do h1
                                 "An open source community effort for over 20 years"
-                             p [class_ "learn-more"]
-                               (a [href (url CommunityR)]
+                             p ! class_ "learn-more" $
+                               (a ! href (url CommunityR) $
                                   "Learn more")))))
-     div [class_ "videos"]
-         (container (row (span12 [] (ul [] (forM_ vids vid)))))
+     div ! class_ "videos" $
+         (container (row (span12 (ul (forM_ vids vid)))))
   where
     vid (n,u,thumb) =
-      li []
-         (a [href (toValue u)
-            ,title (toValue n)]
-            (img [src (toValue thumb)]))
+      li
+         (a !href (toValue u)
+            !title (toValue n)$
+            (img ! src (toValue thumb)))
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?
-events :: Senza
+events :: Html
 events =
   return ()

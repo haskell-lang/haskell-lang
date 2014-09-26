@@ -10,4 +10,4 @@ import HL.V.Documentation
 -- | Documentation controller.
 getDocumentationR :: C Html
 getDocumentationR =
-  senza documentationV
+  blaze documentationV

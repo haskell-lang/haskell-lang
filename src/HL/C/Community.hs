@@ -7,4 +7,4 @@ import HL.V.Community
 
 -- | Community controller.
 getCommunityR :: C Html
-getCommunityR = senza communityV
+getCommunityR = blaze communityV
