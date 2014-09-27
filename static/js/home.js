@@ -1,6 +1,7 @@
 // Main entry point
 $(function(){
   setupVids();
+  setupFeatures();
 });
 
 // Setup hovering of video thumbnails

@@ -448,10 +448,10 @@ h2 {
   padding-bottom: 5px;
   border-radius: 5px;
 }
-/* .page-home .features .span6:hover { */
-/*   background: #f0f1f2; */
-/*   cursor: pointer */
-/* } */
+.page-home .features .span6:hover {
+  background: #f0f1f2;
+  cursor: pointer
+}
 .page-home .features .span6 h2 {
   margin-top: 0;
   padding-top: 10px;
@@ -471,11 +471,8 @@ h2 {
   margin-bottom: 40px;
 }
 
-.page-home .features .expand {
-  display: none;
-}
 .page-home .features .expandable {
-  /* display: none; */
+  display: none;
 }
 
 .page-home .features .packages {
