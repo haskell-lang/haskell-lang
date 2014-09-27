@@ -34,3 +34,35 @@ code .diff              { color:#555 }
 pre {
   margin: 1em 0;
 }
+
+/* Rejected, bad code */
+
+.rejected-code {
+  position: relative;
+}
+.rejected-code .rejected-note {
+  position: absolute;
+  top: 0;
+  line-height: 2em;
+  height: 2em;
+  vertical-align: middle;
+  right: 0.5em;
+  color: #a94442;
+  font-style: italic
+}
+.rejected-code pre {
+  padding-right: 6em;
+}
+.rejected-code pre, .rejected-code pre * {
+  color: #a94442;
+  background-color: #f2ebeb;
+  border-color: #ebccd1;
+}
+.rejected-code pre .hs-comment        { color:#a94442 }
+.rejected-code pre .hs-keyword        { color:#a94442460 }
+.rejected-code pre .hs-str            { color:#a94442354 }
+.rejected-code pre .hs-conid          { color:#a94442371 }
+.rejected-code pre .hs-varop, pre .hs-keyglyph { color:#a94442e8b }
+.rejected-code pre .hs-varid          { color:#a94442 }
+.rejected-code pre .hs-num            { color:#a94442371 }
+.rejected-code pre .hs-definition     { color: #a9444259c }
