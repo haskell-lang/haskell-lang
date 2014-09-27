@@ -15,6 +15,16 @@ body {
   padding:0;
 }
 
+pre {
+  font-family: ubuntu mono, monospace;
+}
+
+code {
+  background: #eee;
+  color: #4F4371;
+  font-family: ubuntu mono, monospace;
+}
+
 .wrap {
   background:#fff;
   padding-bottom:2em;
@@ -53,7 +63,7 @@ h2 {
   margin-top:1em;
   font-size:13px;
   height: 30px;
-overflow: hidden;
+  overflow: hidden;
 }
 
 .footer a {
@@ -292,7 +302,7 @@ overflow: hidden;
 }
 
 .jquery-console-prompt-box {
-    clear: both;
+  clear: both;
 }
 
 .jquery-console-error {
@@ -322,16 +332,16 @@ overflow: hidden;
 }
 
 .jquery-console-stdout + .jquery-console-type {
-    display: none !important;
+  display: none !important;
 }
 
 .jquery-console-value:empty + .jquery-console-type {
-    visibility: visible;
+  visibility: visible;
 }
 
 .jquery-console-value + .jquery-console-type {
-    float: left;
-    margin-left: .5em;
+  float: left;
+  margin-left: .5em;
 }
 
 #guide .spoiler {
@@ -433,6 +443,20 @@ overflow: hidden;
    Features
    */
 
+.page-home .features .span6 {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+.page-home .features .span6:hover {
+  background: #f0f1f2;
+  cursor: pointer
+}
+.page-home .features .span6 h2 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+
 .page-home .features h1 {
   margin-top: 40px;
 }
@@ -445,6 +469,25 @@ overflow: hidden;
 
 .page-home .features {
   margin-bottom: 40px;
+}
+
+.page-home .features .expandable {
+  display: none;
+}
+
+.page-home .features .packages {
+  width: 100%;
+}
+
+.page-home .features .packages td {
+  vertical-align: top;
+  padding-bottom: 0.125em;
+}
+
+@media (max-width: 480px){
+  .page-home .features .rhs {
+    display: none
+  }
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
