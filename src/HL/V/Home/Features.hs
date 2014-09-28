@@ -29,10 +29,10 @@ features =
 purefunc :: Html
 purefunc =
   do h2 "Purely functional"
-     p "Every function in Haskell is pure. They are functions in the mathematical sense. \
+     p "Every function in Haskell is a function in the mathematical sense (i.e., \"pure\"). \
        \Even side-effecting IO operations are but a description of what to do, produced \
-       \by pure code. There are no statements or instructions, only expressions. Which \
-       \cannot mutate variables, local or global, or access state like time or random \
+       \by pure code. There are no statements or instructions, only expressions which \
+       \cannot mutate variables (local or global) nor access state like time or random \
        \numbers."
      p !. "expand" $ a "Click to expand"
      div !. "expandable" $ do
@@ -119,9 +119,9 @@ inference :: Html
 inference =
   do h2 "Type inference"
      p "You don't have to explicitly write out every type in a Haskell program. \
-       \Types will be inferred by unifying every type bidirectionally. But you \
-       \can write out types, or ask the compiler to write them for you, for \
-       \handy documentation."
+       \Types will be inferred by unifying every type bidirectionally. However, you \
+       \can write out types if you choose, or ask the compiler to write them for you \
+       \for handy documentation."
      p !. "expand" $ a "Click to expand"
      div !. "expandable" $ do
        p "This example has a type signature for every binding:"
@@ -156,9 +156,9 @@ lazy =
   do h2 "Lazy"
      p "Functions don't evaluate their arguments. This means that programs \
        \can compose together very well, with the ability to write control \
-       \constructs with normal functions, and, thanks also to the purity \
-       \of Haskell, to fuse chains of functions together for high \
-       \performance."
+       \constructs (such as if/else) just by writing normal functions. The purity \
+       \of Haskell code makes it easy to fuse chains of functions together, allowing \
+       \for performance benefits."
      p !. "expand" $ a "Click to expand"
      div !. "expandable" $ do
        p "Define control structures easily:"
