@@ -127,14 +127,16 @@ inference =
        p "This example has a type signature for every binding:"
        haskellPre "main :: IO ()\n\
                   \main = do line :: String <- getLine\n\
-                  \  where parseDigit :: String -> Maybe Char\n\
-                  \        parseDigit (c :: Char,_) =\n\
+                  \          print (parseDigit line)\n\
+                  \  where parseDigit :: String -> Maybe Int\n\
+                  \        parseDigit ((c :: Char) : _) =\n\
                   \          if isDigit c\n\
                   \             then Just (ord c - ord '0')\n\
                   \             else Nothing"
        p "But you can just write:"
        haskellPre "main = do line <- getLine\n\
-                  \  where parseDigit (c,_) =\n\
+                  \          print (parseDigit line)\n\
+                  \  where parseDigit (c : _) =\n\
                   \          if isDigit c\n\
                   \             then Just (ord c - ord '0')\n\
                   \             else Nothing"
