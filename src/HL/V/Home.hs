@@ -55,7 +55,7 @@ header url =
                "An advanced purely-functional programming language"
         tag =
           span ! class_ "tag" $
-               "Natural, declarative, statically typed code."
+               "Declarative, statically typed code."
         sample = div ! class_ "code-sample" $
                      (haskellPre codeSample)
 
