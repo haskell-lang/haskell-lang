@@ -18,7 +18,7 @@ homeV vids =
     (\_ _ ->
        linkcss "https://fonts.googleapis.com/css?family=Ubuntu:700")
     (\cur url ->
-       do navigation False Nothing url
+       do navigation True Nothing url
           header url
           try url
           community url vids
