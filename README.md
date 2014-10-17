@@ -73,6 +73,23 @@ To do the cabal update, submodule, install, etc.
 
 Done!
 
+### Using sandboxes
+
+Clone the repo:
+
+    $ git clone git@github.com:haskell-infra/hl.git
+
+Set up sandbox:
+
+    $ cabal sandbox init
+
+Install dependencies and build:
+
+    $ cabal install --only-dependencies
+    $ cabal build
+
+Done!
+
 ## Running
 
 It runs at: http://localhost:1990/
