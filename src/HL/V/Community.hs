@@ -46,6 +46,5 @@ offline =
      li (a ! href "http://www.meetup.com/Bay-Area-Haskell-Users-Group/"$ "Bay Area Haskell Users Group")
      li (a ! href "http://www.meetup.com/Boston-Haskell/"$ "Boston Haskell")
      li (a ! href "http://www.meetup.com/berlinhug/"$ "Berlin Haskell Users Group")
-     li (a ! href "http://www.meetup.com/got-lambda/"$ "Got.λ - Göteborg Functional Programming Group")
      li (a ! href "http://www.meetup.com/NY-Haskell/"$ "New York Haskell Users Group")
      li (a ! href "http://www.meetup.com/find/?allMeetups=true&keywords=Haskell&radius=Infinity"$ "More Haskell meetups at meetup.com")
