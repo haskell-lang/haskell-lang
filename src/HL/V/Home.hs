@@ -23,6 +23,7 @@ homeV vids =
           try url
           community url vids
           features
+          sponsors
           events
           div ! class_ "mobile" $
               (navigation False cur url))
@@ -112,3 +113,30 @@ community url vids =
 events :: Html
 events =
   return ()
+
+-- | List of sponsors.
+sponsors :: Html
+sponsors =
+  div !. "sponsors" $
+    container $
+      do row (span6 (h1 "Sponsors"))
+         row (do span6 (p (do strong (a ! href "https://www.datadoghq.com" $ "DataDog")
+                              " provides powerful, customizable 24/7 metrics and monitoring \
+                              \integration for all of Haskell.org, and complains loudly for \
+                              \us when things go wrong."))
+                 span6 (p (do strong (a ! href "https://www.fastly.com" $ "Fastly")
+                              "'s Next Generation CDN provides low latency access for all of \
+                              \Haskell.org's downloads and highest traffic services, including \
+                              \the primary Hackage server, Haskell Platform downloads, and more." )))
+         row (do span6 (p (do strong (a ! href "https://www.rackspace.com" $ "Rackspace")
+                              " provides compute, storage, and networking resources, powering \
+                              \almost all of Haskell.org in several regions around the world."))
+                 span6 (p (do strong (a ! href "https://www.status.io" $ "Status.io")
+                              " powers "
+                              a ! href "https://status.haskell.org" $ "https://status.haskell.org"
+                              ", and lets us easily tell you \
+                              \when we broke something." )))
+         row (do span6 (p (do strong (a ! href "http://www.galois.com" $ "Galois")
+                              " provides infrastructure, funds, administrative resources and \
+                              \has historically hosted critical Haskell.org infrastructure, \
+                              \as well as helping the Haskell community at large with their work." )))
