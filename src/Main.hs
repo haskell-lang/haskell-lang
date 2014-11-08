@@ -6,6 +6,7 @@ import HL.Dispatch ()
 import HL.Foundation
 
 import Control.Concurrent.Chan
+import System.Environment (getEnvironment)
 import Yesod
 import Yesod.Static
 
@@ -14,4 +15,6 @@ main :: IO ()
 main =
   do s <- static "static"
      c <- newChan
-     warp 1990 (App s c)
+     env <- getEnvironment
+     let port = maybe 1990 read $ lookup "PORT" env
+     warp port (App s c)

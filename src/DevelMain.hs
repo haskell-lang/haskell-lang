@@ -9,6 +9,7 @@ import Control.Concurrent
 import Data.IORef
 import Foreign.Store
 import Network.Wai.Handler.Warp
+import System.Environment (getEnvironment)
 import Yesod
 import Yesod.Static
 
@@ -19,9 +20,11 @@ main =
      c <- newChan
      app <- toWaiApp (App s c)
      ref <- newIORef app
+     env <- getEnvironment
+     let port = maybe 1990 read $ lookup "PORT" env
      tid <- forkIO
               (runSettings
-                 (setPort 1990 defaultSettings)
+                 (setPort port defaultSettings)
                  (\req ->
                     do handler <- readIORef ref
                        handler req))
