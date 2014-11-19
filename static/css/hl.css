@@ -97,20 +97,20 @@ h2 {
   border:0;
 }
 
-.navbar-header .navbar-brand {
+.navbar-brand {
   color:#fff;
   font-size:inherit;
   font-weight:700;
   margin-left: 0 !important;
+  padding-left:0;
 }
 
-.navbar-header .navbar-brand .logo {
-  margin-right:.5em;
+.navbar-default .navbar-brand {
   color:#fff;
 }
 
-.navbar-header .navbar-brand:hover,
-.navbar-header .navbar-brand:focus {
+.navbar-brand .logo {
+  margin-right:.5em;
   color:#fff;
 }
 
@@ -118,6 +118,11 @@ h2 {
   color:#d1cddc!important;
   background-color:#312b3f;
   border-bottom:.3em solid #465787;
+}
+
+.navbar-default .navbar-brand:hover,
+.navbar-default .navbar-brand:focus {
+  color:#fff;
 }
 
 .navbar-default .navbar-nav > .active > a:hover,
@@ -154,8 +159,6 @@ h2 {
 }
 
 .template .container > .row {
-  margin-left:0;
-  margin-right:0;
   max-width:none;
 }
 
@@ -199,11 +202,17 @@ h2 {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#150e1a', endColorstr='#22172a',GradientType=1 ); /* IE6-9 */
 }
 
+.page-home .navbar-brand,.page-home .navbar-brand .logo {
+  color: #d1cddc!important;
+  cursor: default;
+}
+
 /* * * * * * * * * * * * * * * * * * * *
    Header
    */
 
 .page-home .header {
+  cursor: default;
   color: #fff;
   background: #19111f; /* Old browsers */
   background: -moz-linear-gradient(left, #19111f 0%, #2c1e37 100%); /* FF3.6+ */
@@ -494,6 +503,30 @@ h2 {
   }
 }
 
+/* * * * * * * * * * * * * * * * * * * *
+   Sponsors
+   */
+
+.page-home .sponsors {
+  background: #1b2332;
+  color: #f0f0f0;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+.page-home .sponsors h1 {
+  margin-bottom: 1em;
+}
+.page-home .wrap {
+  padding-bottom: 0;
+}
+.page-home .footer {
+  background: #1b2332;
+}
+.page-home .sponsors a:hover {
+  color: #71a9d9;
+  text-decoration: none;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Responsiveness
    */
@@ -518,10 +551,13 @@ h2 {
   .footer-contribute {
     display: none;
   }
+  .navbar-brand {
+    margin-left: 15px !important;
+  }
 }
 
 @media (max-width: 480px){
-  .navbar {
+  .page-home .navbar {
     display: none;
   }
   .mobile > .navbar {
