@@ -104,7 +104,7 @@ tryhaskell.ajaxCommand = function(line,report,stdin){
                  'args': JSON.stringify([stdin,tryhaskell.files])
                };
     $.ajax({
-        url: 'http://tryhaskell.org/eval',
+        url: 'https://try.haskell.org/eval',
         dataType: 'jsonp',
         type: 'GET',
         data: args,
