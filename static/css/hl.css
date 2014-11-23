@@ -126,7 +126,8 @@ h2 {
 }
 
 .navbar-default .navbar-nav > .active > a:hover,
-.navbar-default .navbar-nav a:hover {
+.navbar-default .navbar-nav a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
   color:#fff!important;
   background-color:#312b3f;
 }
