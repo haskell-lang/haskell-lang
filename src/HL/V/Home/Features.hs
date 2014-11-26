@@ -4,7 +4,7 @@
 
 module HL.V.Home.Features where
 
-import HL.V hiding (list)
+import HL.V
 import HL.V.Code
 
 import Data.Monoid

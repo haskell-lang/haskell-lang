@@ -15,7 +15,7 @@ import Control.Monad as V
 import Data.Text as V (Text)
 import Lucid as V
 import Lucid.Bootstrap as V
-import Yesod.Lucid as V hiding (toHtml)
+import Yesod.Lucid as V
 
 todo :: Term a r => a -> r
 todo = termWith "div" [class_ "muted"]

@@ -6,7 +6,7 @@
 module HL.V.Template where
 
 import HL.Types
-import HL.V hiding (item,footer)
+import HL.V
 
 import Data.Monoid
 import Yesod.Static (Static)

@@ -6,7 +6,7 @@ module HL.V.Downloads where
 
 import Data.Monoid
 import HL.Types
-import HL.V hiding (list)
+import HL.V
 import HL.V.Template
 
 -- | Downloads view.
