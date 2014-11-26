@@ -122,8 +122,9 @@ It uses Yesod and an MVC organization.
 * HL.V.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/V)
 * HL.C.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/C)
 
-Templates are written in [senza](https://github.com/chrisdone/senza),
-a convenience wrapper to blaze-html. There is presently no database.
+Templates are written in
+[Lucid](https://github.com/chrisdone/lucid). There is presently no
+database.
 
 ## Style
 
