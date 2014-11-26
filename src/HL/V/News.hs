@@ -9,10 +9,11 @@ import HL.V
 import HL.V.Template
 
 -- | News view.
-newsV :: Html -> FromBlaze App
+newsV :: Html () -> FromLucid App
 newsV inner =
   template []
            "News"
            (\_ ->
-              container (do row (span12 (do h1 "News"))
-                            inner))
+              container_
+                (do row_ (span12_ [class_ "col-md-12"] (do h1_ "News"))
+                    inner))

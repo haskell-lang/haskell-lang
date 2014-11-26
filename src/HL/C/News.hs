@@ -6,10 +6,11 @@ module HL.C.News where
 
 import HL.C
 import HL.M.News
+import HL.V
 import HL.V.News
 
 -- | News controller.
-getNewsR :: C Html
+getNewsR :: C (Html ())
 getNewsR =
   do html <- io getHaskellNews
-     blaze (newsV html)
+     lucid (newsV html)

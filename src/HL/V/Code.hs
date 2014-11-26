@@ -6,24 +6,31 @@
 module HL.V.Code where
 
 import HL.V
+
 import Data.Text (unpack)
 import Language.Haskell.HsColour.CSS (hscolour)
 
 -- | Some syntax-highlighted code.
-haskellPre :: Text -> Html
-haskellPre = preEscapedToHtml . hscolour False . unpack
+haskellPre :: Text -> Html ()
+haskellPre = toHtmlRaw . hscolour False . unpack
 
 -- | Some syntax-highlighted code.
-rejectedHaskellPre :: Text -> Text -> Html
-rejectedHaskellPre msg = wrap . preEscapedToHtml . hscolour False . unpack
-  where wrap inner =
-          HL.V.div !. "rejected-code" $
-            do HL.V.span !. "rejected-note" $ toHtml msg
-               inner
+rejectedHaskellPre :: Text -> Text -> Html ()
+rejectedHaskellPre msg =
+  wrap .
+  toHtmlRaw .
+  hscolour False .
+  unpack
+  where wrap :: Html () -> Html ()
+        wrap inner =
+          div_ [class_ "rejected-code"]
+               (do span_ [class_ "rejected-note"]
+                         (toHtml msg)
+                   inner)
 
 -- | Some syntax-highlighted code.
-haskellCode :: Text -> Html
-haskellCode = preEscapedToHtml . preToCode . hscolour False . unpack
+haskellCode :: Text -> Html ()
+haskellCode = toHtmlRaw . preToCode . hscolour False . unpack
 
 -- | Convert a <pre> tag code sample to <code>.
 preToCode :: [Char] -> [Char]

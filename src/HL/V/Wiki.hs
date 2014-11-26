@@ -1,6 +1,5 @@
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 
 -- | Wiki page view.
 
@@ -19,6 +18,7 @@ import           Data.Text (unpack,pack)
 import           Data.Text.Lazy (toStrict)
 import           Data.Text.Lazy.Builder
 import           Language.Haskell.HsColour.CSS (hscolour)
+import           Text.Blaze.Renderer.Text (renderHtml)
 import           Text.HTML.TagStream.Text
 import           Text.Pandoc.Definition
 import           Text.Pandoc.Options
@@ -26,7 +26,7 @@ import           Text.Pandoc.Walk
 import           Text.Pandoc.Writers.HTML
 
 -- | Wiki view.
-wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromBlaze App
+wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromLucid App
 wikiV urlr result =
   template
     ([WikiHomeR] ++
@@ -35,16 +35,16 @@ wikiV urlr result =
        Left{} -> "Wiki error!"
        Right (t,_) -> t)
     (\_ ->
-       container
-         (row
-            (span12
+       container_
+         (row_
+            (span12_ [class_ "col-md-12"]
                (case result of
                   Left err ->
-                    do h1  "Wiki page retrieval problem!"
-                       p  (toHtml err)
+                    do h1_  "Wiki page retrieval problem!"
+                       p_ (toHtml err)
                   Right (t,pan) ->
-                    do h1  (toHtml t)
-                       writeHtml writeOptions (cleanup urlr pan)))))
+                    do h1_ (toHtml t)
+                       toHtmlRaw (renderHtml (writeHtml writeOptions (cleanup urlr pan)))))))
   where cleanup url = highlightBlock . highlightInline . relativize url
         writeOptions = def { writerTableOfContents = True }
 

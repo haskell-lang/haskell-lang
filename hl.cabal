@@ -19,8 +19,9 @@ executable hl
                      -fno-warn-type-defaults
   main-is:           Main.hs
   build-depends:     base >= 4 && < 5
-                   , blaze-html
                    , blaze-markup
+                   , blaze-html
+                   , lucid
                    , bytestring
                    , conduit
                    , deepseq

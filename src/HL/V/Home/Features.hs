@@ -1,5 +1,4 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE NoImplicitPrelude #-}
 
 -- | Features list.
 
@@ -8,89 +7,87 @@ module HL.V.Home.Features where
 import HL.V hiding (list)
 import HL.V.Code
 
-import Data.List
 import Data.Monoid
-import Data.Ord
 
 -- | Features section explains what's notable about Haskell as a
 -- language.
-features :: Html
+features :: Html ()
 features =
-  div ! class_ "features" $
-      (container
-         (do h1 "Features"
-             row (do span6 statically
-                     span6 purefunc)
-             row (do span6 inference
-                     span6 concurrent)
-             row (do span6 lazy
-                     span6 packages)))
+  div_ [class_ "features"]
+       (container_
+          (do h1_ "Features"
+              row_ (do span6_ [class_ "col-md-6"] statically
+                       span6_ [class_ "col-md-6"] purefunc)
+              row_ (do span6_ [class_ "col-md-6"] inference
+                       span6_ [class_ "col-md-6"] concurrent)
+              row_ (do span6_ [class_ "col-md-6"] lazy
+                       span6_ [class_ "col-md-6"] packages)))
 
-purefunc :: Html
+purefunc :: Html ()
 purefunc =
-  do h2 "Purely functional"
-     p "Every function in Haskell is a function in the mathematical sense (i.e., \"pure\"). \
-       \Even side-effecting IO operations are but a description of what to do, produced \
-       \by pure code. There are no statements or instructions, only expressions which \
-       \cannot mutate variables (local or global) nor access state like time or random \
-       \numbers."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p (do "The following function takes an integer and returns an integer. "
-             "By the type it cannot do any side-effects whatsoever, it cannot\
-             \ mutate any of its arguments.")
+  do h2_ "Purely functional"
+     p_ "Every function in Haskell is a function in the mathematical sense (i.e., \"pure\"). \
+        \Even side-effecting IO operations are but a description of what to do, produced \
+        \by pure code. There are no statements or instructions, only expressions which \
+        \cannot mutate variables (local or global) nor access state like time or random \
+        \numbers."
+     p_ [class_ "expand"] (a_ "Click to expand")
+     div_ [class_ "expandable"] $ do
+       p_ (do "The following function takes an integer and returns an integer. "
+              "By the type it cannot do any side-effects whatsoever, it cannot\
+              \ mutate any of its arguments.")
        haskellPre "square :: Int -> Int\n\
                   \square x = x * x"
-       p (do "The following string concatenation is okay:")
+       p_ (do "The following string concatenation is okay:")
        haskellPre "\"Hello: \" ++ \"World!\" "
-       p (do "The following string concatenation is a type error:")
+       p_ (do "The following string concatenation is a type error:")
        rejectedHaskellPre "Type error" "\"Name: \" ++ getLine"
-       p (do "Because "
-             code "getLine"
-             " has type "
-             code "IO String"
-             " and not "
-             code "String"
-             ", like "
-             code "\"Name: \""
-             " is. So by the type system you cannot mix and \
-             \match purity with impurity.")
+       p_ (do "Because "
+              code_ "getLine"
+              " has type "
+              code_ "IO String"
+              " and not "
+              code_ "String"
+              ", like "
+              code_ "\"Name: \""
+              " is. So by the type system you cannot mix and \
+              \match purity with impurity.")
 
-statically :: Html
+statically :: Html ()
 statically =
-  do h2 "Statically typed"
-     p "Every expression in Haskell has a type which is determined at compile time. \
+  do h2_ "Statically typed"
+     p_ "Every expression in Haskell has a type which is determined at compile time. \
        \All the types composed together by function application have to match up. If \
        \they don't, the program will be rejected by the compiler. Types become not \
        \only a form of guarantee, but a language for expressing the construction \
        \of programs."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p "All Haskell values have a type:"
+     p_ [class_ "expand"] (a_ "Click to expand")
+     div_ [class_ "expandable"] $ do
+       p_ "All Haskell values have a type:"
        haskellPre "char = 'a'    :: Char\n\
                   \int = 123     :: Int\n\
                   \fun = isDigit :: Char -> Bool\n"
-       p "You have to pass the right type of values to functions, or the compiler\
+       p_ "You have to pass the right type of values to functions, or the compiler\
          \ will reject the program:"
        rejectedHaskellPre "Type error" "isDigit 1"
-       p "You can decode bytes into text:"
+       p_ "You can decode bytes into text:"
        haskellPre "bytes = Crypto.Hash.SHA1.hash \"hello\" :: ByteString\n\
                   \text = decodeUtf8 bytes               :: Text\n"
-       p "But you cannot decode Text, which is already a vector \
+       p_ "But you cannot decode Text, which is already a vector \
          \of Unicode points:"
        rejectedHaskellPre "Type error" "doubleDecode = decodeUtf8 (decodeUtf8 bytes)"
 
-concurrent :: Html
+concurrent :: Html ()
 concurrent =
-  do h2 "Concurrent"
-     p "Haskell lends itself well to concurrent programming due to its explicit \
+  do h2_ "Concurrent"
+     p_ "Haskell lends itself well to concurrent programming due to its explicit \
        \handling of effects. Its flagship compiler, GHC, comes with a high-\
        \performance parallel garbage collector and light-weight concurrency \
        \library containing a number of useful concurrency primitives and \
        \abstractions."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p "Easily launch threads and communicate with the standard library:"
+     p_ [class_ "expand"] (a_ "Click to expand")
+     div_ [class_ "expandable"] $ do
+       p_ "Easily launch threads and communicate with the standard library:"
        haskellPre "main = do\n\
                   \  done <- newEmptyMVar\n\
                   \  forkIO (do putStrLn \"I'm one thread!\"\n\
@@ -100,31 +97,31 @@ concurrent =
                   \  killThread second\n\
                   \  msg <- takeMVar done\n\
                   \  putStrLn msg"
-       p "Use an asynchronous API for threads:"
+       p_ "Use an asynchronous API for threads:"
        haskellPre "do a1 <- async (getURL url1)\n\
                    \  a2 <- async (getURL url2)\n\
                    \  page1 <- wait a1\n\
                    \  page2 <- wait a2\n\
                    \  ..."
-       p "Atomic threading with software transactional memory:"
+       p_ "Atomic threading with software transactional memory:"
        haskellPre "transfer :: Account -> Account -> Int -> IO ()\n\
                    \transfer from to amount =\n\
                    \  atomically (do deposit to amount\n\
                    \                 withdraw from amount)"
-       p "Atomic transactions must be repeatable, so arbitrary IO is disabled in \
+       p_ "Atomic transactions must be repeatable, so arbitrary IO is disabled in \
          \in the type system:"
        rejectedHaskellPre "Type error" "main = atomically (putStrLn \"Hello!\")"
 
-inference :: Html
+inference :: Html ()
 inference =
-  do h2 "Type inference"
-     p "You don't have to explicitly write out every type in a Haskell program. \
+  do h2_ "Type inference"
+     p_ "You don't have to explicitly write out every type in a Haskell program. \
        \Types will be inferred by unifying every type bidirectionally. However, you \
        \can write out types if you choose, or ask the compiler to write them for you \
        \for handy documentation."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p "This example has a type signature for every binding:"
+     p_ [class_ "expand"] (a_ "Click to expand")
+     div_ [class_ "expandable"] $ do
+       p_ "This example has a type signature for every binding:"
        haskellPre "main :: IO ()\n\
                   \main = do line :: String <- getLine\n\
                   \          print (parseDigit line)\n\
@@ -133,79 +130,79 @@ inference =
                   \          if isDigit c\n\
                   \             then Just (ord c - ord '0')\n\
                   \             else Nothing"
-       p "But you can just write:"
+       p_ "But you can just write:"
        haskellPre "main = do line <- getLine\n\
                   \          print (parseDigit line)\n\
                   \  where parseDigit (c : _) =\n\
                   \          if isDigit c\n\
                   \             then Just (ord c - ord '0')\n\
                   \             else Nothing"
-       p "You can also use inference to avoid wasting time explaining \
+       p_ "You can also use inference to avoid wasting time explaining \
          \what you want:"
        haskellPre "do ss <- decode \"[\\\"Hello!\\\",\\\"World!\\\"]\"\n\
                   \   is <- decode \"[1,2,3]\"\n\
                   \   return (zipWith (\\s i -> s ++ \" \" ++ show (i + 5)) ss is)\n\
                   \ => Just [\"Hello! 6\",\"World! 7\"]"
-       p "Types give a parser specification for free, the following \
+       p_ "Types give a parser specification for free, the following \
          \input is not accepted:"
        haskellPre "do ss <- decode \"[1,2,3]\"\n\
                   \   is <- decode \"[null,null,null]\"\n\
                   \   return (zipWith (\\s i -> s ++ \" \" ++ show (i + 5)) ss is)\n\
                   \ => Nothing"
 
-lazy :: Html
+lazy :: Html ()
 lazy =
-  do h2 "Lazy"
-     p "Functions don't evaluate their arguments. This means that programs \
+  do h2_ "Lazy"
+     p_ "Functions don't evaluate their arguments. This means that programs \
        \can compose together very well, with the ability to write control \
        \constructs (such as if/else) just by writing normal functions. The purity \
        \of Haskell code makes it easy to fuse chains of functions together, allowing \
        \for performance benefits."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p "Define control structures easily:"
+     p_ [class_ "expand"] $ a_ "Click to expand"
+     div_ [class_ "expandable"] $ do
+       p_ "Define control structures easily:"
        haskellPre "when p m = if p then m else return ()\n\
                   \main = do args <- getArgs\n\
                   \          when (null args)\n\
                   \               (putStrLn \"No args specified!\") "
-       p "If you notice a repeated expression pattern, like "
+       p_ "If you notice a repeated expression pattern, like "
        haskellPre "if c then t else False"
-       p "you can give this a name, like "
+       p_ "you can give this a name, like "
        haskellPre "and c t = if c then t else False"
-       p "and then use it with the same effect as the orginal expression."
-       p (do "Get code re-use by composing lazy functions. It's quite natural\
-             \ to express the "
-             code "any"
-             " function by reusing the "
-             code "map"
-             " and "
-             code "or"
-             " functions:")
+       p_ "and then use it with the same effect as the orginal expression."
+       p_ (do "Get code re-use by composing lazy functions. It's quite natural\
+              \ to express the "
+              code_ "any"
+              " function by reusing the "
+              code_ "map"
+              " and "
+              code_ "or"
+              " functions:")
        haskellPre "any :: (a -> Bool) -> [a] -> Bool\n\
                   \any p = or . map p"
-       p (do "Reuse the recursion patterns in "
-             code "map"; ", "; code "filter"; ", "; code "foldr"; ", etc.")
+       p_ (do "Reuse the recursion patterns in "
+              code_ "map"; ", "; code_ "filter"; ", "; code_ "foldr"; ", etc.")
 
-packages :: Html
+packages :: Html ()
 packages =
-  do h2 "Packages"
-     p "Open source contribution to Haskell is very active with a wide range \
-       \of packages available on the public package servers."
-     p !. "expand" $ a "Click to expand"
-     div !. "expandable" $ do
-       p "There are 6,954 packages freely available, here is a sample of the \
+  do h2_ "Packages"
+     p_ "Open source contribution to Haskell is very active with a wide range \
+        \of packages available on the public package servers."
+     p_ [class_ "expand"] (a_ "Click to expand")
+     div_ [class_ "expandable"] $ do
+       p_ "There are 6,954 packages freely available, here is a sample of the \
          \most common ones:"
-       table !. "packages" $
+       table_ [class_ "packages"] $
          forM_ (alternating packages)
                (\((name1,desc1),(name,desc)) ->
-                  tr (do td (a ! href ("https://hackage.haskell.org/package/" <> toValue name) $ toHtml name)
-                         td (toHtml desc)
-                         td !. "rhs" $ a ! href ("https://hackage.haskell.org/package/" <> toValue name1) $ toHtml name1
-                         td !. "rhs" $ toHtml desc1))
+                  tr_ (do td_ (a_ [href_ ("https://hackage.haskell.org/package/" <> name)] $ toHtml name)
+                          td_ (toHtml desc)
+                          td_ [class_ "rhs"] $ a_ [href_ ("https://hackage.haskell.org/package/" <> name1)] $ toHtml name1
+                          td_ [class_ "rhs"] $ toHtml desc1))
   where package (name,desc) =
-          li $ do a ! href (toValue name) $ toHtml name
-                  " — "
-                  toHtml desc
+          li_ $ do a_ [href_ name] $ toHtml name
+                   " — "
+                   toHtml desc
         packages :: [(Text,Text)]
         packages = [("base"             , "Prelude, IO, threads")
                    ,("bytestring"       , "Binary data")

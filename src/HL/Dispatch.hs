@@ -1,5 +1,8 @@
 {-# OPTIONS -fno-warn-orphans -fno-warn-name-shadowing #-}
 {-# LANGUAGE TemplateHaskell #-}
+{-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 -- | Make the dispatcher.
 
@@ -17,6 +20,16 @@ import HL.C.Irc
 import HL.C.MailingLists
 import HL.Foundation
 
-import Yesod
+import Control.Monad.Identity
+import Lucid
+import Yesod hiding (Html)
+
+instance ToTypedContent (Html ()) where
+  toTypedContent html =
+    TypedContent "text/html"
+                 (ContentBuilder (runIdentity (execHtmlT html)) Nothing)
+
+instance ToContent (Html ()) where
+  toContent = undefined
 
 mkYesodDispatch "App" resourcesApp

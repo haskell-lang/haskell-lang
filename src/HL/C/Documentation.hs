@@ -5,9 +5,10 @@
 module HL.C.Documentation where
 
 import HL.C
+import HL.V
 import HL.V.Documentation
 
 -- | Documentation controller.
-getDocumentationR :: C Html
+getDocumentationR :: C (Html ())
 getDocumentationR =
-  blaze documentationV
+  lucid documentationV

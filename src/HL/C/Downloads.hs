@@ -7,17 +7,18 @@ module HL.C.Downloads where
 import HL.C
 import HL.M.Markdown
 import HL.V.Downloads
+import HL.V
 
 -- | Downloads controller.
-getDownloadsR :: C Html
-getDownloadsR = blaze downloadsV
+getDownloadsR :: C (Html ())
+getDownloadsR = lucid downloadsV
 
 -- | Downloads for particular OS.
-getDownloadsForR :: OS -> C Html
+getDownloadsForR :: OS -> C (Html ())
 getDownloadsForR os =
   do manualInstall <- io (getMarkdown "manual-install.md")
      autoInstall <- io (getMarkdown autoFp)
-     blaze (downloadsForV os autoInstall manualInstall)
+     lucid (downloadsForV os autoInstall manualInstall)
   where autoFp =
           case os of
             Windows -> "windows-install.md"

@@ -10,26 +10,26 @@ import HL.V
 import HL.V.Template
 
 -- | Documentation view.
-documentationV :: FromBlaze App
+documentationV :: FromLucid App
 documentationV =
   template
     []
     "Documentation"
     (\url ->
-       container
-         (row
-            (span12
-               (do h1 "Documentation"
+       container_
+         (row_
+            (span12_ [class_ "col-md-12"]
+               (do h1_ "Documentation"
                    books
                    online
                    manuals
                    report url))))
 
 books =
-  do h2 "Books"
-     p "Latest books for learning Haskell:"
+  do h2_ "Books"
+     p_ "Latest books for learning Haskell:"
      links modern
-     p "Older books:"
+     p_ "Older books:"
      links older
   where
     modern =
@@ -42,8 +42,8 @@ books =
       ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
 
 online =
-  do h2 "Online Resources"
-     p "Resources put together by the Haskell community at-large:"
+  do h2_ "Online Resources"
+     p_ "Resources put together by the Haskell community at-large:"
      links resources
   where
     resources =
@@ -52,8 +52,8 @@ online =
       ]
 
 
-manuals = do h2 "Manuals and Guides"
-             p "Manuals and guides that cover common Haskell tooling:"
+manuals = do h2_ "Manuals and Guides"
+             p_ "Manuals and guides that cover common Haskell tooling:"
              links tools
   where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
                 ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
@@ -61,25 +61,21 @@ manuals = do h2 "Manuals and Guides"
                 ,("What I Wish I Knew When Learning Haskell","http://dev.stephendiehl.com/hask/#cabal")
                 ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")]
 
-report :: (Route App -> AttributeValue) -> Html
+report :: (Route App -> Text) -> Html ()
 report url =
-  do h2 "Language Report"
-     p
-       (do "The Haskell 2010 language report is available online "
-           a ! href (url (ReportHomeR 2010)) $
-             "here"
-           ". "
-           todo "(But the formatting is not quite right yet.)")
-     p
-       (do "A PDF version is available "
-           a ! href "http://haskell.org/definition/haskell2010.pdf" $
-             "here"
-           ".")
-     p
-       "It can also be downloaded as a darcs repository: "
-     p
-       (pre
-            (code
-                  "$ darcs get http://darcs.haskell.org/haskell2010-report"))
+  do h2_ "Language Report"
+     p_ (do "The Haskell 2010 language report is available online "
+            a_ [href_ (url (ReportHomeR 2010))] "here"
+            ". "
+            todo "(But the formatting is not quite right yet.)")
+     p_ (do "A PDF version is available "
+            a_ [href_ "http://haskell.org/definition/haskell2010.pdf"] "here"
+            ".")
+     p_ "It can also be downloaded as a darcs repository: "
+     p_ (pre_ (code_ "$ darcs get http://darcs.haskell.org/haskell2010-report"))
 
-links items = ul (forM_ items (\(title,url) -> li (a ! href url $ title)))
+links :: [(Text,Text)] -> Html ()
+links items =
+  ul_ (forM_ items
+             (\(title,url) ->
+                li_ (a_ [href_ url] (toHtml title))))
