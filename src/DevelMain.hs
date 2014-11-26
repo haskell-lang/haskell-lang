@@ -5,6 +5,8 @@ module DevelMain where
 import HL.Dispatch ()
 import HL.Foundation
 
+import Paths_hl
+
 import Control.Concurrent
 import Data.IORef
 import Foreign.Store
@@ -16,7 +18,8 @@ import Yesod.Static
 -- | Start the web server.
 main :: IO (Store (IORef Application))
 main =
-  do s <- static "static"
+  do dir <- getDataFileName "static"
+     s <- static dir
      c <- newChan
      app <- toWaiApp (App s c)
      ref <- newIORef app
@@ -43,7 +46,8 @@ update =
          do ref <- readStore store
             c <- readStore (Store 2)
             writeChan c ()
-            s <- static "static"
+            dir <- getDataFileName "static"
+            s <- static dir
             app <- toWaiApp (App s c)
             writeIORef ref app
             return store

@@ -9,6 +9,8 @@ module HL.M.Report where
 
 import           HL.C
 
+import           Paths_hl
+
 import           Control.Exception
 import qualified Data.ByteString as S
 import           Data.Char
@@ -23,13 +25,14 @@ import           System.FilePath
 -- strip out surrounding HTML tags, and then return it as normal Html.
 getReportPage :: Int -> FilePath -> IO (Html ())
 getReportPage year path =
-  do exists <- doesFileExist fp
+  do dir <- getDataFileName "static"
+     exists <- doesFileExist (dir </> fp)
      converter <- open "iso-8859-1" (Just True)
      if exists
         then fmap (toHtmlRaw . strip . toUnicode converter) (S.readFile fp)
         else throw (ReportPageNotFound fp)
   where normalize = filter (\c -> isDigit c || isLetter c || c == '.')
-        fp = "static" </> "report" </> ("haskell" ++ show year) </> normalize path
+        fp = "report" </> ("haskell" ++ show year) </> normalize path
         strip = T.unlines .
                 takeWhile (not . T.isPrefixOf "</body>") .
                 drop 2 .

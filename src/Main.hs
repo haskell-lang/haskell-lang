@@ -5,6 +5,8 @@ module Main where
 import HL.Dispatch ()
 import HL.Foundation
 
+import Paths_hl
+
 import Control.Concurrent.Chan
 import System.Environment (getEnvironment)
 import Yesod
@@ -13,7 +15,8 @@ import Yesod.Static
 -- | Main entry point.
 main :: IO ()
 main =
-  do s <- static "static"
+  do dir <- getDataFileName "static"
+     s <- static dir
      c <- newChan
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
