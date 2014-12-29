@@ -11,6 +11,7 @@ module HL.Dispatch () where
 
 import HL.C.Community
 import HL.C.Documentation
+import HL.C.Donate
 import HL.C.Downloads
 import HL.C.Home
 import HL.C.News

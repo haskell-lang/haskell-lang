@@ -5,6 +5,11 @@
   url('fonts/Haskell.woff') format('woff'),
   url('fonts/Haskell.ttf') format('truetype'),
   url('fonts/Haskell.svg#Haskell') format('svg');
+
+  src:url('fonts/glyphicons-halflings-regular.eot') format('embedded-opentype'),
+  url('fonts/glyphicons-halflings-regular.woff') format('woff'),
+  url('fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+  url('fonts/glyphicons-halflings-regular.svg') format('svg');
   font-weight: normal;
   font-style: normal;
 }

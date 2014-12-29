@@ -57,10 +57,13 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
     bodyinner =
       do div_ [class_ "wrap"] (innerbody mroute url)
          footer url mroute
+         script_ [src_ "https://checkout.stripe.com/checkout.js"] (mempty :: Text)
+         script_ [src_ "https://donate.haskell.org/pubkey.js"] (mempty :: Text)
          scripts url
                  [js_jquery_js
                  ,js_bootstrap_min_js
-                 ,js_home_js]
+                 ,js_home_js
+                 ,js_donate_js]
          bodyender mroute url
     -- TODO: pop this in a config file later.
     analytics =
@@ -100,7 +103,7 @@ navigation showBrand mroute url =
   where items =
           div_ [class_ "collapse navbar-collapse"]
                (ul_ [class_ "nav navbar-nav"]
-                    (mapM_ item [DownloadsR,CommunityR,DocumentationR,NewsR]))
+                    (mapM_ item [DownloadsR,CommunityR,DocumentationR,NewsR,DonateR]))
           where item :: Route App -> Html ()
                 item route =
                   li_ [class_ "active" | Just route == mroute]

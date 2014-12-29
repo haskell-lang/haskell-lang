@@ -12,11 +12,15 @@ build-type:          Simple
 cabal-version:       >=1.8
 data-files:          static/css/*.css
                      static/css/*.min.css
-                     static/css/fonts/Haskell.dev.svg
-                     static/css/fonts/Haskell.eot
-                     static/css/fonts/Haskell.svg
-                     static/css/fonts/Haskell.ttf
-                     static/css/fonts/Haskell.woff
+                     static/fonts/Haskell.dev.svg
+                     static/fonts/Haskell.eot
+                     static/fonts/Haskell.svg
+                     static/fonts/Haskell.ttf
+                     static/fonts/Haskell.woff
+                     static/fonts/glyphicons-halflings-regular.ttf
+                     static/fonts/glyphicons-halflings-regular.svg
+                     static/fonts/glyphicons-halflings-regular.eot
+                     static/fonts/glyphicons-halflings-regular.woff
                      static/css/haskell.font.css
                      static/img/*.ico
                      static/img/*.jpg
