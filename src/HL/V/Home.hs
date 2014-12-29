@@ -137,4 +137,8 @@ sponsors =
                          (p_ (do strong_ (a_ [href_ "http://www.galois.com"] "Galois")
                                  " provides infrastructure, funds, administrative resources and \
                                  \has historically hosted critical Haskell.org infrastructure, \
-                                 \as well as helping the Haskell community at large with their work." )))
+                                 \as well as helping the Haskell community at large with their work." ))
+                  span6_ [class_ "col-md-6"]
+                         (p_ (do strong_ (a_ [href_ "https://www.dreamhost.com"] "DreamHost")
+                                 " has teamed up to provide Haskell.org with redundant, scalable object-storage \
+                                 \through their Dream Objects service." )))
