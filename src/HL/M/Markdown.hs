@@ -26,7 +26,7 @@ getMarkdown name =
   do dir <- getDataFileName "static"
      exists <- doesFileExist (dir </> fp)
      if exists
-        then do text <- fmap L.fromStrict (ST.readFile fp)
+        then do text <- fmap L.fromStrict (ST.readFile (dir </> fp))
                 let !html = renderHtml (markdown def { msBlockCodeRenderer = renderer } text)
                 return (toHtmlRaw html)
         else throw (MarkdownFileUnavailable name)
