@@ -6,10 +6,10 @@
 module HL.M.Markdown where
 
 import           HL.C
-import           HL.V.Code
-import           HL.V
 
-import           Paths_hl
+import           HL.V
+import           HL.V.Code
+
 
 import           Control.Exception
 import qualified Data.Text.IO as ST
@@ -23,7 +23,7 @@ import           Text.Markdown
 -- | Get the HTML for the given markdown static file.
 getMarkdown :: FilePath -> IO (Html ())
 getMarkdown name =
-  do dir <- getDataFileName "static"
+  do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
      if exists
         then do text <- fmap L.fromStrict (ST.readFile (dir </> fp))

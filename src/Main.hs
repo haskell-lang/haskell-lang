@@ -5,7 +5,7 @@ module Main where
 import HL.Dispatch ()
 import HL.Foundation
 
-import Paths_hl
+
 
 import Control.Concurrent.Chan
 import System.Environment (getEnvironment)
@@ -15,7 +15,7 @@ import Yesod.Static
 -- | Main entry point.
 main :: IO ()
 main =
-  do dir <- getDataFileName "static"
+  do dir <- getStaticDir
      s <- static dir
      c <- newChan
      env <- getEnvironment

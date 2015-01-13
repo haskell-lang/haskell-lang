@@ -8,8 +8,7 @@
 module HL.M.Report where
 
 import           HL.C
-
-import           Paths_hl
+import           HL.Static
 
 import           Control.Exception
 import qualified Data.ByteString as S
@@ -25,7 +24,7 @@ import           System.FilePath
 -- strip out surrounding HTML tags, and then return it as normal Html.
 getReportPage :: Int -> FilePath -> IO (Html ())
 getReportPage year path =
-  do dir <- getDataFileName "static"
+  do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
      converter <- open "iso-8859-1" (Just True)
      if exists
