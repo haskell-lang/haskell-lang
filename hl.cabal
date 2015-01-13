@@ -45,9 +45,8 @@ executable hl
                      -fno-warn-type-defaults
   main-is:           Main.hs
   build-depends:     base >= 4 && < 5
-                   , blaze-markup
                    , blaze-html
-                   , lucid
+                   , blaze-markup
                    , bytestring
                    , conduit
                    , deepseq
@@ -58,6 +57,7 @@ executable hl
                    , hscolour
                    , http-conduit
                    , lifted-base
+                   , lucid
                    , markdown
                    , monad-extras
                    , mtl
@@ -67,6 +67,7 @@ executable hl
                    , tagstream-conduit
                    , text
                    , text-icu
+                   , transformers
                    , wai-logger
                    , warp
                    , xml-conduit
