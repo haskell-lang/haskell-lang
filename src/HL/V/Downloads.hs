@@ -61,10 +61,6 @@ hackage =
             \documentation will be generated and hosted there. It can be used by "
             code_ "cabal install"
             ".")
-     p_ (do "In your "
-            code_ ".cabal/config"
-            " file, there will by default be a line like the following:")
-     pre_ "remote-repo: hackage.haskell.org:http://hackage.haskell.org/packages/archive"
      p_ "You can install a package by merely running: "
      pre_ "$ cabal update \n\
           \$ cabal install the-package"
@@ -75,17 +71,6 @@ stackage =
      p_ "Stackage is a stable repository of snapshots of package sets in \
         \which only packages which build and pass tests together are bundled \
         \together into a snapshot."
-     p_ (do "To use, in your "
-            code_ ".cabal/config"
-            ".cabal/config file, you specify something like the following:")
-     pre_ "remote-repo: stackage:http://www.stackage.org/stackage/<the-snapshot-hash>"
-     p_ "(Note: any other remote-repo line should be removed or commented out)."
-     p_ "After that, you can install a package into a sandbox by merely running: "
-     pre_ "$ cabal update \n\
-          \$ mkdir my-project\n\
-          \$ cd my-project\n\
-          \$ cabal sandbox init\n\
-          \$ cabal install the-package"
      p_ (a_ [href_ "http://www.stackage.org/"] $ "Go to Stackage →")
 
 github =
