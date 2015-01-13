@@ -5,7 +5,7 @@
 
 module HL.V.Community where
 
-import HL.V hiding (list)
+import HL.V
 import HL.V.Template
 
 -- | Community view.

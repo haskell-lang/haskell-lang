@@ -18,7 +18,7 @@ import           Data.Text (unpack,pack)
 import           Data.Text.Lazy (toStrict)
 import           Data.Text.Lazy.Builder
 import           Language.Haskell.HsColour.CSS (hscolour)
-import           Text.Blaze.Renderer.Text (renderHtml)
+import           Text.Blaze.Html.Renderer.Text (renderHtml)
 import           Text.HTML.TagStream.Text
 import           Text.Pandoc.Definition
 import           Text.Pandoc.Options
@@ -60,17 +60,17 @@ relativize url = walk links
 -- Haskell syntax highlighter.
 highlightBlock :: Pandoc -> Pandoc
 highlightBlock = walk codes
-  where codes (CodeBlock ("",["haskell"],[]) text) =
-          RawBlock "html" (hscolour False text)
+  where codes (CodeBlock ("",["haskell"],[]) t) =
+          RawBlock "html" (hscolour False t)
         codes x = x
 
 -- | Highlight code blocks and inline code samples with a decent
 -- Haskell syntax highlighter.
 highlightInline :: Pandoc -> Pandoc
 highlightInline = walk codes
-  where codes (Code ("",["haskell"],[]) text) =
-          RawInline "html" (preToCode (hscolour False text))
-        codes (Code x text) = Code x (unpack (decodeEntities (pack text)))
+  where codes (Code ("",["haskell"],[]) txt) =
+          RawInline "html" (preToCode (hscolour False txt))
+        codes (Code x txt) = Code x (unpack (decodeEntities (pack txt)))
         codes x = x
 
 -- | Decode entities because for some reason MediaWiki syntax allows

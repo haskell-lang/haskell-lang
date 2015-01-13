@@ -44,6 +44,7 @@ downloadsForV os autoInstall manualInstall =
                             p_ "To install GHC and Cabal manually, follow these steps."
                             manualInstall)))))
 
+thirdParty :: Html ()
 thirdParty =
   do h2_ "Third party libraries"
      p_ (do "In Haskell, packages are managed with the Cabal package system built into GHC (and other compilers). "
@@ -55,6 +56,7 @@ thirdParty =
      stackage
      github
 
+hackage :: Html ()
 hackage =
   do h3_ "Hackage"
      p_ (do "Hackage is a repository of packages to which anyone can freely \
@@ -67,12 +69,14 @@ hackage =
           \$ cabal install the-package"
      p_ (a_ [href_ "https://hackage.haskell.org/packages/"] $ "Go to Hackage →")
 
+ltsHaskell :: Html ()
 ltsHaskell =
   do h3_ "LTS Haskell"
      p_ "LTS Haskell is a stackage-based long-term support set of packages \
         \which build and pass tests together, with backported bug fixes."
      p_ (a_ [href_ "http://www.stackage.org/lts"] $ "Get LTS Haskell →")
 
+stackage :: Html ()
 stackage =
   do h3_ "Stackage Nightly"
      p_ "Stackage is a nightly generated stable repository of snapshots of package sets in \
@@ -80,6 +84,7 @@ stackage =
         \together into a snapshot."
      p_ (a_ [href_ "http://www.stackage.org/nightly"] $ "Get Stackage Nightly →")
 
+github :: Html ()
 github =
   do h3_ "From source control repositories"
      p_ "Installing from a source repository is also possible. For example, \

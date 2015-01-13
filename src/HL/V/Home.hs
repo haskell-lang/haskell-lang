@@ -4,7 +4,7 @@
 
 module HL.V.Home where
 
-import HL.V hiding (list)
+import HL.V
 import HL.V.Code
 import HL.V.Home.Features
 import HL.V.Template

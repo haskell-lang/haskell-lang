@@ -5,7 +5,7 @@
 
 module HL.V.Donate where
 
-import HL.V hiding (list)
+import HL.V
 import HL.V.Template
 
 import Lucid.Base
@@ -16,7 +16,7 @@ donateV =
   template
     []
     "Donate to Haskell.org"
-    (\url ->
+    (\_ ->
        container_
          (row_
             (span12_

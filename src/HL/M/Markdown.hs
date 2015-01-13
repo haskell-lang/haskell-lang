@@ -17,7 +17,7 @@ import qualified Data.Text.Lazy as L
 import           System.Directory
 import           System.FilePath
 import qualified Text.Blaze.Html5 as H
-import           Text.Blaze.Renderer.Text (renderHtml)
+import           Text.Blaze.Html.Renderer.Text (renderHtml)
 import           Text.Markdown
 
 -- | Get the HTML for the given markdown static file.

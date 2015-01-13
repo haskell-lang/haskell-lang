@@ -25,6 +25,7 @@ documentationV =
                    manuals
                    report url))))
 
+books :: Html ()
 books =
   do h2_ "Books"
      p_ "Latest books for learning Haskell:"
@@ -41,6 +42,7 @@ books =
       ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")
       ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
 
+online :: Html ()
 online =
   do h2_ "Online Resources"
      p_ "Resources put together by the Haskell community at-large:"
@@ -52,6 +54,7 @@ online =
       ]
 
 
+manuals :: Html ()
 manuals = do h2_ "Manuals and Guides"
              p_ "Manuals and guides that cover common Haskell tooling:"
              links tools
