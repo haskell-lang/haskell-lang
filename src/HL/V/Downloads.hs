@@ -51,6 +51,7 @@ thirdParty =
             (a_ [href_ "https://www.haskell.org/cabal/users-guide/"] "The Cabal User Guide")
             ".")
      hackage
+     ltsHaskell
      stackage
      github
 
@@ -66,12 +67,18 @@ hackage =
           \$ cabal install the-package"
      p_ (a_ [href_ "https://hackage.haskell.org/packages/"] $ "Go to Hackage →")
 
+ltsHaskell =
+  do h3_ "LTS Haskell"
+     p_ "LTS Haskell is a stackage-based long-term support set of packages \
+        \which build and pass tests together, with backported bug fixes."
+     p_ (a_ [href_ "http://www.stackage.org/lts"] $ "Get LTS Haskell →")
+
 stackage =
-  do h3_ "Stackage"
-     p_ "Stackage is a stable repository of snapshots of package sets in \
+  do h3_ "Stackage Nightly"
+     p_ "Stackage is a nightly generated stable repository of snapshots of package sets in \
         \which only packages which build and pass tests together are bundled \
         \together into a snapshot."
-     p_ (a_ [href_ "http://www.stackage.org/"] $ "Go to Stackage →")
+     p_ (a_ [href_ "http://www.stackage.org/nightly"] $ "Get Stackage Nightly →")
 
 github =
   do h3_ "From source control repositories"
