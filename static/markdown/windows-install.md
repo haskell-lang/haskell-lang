@@ -1,10 +1,12 @@
-Download the Windows installer here:
+Please do the following steps:
 
-[Haskell Platform 2013.2.0.0 for Windows](http://www.haskell.org/platform/download/2013.2.0.0/HaskellPlatform-2013.2.0.0-setup.exe)
+* Download the Windows installer here:
 
-SHA-1: fe9a4eee2fe8839eb3b240f15a2af229a110e37f
+  [MinGHC installer](https://s3.amazonaws.com/download.fpcomplete.com/minghc/minghc-7.8.3.exe)
 
-### After downloading
+* Run the MinGHC installer (more information). After installation, open
+  a command prompt and run:
 
-* Run the setup.exe program
-* Follow the install instructions as prompted.
+  `cabal update`
+
+  `cabal install alex happy`
