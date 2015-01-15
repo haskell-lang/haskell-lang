@@ -18,6 +18,19 @@ template
   -> ((Route App -> Text) -> Html ())
   -> FromLucid App
 template crumbs ptitle inner =
+  templateWithBodyEnder crumbs
+                        ptitle
+                        inner
+                        (\_ _ -> return ())
+
+-- | Render a template, with some additional content just before
+-- </body>.
+templateWithBodyEnder :: [Route App]
+                      -> Text
+                      -> ((Route App -> Text) -> Html ())
+                      -> FromLucid App
+                      -> FromLucid App
+templateWithBodyEnder crumbs ptitle inner bodyender =
   skeleton ptitle
            (\_ _ -> return ())
            (\cur url ->
@@ -25,7 +38,7 @@ template crumbs ptitle inner =
                    (do navigation True cur url
                        container_ (bread url crumbs)
                        inner url))
-           (\_ _ -> return ())
+           bodyender
 
 -- | Render the basic site skeleton.
 skeleton
@@ -57,13 +70,10 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
     bodyinner =
       do div_ [class_ "wrap"] (innerbody mroute url)
          footer url mroute
-         script_ [src_ "https://checkout.stripe.com/checkout.js"] (mempty :: Text)
-         script_ [src_ "https://donate.haskell.org/pubkey.js"] (mempty :: Text)
          scripts url
                  [js_jquery_js
                  ,js_bootstrap_min_js
-                 ,js_home_js
-                 ,js_donate_js]
+                 ,js_home_js]
          bodyender mroute url
     -- TODO: pop this in a config file later.
     analytics =
