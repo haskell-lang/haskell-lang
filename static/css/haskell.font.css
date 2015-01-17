@@ -1,18 +1,18 @@
 @font-face {
-  font-family: 'haskell';
-  src:url('fonts/haskell.eot');
-  src:url('fonts/haskell.eot?#iefix') format('embedded-opentype'),
-  url('fonts/haskell.woff') format('woff'),
-  url('fonts/haskell.ttf') format('truetype'),
-  url('fonts/haskell.svg#haskell') format('svg');
+  font-family: 'Hhaskell';
+  src:url('/static/fonts/Haskell.eot');
+  src:url('/static/fonts/Haskell.eot?#iefix') format('embedded-opentype'),
+  url('/static/fonts/Haskell.woff') format('woff'),
+  url('/static/fonts/Haskell.ttf') format('truetype'),
+  url('/static/fonts/Haskell.svg#Haskell') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'glyphicons halflings';
-  src:url('fonts/glyphicons-halflings-regular.eot') format('embedded-opentype'),
-  url('fonts/glyphicons-halflings-regular.woff') format('woff'),
-  url('fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-  url('fonts/glyphicons-halflings-regular.svg') format('svg');
+  src:url('/static/fonts/glyphicons-halflings-regular.eot') format('embedded-opentype'),
+  url('/static/fonts/glyphicons-halflings-regular.woff') format('woff'),
+  url('/static/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+  url('/static/fonts/glyphicons-halflings-regular.svg') format('svg');
 }
