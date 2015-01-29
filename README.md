@@ -118,9 +118,9 @@ Just hit f12 to recompile and restart.
 
 It uses Yesod and an MVC organization.
 
-* HL.M.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/M)
-* HL.V.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/V)
-* HL.C.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/C)
+* HL.M.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/Model)
+* HL.V.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/View)
+* HL.C.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/Controller)
 
 Templates are written in
 [Lucid](https://github.com/chrisdone/lucid). There is presently no
