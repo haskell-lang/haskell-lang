@@ -28,7 +28,7 @@ getReportPage year path =
      exists <- doesFileExist (dir </> fp)
      converter <- open "iso-8859-1" (Just True)
      if exists
-        then fmap (toHtmlRaw . strip . toUnicode converter) (S.readFile fp)
+        then fmap (toHtmlRaw . strip . toUnicode converter) (S.readFile (dir </> fp))
         else throw (ReportPageNotFound fp)
   where normalize = filter (\c -> isDigit c || isLetter c || c == '.')
         fp = "report" </> ("haskell" ++ show year) </> normalize path
