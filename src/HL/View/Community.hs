@@ -17,7 +17,7 @@ communityV =
     (\url ->
        container_
          (row_
-            (span12_
+            (span12_ [class_ "col-md-12"]
                (do h1_ "Community"
                    p_
                      "The Haskell community is spread out across several mediums \
