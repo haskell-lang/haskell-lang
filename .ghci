@@ -1,4 +1,3 @@
 :set -isrc
-:set -hide-package monads-tf
 :set -fno-warn-unused-do-bind
 :set -DDEVELOPMENT=1
