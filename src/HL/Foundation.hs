@@ -35,22 +35,6 @@ import Yesod.Core.Types
 import Yesod.Slug
 import Yesod.Static
 
--- | Mode for rendering Haskell report.
-data Mode = Mono | Node
-  deriving (Eq,Show,Read)
-instance Slug Mode where
-  toSlug m =
-    case m of
-      Mono -> "mono"
-      Node -> "node"
-instance PathPiece Mode where
-  fromPathPiece m =
-    case m of
-      "mono" -> Just Mono
-      "node" -> Just Node
-      _ -> Nothing
-  toPathPiece = toSlug
-
 -- | Generate boilerplate.
 mkYesodData "App" $(parseRoutesFile "config/routes")
 

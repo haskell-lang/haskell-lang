@@ -5,13 +5,15 @@
 
 module HL.Types where
 
-import Control.Concurrent.MVar
-import Control.Exception
-import Data.Text (Text)
-import Data.Typeable
-import Yesod.Core.Dispatch
-import Yesod.Slug
-import Yesod.Static
+import           Control.Concurrent.MVar
+import           Control.Exception
+import           Data.Monoid
+import           Data.Text (Text)
+import qualified Data.Text as T
+import           Data.Typeable
+import           Yesod.Core.Dispatch
+import           Yesod.Slug
+import           Yesod.Static
 
 -- | Make a human-readable version of the value.
 class Human a where
@@ -57,3 +59,27 @@ instance PathPiece OS where
       "windows" -> Just Windows
       "linux"   -> Just Linux
       _         -> Nothing
+
+-- | Mode for rendering Haskell report.
+data Mode = Mono | Node
+  deriving (Eq,Show,Read)
+
+instance Slug Mode where
+  toSlug m =
+    case m of
+      Mono -> "mono"
+      Node -> "node"
+
+instance PathPiece Mode where
+  fromPathPiece m =
+    case m of
+      "mono" -> Just Mono
+      "node" -> Just Node
+      _ -> Nothing
+  toPathPiece = toSlug
+
+-- | Page cache key.
+data PageKey = Report !Int
+
+instance Slug PageKey where
+  toSlug (Report year) = "report-" <> T.pack (show year)
