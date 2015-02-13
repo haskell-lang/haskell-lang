@@ -7,6 +7,8 @@
 
 module HL.Model.Report where
 
+
+
 import           HL.Controller
 import           HL.Static
 
@@ -26,14 +28,37 @@ getReportPage :: Int -> FilePath -> IO (Html ())
 getReportPage year path =
   do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
-     converter <- open "iso-8859-1" (Just True)
+     converter <- makeConverter
      if exists
         then fmap (toHtmlRaw . strip . toUnicode converter) (S.readFile (dir </> fp))
         else throw (ReportPageNotFound fp)
   where normalize = filter (\c -> isDigit c || isLetter c || c == '.')
         fp = "report" </> ("haskell" ++ show year) </> normalize path
-        strip = T.unlines .
-                takeWhile (not . T.isPrefixOf "</body>") .
-                drop 2 .
-                dropWhile (/="</head><body ") .
-                T.lines
+
+-- | Get ALL pages in one big-ass HTML output.
+getReportAllPages :: Int -> IO (Html ())
+getReportAllPages year =
+  do staticDir <- getStaticDir
+     let reportDir =
+           staticDir </> "report" </>
+           ("haskell" ++ show year)
+     let files = ["li2"] ++
+                 map (("ch"++) . show) [1..42] ++
+                 ["li3"]
+     let pages = map (\x -> "haskell" ++ x ++ ".html") files
+     converter <- makeConverter
+     chunks <-
+       mapM (S.readFile . (reportDir </>)) pages
+     return (mapM_ (toHtmlRaw . strip . toUnicode converter) chunks)
+
+-- | Strip out everything before and after the body.
+strip :: Text -> Text
+strip = T.unlines .
+        takeWhile (not . T.isPrefixOf "</body>") .
+        drop 2 .
+        dropWhile (/="</head><body ") .
+        T.lines
+
+-- | Make a converter appropriate for the report.
+makeConverter :: IO Converter
+makeConverter = open "iso-8859-1" (Just True)

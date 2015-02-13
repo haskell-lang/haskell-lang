@@ -68,7 +68,7 @@ report :: (Route App -> Text) -> Html ()
 report url =
   do h2_ "Language Report"
      p_ (do "The Haskell 2010 language report is available online "
-            a_ [href_ (url (ReportHomeR 2010))] "here"
+            a_ [href_ (url ReportR)] "here"
             ". "
             todo "(But the formatting is not quite right yet.)")
      p_ (do "A PDF version is available "

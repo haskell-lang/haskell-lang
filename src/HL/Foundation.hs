@@ -16,7 +16,8 @@ module HL.Foundation
   ,Widget
   ,resourcesApp
   ,Slug(..)
-  ,Human(..))
+  ,Human(..)
+  ,Mode(..))
   where
 
 import Data.Monoid
@@ -30,6 +31,22 @@ import System.Log.FastLogger
 import Yesod
 import Yesod.Core.Types
 import Yesod.Static
+
+-- | Mode for rendering Haskell report.
+data Mode = Mono | Node
+  deriving (Eq,Show,Read)
+instance Slug Mode where
+  toSlug m =
+    case m of
+      Mono -> "mono"
+      Node -> "node"
+instance PathPiece Mode where
+  fromPathPiece m =
+    case m of
+      "mono" -> Just Mono
+      "node" -> Just Node
+      _ -> Nothing
+  toPathPiece = toSlug
 
 -- | Generate boilerplate.
 mkYesodData "App" $(parseRoutesFile "config/routes")
@@ -45,37 +62,40 @@ instance Yesod App where
 instance Human (Route App) where
   toHuman r =
     case r of
-      CommunityR       -> "Community"
-      IrcR             -> "IRC"
-      DocumentationR   -> "Documentation"
-      HomeR            -> "Home"
-      ReloadR          -> "Reload"
-      DonateR          -> "Donate"
-      MailingListsR    -> "Mailing Lists"
-      NewsR            -> "News"
-      StaticR{}        -> "Static"
-      DownloadsR       -> "Downloads"
-      DownloadsForR os -> "Downloads for " <> toHuman os
-      WikiR t          -> "Wiki: " <> t
-      ReportR i _      -> "Report " <> pack (show i)
-      ReportHomeR i    -> "Report " <> pack (show i)
-      WikiHomeR{}      -> "Wiki"
+      CommunityR           -> "Community"
+      IrcR                 -> "IRC"
+      DocumentationR       -> "Documentation"
+      HomeR                -> "Home"
+      ReloadR              -> "Reload"
+      DonateR              -> "Donate"
+      MailingListsR        -> "Mailing Lists"
+      NewsR                -> "News"
+      StaticR{}            -> "Static"
+      DownloadsR           -> "Downloads"
+      DownloadsForR os     -> "Downloads for " <> toHuman os
+      WikiR t              -> "Wiki: " <> t
+      ReportNodeR i _      -> "Report Page"
+      ReportModeR Node i   -> "Node " <> pack (show i)
+      ReportModeR Mono i   -> "Mono " <> pack (show i)
+      ReportR{}            -> "Report"
+      WikiHomeR{}          -> "Wiki"
 
 instance Slug (Route App) where
   toSlug r =
     case r of
-      CommunityR      -> "community"
-      IrcR            -> "irc"
-      DocumentationR  -> "documentation"
-      HomeR           -> "home"
-      ReloadR         -> "reload"
-      DonateR         -> "donate"
-      MailingListsR   -> "mailing-lists"
-      NewsR           -> "news"
-      StaticR{}       -> "static"
-      DownloadsR      -> "downloads"
-      WikiR{}         -> "wiki"
-      ReportR{}       -> "report"
-      ReportHomeR{}   -> "report"
-      WikiHomeR{}     -> "wiki"
-      DownloadsForR{} -> "downloads"
+      CommunityR        -> "community"
+      IrcR              -> "irc"
+      DocumentationR    -> "documentation"
+      HomeR             -> "home"
+      ReloadR           -> "reload"
+      DonateR           -> "donate"
+      MailingListsR     -> "mailing-lists"
+      NewsR             -> "news"
+      StaticR{}         -> "static"
+      DownloadsR        -> "downloads"
+      WikiR{}           -> "wiki"
+      ReportNodeR{}     -> "report"
+      ReportModeR{}     -> "report"
+      ReportR{}         -> "report"
+      WikiHomeR{}       -> "wiki"
+      DownloadsForR{}   -> "downloads"

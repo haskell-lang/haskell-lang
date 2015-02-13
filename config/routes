@@ -9,7 +9,8 @@
 /mailing-lists MailingListsR GET
 /documentation DocumentationR GET
 /news NewsR GET
-/report/#Int/#FilePath ReportR GET
-/report/#Int ReportHomeR GET
+/report ReportR GET
+/report/node/#Int/#FilePath ReportNodeR GET
+/report/#Mode/#Int ReportModeR GET
 /wiki/#Text WikiR GET
 /wiki/ WikiHomeR GET
