@@ -28,7 +28,7 @@ import Text.XML.Cursor
 -- HTML.
 getWikiPage :: Text -> IO (Either Text (Text,Pandoc))
 getWikiPage article =
-  do request <- parseUrl ("http://www.haskell.org/haskellwiki/Special:Export/" <> unpack article)
+  do request <- parseUrl ("http://wiki.haskell.org/Special:Export/" <> unpack article)
      withManager
        (\manager ->
           do response <- http request manager
