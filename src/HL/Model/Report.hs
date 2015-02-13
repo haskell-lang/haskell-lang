@@ -30,10 +30,15 @@ getReportPage year path =
      exists <- doesFileExist (dir </> fp)
      converter <- makeConverter
      if exists
-        then fmap (toHtmlRaw . strip . toUnicode converter) (S.readFile (dir </> fp))
+        then fmap (toHtmlRaw . strip . toUnicode converter)
+                  (S.readFile (dir </> fp))
         else throw (ReportPageNotFound fp)
-  where normalize = filter (\c -> isDigit c || isLetter c || c == '.')
-        fp = "report" </> ("haskell" ++ show year) </> normalize path
+  where normalize =
+          filter (\c -> isDigit c || isLetter c || c == '.')
+        fp =
+          "report" </>
+          ("haskell" ++ show year) </>
+          normalize path
 
 -- | Get ALL pages in one big-ass HTML output.
 getReportAllPages :: Int -> IO (Html ())
@@ -42,10 +47,13 @@ getReportAllPages year =
      let reportDir =
            staticDir </> "report" </>
            ("haskell" ++ show year)
-     let files = ["li2"] ++
-                 map (("ch"++) . show) [1..42] ++
-                 ["li3"]
-     let pages = map (\x -> "haskell" ++ x ++ ".html") files
+     let files =
+           ["li2"] ++
+           map (("ch" ++) . show)
+               [1 .. 42] ++
+           ["li3"]
+     let pages =
+           map (\x -> "haskell" ++ x ++ ".html") files
      converter <- makeConverter
      chunks <-
        mapM (S.readFile . (reportDir </>)) pages
@@ -53,11 +61,13 @@ getReportAllPages year =
 
 -- | Strip out everything before and after the body.
 strip :: Text -> Text
-strip = T.unlines .
-        takeWhile (not . T.isPrefixOf "</body>") .
-        drop 2 .
-        dropWhile (/="</head><body ") .
-        T.lines
+strip =
+  T.unlines .
+  takeWhile (not .
+             T.isPrefixOf "</body>") .
+  drop 2 .
+  dropWhile (/= "</head><body ") .
+  T.lines
 
 -- | Make a converter appropriate for the report.
 makeConverter :: IO Converter
