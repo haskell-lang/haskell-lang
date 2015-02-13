@@ -17,7 +17,7 @@ homeV vids =
     (\_ _ ->
        linkcss "https://fonts.googleapis.com/css?family=Ubuntu:700")
     (\cur url ->
-       do navigation True Nothing url
+       do navigation True [] Nothing url
           header url
           try url
           community url vids
@@ -25,7 +25,7 @@ homeV vids =
           sponsors
           events
           div_ [class_ "mobile"] $
-               (navigation False cur url))
+               (navigation False [] cur url))
     (\_ url ->
        scripts url
                [js_jquery_console_js

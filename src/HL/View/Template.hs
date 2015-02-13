@@ -35,7 +35,7 @@ templateWithBodyEnder crumbs ptitle inner bodyender =
            (\_ _ -> return ())
            (\cur url ->
               div_ [class_ "template"]
-                   (do navigation True cur url
+                   (do navigation True crumbs cur url
                        container_ (bread url crumbs)
                        inner url))
            bodyender
@@ -104,8 +104,8 @@ linkcss uri =
   link_ [rel_ "stylesheet",type_ "text/css",href_ uri]
 
 -- | Main navigation.
-navigation :: Bool -> FromLucid App
-navigation showBrand mroute url =
+navigation :: Bool -> [Route App] -> FromLucid App
+navigation showBrand crumbs mroute url =
   nav_ [class_ "navbar navbar-default"]
        (div_ [class_ "container"]
              (do when showBrand brand
@@ -116,7 +116,7 @@ navigation showBrand mroute url =
                     (mapM_ item [DownloadsR,CommunityR,DocumentationR,NewsR]))
           where item :: Route App -> Html ()
                 item route =
-                  li_ [class_ "active" | Just route == mroute]
+                  li_ [class_ "active" | Just route == mroute || elem route crumbs]
                       (a_ [href_ (url route)]
                           (toHtml (toHuman route)))
         brand =
