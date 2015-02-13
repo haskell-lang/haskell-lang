@@ -583,3 +583,29 @@ h2 {
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#150e1a', endColorstr='#22172a',GradientType=1 ); /* IE6-9 */
   }
 }
+
+.page-report .chapterTOCS,.page-report .tableofcontents {
+  line-height: 2em;
+  font-size: 15px;
+}
+
+.page-report .quote {
+  border-left: 5px solid #eee;
+  padding-left: 1em;
+}
+
+.page-report .verbatim {
+  font-family: ubuntu mono, monospace;
+}
+
+.page-report .tabular,.page-report .array {
+  padding-bottom: 1em;
+}
+
+.page-report .tabular td {
+  padding: 0.25em;
+}
+
+.page-report .section-sign {
+  padding-right: 0.25em;
+}
