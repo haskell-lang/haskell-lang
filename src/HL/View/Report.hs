@@ -21,7 +21,8 @@ reportNodeV mode year inner =
      " report")
     (const (container_ (row_ (span12_ [class_ "col-md-12"] inner))))
     (\_ url ->
-       do script_ [src_ (url (StaticR js_highlight_pack_js))] ""
+       do link_ [rel_ "stylesheet",type_ "text/css",href_ (url (StaticR css_report_css))]
+          script_ [src_ (url (StaticR js_highlight_pack_js))] ""
           script_ [src_ (url (StaticR js_report_js))] "")
 
 -- | Report types view.

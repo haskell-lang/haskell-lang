@@ -68,10 +68,10 @@ report :: (Route App -> Text) -> Html ()
 report url =
   do h2_ "Language Report"
      p_ (do "The Haskell 2010 language report is available online "
-            a_ [href_ (url ReportR)] "here"
+            a_ [href_ "//haskell.org/onlinereport/haskell2010/"] "here"
             ". ")
      p_ (do "A PDF version is available "
-            a_ [href_ "http://haskell.org/definition/haskell2010.pdf"] "here"
+            a_ [href_ "//haskell.org/definition/haskell2010.pdf"] "here"
             ".")
      p_ "It can also be downloaded as a darcs repository: "
      p_ (pre_ (code_ "$ darcs get http://darcs.haskell.org/haskell2010-report"))
