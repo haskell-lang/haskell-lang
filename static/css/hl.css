@@ -632,7 +632,7 @@ h2 {
   padding-bottom: 1em;
 }
 
-.page-report .tabular td {
+.page-report .array td,.page-report .tabular td {
   padding: 0.25em;
 }
 
