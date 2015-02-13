@@ -169,6 +169,10 @@ h2 {
   margin-bottom:0;
 }
 
+.template .breadcrumb li {
+  margin-right: 5px;
+}
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    News page
    */
