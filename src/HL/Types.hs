@@ -5,20 +5,17 @@
 
 module HL.Types where
 
-import Control.Concurrent.Chan
+import Control.Concurrent.MVar
 import Control.Exception
 import Data.Text (Text)
 import Data.Typeable
-import Yesod
+import Yesod.Core.Dispatch
+import Yesod.Slug
 import Yesod.Static
 
 -- | Make a human-readable version of the value.
 class Human a where
   toHuman :: a -> Text
-
--- | Make a slug version of the value.
-class Slug a where
-  toSlug :: a -> Text
 
 -- | A haskell-lang exception.
 data HaskellLangException
@@ -30,8 +27,8 @@ instance Exception HaskellLangException
 
 -- | Application state.
 data App = App
-  { appStatic :: !Static
-  , appReload :: !(Chan ())
+  { appStatic   :: !Static
+  , appCacheDir :: !(MVar FilePath)
   }
 
 -- | Operating system. Used for downloads, for example.

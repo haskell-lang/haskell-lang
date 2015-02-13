@@ -9,16 +9,21 @@ import Control.Concurrent
 import Data.IORef
 import Foreign.Store
 import Network.Wai.Handler.Warp
+import System.Directory
 import System.Environment (getEnvironment)
+import System.FilePath
 import Yesod
 import Yesod.Static
 
 -- | Start the web server.
 main :: IO (Store (IORef Application))
 main =
-  do s <- static "static"
-     c <- newChan
-     app <- toWaiApp (App s c)
+  do st <- static "static"
+     tmpDir <- getTemporaryDirectory
+     let cacheDir = tmpDir </> "hl-cache"
+     createDirectoryIfMissing True cacheDir
+     cacheVar <- newMVar cacheDir
+     app <- toWaiApp (App st cacheVar)
      ref <- newIORef app
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
@@ -30,7 +35,7 @@ main =
                        handler req))
      _ <- newStore tid
      ref' <- newStore ref
-     _ <- newStore c
+     _ <- newStore cacheVar
      return ref'
 
 -- | Update the server, start it if not running.
@@ -41,9 +46,8 @@ update =
        Nothing -> main
        Just store ->
          do ref <- readStore store
-            c <- readStore (Store 2)
-            writeChan c ()
-            s <- static "static"
-            app <- toWaiApp (App s c)
+            cacheVar <- readStore (Store 2)
+            st <- static "static"
+            app <- toWaiApp (App st cacheVar)
             writeIORef ref app
             return store

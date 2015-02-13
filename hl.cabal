@@ -44,10 +44,12 @@ executable hl
                      -fno-warn-type-defaults
   main-is:           Main.hs
   build-depends:     base >= 4 && < 5
+                   , blaze-builder
                    , blaze-html
                    , blaze-markup
                    , bytestring
                    , conduit
+                   , conduit-extra
                    , deepseq
                    , directory
                    , fast-logger
@@ -62,6 +64,7 @@ executable hl
                    , mtl
                    , pandoc
                    , pandoc-types
+                   , resourcet
                    , spoon
                    , tagstream-conduit
                    , text

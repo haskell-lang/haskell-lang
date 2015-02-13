@@ -20,16 +20,19 @@ module HL.Foundation
   ,Mode(..))
   where
 
-import Data.Monoid
-import Data.Text (pack)
+import Control.Concurrent.MVar.Lifted
 import HL.Static
 import HL.Types
 
+import Data.Monoid
 import Data.Text (Text)
+import Data.Text (pack)
 import Network.Wai.Logger
 import System.Log.FastLogger
 import Yesod
+import Yesod.Caching
 import Yesod.Core.Types
+import Yesod.Slug
 import Yesod.Static
 
 -- | Mode for rendering Haskell report.
@@ -59,6 +62,11 @@ instance Yesod App where
        return (Logger {loggerSet = set
                       ,loggerDate = date})
 
+instance MonadCaching (HandlerT App IO) where
+  withCacheDir cont =
+    do dirVar <- fmap appCacheDir getYesod
+       withMVar dirVar cont
+
 instance Human (Route App) where
   toHuman r =
     case r of
@@ -66,7 +74,6 @@ instance Human (Route App) where
       IrcR                 -> "IRC"
       DocumentationR       -> "Documentation"
       HomeR                -> "Home"
-      ReloadR              -> "Reload"
       DonateR              -> "Donate"
       MailingListsR        -> "Mailing Lists"
       NewsR                -> "News"
@@ -74,7 +81,7 @@ instance Human (Route App) where
       DownloadsR           -> "Downloads"
       DownloadsForR os     -> "Downloads for " <> toHuman os
       WikiR t              -> "Wiki: " <> t
-      ReportNodeR i _      -> "Report Page"
+      ReportNodeR _ _      -> "Report Page"
       ReportModeR Node i   -> "Node " <> pack (show i)
       ReportModeR Mono i   -> "Mono " <> pack (show i)
       ReportR{}            -> "Report"
@@ -87,7 +94,6 @@ instance Slug (Route App) where
       IrcR              -> "irc"
       DocumentationR    -> "documentation"
       HomeR             -> "home"
-      ReloadR           -> "reload"
       DonateR           -> "donate"
       MailingListsR     -> "mailing-lists"
       NewsR             -> "news"

@@ -2,13 +2,12 @@
 
 module Main where
 
+import Control.Concurrent.MVar
 import HL.Dispatch ()
 import HL.Foundation
-
-
-
-import Control.Concurrent.Chan
+import System.Directory
 import System.Environment (getEnvironment)
+import System.FilePath
 import Yesod
 import Yesod.Static
 
@@ -16,8 +15,11 @@ import Yesod.Static
 main :: IO ()
 main =
   do dir <- getStaticDir
-     s <- static dir
-     c <- newChan
+     st <- static dir
+     tmpDir <- getTemporaryDirectory
+     let cacheDir = tmpDir </> "hl-cache"
+     createDirectoryIfMissing True cacheDir
+     cacheVar <- newMVar cacheDir
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
-     warp port (App s c)
+     warp port (App st cacheVar)

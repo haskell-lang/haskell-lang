@@ -14,24 +14,12 @@ import HL.Controller.Documentation
 import HL.Controller.Donate
 import HL.Controller.Downloads
 import HL.Controller.Home
-import HL.Controller.News
-import HL.Controller.Reload
-import HL.Controller.Report
-import HL.Controller.Wiki
 import HL.Controller.Irc
 import HL.Controller.MailingLists
+import HL.Controller.News
+import HL.Controller.Report
+import HL.Controller.Wiki
 import HL.Foundation
-
-import Control.Monad.Identity
-import Lucid
-import Yesod hiding (Html)
-
-instance ToTypedContent (Html ()) where
-  toTypedContent html =
-    TypedContent "text/html"
-                 (ContentBuilder (runIdentity (execHtmlT html)) Nothing)
-
-instance ToContent (Html ()) where
-  toContent = undefined
+import Yesod.Core.Dispatch
 
 mkYesodDispatch "App" resourcesApp
