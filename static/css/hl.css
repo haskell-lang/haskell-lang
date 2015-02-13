@@ -84,6 +84,23 @@ h2 {
   margin-top: 0.5em;
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+   Syntax highlighting for general code blocks
+   */
+
+.hljs-module     { color: #4F4371 }
+.hljs-type       { color: #4F4371 }
+.hljs-title      { color: #2e659c }
+.hljs-container .hljs-title      { color: #333 }
+.hljs-definition { color: #2e659c }
+.hljs-comment    { color: #555555 }
+.hljs-keyword    { color: #397460 }
+.hljs-str        { color: #366354 }
+.hljs-conid      { color: #4F4371 }
+.hljs-keyglyph   { color: #8f4e8b }
+.hljs-varop      { color: #8f4e8b }
+.hljs-varid      { color: #333333 }
+.hljs-num        { color: #4F4371 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Navigation
@@ -584,19 +601,31 @@ h2 {
   }
 }
 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+   Report page
+   */
+
 .page-report .chapterTOCS,.page-report .tableofcontents {
   line-height: 2em;
   font-size: 15px;
 }
 
-.page-report .quote {
-  border-left: 5px solid #eee;
-  padding-left: 1em;
-  margin: 1.5em 0;
-}
-
-.page-report .verbatim {
+.page-report .verbatim,
+.page-report .fbox {
+  font-size: 14px;
   font-family: ubuntu mono, monospace;
+  background: #f5f5f5;
+  border: 1px solid #eee;
+  padding: 1em;
+  margin-bottom: 1em;
+}
+.page-report .verbatim .fbox,
+.page-report .fbox .verbatim,
+.page-report .verbatim .verbatim,
+.page-report .fbox .fbox {
+  padding: 0;
+  border: 0;
+  margin-bottom: 0em;
 }
 
 .page-report .tabular,.page-report .array {

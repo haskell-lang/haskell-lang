@@ -22,4 +22,12 @@ $(function(){
       }
     });
   });
+
+  hljs.configure({useBR: true});
+  $('.verbatim').each(function(i, block) {
+    hljs.highlightBlock(block);
+    block.innerHTML =
+      block.innerHTML.replace(/&nbsp;(::|=|\-&gt;)&nbsp;/g,
+                              '<span class="hljs-keyglyph">&nbsp;$1&nbsp;</span>');
+  });
 });
