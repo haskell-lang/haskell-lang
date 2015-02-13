@@ -610,3 +610,7 @@ h2 {
 .page-report .section-sign {
   padding-right: 0.25em;
 }
+
+.page-report .crosslinks {
+  display: none
+}
