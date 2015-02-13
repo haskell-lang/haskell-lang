@@ -69,8 +69,7 @@ report url =
   do h2_ "Language Report"
      p_ (do "The Haskell 2010 language report is available online "
             a_ [href_ (url ReportR)] "here"
-            ". "
-            todo "(But the formatting is not quite right yet.)")
+            ". ")
      p_ (do "A PDF version is available "
             a_ [href_ "http://haskell.org/definition/haskell2010.pdf"] "here"
             ".")
