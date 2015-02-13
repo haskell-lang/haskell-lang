@@ -566,6 +566,7 @@ h2 {
   }
   .mobile > .navbar {
     display: block;
+    background: #161d29;
   }
   .wrap {
     padding-bottom: 0;
