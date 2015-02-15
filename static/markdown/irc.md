@@ -20,6 +20,8 @@ Searchable logs are available on IRC Browse for:
   [recent messages](http://ircbrowse.net/day/haskell/today/recent)
 * [#haskell-game](http://ircbrowse.net/haskell-game) —
   [recent messages](http://ircbrowse.net/day/haskell-game/today/recent)
+* [#haskell-beginners](http://ircbrowse.net/haskell-beginners) —
+  [recent messages](http://ircbrowse.net/day/haskell-beginners/today/recent)
 * [#diagrams](http://ircbrowse.net/diagrams) —
   [recent messages](http://ircbrowse.net/day/diagrams/today/recent)
 * [#tasty](http://ircbrowse.net/tasty) —
