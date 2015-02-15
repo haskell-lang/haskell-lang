@@ -40,8 +40,7 @@ books =
       ,("Thinking Functionally with Haskell","http://www.cambridge.org/us/academic/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell")]
     older =
       [("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
-      ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")
-      ,("Introduction to Functional Programming using Haskell","http://www.prenhall.com/allbooks/ptr_0134843460.html")]
+      ,("Haskell: The Craft of Functional Programming","http://www.cs.ukc.ac.uk/people/staff/sjt/craft2e/")]
 
 online :: Html ()
 online =
