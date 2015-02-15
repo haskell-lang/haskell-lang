@@ -190,7 +190,7 @@ packages =
         \of packages available on the public package servers."
      p_ [class_ "expand"] (a_ "Click to expand")
      div_ [class_ "expandable"] $ do
-       p_ "There are 6,954 packages freely available, here is a sample of the \
+       p_ "There are 6,954 packages freely available. Here is a sample of the \
          \most common ones:"
        table_ [class_ "packages"] $
          forM_ (alternating pkgs)
