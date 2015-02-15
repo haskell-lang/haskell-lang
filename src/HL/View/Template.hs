@@ -78,7 +78,7 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
     -- TODO: pop this in a config file later.
     analytics =
       script_ "var _gaq = _gaq || [];\n\
-              \_gaq.push(['_setAccount', 'UA-15375175-1']);\n\
+              \_gaq.push(['_setAccount', 'UA-51440536-1']);\n\
               \_gaq.push(['_trackPageview']);\n\
               \(function() {\n\
               \ var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\n\
