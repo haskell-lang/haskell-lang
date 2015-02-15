@@ -66,7 +66,7 @@ manuals = do h2_ "Manuals and Guides"
                 ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")]
 
 report :: (Route App -> Text) -> Html ()
-report url =
+report _ =
   do h2_ "Language Report"
      p_ (do "The Haskell 2010 language report is available online "
             a_ [href_ "//haskell.org/onlinereport/haskell2010/"] "here"
