@@ -156,7 +156,7 @@ footer url r =
                       wikiLicense (Nothing :: Maybe Text)
                     _ -> hlCopy)))
   where hlCopy =
-          do span_ [class_ "item"] "\169 2015 haskell.org"
+          do span_ [class_ "item"] "\169 2014-2015 haskell.org"
              span_ [class_ "item footer-contribute"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-infra/hl"] "Fork on Github")
