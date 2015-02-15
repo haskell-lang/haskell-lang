@@ -23,6 +23,7 @@ homeV vids =
           community url vids
           features
           sponsors
+          transition
           events
           div_ [class_ "mobile"] $
                (navigation False [] cur url))
@@ -100,6 +101,16 @@ community url vids =
         vid (n,u,thumb) =
           li_ (a_ [class_ "vid-thumbnail",href_ u,title_ n]
                   (img_ [src_ thumb]))
+
+-- | Information for people to help transition from the old site to the new locations.
+transition :: Html ()
+transition =
+  div_ [class_ "transition"]
+       (container_
+          (row_ (span6_ [class_ "col-md-6"]
+                        (do h1_ "Psst! Looking for the wiki?"
+                            p_ (do "This is the new Haskell home page! The wiki has moved to "
+                                   a_ [href_ "https://wiki.haskell.org"] "wiki.haskell.org.")))))
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?

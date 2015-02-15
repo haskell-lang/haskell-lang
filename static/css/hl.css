@@ -549,6 +549,34 @@ h2 {
   text-decoration: none;
 }
 
+
+/* * * * * * * * * * * * * * * * * * * *
+   Transition
+   */
+
+.page-home .transition {
+  background: #1b2332;
+  color: #f0f0f0;
+  padding-top: 2em;
+  padding-bottom: 2em;
+}
+.page-home .transition h1 {
+  margin-bottom: 1em;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+.page-home .wrap {
+  padding-bottom: 0;
+}
+.page-home .footer {
+  background: #1b2332;
+}
+.page-home .transition a:hover {
+  color: #71a9d9;
+  text-decoration: none;
+}
+
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Responsiveness
    */
