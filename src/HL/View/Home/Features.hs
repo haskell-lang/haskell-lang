@@ -109,7 +109,7 @@ concurrent =
                    \  atomically (do deposit to amount\n\
                    \                 withdraw from amount)"
        p_ "Atomic transactions must be repeatable, so arbitrary IO is disabled in \
-         \in the type system:"
+         \the type system:"
        rejectedHaskellPre "Type error" "main = atomically (putStrLn \"Hello!\")"
 
 inference :: Html ()
