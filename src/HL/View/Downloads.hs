@@ -24,6 +24,9 @@ downloadsV =
                               (\os ->
                                  li_ (a_ [href_ (url (DownloadsForR os))]
                                          (toHtml (toHuman os)))))
+                   h2_ "Haskell Platform"
+                   p_ "Many now recommend just using a bare compiler combined with sandboxed dependencies, especially for new users. However, others prefer to start with the curated blessed set of packages in the Haskell Platform, which is available for Windows, OS X, and Linux."
+                   p_ (a_ [href_ "http://www.haskell.org/platform/"] $ "Get the Haskell Platform →")
                    thirdParty))))
 
 -- | OS-specific downloads view.
