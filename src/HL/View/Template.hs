@@ -159,7 +159,7 @@ footer url r =
           do span_ [class_ "item"] "\169 2014-2015 haskell.org"
              span_ [class_ "item footer-contribute"]
                    (do "Got changes to contribute? "
-                       a_ [href_ "https://github.com/haskell-infra/hl"] "Fork on Github")
+                       a_ [href_ "https://github.com/haskell-infra/hl"] "Fork or comment on Github")
              span_ [class_ "pull-right"]
                    (do span_ "Proudly hosted by "
                        a_ [href_ "https://www.rackspace.com/"]
