@@ -111,9 +111,10 @@ library =
      p_ "Documentation for Haskell libraries is typically available on Hackage. We also have specialized tools for searching across it, not only by name, but by type."
      links docs
   where docs =
-         [("Hoogle","http://www.haskell.org/hoogle/")
-         ,("Hayoo!","http://hayoo.fh-wedel.de")
+         [("Hoogle API Search","http://www.haskell.org/hoogle/")
+         ,("Hayoo! API Search","http://hayoo.fh-wedel.de")
          ,("Hackage","http://hackage.haskell.org/")
+         ,("The Typeclassopedia","https://wiki.haskell.org/Typeclassopedia")
          ,("Haddocks for Libraries included with GHC","https://downloads.haskell.org/~ghc/latest/docs/html/libraries/index.html")]
 
 report :: (Route App -> Text) -> Html ()
