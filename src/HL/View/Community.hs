@@ -31,9 +31,9 @@ communityV =
                    h2_ "Conferences and Events"
                    p_ "There are a number of conferences and events featuring Haskell, some focusing on the academic side of things, and some on the commercial or hobbyist side. Here are just a few:"
                    h3_ "Academic Conferences"
-                   ul_ academic_conferences
+                   ul_ academicConferences
                    h3_ "Non-Academic Conferences"
-                   ul_ commercial_conferences
+                   ul_ commercialConferences
                    h3_ "Hackathons"
                    p_ "Haskell Hackathons are a long tradition, with lots of learning and social exchange. In many ways they function as semi-structured conferences. Here are some of the most notable:"
                    ul_ hackathons
@@ -60,16 +60,16 @@ offline =
      li_ (a_ [href_ "http://www.meetup.com/London-Haskell/"] "London Haskell")
      li_ (a_ [href_ "http://www.meetup.com/find/?allMeetups=true&keywords=Haskell&radius=Infinity"] "More Haskell meetups at meetup.com")
 
-academic_conferences :: Html ()
-academic_conferences =
+academicConferences :: Html ()
+academicConferences =
   do li_ (a_ [href_ "https://www.haskell.org/haskell-symposium/"] "The Haskell Symposium")
      li_ (a_ [href_ "http://www.icfpconference.org/"] "The International Conference on Functional Programming")
      li_ (a_ [href_ "http://popl.mpi-sws.org/"] "Symposium on Principles of Programming Languages")
      li_ (a_ [href_ "http://www.ifl-symposia.org/"] "International Symposia on Implementation and Application of Functional Languages")
      li_ (a_ [href_ "http://www.tifp.org/"] "Symposium on Trends in Functional Programming ")
 
-commercial_conferences :: Html ()
-commercial_conferences =
+commercialConferences :: Html ()
+commercialConferences =
   do li_ (a_ [href_ "http://cufp.org/"] "Commercial Users of Functional Programming (Roving)")
      li_ (a_ [href_ "http://www.lambdajam.com/"] "LambdaJam (Chicago, IL, USA)")
      li_ (a_ [href_ "http://functionalconf.com/"] "Functional Conf (Bangalore, IN)")
