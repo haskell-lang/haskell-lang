@@ -18,7 +18,7 @@ Steps to setup:
 
 ### Fedora 21
 
-To install Haskell 7.8.4 from the unofficial repo (Fedora 22+ will include it in the official one):
+To install GHC 7.8.4 from the unofficial repo (Fedora 22+ will include it in the official one):
 
     sudo yum-config-manager --add-repo https://copr.fedoraproject.org/coprs/petersen/ghc-7.8.4/repo/fedora-21/petersen-ghc-7.8.4-fedora-21.repo
     sudo yum install ghc cabal-install
@@ -29,12 +29,12 @@ If you want to install from the official repo that uses an older version of ghc 
 
 ### Arch Linux
 
-To install Haskell from the official repos on Arch Linux:
+To install GHC from the official repos on Arch Linux:
 
 Update your mirrorlist:
 
     sudo pacman -Syy
 
-Download and install Haskell:
+Download and install:
 
     sudo pacman -S cabal-install ghc happy alex haddock
