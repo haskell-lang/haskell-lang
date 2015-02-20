@@ -1,7 +1,7 @@
-haskell-lang
+hl
 =====
 
-Haskell web site.
+Haskell.org web site.
 
 ## Editing pages
 
@@ -33,46 +33,6 @@ haskellCode "peyton `simon` jones"
 Pre for `<pre>` block, code for `<code>` span snippet.
 
 ## Building
-
-Clone the repo:
-
-    $ git clone git@github.com:haskell-infra/hl.git
-
-You need one of these GHC versions:
-
-* GHC 7.6
-* GHC 7.8
-
-***Heads up***: hsenv doesn't currently work on GHC 7.8. To get around
-   this, you can instead try just making a cabal sandbox and using the
-   hl-ghc7.8.cabal file to setup all direct and transient dependencies.
-
-Create an [hsenv](http://hackage.haskell.org/package/hsenv) (cabal
-sandbox [doesn't support specifying a repo yet](https://github.com/haskell/cabal/issues/1884)):
-
-    $ cd hl
-    $ hsenv
-    $ source .hsenv/bin/activate
-
-You need the right package set. Add the following to your
-`.hsenv/cabal/config`, replacing the Hackage reference:
-
-* If you have GHC 7.6:
-
-        remote-repo: stackage:http://www.stackage.org/stackage/1ba546f8f281c02d135ec3babd86516f726b4453
-* If you have GHC 7.8:
-
-        remote-repo: stackage:http://www.stackage.org/stackage/160b97ce7459820d4de720d6a867b85297ab4351
-
-Now just run:
-
-    $ sh scripts/pull-build
-
-To do the cabal update, install, etc.
-
-Done!
-
-### Using sandboxes
 
 Clone the repo:
 
@@ -117,9 +77,9 @@ Just hit f12 to recompile and restart.
 
 It uses Yesod and an MVC organization.
 
-* HL.M.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/Model)
-* HL.V.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/View)
-* HL.C.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/Controller)
+* HL.Model.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/Model)
+* HL.View.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/View)
+* HL.Controller.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/Controller)
 
 Templates are written in
 [Lucid](https://github.com/chrisdone/lucid). There is presently no
