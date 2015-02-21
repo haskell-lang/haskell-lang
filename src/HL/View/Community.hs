@@ -56,6 +56,7 @@ offline =
   do li_ (a_ [href_ "http://www.meetup.com/Bay-Area-Haskell-Users-Group/"] "Bay Area Haskell Users Group")
      li_ (a_ [href_ "http://www.meetup.com/Boston-Haskell/"] "Boston Haskell")
      li_ (a_ [href_ "http://www.meetup.com/berlinhug/"] "Berlin Haskell Users Group")
+     li_ (a_ [href_ "http://ChicagoHaskell.com/"] "Chicago Haskell Group")
      li_ (a_ [href_ "http://www.meetup.com/NY-Haskell/"] "New York Haskell Users Group")
      li_ (a_ [href_ "http://www.meetup.com/London-Haskell/"] "London Haskell")
      li_ (a_ [href_ "http://www.meetup.com/find/?allMeetups=true&keywords=Haskell&radius=Infinity"] "More Haskell meetups at meetup.com")
