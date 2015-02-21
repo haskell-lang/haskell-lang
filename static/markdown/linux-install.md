@@ -29,12 +29,18 @@ If you want to install from the official repo that uses an older version of ghc 
 
 ### Arch Linux
 
-To install GHC from the official repos on Arch Linux:
+The official repos on Arch Linux (extra, specifically) contain packages `ghc`, `cabal-install`, `happy`, `alex`, `haddock`. To install them,
 
-Update your mirrorlist:
+1) Update the mirrorlist and the system itself
 
-    sudo pacman -Syy
+    sudo pacman -Syu
 
-Download and install:
+2) Download and install:
 
-    sudo pacman -S cabal-install ghc happy alex haddock
+    sudo pacman -S ghc cabal-install happy alex haddock
+
+Of course you can choose to omit the system upgrade and simply do
+
+    sudo pacman -Sy ghc cabal-install happy alex haddock
+    
+As a responsible arch user you know the inherent risks, i am certain.
