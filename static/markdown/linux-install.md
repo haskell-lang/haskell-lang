@@ -10,7 +10,7 @@ Steps to setup:
     sudo apt-get update
     sudo apt-get install -y cabal-install-1.20 ghc-7.8.4
     cat >> ~/.bashrc <<EOF
-    export "PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:\$PATH"
+    export PATH="~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:\$PATH"
     EOF
     export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
     cabal update
@@ -42,5 +42,5 @@ The official repos on Arch Linux (extra, specifically) contain packages `ghc`, `
 Of course you can choose to omit the system upgrade and simply do
 
     sudo pacman -Sy ghc cabal-install happy alex haddock
-    
+
 As a responsible arch user you know the inherent risks, i am certain.
