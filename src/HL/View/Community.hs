@@ -53,7 +53,8 @@ online url =
 
 offline :: Html ()
 offline =
-  do li_ (a_ [href_ "http://www.meetup.com/Bay-Area-Haskell-Users-Group/"] "Bay Area Haskell Users Group")
+  do li_ (a_ [href_ "http://www.meetup.com/ATX-Haskell/"] "Austin Haskell Users Group")
+     li_ (a_ [href_ "http://www.meetup.com/Bay-Area-Haskell-Users-Group/"] "Bay Area Haskell Users Group")
      li_ (a_ [href_ "http://www.meetup.com/Boston-Haskell/"] "Boston Haskell")
      li_ (a_ [href_ "http://www.meetup.com/berlinhug/"] "Berlin Haskell Users Group")
      li_ (a_ [href_ "http://ChicagoHaskell.com/"] "Chicago Haskell")
