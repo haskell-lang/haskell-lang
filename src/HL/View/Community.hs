@@ -77,6 +77,7 @@ commercialConferences =
      li_ (a_ [href_ "http://functionalconf.com/"] "Functional Conf (Bangalore, IN)")
      li_ (a_ [href_ "http://www.lambdacon.org/"] "LambdaCon (Bologna, IT)")
      li_ (a_ [href_ "http://bobkonf.de/"] "BOB (Berlin, DE)")
+     li_ (a_ [href_ "http://www.iba-cg.de/hal9.html"] "HaL (Leipzig, Halle, DE)")
      li_ (a_ [href_ "https://skillsmatter.com/conferences/1907-haskell-exchange-2014"] "Skills Matter's Haskell eXchange (London, GB)")
      li_ (a_ [href_ "http://www.degoesconsulting.com/lambdaconf-2015/"] "LambdaConf (Boulder, CO, USA)")
      li_ (a_ [href_ "http://composeconference.org"] "Compose :: Conference (NY, NY, USA)")
