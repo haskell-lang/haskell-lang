@@ -42,7 +42,8 @@ books =
       ,("Parallel and Concurrent Programming in Haskell","http://chimera.labs.oreilly.com/books/1230000000929")
       ,("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
       ,("Haskell: The Craft of Functional Programming","http://www.haskellcraft.com/craft3e/Home.html")
-      ,("The Haskell School of Music","http://haskell.cs.yale.edu/?post_type=publication&p=112")]
+      ,("The Haskell School of Music","http://haskell.cs.yale.edu/?post_type=publication&p=112")
+      ,("Developing Web Apps with Haskell and Yesod","http://www.yesodweb.com/book")]
 
 courses :: Html ()
 courses =
@@ -65,7 +66,7 @@ tutorials =
     tutorialLinks =
        [("A Gentle Introduction to Haskell","https://www.haskell.org/tutorial/")
        ,("Yet Another Haskell Tutorial","http://en.wikibooks.org/wiki/Haskell/YAHT/Preamble")
-       ,("Whte Yourself a Scheme in 48 Hours","http://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours")]
+       ,("Write Yourself a Scheme in 48 Hours","http://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours")]
 
 online :: Html ()
 online =

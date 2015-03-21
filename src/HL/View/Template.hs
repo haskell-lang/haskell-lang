@@ -59,6 +59,9 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
          meta_ [charset_ "utf-8"]
          meta_ [httpEquiv_ "X-UA-Compatible",content_ "IE edge"]
          meta_ [name_ "viewport",content_ "width=device-width, initial-scale=1"]
+         meta_ [name_ "keywords",content_ "haskell,functional,pure,programming,lazy"]
+         meta_ [name_ "description",
+                content_ "The Haskell purely functional programming language home page."]
          link_ [rel_ "shortcut icon",href_ (url (StaticR img_favicon_ico))]
          linkcss "https://fonts.googleapis.com/css?family=Open+Sans"
          styles url
@@ -156,7 +159,7 @@ footer url r =
                       wikiLicense (Nothing :: Maybe Text)
                     _ -> hlCopy)))
   where hlCopy =
-          do span_ [class_ "item"] "\169 2014-2015 haskell.org"
+          do span_ [class_ "item"] "\169 2014\8211\&2015 haskell.org"
              span_ [class_ "item footer-contribute"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-infra/hl"] "Fork or comment on Github")
