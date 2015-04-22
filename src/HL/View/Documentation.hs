@@ -43,7 +43,7 @@ books =
       ,("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
       ,("Haskell: The Craft of Functional Programming","http://www.haskellcraft.com/craft3e/Home.html")
       ,("The Haskell School of Music","http://haskell.cs.yale.edu/?post_type=publication&p=112")
-      ,("Developing Web Apps with Haskell and Yesod","http://www.yesodweb.com/book")]
+      ,("Developing Web Applications with Haskell and Yesod","http://www.yesodweb.com/book")]
 
 courses :: Html ()
 courses =
@@ -113,6 +113,7 @@ library =
      links docs
   where docs =
          [("Hoogle API Search","http://www.haskell.org/hoogle/")
+         ,("FPComplete API Search", "https://www.fpcomplete.com/hoogle")
          ,("Hayoo! API Search","http://hayoo.fh-wedel.de")
          ,("Hackage","http://hackage.haskell.org/")
          ,("The Typeclassopedia","https://wiki.haskell.org/Typeclassopedia")

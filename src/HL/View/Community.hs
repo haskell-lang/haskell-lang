@@ -47,6 +47,7 @@ online url =
      li_ (a_ [href_ (url IrcR)] "IRC (online chat)")
      li_ (a_ [href_ "http://stackoverflow.com/questions/tagged?tagnames=haskell"] "StackOverflow")
      li_ (a_ [href_ "https://plus.google.com/communities/104818126031270146189"] "Google+ community")
+     li_ (a_ [href_ "https://www.facebook.com/groups/programming.haskell/"] "Facebook community")
      li_ (a_ [href_ "http://www.reddit.com/r/haskell"] "Reddit")
      li_ (a_ [href_ "http://www.haskell.org/haskellwiki/Haskell"] "Wiki")
      li_ (a_ [href_ "http://planet.haskell.org/"] "The blogosphere")
