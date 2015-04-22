@@ -1,22 +1,19 @@
 ### MinGHC
 
-MinGHC is a minimal installer for GHC and cabal. 
+MinGHC is a minimal installer for GHC and cabal.
 
-Please do the following steps:
+* Download the Windows 7.8.4 installer here:
 
-* Download the Windows installer here:
+ [MinGHC installer (32-bit)](https://s3.amazonaws.com/download.fpcomplete.com/minghc/minghc-7.8.4-i386.exe)
+ [MinGHC installer (64-bit)](https://s3.amazonaws.com/download.fpcomplete.com/minghc/minghc-7.8.4-x86_64.exe)
 
-  [MinGHC installer](https://s3.amazonaws.com/download.fpcomplete.com/minghc/minghc-7.8.3.exe)
+* Other versions are available at the MinGHC homepage.
 
-* Run the MinGHC installer (more information). After installation, open
-  a command prompt and run:
+[MinGHC Homepage](https://github.com/fpco/minghc)
 
-  `cabal update`
-
-  `cabal install alex happy`
-  
 ### Haskell Platform
 
-The Haskell Platform collects GHC and some common libraries in an installer.
+The Haskell Platform collects GHC and the common platform libraries in
+a single installer.
 
 [Haskell Platform for Windows](https://www.haskell.org/platform/windows.html)
