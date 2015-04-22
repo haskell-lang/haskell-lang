@@ -113,6 +113,7 @@ library =
      links docs
   where docs =
          [("Hoogle API Search","http://www.haskell.org/hoogle/")
+         ,("FPComplete API Search", "https://www.fpcomplete.com/hoogle")
          ,("Hayoo! API Search","http://hayoo.fh-wedel.de")
          ,("Hackage","http://hackage.haskell.org/")
          ,("The Typeclassopedia","https://wiki.haskell.org/Typeclassopedia")
