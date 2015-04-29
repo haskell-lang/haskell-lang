@@ -54,6 +54,7 @@ Plain text logs are also available at
 <tr><td>#haskell_ru</td><td> Russian speakers again, in UTF-8. For those, who prefer good ol' IRC channel with a lambdabot.</td></tr>
 <tr><td>#haskell.se</td><td> Swedish speakers</td></tr>
 <tr><td>#haskell.tw</td><td> Chinese speakers (mainly in Taiwan)</td></tr>
+<tr><td>#haskell.vn</td><td> Vietnamese speakers</td></tr>
 <tr><td>#haskell-blah  </td><td> Haskell people talking about anything except Haskell itself</td></tr>
 <tr><td>#haskell-game  </td><td> The hub for Haskell-based game development</td></tr>
 <tr><td>#haskell-in-depth  </td><td> slower paced discussion of use, theory, implementation etc with no monad tutorials!</td></tr>
