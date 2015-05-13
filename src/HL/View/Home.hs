@@ -60,9 +60,9 @@ header url =
 -- TODO: should be rotatable and link to some article.
 codeSample :: Text
 codeSample =
-  "primes = sieve [2..] \n\
-  \  where sieve (p:xs) = \n\
-  \          p : sieve [x | x <- xs, x `mod` p /= 0]"
+  "primes = filterPrime [2..] \n\
+  \  where filterPrime (p:xs) = \n\
+  \          p : filterPrime [x | x <- xs, x `mod` p /= 0]"
 
 -- | Try Haskell section.
 try :: (Route App -> Text) -> Html ()
