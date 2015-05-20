@@ -32,6 +32,10 @@ try {
     };
 } catch (e){ tryhaskell.files = {} }
 
+tryhaskell.showWarnings = function() {
+    !navigator.cookieEnabled && $("#cookie-warning").show();
+}
+
 // A pre-command hook which can prevent the command from being run if
 // it returns true.
 tryhaskell.preCommandHook = function(line,report){
@@ -258,6 +262,7 @@ String.prototype.trim = function() {
 
 // Main entry point.
 $(function(){
+    tryhaskell.showWarnings();
     tryhaskell.makeController();
     tryhaskell.makeGuide();
     tryhaskell.activeUsers();
