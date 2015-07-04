@@ -85,7 +85,7 @@ commercialConferences =
 
 hackathons :: Html ()
 hackathons =
-  do li_ (a_ [href_ "https://wiki.haskell.org/BayHac2014"] "BayHac (Bay Area, USA)")
+  do li_ (a_ [href_ "http://bayhac.org/"] "BayHac (Bay Area, USA)")
      li_ (a_ [href_ "https://wiki.haskell.org/Hac_Phi"] "Hac Phi (Philadelphia, PA, USA)")
      li_ (a_ [href_ "https://wiki.haskell.org/ZuriHac"] "ZuriHac (Zurich, CH)")
 
