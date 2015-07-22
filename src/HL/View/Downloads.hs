@@ -32,6 +32,7 @@ downloadsV =
                (do h1_ "Downloads"
                    hpSection
                    h2_ "Compiler and base libraries"
+                   p_ "Many now recommend just using the compiler and base libraries combined with package sandboxing, especially for new users interested in using frameworks with complex dependency structures."
                    p_ "Downloads are available on a per operating system basis:"
                    ul_ (forM_ [minBound .. maxBound]
                               (\os ->
