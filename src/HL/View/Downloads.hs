@@ -9,6 +9,18 @@ import HL.Types
 import HL.View
 import HL.View.Template
 
+hpSection :: Html ()
+hpSection = do
+  let hpRoot = "http://www.haskell.org/platform/"
+  h2_ "Haskell Platform"
+  p_ $ "The Haskell Platform is a convenient way to install the Haskell development tools and"
+       <> " a collection of commonly used Haskell packages from Hackage."
+  p_ $ "Get the Haskell Platform for:"
+  ul_ $ do li_ $ a_ [href_ $ hpRoot <> "windows.html"] "Windows"
+           li_ $ a_ [href_ $ hpRoot <> "mac.html"] "OS X"
+           li_ $ a_ [href_ $ hpRoot <> "linux.html"] "Linux"
+  hr_ [style_ "height: 1px; background-color: black;"]
+
 -- | Downloads view.
 downloadsV :: FromLucid App
 downloadsV =
@@ -18,15 +30,14 @@ downloadsV =
          (row_
             (span12_ [class_ "col-md-12"]
                (do h1_ "Downloads"
+                   hpSection
                    h2_ "Compiler and base libraries"
+                   p_ "Many now recommend just using the compiler and base libraries combined with package sandboxing, especially for new users interested in using frameworks with complex dependency structures."
                    p_ "Downloads are available on a per operating system basis:"
                    ul_ (forM_ [minBound .. maxBound]
                               (\os ->
                                  li_ (a_ [href_ (url (DownloadsForR os))]
                                          (toHtml (toHuman os)))))
-                   h2_ "Haskell Platform"
-                   p_ "Many now recommend just using a bare compiler combined with sandboxed dependencies, especially for new users. However, others prefer to start with the curated blessed set of packages in the Haskell Platform, which is available for Windows, OS X, and Linux."
-                   p_ (a_ [href_ "http://www.haskell.org/platform/"] $ "Get the Haskell Platform →")
                    thirdParty))))
 
 -- | OS-specific downloads view.
