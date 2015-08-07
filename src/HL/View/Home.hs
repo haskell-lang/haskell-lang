@@ -74,6 +74,11 @@ try _ =
                            (return ()))))
   where repl =
           do h2_ "Try it"
+             noscript_ (span6_ (div_ [class_ "alert alert-warning"]
+                    "Try haskell requires Javascript to be enabled."))
+             span6_ [hidden_ "", id_ "cookie-warning"]
+                  (div_ [class_ "alert alert-warning"]
+                  "Try haskell requires cookies to be enabled.")
              div_ [id_ "console"]
                   (return ())
 
