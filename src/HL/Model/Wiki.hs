@@ -1,3 +1,4 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ViewPatterns #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings #-}
@@ -49,7 +50,11 @@ getWikiPage article =
       do let cursor = fromDocument doc
          title <- listToMaybe (getTitle cursor)
          text <- listToMaybe (getText cursor)
-         return (title,readMediaWiki def (unpack text))
+         pan <- either
+                    (const Nothing)
+                    return
+                    (readMediaWiki def (unpack text))
+         return (title,pan)
     name n =
       Name {nameLocalName = n
            ,nameNamespace = Nothing
