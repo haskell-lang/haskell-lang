@@ -18,9 +18,10 @@ Steps to setup:
 
 ### Fedora 22
 
-The Haskell Platform with GHC 7.8.4 is in the official Fedora repo.
+GHC 7.8.4 is in the official Fedora repo.
 
-    sudo dnf install haskell-platform
+    sudo dnf install ghc
+    sudo dnf install cabal-install
     
 ### Fedora 21
 
