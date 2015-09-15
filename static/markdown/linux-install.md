@@ -16,9 +16,15 @@ Steps to setup:
     cabal update
     cabal install alex happy
 
+### Fedora 22
+
+The Haskell Platform with GHC 7.8.4 is in the official Fedora repo.
+
+    sudo dnf install haskell-platform
+    
 ### Fedora 21
 
-To install GHC 7.8.4 from the unofficial repo (Fedora 22+ will include it in the official one):
+To install GHC 7.8.4 from the unofficial repo:
 
     sudo yum-config-manager --add-repo https://copr.fedoraproject.org/coprs/petersen/ghc-7.8.4/repo/fedora-21/petersen-ghc-7.8.4-fedora-21.repo
     sudo yum install ghc cabal-install
