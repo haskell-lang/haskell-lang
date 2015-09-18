@@ -159,5 +159,5 @@ sponsors =
                                  " has teamed up to provide Haskell.org with redundant, scalable object-storage \
                                  \through their Dream Objects service." )))
          row_ (do span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "http://www.webmon.com"] "Webmon")
+                         (p_ (do strong_ (a_ [href_ "https://webmon.com"] "Webmon")
                                  " provides monitoring and escalation for core haskell.org infrastructure." )))
