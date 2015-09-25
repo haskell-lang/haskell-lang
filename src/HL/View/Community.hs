@@ -66,7 +66,7 @@ offline =
 academicConferences :: Html ()
 academicConferences =
   do li_ (a_ [href_ "https://www.haskell.org/haskell-symposium/"] "The Haskell Symposium")
-     li_ (a_ [href_ "https://wiki.haskell.org/HaskellImplementorsWorkshop"] "Haskell Implementors' Workshop"
+     li_ (a_ [href_ "https://wiki.haskell.org/HaskellImplementorsWorkshop"] "Haskell Implementors' Workshop")
      li_ (a_ [href_ "http://www.icfpconference.org/"] "The International Conference on Functional Programming")
      li_ (a_ [href_ "http://popl.mpi-sws.org/"] "Symposium on Principles of Programming Languages")
      li_ (a_ [href_ "http://www.ifl-symposia.org/"] "International Symposia on Implementation and Application of Functional Languages")
