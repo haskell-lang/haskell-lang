@@ -48,3 +48,7 @@ And install packages into a sandbox so it doesn't conflict with other projects:
     $ cd my-project
     $ cabal sandbox init
     $ cabal install the-package-name
+
+### 3. Installing Stack
+
+Generic stack binary downloads are available from the [stack website](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md#linux).

@@ -11,7 +11,7 @@ import HL.View
 
 -- | Downloads controller.
 getDownloadsR :: C (Html ())
-getDownloadsR = lucid downloadsV
+getDownloadsR = lucid . downloadsFromMarkdown =<< io (getMarkdown "downloads-main.md") --lucid downloadsV
 
 -- | Downloads for particular OS.
 getDownloadsForR :: OS -> C (Html ())
