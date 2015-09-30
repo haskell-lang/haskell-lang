@@ -2,19 +2,19 @@
 
 ### Ubuntu
 
-Steps to setup:
+Steps to setup ghc and cabal:
 
     sudo apt-get update
     sudo apt-get install -y software-properties-common
     sudo add-apt-repository -y ppa:hvr/ghc
     sudo apt-get update
-    sudo apt-get install -y cabal-install-1.20 ghc-7.8.4
+    sudo apt-get install -y cabal-install-1.22 ghc-7.10.3
     cat >> ~/.bashrc <<EOF
-    export PATH="\$HOME/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:\$PATH"
+    export PATH="\$HOME/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.10.3/bin:\$PATH"
     EOF
-    export PATH=~/.cabal/bin:/opt/cabal/1.20/bin:/opt/ghc/7.8.4/bin:$PATH
-    cabal update
-    cabal install alex happy
+    export PATH=~/.cabal/bin:/opt/cabal/1.22/bin:/opt/ghc/7.10.3/bin:$PATH
+
+Steps to setup stack are [on the stack website](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md#ubuntu).
 
 ### Fedora 22
 
@@ -22,7 +22,10 @@ GHC 7.8.4 is in the official Fedora repo.
 
     sudo dnf install ghc
     sudo dnf install cabal-install
-    
+
+Steps to setup stack are
+[on the stack website](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md#fedora).
+
 ### Fedora 21
 
 To install GHC 7.8.4 from the unofficial repo:
@@ -32,10 +35,16 @@ To install GHC 7.8.4 from the unofficial repo:
 
 As stated in [petersen/ghc-7.8.4 copr page](https://copr.fedoraproject.org/coprs/petersen/ghc-7.8.4/) this ghc cannot be installed in parallel with Fedora/EPEL ghc.
 
-If you want to install from the official repo that uses an older version of ghc (7.6.x) and cabal-install (1.16.x), just run the install command without adding the unofficial repo.
+If you want to install from the official repo that uses an older version of ghc (7.6.x) and cabal-install (1.16.x), just run the install command without badding the unofficial repo.
+
+Steps to setup stack are
+[on the stack website](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md#fedora).
 
 ### Arch Linux
 
 The official repos on Arch Linux contain packages `ghc`, `cabal-install`, `happy`, `alex`, `haddock`.  Install them with:
 
     sudo pacman -S ghc cabal-install happy alex haddock
+
+Steps to setup stack are
+[on the stack website](https://github.com/commercialhaskell/stack/blob/master/doc/install_and_upgrade.md#arch-linux).
