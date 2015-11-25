@@ -91,6 +91,7 @@ manuals = do h2_ "Manuals and Guides"
   where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
                 ,("Cabal Homepage And Quick Links","https://www.haskell.org/cabal/")
                 ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
+                ,("Stack User Guide","https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md")
                 ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")
                 ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")
                 ,("How to Write a Haskell Program","https://wiki.haskell.org/How_to_write_a_Haskell_program")]
