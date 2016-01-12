@@ -37,6 +37,7 @@ books =
     bookLinks =
       [("Learn You a Haskell for Great Good!","http://learnyouahaskell.com/")
       ,("Real World Haskell","http://book.realworldhaskell.org/")
+      ,("Haskell Programming","http://haskellbook.com")
       ,("Beginning Haskell","http://www.apress.com/9781430262503")
       ,("Thinking Functionally with Haskell","http://www.cambridge.org/us/academic/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell")
       ,("Parallel and Concurrent Programming in Haskell","http://chimera.labs.oreilly.com/books/1230000000929")
