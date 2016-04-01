@@ -23,6 +23,12 @@ libraries, so avoids nearly all kinds of conflicts between projects. With
 Platform you can also optionally sandbox libraries, but not the globally
 installed platform libraries.
 
+### Haskell IDEs & other distributions
+
+In addition to the generic, cross-platform Haskell toolchain described above, 
+there are also easy-to-use, platform-specific distributions and IDEs. 
+The Haskell Wiki contains a [list of the most popular ones](https://wiki.haskell.org/Distributions).
+
 <!-- For information on other platforms and methods, please see the section on
 [third party installers](#other). -->
 
