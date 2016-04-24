@@ -51,9 +51,9 @@ wikiV urlr result =
 -- | Make all wiki links use the wiki route.
 relativize :: (Route App -> Text) -> Pandoc -> Pandoc
 relativize url = walk links
-  where links asis@(Link is (ref,t))
+  where links asis@(Link attr is (ref,t))
           | isPrefixOf "http://" ref || isPrefixOf "https://" ref = asis
-          | otherwise = Link is (unpack (url (WikiR (pack ref))),t)
+          | otherwise = Link attr is (unpack (url (WikiR (pack ref))),t)
         links x = x
 
 -- | Highlight code blocks and inline code samples with a decent

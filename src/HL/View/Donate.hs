@@ -64,8 +64,5 @@ statusWindow =
       span_ [ id_ "status_title", class_ "sr-only" ] "Error:"
       span_ [ id_ "status_message" ] "  Enter an amount above."))
 
-role_ :: Text -> Attribute
-role_ = makeAttribute "role"
-
 aria_hidden_ :: Text -> Attribute
 aria_hidden_ = makeAttribute "role"
