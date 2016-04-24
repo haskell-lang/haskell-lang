@@ -22,8 +22,8 @@ reportNodeV mode year inner =
     (const (container_ (row_ (span12_ [class_ "col-md-12"] inner))))
     (\_ url ->
        do link_ [rel_ "stylesheet",type_ "text/css",href_ (url (StaticR css_report_css))]
-          script_ [src_ (url (StaticR js_highlight_pack_js))] ""
-          script_ [src_ (url (StaticR js_report_js))] "")
+          script_ [src_ (url (StaticR js_highlight_pack_js))] T.empty
+          script_ [src_ (url (StaticR js_report_js))] T.empty)
 
 -- | Report types view.
 reportV :: FromLucid App

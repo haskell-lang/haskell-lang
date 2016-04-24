@@ -52,6 +52,7 @@ executable haskell-lang
                    , conduit-extra
                    , deepseq
                    , directory
+                   , exceptions
                    , fast-logger
                    , filepath
                    , foreign-store

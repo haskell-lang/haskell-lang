@@ -13,7 +13,6 @@ import           Control.Monad.Identity
 import           Data.Conduit
 import qualified Data.Conduit.List as CL
 import           Data.List (isPrefixOf)
-import           Data.Monoid
 import           Data.Text (unpack,pack)
 import           Data.Text.Lazy (toStrict)
 import           Data.Text.Lazy.Builder
@@ -51,9 +50,9 @@ wikiV urlr result =
 -- | Make all wiki links use the wiki route.
 relativize :: (Route App -> Text) -> Pandoc -> Pandoc
 relativize url = walk links
-  where links asis@(Link attr is (ref,t))
+  where links asis@(Link attr' is (ref,t))
           | isPrefixOf "http://" ref || isPrefixOf "https://" ref = asis
-          | otherwise = Link attr is (unpack (url (WikiR (pack ref))),t)
+          | otherwise = Link attr' is (unpack (url (WikiR (pack ref))),t)
         links x = x
 
 -- | Highlight code blocks and inline code samples with a decent

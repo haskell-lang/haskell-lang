@@ -11,6 +11,8 @@ import HL.View.Template
 
 import Lucid.Base
 
+import qualified Data.Text as T
+
 -- | Donation view.
 donateV :: FromLucid App
 donateV =
@@ -42,8 +44,8 @@ donateV =
                              ", a free online fundraising platform.")
                       p_ donateForm
                       p_ statusWindow))))
-    (\_ url -> do script_ [src_ "https://checkout.stripe.com/checkout.js"] ""
-                  script_ [src_ "https://donate.haskell.org/pubkey.js"] ""
+    (\_ url -> do script_ [src_ "https://checkout.stripe.com/checkout.js"] T.empty
+                  script_ [src_ "https://donate.haskell.org/pubkey.js"] T.empty
                   scripts url [js_donate_js])
 
 donateForm :: Html ()

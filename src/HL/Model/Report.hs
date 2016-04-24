@@ -50,7 +50,7 @@ getReportAllPages year =
      let files =
            ["li2"] ++
            map (("ch" ++) . show)
-               [1 .. 42] ++
+               [1 .. 42 :: Int] ++
            ["li3"]
      let pages =
            map (\x -> "haskell" ++ x ++ ".html") files

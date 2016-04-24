@@ -11,13 +11,12 @@ module HL.Model.Wiki where
 import HL.Controller
 
 
-import Control.Exception.Lifted (catch)
+import Control.Monad.Catch (catch)
 import Control.Spoon
-import Data.Conduit
 import Data.Maybe
 import Data.Monoid
 import Data.Text (unpack)
-import Network.HTTP.Conduit
+import Network.HTTP.Simple
 import Prelude hiding (readFile)
 import Text.Pandoc.Definition
 import Text.Pandoc.Options
@@ -29,22 +28,23 @@ import Text.XML.Cursor
 -- HTML.
 getWikiPage :: Text -> IO (Either Text (Text,Pandoc))
 getWikiPage article =
-  do request <- parseUrl ("http://wiki.haskell.org/api.php?action=query&\
+  do request <- parseRequest
+                         ("http://wiki.haskell.org/api.php?action=query&\
                           \prop=revisions&rvprop=content&format=xml&titles=" <>
                           unpack article)
-     withManager
-       (\manager ->
-          do response <- http request manager
-             doc <- catch (fmap Just (responseBody response $$+- sinkDoc def))
-                          (\(_::UnresolvedEntityException) -> return Nothing)
-             case doc >>= parse of
-               Nothing -> return (Left "Unable to parse XML from wiki.haskell.org.")
-               Just (title,pan) ->
-                 return
-                   (fromMaybe (Left ("Unable to parse XML from wiki.haskell.org! \
-                                     \And the parser gave us an impure exception! \
-                                     \Can you believe it?"))
-                              (showSpoon (Right (title,pan)))))
+     doc <- httpSink
+                request
+                (\_req ->
+                       catch (fmap Just (sinkDoc def))
+                       (\(_::UnresolvedEntityException) -> return Nothing))
+     case doc >>= parse of
+       Nothing -> return (Left "Unable to parse XML from wiki.haskell.org.")
+       Just (title,pan) ->
+         return
+           (fromMaybe (Left ("Unable to parse XML from wiki.haskell.org! \
+                             \And the parser gave us an impure exception! \
+                             \Can you believe it?"))
+                      (showSpoon (Right (title,pan))))
   where
     parse doc =
       do let cursor = fromDocument doc
