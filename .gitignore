@@ -13,3 +13,4 @@ hl.tar.gz
 .hsenv*
 cabal.sandbox.config
 /.stack-work/
+*.swp
