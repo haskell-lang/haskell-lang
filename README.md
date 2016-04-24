@@ -1,6 +1,8 @@
 hl
 =====
 
+[![Build Status](https://travis-ci.org/haskell-lang/haskell-lang.svg?branch=master)](https://travis-ci.org/haskell-lang/haskell-lang)
+
 Haskell.org web site.
 
 ## Editing pages
