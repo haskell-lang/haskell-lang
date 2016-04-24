@@ -7,7 +7,7 @@ module HL.Static where
 import Control.Monad.IO.Class
 import HL.Development
 
-import Paths_hl
+import Paths_haskell_lang
 import Yesod.Static
 
 staticFiles "static/"
