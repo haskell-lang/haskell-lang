@@ -37,7 +37,7 @@ data-files:          static/css/*.css
                      static/report/haskell2010/*.html
                      static/report/haskell2010/*.png
 
-executable hl
+executable haskell-lang
   hs-source-dirs:    src/
   ghc-options:       -Wall
                      -O2
