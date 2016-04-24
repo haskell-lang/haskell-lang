@@ -3,7 +3,7 @@ hl
 
 [![Build Status](https://travis-ci.org/haskell-lang/haskell-lang.svg?branch=master)](https://travis-ci.org/haskell-lang/haskell-lang)
 
-Haskell.org web site.
+haskell-lang.org web site.
 
 ## Editing pages
 
@@ -38,16 +38,11 @@ Pre for `<pre>` block, code for `<code>` span snippet.
 
 Clone the repo:
 
-    $ git clone git@github.com:haskell-infra/hl.git
-
-Set up sandbox:
-
-    $ cabal sandbox init
+    $ git clone git@github.com:haskell-lang/haskell-lang.git
 
 Install dependencies and build:
 
-    $ cabal install --only-dependencies
-    $ cabal build
+    $ stack build
 
 Done!
 
@@ -57,7 +52,7 @@ It runs at: http://localhost:1990/
 
 Manually running the binary:
 
-    $ dist/build/hl/hl
+    $ stack exec haskell-lang
 
 Running from inside GHCi:
 
