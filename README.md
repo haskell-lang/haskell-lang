@@ -34,6 +34,7 @@ haskellCode "peyton `simon` jones"
 
 Pre for `<pre>` block, code for `<code>` span snippet.
 
+
 ## Building
 
 Clone the repo:
@@ -45,6 +46,23 @@ Install dependencies and build:
     $ stack build
 
 Done!
+
+### Note on text-icu
+
+If `text-icu` fails to build, you'll want to install the icu dev libraries. The appropriate include/lib directories are configured in the `stack.yaml` already.
+
+#### Mac OS X
+
+```
+brew install icu4c
+```
+
+#### Ubuntu/Debian
+
+```
+$ sudo apt-get install libicu-dev
+```
+
 
 ## Running
 
