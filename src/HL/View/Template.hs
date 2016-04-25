@@ -159,17 +159,10 @@ footer url r =
                       wikiLicense (Nothing :: Maybe Text)
                     _ -> hlCopy)))
   where hlCopy =
-          do span_ [class_ "item"] "\169 2014\8211\&2015 haskell.org"
-             span_ [class_ "item footer-contribute"]
+          do span_ [class_ "item"] "\169 2014 Chris Done"
+             span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
-             span_ [class_ "pull-right"]
-                   (do span_ "Proudly hosted by "
-                       a_ [href_ "https://www.rackspace.com/"]
-                          (img_ [src_ (url (StaticR img_rackspace_svg))
-                                ,alt_ "rackspace"
-                                ,height_ "20"
-                                ,width_ "20"]))
         wikiLicense :: Maybe Text -> Html ()
         wikiLicense page =
           do span_ [class_ "item"] wikiLink

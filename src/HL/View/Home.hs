@@ -22,8 +22,6 @@ homeV vids =
           try url
           community url vids
           features
-          sponsors
-          transition
           events
           div_ [class_ "mobile"] $
                (navigation False [] cur url))
@@ -107,57 +105,8 @@ community url vids =
           li_ (a_ [class_ "vid-thumbnail",href_ u,title_ n]
                   (img_ [src_ thumb]))
 
--- | Information for people to help transition from the old site to the new locations.
-transition :: Html ()
-transition =
-  div_ [class_ "transition"]
-       (container_
-          (row_ (span6_ [class_ "col-md-6"]
-                        (do h1_ "Psst! Looking for the wiki?"
-                            p_ (do "This is the new Haskell home page! The wiki has moved to "
-                                   a_ [href_ "https://wiki.haskell.org"] "wiki.haskell.org.")))))
-
 -- | Events section.
 -- TODO: Take events section from Haskell News?
 events :: Html ()
 events =
   return ()
-
--- | List of sponsors.
-sponsors :: Html ()
-sponsors =
-  div_ [class_ "sponsors"] $
-    container_ $
-      do row_ (span6_ [class_ "col-md-6"] (h1_ "Sponsors"))
-         row_ (do span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://www.datadoghq.com"] "DataDog")
-                                 " provides powerful, customizable 24/7 metrics and monitoring \
-                                 \integration for all of Haskell.org, and complains loudly for \
-                                 \us when things go wrong."))
-                  span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://www.fastly.com"] "Fastly")
-                                 "'s Next Generation CDN provides low latency access for all of \
-                                 \Haskell.org's downloads and highest traffic services, including \
-                                 \the primary Hackage server, Haskell Platform downloads, and more." )))
-         row_ (do span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://www.rackspace.com"] "Rackspace")
-                                 " provides compute, storage, and networking resources, powering \
-                                 \almost all of Haskell.org in several regions around the world."))
-                  span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://www.status.io"] "Status.io")
-                                 " powers "
-                                 a_ [href_ "https://status.haskell.org"] "https://status.haskell.org"
-                                 ", and lets us easily tell you \
-                                 \when we broke something." )))
-         row_ (do span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "http://www.galois.com"] "Galois")
-                                 " provides infrastructure, funds, administrative resources and \
-                                 \has historically hosted critical Haskell.org infrastructure, \
-                                 \as well as helping the Haskell community at large with their work." ))
-                  span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://www.dreamhost.com"] "DreamHost")
-                                 " has teamed up to provide Haskell.org with redundant, scalable object-storage \
-                                 \through their Dream Objects service." )))
-         row_ (do span6_ [class_ "col-md-6"]
-                         (p_ (do strong_ (a_ [href_ "https://webmon.com"] "Webmon")
-                                 " provides monitoring and escalation for core haskell.org infrastructure." )))
