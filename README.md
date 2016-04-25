@@ -1,5 +1,5 @@
-hl
-=====
+haskell-lang
+============
 
 [![Build Status](https://travis-ci.org/haskell-lang/haskell-lang.svg?branch=master)](https://travis-ci.org/haskell-lang/haskell-lang)
 
@@ -10,7 +10,7 @@ haskell-lang.org web site.
 If you're just here to contribute a content change, read this section.
 
 All pages that are produced by markdown
-[are here](https://github.com/haskell-infra/hl/tree/master/static/markdown). To
+[are here](https://github.com/haskell-lang/haskell-lang/tree/master/static/markdown). To
 contribute changes simply fork this repo and open a pull request. It
 will be merged and redeployed in short order.
 
@@ -92,9 +92,9 @@ Just hit f12 to recompile and restart.
 
 It uses Yesod and an MVC organization.
 
-* HL.Model.* -- [models](https://github.com/haskell-infra/hl/tree/master/src/HL/Model)
-* HL.View.* -- [views](https://github.com/haskell-infra/hl/tree/master/src/HL/View)
-* HL.Controller.* -- [controllers](https://github.com/haskell-infra/hl/tree/master/src/HL/Controller)
+* HL.Model.* -- [models](https://github.com/haskell-lang/haskell-lang/tree/master/src/HL/Model)
+* HL.View.* -- [views](https://github.com/haskell-lang/haskell-lang/tree/master/src/HL/View)
+* HL.Controller.* -- [controllers](https://github.com/haskell-lang/haskell-lang/tree/master/src/HL/Controller)
 
 Templates are written in
 [Lucid](https://github.com/chrisdone/lucid). There is presently no
