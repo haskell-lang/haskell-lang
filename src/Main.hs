@@ -22,4 +22,5 @@ main =
      cacheVar <- newMVar cacheDir
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
+     putStrLn "Now running at: http://localhost:1990/"
      warp port (App st cacheVar)
