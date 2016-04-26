@@ -20,7 +20,7 @@ additional community resources, including:
 
 * A [new Github organization](https://github.com/haskell-lang) (including [the code for the website itself](https://github.com/haskell-lang/haskell-lang))
 * A [new subreddit](https://www.reddit.com/r/haskell_lang)
-* A new `#haskell_lang` IRC channel on Freenode
+* A new `#haskell-lang` IRC channel on Freenode
 * A [new Twitter account](https://twitter.com/haskell_lang)
 
 These community resources are open to all, and in particular to those
