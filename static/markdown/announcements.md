@@ -15,15 +15,15 @@ Haskell, and ultimately increase adoption of Haskell in the greater
 programming community.
 
 The launch of this website is paired with the launch of a number of
-additional community resources, including:
+additional community resources to aid its growth:
 
 * A [new Github organization](https://github.com/haskell-lang) (including [the code for the website itself](https://github.com/haskell-lang/haskell-lang))
 * A [new subreddit](https://www.reddit.com/r/haskell_lang)
 * A new `#haskell-lang` IRC channel on Freenode
 * A [new Twitter account](https://twitter.com/haskell_lang)
 
-These community resources are open to all, and in particular to those
-interested in making Haskell as welcoming a language, community, and
+These community resources are open to all to discuss the contents of
+the website, and more broadly how to make Haskell as welcoming a language, community, and
 ecosystem as can be managed. We encourage all Haskellers to join, and
 to take part in lively discussions of how to improve the state of the
 art within Haskell.
