@@ -12,6 +12,15 @@ Alternately, you can try
 [http://webchat.freenode.net/](http://webchat.freenode.net/) which
 connects inside the browser.
 
+## IRC Channels for getting help
+
+All of the channels mentioned are on Freenode.
+
+* [\#haskell](irc://irc.freenode.net/haskell) is the oldest and most populous Haskell IRC channel, but can be noisy at times.
+* [\#haskell-lang](irc://irc.freenode.net/haskell-stack) for general help and queries.
+* [\#haskell-beginners](irc://irc.freenode.net/haskell-beginners) not only for beginners, focused on helping anyone that needs it.
+* [\#haskell-stack](irc://irc.freenode.net/haskell-stack) for Stack-specific queries and assistance.
+
 ## Logs
 
 Searchable logs are available on IRC Browse for:
@@ -29,8 +38,7 @@ Searchable logs are available on IRC Browse for:
 * [#haskell-distributed](http://ircbrowse.net/haskell-distributed) —
   [recent messages](http://ircbrowse.net/day/haskell-distributed/today/recent)
 
-Plain text logs are also available at
-[tunes](http://tunes.org/~nef/logs/haskell/).
+Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell/).
 
 ## Related channels
 
@@ -55,9 +63,9 @@ Plain text logs are also available at
 <tr><td>#haskell.se</td><td> Swedish speakers</td></tr>
 <tr><td>#haskell.tw</td><td> Chinese speakers (mainly in Taiwan)</td></tr>
 <tr><td>#haskell.vn</td><td> Vietnamese speakers</td></tr>
-<tr><td>#haskell-blah  </td><td> Haskell people talking about anything except Haskell itself</td></tr>
+<tr><td>#haskell-blah  </td><td> Haskell people talking about anything except Haskell itself. Don't say scow.</td></tr>
 <tr><td>#haskell-game  </td><td> The hub for Haskell-based game development</td></tr>
-<tr><td>#haskell-in-depth  </td><td> slower paced discussion of use, theory, implementation etc with no monad tutorials!</td></tr>
+<tr><td>#haskell-in-depth  </td><td>Slower paced discussion of use, theory, implementation etc with no monad tutorials!</td></tr>
 <tr><td>#haskell-iphone</td><td> Haskell-based iPhone development</td></tr>
 <tr><td>#haskell-apple </td><td> Projects that target iOS or OS X using Haskell.</td></tr>
 <tr><td>#haskell-lisp  </td><td>Haskell Lisp - projects that are creating Lisps written in Haskell, or Haskell implementations written in Lisps.</td></tr>
