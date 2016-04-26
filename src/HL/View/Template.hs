@@ -149,7 +149,7 @@ background url route =
 
 -- | Footer across the whole site.
 footer :: (Route App -> Text) -> Maybe (Route App) -> Html ()
-footer url r =
+footer _ r =
   div_ [class_ "footer"]
        (div_ [class_ "container"]
              (p_ (case r of

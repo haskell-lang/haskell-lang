@@ -1,6 +1,7 @@
 /static StaticR Static appStatic
 / HomeR GET
 /donate DonateR GET
+/announcements AnnouncementsR GET
 /downloads DownloadsR GET
 /downloads/#OS DownloadsForR GET
 /community CommunityR GET

@@ -83,6 +83,7 @@ executable haskell-lang
                      HL.Controller.Documentation
                      HL.Controller.Donate
                      HL.Controller.Downloads
+                     HL.Controller.Announcements
                      HL.Controller.Home
                      HL.Controller.Irc
                      HL.Controller.MailingLists
@@ -106,6 +107,7 @@ executable haskell-lang
                      HL.View.Documentation
                      HL.View.Donate
                      HL.View.Downloads
+                     HL.View.Announcements
                      HL.View.Home
                      HL.View.Home.Features
                      HL.View.Markdown
