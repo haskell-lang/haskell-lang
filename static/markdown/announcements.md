@@ -2,7 +2,7 @@
 
 **April 26 2016**
 
-*By the haskell-lang.org team: Chris Allen, Julie Moronuki, Michael Snoyman*
+*By the haskell-lang.org team: Chris Allen, Julie Moronuki, Michael Snoyman, Francesco Mazzoli*
 
 **TODO Include other members of the team**
 
