@@ -4,7 +4,7 @@
 
 *By the haskell-lang.org team: Anthony Cowley, Chris Allen, Chris Done,
 Emanuel Borsboom, Francesco Mazzoli, Gabriel Gonzalez, Julie Moronuki,
-Mathieu Boespflug, Michael Sloan, Michael Snoyman, Roman Cheplyaka,
+Michael Sloan, Michael Snoyman, Roman Cheplyaka,
 Sibi Prabakaran, Tim Dysinger, Vincent Hanquez*
 
 We are happy to announce the launch of a new Haskell community nexus
