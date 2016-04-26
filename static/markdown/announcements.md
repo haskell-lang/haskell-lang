@@ -2,6 +2,10 @@
 
 **April 26 2016**
 
+*By the haskell-lang.org team: Chris Allen, Julie Moronuki, Michael Snoyman*
+
+**TODO Include other members of the team**
+
 We are happy to announce the launch of a new Haskell community nexus
 site: http://haskell-lang.org/. This website is aimed at providing
 modern best practices information for the Haskell programming
