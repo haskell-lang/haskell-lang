@@ -1,6 +1,0 @@
-#!/bin/bash -ex
-cabal build
-strip dist/build/hl/hl
-tar cvf hl.tar.gz dist/build/hl/hl scripts/restart static/ --lzma
-scp hl.tar.gz herz:
-ssh herz 'mkdir -p hl && cd hl && tar xvf ../hl.tar.gz --lzma && killall hl -w && rm ../hl.tar.gz'
