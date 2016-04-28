@@ -66,9 +66,8 @@ instance Human (Route App) where
       MailingListsR        -> "Mailing Lists"
       NewsR                -> "News"
       StaticR{}            -> "Static"
-      DownloadsR           -> "Downloads"
+      GetStartedR          -> "Get Started"
       AnnouncementsR       -> "Announcements"
-      DownloadsForR os     -> "Downloads for " <> toHuman os
       WikiR t              -> "Wiki: " <> t
       ReportNodeR _ _      -> "Report Page"
       ReportModeR Node i   -> "Node " <> pack (show i)
@@ -87,11 +86,10 @@ instance Slug (Route App) where
       MailingListsR     -> "mailing-lists"
       NewsR             -> "news"
       StaticR{}         -> "static"
-      DownloadsR        -> "downloads"
+      GetStartedR       -> "get-started"
       AnnouncementsR    -> "announcements"
       WikiR{}           -> "wiki"
       ReportNodeR{}     -> "report"
       ReportModeR{}     -> "report"
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
-      DownloadsForR{}   -> "downloads"
