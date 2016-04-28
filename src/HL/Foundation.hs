@@ -68,7 +68,6 @@ instance Human (Route App) where
       StaticR{}            -> "Static"
       DownloadsR           -> "Downloads"
       AnnouncementsR       -> "Announcements"
-      DownloadsForR os     -> "Downloads for " <> toHuman os
       WikiR t              -> "Wiki: " <> t
       ReportNodeR _ _      -> "Report Page"
       ReportModeR Node i   -> "Node " <> pack (show i)
@@ -94,4 +93,3 @@ instance Slug (Route App) where
       ReportModeR{}     -> "report"
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
-      DownloadsForR{}   -> "downloads"

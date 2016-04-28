@@ -3,7 +3,6 @@
 /donate DonateR GET
 /announcements AnnouncementsR GET
 /downloads DownloadsR GET
-/downloads/#OS DownloadsForR GET
 /community CommunityR GET
 /irc IrcR GET
 /mailing-lists MailingListsR GET
