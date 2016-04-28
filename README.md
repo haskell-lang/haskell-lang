@@ -3,7 +3,24 @@ haskell-lang
 
 [![Build Status](https://travis-ci.org/haskell-lang/haskell-lang.svg?branch=master)](https://travis-ci.org/haskell-lang/haskell-lang)
 
-haskell-lang.org web site.
+## Purpose
+
+This repository contains the code powering the [haskell-lang.org web
+site](http://haskell-lang.org/). This website is a community driven website for
+the Haskell programm language. Its primary motivators are:
+
+* A destination that Haskellers can happily send non-Haskellers to in order to
+  discover Haskell and get started with modern best practices.
+* A source of information for existing Haskellers to discover up-to-date
+  information
+* A collection of links to various online communities
+* A hub for sharing and hosting documentation for all levels of Haskellers
+
+This list is not meant to be exclusive. If there are other ideas people have
+for content on this website, feel free to raise it in [the issue
+tracker](https://github.com/haskell-lang/haskell-lang/issues/new), [on
+Reddit](https://www.reddit.com/r/haskell_lang), or [on
+Twitter](https://twitter.com/haskell_lang).
 
 ## Editing pages
 
