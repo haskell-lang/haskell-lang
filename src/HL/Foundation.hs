@@ -46,6 +46,10 @@ instance Yesod App where
        return (Logger {loggerSet = set
                       ,loggerDate = date})
 
+  -- We make no usage of Yesod's session features in this site, so disable it
+  -- to avoid unnecessary overhead and cookie header generation.
+  makeSessionBackend _ = return Nothing
+
 instance MonadCaching (HandlerT App IO) where
   withCacheDir cont =
     do dirVar <- fmap appCacheDir getYesod
