@@ -5,18 +5,18 @@ Get up and running with Haskell development quickly!
 [Stack](http://haskellstack.com) is the build tool of choice for Haskell.
 
 * [View the full Stack installation page](http://docs.haskellstack.org/en/stable/install_and_upgrade/)
-* Instructions for 
-  [Windows](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#windows),
-  [Mac OS X](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#mac-os-x),
-  [Ubuntu](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#ubuntu),
-  [Debian](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#debian),
-  [CentOS / Red Hat / Amazon Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#centos),
-  [Fedora](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#fedora),
-  [openSUSE / SUSE Linux Enterprise](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#suse),
-  [Arch Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#arch-linux),
-  [NixOS](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#nixos),
-  [Linux (general)](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#linux),
-  [FreeBSD (unofficial)](http://docs.haskellstack.org/en/stable/install_and_upgrade.md#freebsd)
+* Instructions for
+  [Windows](http://docs.haskellstack.org/en/stable/install_and_upgrade#windows),
+  [Mac OS X](http://docs.haskellstack.org/en/stable/install_and_upgrade#mac-os-x),
+  [Ubuntu](http://docs.haskellstack.org/en/stable/install_and_upgrade#ubuntu),
+  [Debian](http://docs.haskellstack.org/en/stable/install_and_upgrade#debian),
+  [CentOS / Red Hat / Amazon Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade#centos),
+  [Fedora](http://docs.haskellstack.org/en/stable/install_and_upgrade#fedora),
+  [openSUSE / SUSE Linux Enterprise](http://docs.haskellstack.org/en/stable/install_and_upgrade#suse),
+  [Arch Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade#arch-linux),
+  [NixOS](http://docs.haskellstack.org/en/stable/install_and_upgrade#nixos),
+  [Linux (general)](http://docs.haskellstack.org/en/stable/install_and_upgrade#linux),
+  [FreeBSD (unofficial)](http://docs.haskellstack.org/en/stable/install_and_upgrade#freebsd)
 
 Stack will be responsible for downloading the correct version of
 [GHC](http://www.haskell.org/ghc) and installing packages.
