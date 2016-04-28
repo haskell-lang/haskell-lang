@@ -2,7 +2,7 @@
 / HomeR GET
 /donate DonateR GET
 /announcements AnnouncementsR GET
-/downloads DownloadsR GET
+/get-started GetStartedR GET
 /community CommunityR GET
 /irc IrcR GET
 /mailing-lists MailingListsR GET
