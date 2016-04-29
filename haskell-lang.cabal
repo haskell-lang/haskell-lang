@@ -91,7 +91,6 @@ executable haskell-lang
                      HL.Controller.News
                      HL.Controller.Report
                      HL.Controller.Wiki
-                     HL.Development
                      HL.Dispatch
                      HL.Foundation
                      HL.Model.Markdown

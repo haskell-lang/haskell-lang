@@ -5,9 +5,6 @@
 module HL.Static where
 
 import Control.Monad.IO.Class
-import HL.Development
-
-import Paths_haskell_lang
 import Yesod.Static
 
 staticFiles "static/"
@@ -17,6 +14,4 @@ staticFiles "static/"
 -- functionality.
 getStaticDir :: MonadIO m => m FilePath
 getStaticDir =
-  if development
-     then return "static/"
-     else liftIO (getDataFileName "static")
+  return "static/"
