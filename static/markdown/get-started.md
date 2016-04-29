@@ -40,7 +40,7 @@ Stack will be responsible for downloading the correct version of
       installation instructions above.
 
     * If you get an error message about `HelloWorld.hs` not being found, please
-      ensure you run the command from the directory containing the file
+      ensure you run the command from the directory containing the file.
 
 ## Step 3 (optional): Start a project
 
