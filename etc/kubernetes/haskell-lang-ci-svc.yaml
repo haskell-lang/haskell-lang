@@ -1,0 +1,16 @@
+# Kubernetes
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: haskell-lang-ci
+  labels:
+    app: haskell-lang-ci
+spec:
+  ports:
+  - name: http
+    port: 9090
+    targetPort: http
+  selector:
+    app: haskell-lang-ci
+  type: ClusterIP

@@ -1,0 +1,3 @@
+[submodule "etc/common/devops-helpers"]
+	path = etc/common/devops-helpers
+	url = https://github.com/fpco/devops-helpers.git
