@@ -68,7 +68,6 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#haskell-game  </td><td> The hub for Haskell-based game development</td></tr>
 <tr><td>#haskell-in-depth  </td><td>Slower paced discussion of use, theory, implementation etc with no monad tutorials!</td></tr>
 <tr><td>#haskell-iphone</td><td> Haskell-based iPhone development</td></tr>
-<tr><td>#haskell-apple </td><td> Projects that target iOS or OS X using Haskell.</td></tr>
 <tr><td>#haskell-lisp  </td><td>Haskell Lisp - projects that are creating Lisps written in Haskell, or Haskell implementations written in Lisps.</td></tr>
 <tr><td>#haskell-llvm  </td><td> For projects using Haskell and LLVM</td></tr>
 <tr><td>#haskell-overflow  </td><td> Overflow conversations</td></tr>
@@ -81,6 +80,7 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#arch-haskell  </td><td>Arch Linux/ specific Haskell conversations</td></tr>
 <tr><td>#fedora-haskell</td><td>Fedora Haskell SIG</td></tr>
 <tr><td>#gentoo-haskell</td><td>Gentoo/Linux specific Haskell conversations</td></tr>
+<tr><td>#haskell-apple </td><td> Projects that target iOS or OS X using Haskell.</td></tr>
 </table>
 
 ## Projects using haskell
