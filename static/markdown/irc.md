@@ -46,6 +46,7 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><th>Channel</th><th>Purpose</th></tr>
 <tr><td>#haskell.au</td><td> Australian Haskell hackers</td></tr>
 <tr><td>#haskell-br</td><td> Brazilian Portuguese (pt_BR) speakers</td></tr>
+<tr><td>#chicagohaskell</td><td>Chicago Haskell hackers</td></tr>
 <tr><td>#haskell.cz</td><td> Czech speakers (UTF-8)</td></tr>
 <tr><td>#haskell.de</td><td> German speakers</td></tr>
 <tr><td>#haskell.dut   </td><td> Dutch speakers</td></tr>
@@ -99,5 +100,4 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#xmonad</td><td>Xmonad tiling window manager</td></tr>
 <tr><td>#yesod </td><td>Yesod web framework</td></tr>
 <tr><td>#haskell-distributed </td><td>Distributed Haskell discussion</td></tr>
-<tr><td>#chicagohaskell</td><td>Chicago Haskell programmers group</td></tr>
 </table>
