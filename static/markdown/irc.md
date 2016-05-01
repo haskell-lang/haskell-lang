@@ -95,7 +95,6 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#tasty </td><td>Tasty test framework</td></tr>
 <tr><td>#hledger   </td><td>hledger accounting tools and library</td></tr>
 <tr><td>#leksah</td><td>Leksah IDE for Haskell development</td></tr>
-<tr><td>#perl6 </td><td>Perl 6 development (plenty of Haskell chat there too)</td></tr>
 <tr><td>#snapframework </td><td>Snap web framework</td></tr>
 <tr><td>#xmonad</td><td>Xmonad tiling window manager</td></tr>
 <tr><td>#yesod </td><td>Yesod web framework</td></tr>
