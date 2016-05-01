@@ -20,8 +20,8 @@ communityV =
             (span12_ [class_ "col-md-12"]
                (do h1_ "Community"
                    p_
-                     "Haskellers interact, talk and collaborate across several mediums \
-                     \and around the world. There are places to learn, to teach, to ask questions, and to find contributors and collaborators."
+                     "Haskellers interact, talk and collaborate through several mediums \
+                     \ around the world. There are places to learn, to teach, to ask questions, and to find contributors and collaborators."
                    h2_ "Online Communities and Social Resources"
                    p_ "Haskellers are active on a number of online areas, but the most busy are below:"
                    ul_ (online url)
