@@ -60,6 +60,7 @@ automatically rebuild each time you make a change.
 Congratulations, you're ready to start writing Haskell code! Now you're ready to:
 
 * [Read docs on this website](/documentation)
+* [Read Haskell Programming from first principles](http://haskellbook.com/)
 * [Join the community](/community)
 * Browse [the LTS Haskell package set](https://www.stackage.org/lts) to see
   what packages are available and read their API docs
