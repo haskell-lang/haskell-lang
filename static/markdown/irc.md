@@ -46,6 +46,7 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><th>Channel</th><th>Purpose</th></tr>
 <tr><td>#haskell.au</td><td> Australian Haskell hackers</td></tr>
 <tr><td>#haskell-br</td><td> Brazilian Portuguese (pt_BR) speakers</td></tr>
+<tr><td>#chicagohaskell</td><td>Chicago Haskell hackers</td></tr>
 <tr><td>#haskell.cz</td><td> Czech speakers (UTF-8)</td></tr>
 <tr><td>#haskell.de</td><td> German speakers</td></tr>
 <tr><td>#haskell.dut   </td><td> Dutch speakers</td></tr>
@@ -67,7 +68,6 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#haskell-game  </td><td> The hub for Haskell-based game development</td></tr>
 <tr><td>#haskell-in-depth  </td><td>Slower paced discussion of use, theory, implementation etc with no monad tutorials!</td></tr>
 <tr><td>#haskell-iphone</td><td> Haskell-based iPhone development</td></tr>
-<tr><td>#haskell-apple </td><td> Projects that target iOS or OS X using Haskell.</td></tr>
 <tr><td>#haskell-lisp  </td><td>Haskell Lisp - projects that are creating Lisps written in Haskell, or Haskell implementations written in Lisps.</td></tr>
 <tr><td>#haskell-llvm  </td><td> For projects using Haskell and LLVM</td></tr>
 <tr><td>#haskell-overflow  </td><td> Overflow conversations</td></tr>
@@ -80,6 +80,7 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#arch-haskell  </td><td>Arch Linux/ specific Haskell conversations</td></tr>
 <tr><td>#fedora-haskell</td><td>Fedora Haskell SIG</td></tr>
 <tr><td>#gentoo-haskell</td><td>Gentoo/Linux specific Haskell conversations</td></tr>
+<tr><td>#haskell-apple </td><td> Projects that target iOS or OS X using Haskell.</td></tr>
 </table>
 
 ## Projects using haskell
@@ -94,10 +95,8 @@ Plain text logs are also available at [tunes](http://tunes.org/~nef/logs/haskell
 <tr><td>#tasty </td><td>Tasty test framework</td></tr>
 <tr><td>#hledger   </td><td>hledger accounting tools and library</td></tr>
 <tr><td>#leksah</td><td>Leksah IDE for Haskell development</td></tr>
-<tr><td>#perl6 </td><td>Perl 6 development (plenty of Haskell chat there too)</td></tr>
 <tr><td>#snapframework </td><td>Snap web framework</td></tr>
 <tr><td>#xmonad</td><td>Xmonad tiling window manager</td></tr>
 <tr><td>#yesod </td><td>Yesod web framework</td></tr>
 <tr><td>#haskell-distributed </td><td>Distributed Haskell discussion</td></tr>
-<tr><td>#chicagohaskell</td><td>Chicago Haskell programmers group</td></tr>
 </table>
