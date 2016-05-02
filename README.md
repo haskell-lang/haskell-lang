@@ -30,19 +30,12 @@ under `static/markdown/`.
 
 ## Building
 
-Clone the repo:
+* Clone the repo: `$ git clone git@github.com:haskell-lang/haskell-lang.git`
+* Install dependencies and build: `$ stack build`
 
-    $ git clone git@github.com:haskell-lang/haskell-lang.git
-
-Install dependencies and build:
-
-    $ stack build
-
-Done!
-
-### Note on text-icu
-
-If `text-icu` fails to build, you'll want to install the icu dev libraries. The appropriate include/lib directories are configured in the `stack.yaml` already.
+If `text-icu` fails to build, you'll want to install the icu dev
+libraries (the appropriate include/lib directories are configured in
+the `stack.yaml` already):
 
 * Mac OS X: `brew install icu4c`
 * Ubuntu/Debian: `$ sudo apt-get install libicu-dev`
