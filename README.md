@@ -30,6 +30,8 @@ under `static/markdown/`.
 
 ## Building
 
+Run these steps:
+
 * Clone the repo: `$ git clone git@github.com:haskell-lang/haskell-lang.git`
 * Install dependencies and build: `$ stack build`
 
