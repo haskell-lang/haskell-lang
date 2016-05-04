@@ -61,3 +61,14 @@ It uses Yesod and an MVC organization.
 Templates are written in
 [Lucid](https://github.com/chrisdone/lucid). There is presently no
 database.
+
+## Continuous Integration
+
+In addition to builds on
+[Travis CI](https://travis-ci.org/haskell-lang/haskell-lang), certain branches
+are automatically deployed to live websites:
+
+| Branch             | Site                                               |
+|--------------------|----------------------------------------------------|
+| `master`           | [ci.haskell-lang.org](https://ci.haskell-lang.org) |
+| `prod` (protected) | [haskell-lang.org](https://haskell-lang.org)       |
