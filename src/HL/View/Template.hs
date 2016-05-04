@@ -9,6 +9,10 @@ import HL.Types
 import HL.View
 
 import Data.Monoid
+import qualified Data.Text.Lazy as TL
+import qualified Text.Blaze.Html.Renderer.Text as Blaze
+import qualified Text.Blaze.Html.Renderer.Utf8 as BlazeUtf8
+import qualified Yesod.Core as Y
 import Yesod.Static (Static)
 
 -- | Render a template.
@@ -178,3 +182,17 @@ footer _ r =
                       a_ [href_ ("http://www.haskell.org/haskellwiki/index.php?title=" <>
                                  pn <> "&action=edit")]
                          "Edit this page"
+
+defaultLayoutImpl :: Y.WidgetT App IO () -> Y.HandlerT App IO a
+defaultLayoutImpl widget = do
+  pc <- Y.widgetToPageContent widget
+  render <- Y.getUrlRenderParams
+  let title = TL.toStrict (Blaze.renderHtml (Y.pageTitle pc))
+      body = Y.pageBody pc
+      content :: FromLucid App
+      content = template [] title
+              (\_ ->
+                container_
+                  (row_ (span12_ [class_ "col-md-12"]
+                    (toHtmlRaw (BlazeUtf8.renderHtml (body render))))))
+  lucid content >>= Y.sendResponse

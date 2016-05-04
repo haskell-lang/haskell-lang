@@ -46,6 +46,10 @@ instance Yesod App where
        return (Logger {loggerSet = set
                       ,loggerDate = date})
 
+  defaultLayout widget =
+    do app <- getYesod
+       appDefaultLayout app widget
+
   -- We make no usage of Yesod's session features in this site, so disable it
   -- to avoid unnecessary overhead and cookie header generation.
   makeSessionBackend _ = return Nothing
