@@ -3,7 +3,7 @@ intro: |
   You can see an extensive list of available packages on the
   [LTS Haskell package list page](https://www.stackage.org/lts).
 
-  Want to improve this page? Please [send us a pull request](https://github.com/haskell-lang/hskell-lang/edit/master/config/package-info.yaml)!
+  Want to improve this page? Please [send us a pull request](https://github.com/haskell-lang/haskell-lang/edit/master/config/package-info.yaml)!
 
 fundamentals-intro: |
   Fundamentals are packages which solve common problems, are regularly used in most Haskell programs, and are almost universally accepted in Haskell world.
@@ -21,3 +21,22 @@ fundamentals:
 - name: containers
   description: |
     Commonly used container data structures, including `Map`s (dictionaries from keys to values), `Set`s, and `Seq`s (sequential data with cheap append and prepend). These data structures are immutable/persistent, making them much easier to use safely, especially in concurrent settings.
+
+commons-intro: |
+    Common tasks are activities that commonly need to be performed in a Haskell program, and typically have more than one library option available. The descriptions below will help you choose which package to use.
+
+commons:
+- title: Test Framework
+  slug: test-framework
+  description: |
+      Haskell has multiple libraries for writing individual test cases. Two commonly used libraries are [HUnit](https://www.stackage.org/package/HUnit) (for typical unit tests) and [QuickCheck](https://www.stackage.org/package/QuickCheck) (for property based testing).
+
+      At the end of the day, you'll want to build up a test suite from all of these individuals test cases. This is where a test framework comes into play.
+
+  choices:
+  - name: tasty
+    description: |
+      FIXME: Please fill this in
+  - name: hspec
+    description: |
+      FIXME: Please fill this in

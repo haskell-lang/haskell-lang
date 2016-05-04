@@ -18,24 +18,36 @@ packagesV pi = template [] "Packages"
     (\_ -> container_ (row_  (span12_ [class_ "col-md-12"]
       (do h1_ (toHtml ("Haskell Packages" :: String))
           toHtml (piIntro pi)
-          h2_ [id_ "quicklinks"] "Quick Links"
-          ul_ [class_ "quicklinks"] (mapM_ quickLink (map fundName (piFundamentals pi)))
-          h2_ [id_ "fundamentals"] "Fundamentals"
+          h2_ [id_ "_quicklinks"] "Quick Links"
+          ul_ [class_ "quicklinks"]
+            (do mapM_ quickLink (fmap packageName (piFundamentals pi))
+                mapM_ quickLink (fmap packageName (foldMap commonChoices (piCommons pi))))
+          h2_ [id_ "_fundamentals"] "Fundamentals"
           toHtml (piFundamentalsIntro pi)
-          row_ (mapM_ fundamental (piFundamentals pi))
+          row_ (mapM_ package (piFundamentals pi))
+          h2_ [id_ "_commons"] "Commons"
+          toHtml (piCommonsIntro pi)
+          mapM_ common (piCommons pi)
           ))))
 
 quickLink :: Text -> Html ()
 quickLink name = li_ (a_ [href_ ("#" <> name)] (toHtml name))
 
-fundamental :: Fundamental -> Html ()
-fundamental f = (span4_ [class_ "col-md-4"] (do
-  h3_ [id_ (fundName f)] (toHtml (fundName f))
-  toHtml (fundDesc f)
+package :: Package -> Html ()
+package f = (span4_ [class_ "col-md-4"] (do
+  h3_ [id_ (packageName f)] (toHtml (packageName f))
+  toHtml (packageDesc f)
   ul_ [class_ "quicklinks"]
     (mapM_ link
-       [ ("API docs", "https://www.stackage.org/package/" <> fundName f)
+       [ ("API docs", "https://www.stackage.org/package/" <> packageName f)
        ])))
   where
     link :: (Text, Text) -> Html ()
     link (title, url) = li_ (a_ [href_ url] (toHtml title))
+
+common :: Common -> Html ()
+common c = do
+    let ident = "_common_" <> commonSlug c
+    h3_ [id_ ident] (a_ [href_ ("#" <> ident)] (toHtml (commonTitle c)))
+    toHtml (commonDesc c)
+    row_ (mapM_ package (commonChoices c))
