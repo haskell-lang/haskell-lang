@@ -73,6 +73,13 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
                 ,StaticR css_haskell_font_css
                 ,StaticR css_hscolour_css
                 ,StaticR css_hl_css]
+         link_
+           [ href_ (url FeedR)
+           , type_ "application/atom+xml"
+           , rel_ "alternate"
+           , title_ "Haskell Language News Feed"
+           ]
+
          innerhead mroute url
     bodyinner =
       do div_ [class_ "wrap"] (innerbody mroute url)

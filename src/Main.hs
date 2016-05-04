@@ -5,6 +5,7 @@ module Main where
 import Control.Concurrent.MVar
 import Control.Exception (throwIO)
 import qualified Data.Yaml as Yaml
+import HL.Controller.Feed (toFeedEntry)
 import HL.Dispatch ()
 import HL.Foundation
 import HL.View.Template
@@ -27,10 +28,13 @@ main =
      let port = maybe 1990 read $ lookup "PORT" env
      packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
                 >>= either throwIO return
+     entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
+            >>= either throwIO return
      putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
      warp port App
          { appStatic = st
          , appCacheDir = cacheVar
          , appPackageInfo = packageInfo
          , appDefaultLayout = defaultLayoutImpl
+         , appFeedEntries = map toFeedEntry entries
          }

@@ -79,6 +79,7 @@ instance Human (Route App) where
       ReportR{}            -> "Report"
       WikiHomeR{}          -> "Wiki"
       PackagesR{}          -> "Packages"
+      FeedR{}              -> "News Feed"
 
 instance Slug (Route App) where
   toSlug r =
@@ -99,3 +100,4 @@ instance Slug (Route App) where
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
       PackagesR{}       -> "packages"
+      FeedR{}           -> "feed"

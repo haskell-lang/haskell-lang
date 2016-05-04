@@ -71,6 +71,7 @@ executable haskell-lang
                    , tagstream-conduit
                    , text
                    , text-icu
+                   , time
                    , transformers
                    , vector
                    , wai-logger
@@ -80,6 +81,7 @@ executable haskell-lang
                    , yesod
                    , yesod-core
                    , yesod-static
+                   , yesod-newsfeed
 
   other-modules:     HL.Controller
                      HL.Controller.Community
@@ -95,6 +97,7 @@ executable haskell-lang
                      HL.Controller.Report
                      HL.Controller.Wiki
                      HL.Controller.Packages
+                     HL.Controller.Feed
                      HL.Dispatch
                      HL.Foundation
                      HL.Model.Markdown
