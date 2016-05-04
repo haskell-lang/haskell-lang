@@ -7,6 +7,7 @@ import Control.Exception (throwIO)
 import qualified Data.Yaml as Yaml
 import HL.Dispatch ()
 import HL.Foundation
+import HL.View.Template
 import System.Directory
 import System.Environment (getEnvironment)
 import System.FilePath
@@ -31,4 +32,5 @@ main =
          { appStatic = st
          , appCacheDir = cacheVar
          , appPackageInfo = packageInfo
+         , appDefaultLayout = defaultLayoutImpl
          }

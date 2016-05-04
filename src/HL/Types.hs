@@ -12,6 +12,7 @@ import           Data.Text (Text)
 import qualified Data.Text as T
 import           Data.Typeable
 import           HL.Model.Packages
+import           Yesod.Core (HandlerT, WidgetT, Html)
 import           Yesod.Core.Dispatch
 import           Yesod.Slug
 import           Yesod.Static
@@ -30,9 +31,10 @@ instance Exception HaskellLangException
 
 -- | Application state.
 data App = App
-  { appStatic      :: !Static
-  , appCacheDir    :: !(MVar FilePath)
-  , appPackageInfo :: !PackageInfo
+  { appStatic        :: !Static
+  , appCacheDir      :: !(MVar FilePath)
+  , appPackageInfo   :: !PackageInfo
+  , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Html)
   }
 
 -- | Operating system. Used for downloads, for example.
