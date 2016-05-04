@@ -12,7 +12,9 @@ import           HL.View.Code
 
 
 import           Control.Exception
-import qualified Data.Text.IO as ST
+import qualified Data.ByteString as S
+import           Data.Text.Encoding (decodeUtf8With)
+import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.Lazy as L
 import           System.Directory
 import           System.FilePath
@@ -26,7 +28,8 @@ getMarkdown name =
   do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
      if exists
-        then do text <- fmap L.fromStrict (ST.readFile (dir </> fp))
+        then do text <- fmap (L.fromStrict . decodeUtf8With lenientDecode)
+                             (S.readFile (dir </> fp))
                 let !html = renderHtml (markdown def { msBlockCodeRenderer = renderer } text)
                 return (toHtmlRaw html)
         else throw (MarkdownFileUnavailable name)
