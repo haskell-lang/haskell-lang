@@ -697,6 +697,6 @@ ul.quicklinks > li:first-child::before {
   margin: 0;
 }
 
-h3 > a {
+h3 > a, h4 > a {
   color: #6e618d;
 }
