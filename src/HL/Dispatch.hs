@@ -20,6 +20,7 @@ import HL.Controller.MailingLists
 import HL.Controller.News
 import HL.Controller.Report
 import HL.Controller.Wiki
+import HL.Controller.Packages
 import HL.Foundation
 import Yesod.Core.Dispatch
 

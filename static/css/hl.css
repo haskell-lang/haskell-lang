@@ -671,3 +671,28 @@ h2 {
 .page-report .crosslinks {
   display: none
 }
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+   Packages page
+   */
+
+ul.quicklinks {
+  margin: 0;
+  padding: 0;
+}
+
+ul.quicklinks > li {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+
+ul.quicklinks > li::before {
+  content: "»";
+  margin: 0 0.25em;
+}
+
+ul.quicklinks > li:first-child::before {
+  content: "";
+  margin: 0;
+}

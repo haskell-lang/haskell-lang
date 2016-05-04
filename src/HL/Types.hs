@@ -11,6 +11,7 @@ import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
 import           Data.Typeable
+import           HL.Model.Packages
 import           Yesod.Core.Dispatch
 import           Yesod.Slug
 import           Yesod.Static
@@ -29,8 +30,9 @@ instance Exception HaskellLangException
 
 -- | Application state.
 data App = App
-  { appStatic   :: !Static
-  , appCacheDir :: !(MVar FilePath)
+  { appStatic      :: !Static
+  , appCacheDir    :: !(MVar FilePath)
+  , appPackageInfo :: !PackageInfo
   }
 
 -- | Operating system. Used for downloads, for example.

@@ -44,6 +44,7 @@ executable haskell-lang
                      -fno-warn-type-defaults
   main-is:           Main.hs
   build-depends:     base >= 4 && < 5
+                   , aeson
                    , blaze-builder
                    , blaze-html
                    , blaze-markup
@@ -74,6 +75,7 @@ executable haskell-lang
                    , wai-logger
                    , warp
                    , xml-conduit
+                   , yaml
                    , yesod
                    , yesod-core
                    , yesod-static
@@ -91,6 +93,7 @@ executable haskell-lang
                      HL.Controller.News
                      HL.Controller.Report
                      HL.Controller.Wiki
+                     HL.Controller.Packages
                      HL.Dispatch
                      HL.Foundation
                      HL.Model.Markdown
@@ -98,6 +101,7 @@ executable haskell-lang
                      HL.Model.Report
                      HL.Model.Videos
                      HL.Model.Wiki
+                     HL.Model.Packages
                      HL.Static
                      HL.Types
                      HL.View
@@ -114,6 +118,7 @@ executable haskell-lang
                      HL.View.Report
                      HL.View.Template
                      HL.View.Wiki
+                     HL.View.Packages
                      Paths_haskell_lang
                      Yesod.Caching
                      Yesod.Lucid

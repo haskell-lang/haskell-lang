@@ -74,6 +74,7 @@ instance Human (Route App) where
       ReportModeR Mono i   -> "Mono " <> pack (show i)
       ReportR{}            -> "Report"
       WikiHomeR{}          -> "Wiki"
+      PackagesR{}          -> "Packages"
 
 instance Slug (Route App) where
   toSlug r =
@@ -93,3 +94,4 @@ instance Slug (Route App) where
       ReportModeR{}     -> "report"
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
+      PackagesR{}       -> "packages"

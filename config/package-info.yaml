@@ -1,0 +1,23 @@
+intro: |
+  This page lists some of the most commonly used packages in Haskell.
+  You can see an extensive list of available packages on the
+  [LTS Haskell package list page](https://www.stackage.org/lts).
+
+  Want to improve this page? Please [send us a pull request](https://github.com/haskell-lang/hskell-lang/edit/master/config/package-info.yaml)!
+
+fundamentals-intro: |
+  Fundamentals are packages which solve common problems, are regularly used in most Haskell programs, and are almost universally accepted in Haskell world.
+
+fundamentals:
+- name: text
+  description: |
+    Provides efficient packed-memory representations of characters. This is intended for textual data, please use [the bytestring package](#bytestring) instead for binary data.
+- name: bytestring
+  description: |
+    Provides efficient packed-memory representations of bytes. This is intended for binary data, please use [the text package](#text) instead for textual data.
+- name: vector
+  description: |
+    Packed memory sequences of data, similar to arrays in C. This package provides boxed, unboxed, and storable vectors (giving different performance trade-offs), mutable and immutable access, and a powerful fusion framework. This is a highly recommended library for writing real-world high performance code.
+- name: containers
+  description: |
+    Commonly used container data structures, including `Map`s (dictionaries from keys to values), `Set`s, and `Seq`s (sequential data with cheap append and prepend). These data structures are immutable/persistent, making them much easier to use safely, especially in concurrent settings.

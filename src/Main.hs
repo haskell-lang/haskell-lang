@@ -3,6 +3,8 @@
 module Main where
 
 import Control.Concurrent.MVar
+import Control.Exception (throwIO)
+import qualified Data.Yaml as Yaml
 import HL.Dispatch ()
 import HL.Foundation
 import System.Directory
@@ -22,5 +24,11 @@ main =
      cacheVar <- newMVar cacheDir
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
+     packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
+                >>= either throwIO return
      putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
-     warp port (App st cacheVar)
+     warp port App
+         { appStatic = st
+         , appCacheDir = cacheVar
+         , appPackageInfo = packageInfo
+         }
