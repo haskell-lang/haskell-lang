@@ -16,15 +16,7 @@ Quick steps to get up and running with Haskell quickly!
 </a>
 </p>
 
-Other operating systems: [Ubuntu](http://docs.haskellstack.org/en/stable/install_and_upgrade#ubuntu),
-[Debian](http://docs.haskellstack.org/en/stable/install_and_upgrade#debian),
-[CentOS / Red Hat / Amazon Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade#centos),
-[Fedora](http://docs.haskellstack.org/en/stable/install_and_upgrade#fedora),
-[openSUSE / SUSE Linux Enterprise](http://docs.haskellstack.org/en/stable/install_and_upgrade#suse),
-[Arch Linux](http://docs.haskellstack.org/en/stable/install_and_upgrade#arch-linux),
-[NixOS](http://docs.haskellstack.org/en/stable/install_and_upgrade#nixos),
-[Linux (general)](http://docs.haskellstack.org/en/stable/install_and_upgrade#linux),
-[FreeBSD (unofficial)](http://docs.haskellstack.org/en/stable/install_and_upgrade#freebsd)
+[Other operating systems](http://docs.haskellstack.org/en/stable/install_and_upgrade)
 
 Included goodies:
 
