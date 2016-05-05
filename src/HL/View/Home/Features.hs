@@ -99,10 +99,10 @@ concurrent =
                   \  putStrLn msg"
        p_ "Use an asynchronous API for threads:"
        haskellPre "do a1 <- async (getURL url1)\n\
-                   \  a2 <- async (getURL url2)\n\
-                   \  page1 <- wait a1\n\
-                   \  page2 <- wait a2\n\
-                   \  ..."
+                  \   a2 <- async (getURL url2)\n\
+                  \   page1 <- wait a1\n\
+                  \   page2 <- wait a2\n\
+                  \   ..."
        p_ "Atomic threading with software transactional memory:"
        haskellPre "transfer :: Account -> Account -> Int -> IO ()\n\
                    \transfer from to amount =\n\
