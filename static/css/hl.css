@@ -1,6 +1,6 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Global styles
-   */
+*/
 
 html {
   position:relative;
@@ -86,7 +86,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Syntax highlighting for general code blocks
-   */
+*/
 
 .hljs-module     { color: #4F4371 }
 .hljs-type       { color: #4F4371 }
@@ -104,7 +104,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Navigation
-   */
+*/
 
 .mobile > .navbar {
   display: none;
@@ -161,7 +161,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Template
-   */
+*/
 
 .template .navbar {
   margin-bottom:.5em;
@@ -193,7 +193,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    News page
-   */
+*/
 
 .page-news .span6 {
 
@@ -201,7 +201,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Home page
-   */
+*/
 
 .page-home #video-anchor {
   color: #fff;
@@ -231,7 +231,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Header
-   */
+*/
 
 .page-home .header {
   cursor: default;
@@ -305,7 +305,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Try Haskell
-   */
+*/
 
 #console {
   font-family: monospace;
@@ -407,7 +407,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Community
-   */
+*/
 
 .page-home .community #video-description {
   display: none;
@@ -476,7 +476,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Features
-   */
+*/
 
 .page-home .features .span6 {
   padding-top: 5px;
@@ -527,7 +527,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Sponsors
-   */
+*/
 
 .page-home .sponsors {
   background: #1b2332;
@@ -552,7 +552,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * *
    Transition
-   */
+*/
 
 .page-home .transition {
   background: #1b2332;
@@ -579,7 +579,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Responsiveness
-   */
+*/
 
 @media (max-width: 767px){
   .page-home .header .branding {
@@ -631,7 +631,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Report page
-   */
+*/
 
 .page-report .chapterTOCS,.page-report .tableofcontents {
   line-height: 2em;
@@ -674,7 +674,7 @@ h2 {
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Packages page
-   */
+*/
 
 ul.quicklinks {
   margin: 0;
@@ -699,4 +699,35 @@ ul.quicklinks > li:first-child::before {
 
 h3 > a, h4 > a {
   color: #6e618d;
+}
+
+.page-packages .package-name a {
+  color: #555;
+}
+
+.page-get-started .os-logos {
+  padding: 1em 0;
+}
+
+.page-get-started .os-logo {
+  text-decoration: none
+}
+
+.page-get-started .os-logo img {
+  width: 5em;
+  height: 5em;
+}
+
+.page-get-started h2 .counter {
+  color: #999;
+}
+
+.template .alert-info code {
+  background-color: inherit;
+  color: inherit;
+}
+
+.alert-info .title {
+  font-weight: bold;
+  padding-bottom: 20px;
 }
