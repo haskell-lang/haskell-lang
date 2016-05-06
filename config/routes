@@ -3,6 +3,7 @@
 /donate DonateR GET
 /announcements AnnouncementsR GET
 /get-started GetStartedR GET
+/get-started/#OS GetStartedOSR GET
 /community CommunityR GET
 /irc IrcR GET
 /mailing-lists MailingListsR GET

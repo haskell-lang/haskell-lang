@@ -7,49 +7,88 @@ module HL.View.GetStarted where
 
 import HL.Types
 import HL.View
+import HL.View.Code
 import HL.View.Template
 
 -- | Page entry point.
-getStarted :: FromLucid App
-getStarted =
+getStarted :: Maybe OS -> FromLucid App
+getStarted mos =
   template []
            "Get Started with Haskell"
-           (\_ -> container_ (row_ (span12_ [class_ "col-md-12"] content)))
+           (\url ->
+              container_
+                [class_ "get-started-general"]
+                (row_ (span12_ [class_ "col-md-12"]
+                               (content url mos))))
 
 -- | Page content.
-content :: Html ()
-content =
+content :: (Route App -> Text) -> Maybe OS -> Html ()
+content url mos =
   do h1_ (toHtml ("Get Started" :: String))
-     p_ "Quick steps to get up and running with Haskell quickly!"
-     downloadStack
+     p_ "Quick steps to get up and running with Haskell."
+     downloadStack url mos
+     runScripts
+     writePackage
+     nextSteps url
 
 -- | The Stack download section.
-downloadStack :: Html ()
-downloadStack =
-  do h2_ (do span_ [class_ "counter"] "1"
-             " Download Haskell Stack")
+downloadStack :: (Route App -> Text) -> Maybe OS -> Html ()
+downloadStack url mos =
+  do h2_ (do span_ [class_ "counter"] "1 "
+             "Download Haskell Stack")
      container_
-       (do row_ (do span6_ [class_ "col-md-6"] operatingSystems
-                    span6_ [class_ "col-md-6"] downloadContents))
+       (do row_ (do span6_ [class_ "col-md-6"]
+                           (do operatingSystems url mos
+                               operatingSystemDownload url mos)
+                    span6_ [class_ "col-md-6"]
+                           (when False downloadContents)))
 
 -- | Operating system choices.
 --
 -- The user clicks on a logo and then is given a little guide on how
 -- to install for that operating system.
-operatingSystems :: Html ()
-operatingSystems =
+operatingSystems :: (Route App -> Text) -> Maybe OS -> Html ()
+operatingSystems url mos =
   do p_ [class_ "os-logos"]
-        (do a_ [class_ "os-logo"
-               ,href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#mac-os-x"]
-               (img_ [src_ "/static/img/apple-logo.svg"])
-            a_ [class_ "os-logo"
-               ,href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#windows"]
-               (img_ [src_ "/static/img/windows-logo.svg"])
-            a_ [class_ "os-logo"
-               ,href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#linux"]
-               (img_ [src_ "/static/img/linux-logo.svg"]))
-     p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade"]
-            "Other operating systems")
+        (do forM_ oses
+                  (\(os,osLogo) ->
+                     a_ (concat [[class_ "os-logo"
+                                 ,href_ (url (GetStartedOSR os))
+                                 ,title_ (toHuman os)]
+                                ,case mos of
+                                   Nothing -> [class_ " os-choose "]
+                                   Just os'
+                                     | os' == os -> [class_ " os-selected "]
+                                     | otherwise -> [class_ " os-faded "]])
+                        (img_ [src_ (url (StaticR osLogo))])))
+  where oses =
+          [(OSX,img_apple_logo_svg)
+          ,(Windows,img_windows_logo_svg)
+          ,(Linux,img_linux_logo_svg)]
+
+-- | Show download information for the operating system.
+operatingSystemDownload :: (Route App -> Text) -> Maybe OS -> Html ()
+operatingSystemDownload _url mos =
+  case mos of
+    Nothing -> return ()
+    Just OSX ->
+      do p_ "Run the following in your terminal:"
+         osxWindow "Terminal"
+                   (div_ [class_ "terminal-sample"]
+                         (do span_ [class_ "noselect"] "$ "
+                             span_ "curl https://get.haskellstack.com/ | sh"))
+    Just Linux ->
+      do p_ "Run the following in your terminal:"
+         osxWindow "Terminal"
+                   (div_ [class_ "terminal-sample"]
+                         (do span_ [class_ "noselect"] "$ "
+                             span_ "curl https://get.haskellstack.com/ | sh"))
+    Just Windows ->
+      do p_ (do "Download and run the installer: ")
+         ul_ (do li_ (a_ [href_ "https://www.stackage.org/stack/windows-x86_64-installer"]
+                         "Windows 64-bit")
+                 li_ (a_ [href_ "https://www.stackage.org/stack/windows-i386-installer"]
+                         "Windows 32-bit"))
 
 -- | List what's inside the download.
 downloadContents :: Html ()
@@ -65,43 +104,58 @@ downloadContents =
                      ": A search tool for searching Haskell packages.")
              li_ "And thousands of packages installed on demand.")
 
--- ## span_ [class_"counter"]2/span_ Running Haskell scripts
+-- | Demo of running a Haskell script with Stack.
+runScripts :: Html ()
+runScripts =
+  do h2_ (do span_ [class_ "counter"] "2 "
+             "Running Haskell scripts")
+     p_ "To quickly run a Haskell script:"
+     ol_ (do li_ (do p_ "Copy the following content into a file called `HelloWorld.hs`:"
+                     haskellPre
+                       "#!/usr/bin/env stack\n\
+                                 \-- stack --install-ghc runghc\n\
+                                 \\n\
+                                 \main :: IO ()\n\
+                                 \main = putStrLn \"Hello World\"")
+             li_ "Open up a terminal and run `stack HelloWorld.hs`.")
+     p_ "Done!"
 
--- To quickly run a Haskell script:
+-- | Example of making a package to be built with Stack.
+writePackage :: Html ()
+writePackage =
+  do h2_ (do span_ [class_ "counter"] "3 "
+             "Write your own Haskell package")
+     p_ "This is a good way to start on a proper Haskell package. \
+        \Run the following in your terminal:"
+     osxWindow "Terminal"
+               (div_ [class_ "terminal-sample"]
+                     (forM_ (lines ls)
+                            (\l ->
+                               (do span_ [class_ "noselect"] "$ "
+                                   span_ (do toHtml l
+                                             "\n")))))
+     p_ (do "You can now edit the source files in this directory \
+            \(see the file "
+            code_ "src/Lib.hs"
+            "), and run the project with"
+            code_ "stack exec new-project-exe"
+            " as above.")
+  where ls =
+          "stack new new-project\n\
+          \cd new-project\n\
+          \stack build\n\
+          \stack exec new-project-exe"
 
--- 1.  Copy the following content into a file called `HelloWorld.hs`:
-
---     ```haskell
---     #!/usr/bin/env stack
---     -- stack --install-ghc runghc
-
---     main :: IO ()
---     main = putStrLn "Hello World"
---     ```
-
--- 2. Open up a terminal and run `stack HelloWorld.hs`.
-
--- Done!
-
--- ## span_ [class_"counter"]3/span_ Write your own Haskell package
-
--- This is a good way to start on a proper Haskell package.
-
--- ```
--- stack new new-project
--- cd new-project
--- stack build
--- stack exec new-project-exe
--- ```
-
--- You can now edit the source files in this directory (see the file
--- `src/Lib.hs`), and run the project with `stack exec new-project-exe`
--- as above.
-
--- ## span_ [class_"counter"]4/span_ Next steps
-
--- Congratulations, you're ready to start writing Haskell code! Now you're ready to:
-
--- * [Learn about Haskell the language](/documentation)
--- * [Write Haskell projects with Stack](http://docs.haskellstack.org/en/stable/GUIDE/)
--- * [Browse packages that you can use in your projects](/packages)
+-- | Next steps for the user to go to.
+nextSteps :: (Route App -> Text) -> Html ()
+nextSteps url =
+  do h2_ (do span_ [class_ "counter"] "3 "
+             "Next steps")
+     p_ "Congratulations, you're setup to start writing \
+        \Haskell code! Now you're ready to:"
+     ul_ (mapM_ (\(title,link) -> li_ (a_ [href_ link] title)) nextLinks)
+  where nextLinks =
+          [("Learn about Haskell the language",url DocumentationR)
+          ,("Write Haskell projects with Stack"
+           ,"http://docs.haskellstack.org/en/stable/GUIDE/")
+          ,("Browse packages that you can use in your projects",url PackagesR)]

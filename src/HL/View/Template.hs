@@ -203,3 +203,22 @@ defaultLayoutImpl widget = do
                   (row_ (span12_ [class_ "col-md-12"]
                     (toHtmlRaw (BlazeUtf8.renderHtml (body render))))))
   lucid content >>= Y.sendResponse
+
+-- | Make an element that looks like an OS X window.
+osxWindow :: Text -> Html () -> Html ()
+osxWindow title content =
+  div_ [class_ "osx-window"]
+       (div_ [class_ "window"]
+             (do div_ [class_ "titlebar"]
+                      (do div_ [class_ "buttons"]
+                               (do div_ [class_ "closebtn"]
+                                        (a_ [class_ "closebutton",href_ "#"]
+                                            (span_ (strong_ "x")))
+                                   div_ [class_ "minimize"]
+                                        (a_ [class_ "minimizebutton",href_ "#"]
+                                            (span_ (strong_ (toHtmlRaw ("&ndash;" ::Text)))))
+                                   div_ [class_ "zoom"]
+                                        (a_ [class_ "zoombutton",href_ "#"]
+                                            (span_ (strong_ "+"))))
+                          (span_ [class_ "title-bar-text"] (toHtml title)))
+                 div_ [class_ "content"] content))

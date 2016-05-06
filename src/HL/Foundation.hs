@@ -71,6 +71,7 @@ instance Human (Route App) where
       NewsR                -> "News"
       StaticR{}            -> "Static"
       GetStartedR          -> "Get Started"
+      GetStartedOSR os     -> "Get Started (" <> toHuman os <> ")"
       AnnouncementsR       -> "Announcements"
       WikiR t              -> "Wiki: " <> t
       ReportNodeR _ _      -> "Report Page"
@@ -93,6 +94,7 @@ instance Slug (Route App) where
       NewsR             -> "news"
       StaticR{}         -> "static"
       GetStartedR       -> "get-started"
+      GetStartedOSR os  -> "get-started-" <> toSlug os
       AnnouncementsR    -> "announcements"
       WikiR{}           -> "wiki"
       ReportNodeR{}     -> "report"
