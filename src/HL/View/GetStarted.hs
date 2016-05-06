@@ -41,7 +41,7 @@ downloadStack url mos =
                            (do operatingSystems url mos
                                operatingSystemDownload url mos)
                     span6_ [class_ "col-md-6"]
-                           (when False downloadContents)))
+                           downloadContents))
 
 -- | Operating system choices.
 --
@@ -93,7 +93,7 @@ operatingSystemDownload _url mos =
 -- | List what's inside the download.
 downloadContents :: Html ()
 downloadContents =
-  do p_ "What's inside:"
+  do p_ "Features:"
      ul_ (do li_ (do (strong_ "Stack")
                      ": A project builder for multi-package Haskell projects.")
              li_ (do (strong_ "GHC")
