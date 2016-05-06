@@ -149,7 +149,7 @@ writePackage =
 -- | Next steps for the user to go to.
 nextSteps :: (Route App -> Text) -> Html ()
 nextSteps url =
-  do h2_ (do span_ [class_ "counter"] "3 "
+  do h2_ (do span_ [class_ "counter"] "4 "
              "Next steps")
      p_ "Congratulations, you're setup to start writing \
         \Haskell code! Now you're ready to:"
