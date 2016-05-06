@@ -5,7 +5,6 @@
 
 module HL.View.GetStarted where
 
-import Data.Maybe
 import HL.Types
 import HL.View
 import HL.View.Code
@@ -17,32 +16,37 @@ getStarted mos =
   template []
            "Get Started with Haskell"
            (\url ->
-              container_
-                [class_ "get-started-general"]
-                (row_ (span12_ [class_ "col-md-12"]
-                               (content url mos))))
+              div_ [class_ "get-started-general"]
+                   (content url mos))
 
 -- | Page content.
 content :: (Route App -> Text) -> Maybe OS -> Html ()
 content url mos =
-  do h1_ (toHtml ("Get Started" :: String))
-     p_ "Quick steps to get up and running with Haskell."
+  do container_
+       (row_ (span12_ [class_ "col-md-12"]
+                      (do h1_ (toHtml ("Get Started" :: String))
+                          p_ "Quick steps to get up and running with Haskell.")))
      downloadStack url mos
-     runScripts
-     writePackage
-     nextSteps url
+     container_
+       (do h2_ (do span_ [class_ "counter"] "2 "
+                   "Running Haskell programs")
+           row_ (do span6_ [class_ "col-md-6"] runScripts
+                    span6_ [class_ "col-md-6"] writePackage))
+     container_
+       (row_ (span12_ [class_ "col-md-12"]
+                      (nextSteps url)))
 
 -- | The Stack download section.
 downloadStack :: (Route App -> Text) -> Maybe OS -> Html ()
 downloadStack url mos =
-  do h2_ (do span_ [class_ "counter"] "1 "
-             "Download Haskell Stack")
-     container_
-       (do row_ (do span6_ [class_ "col-md-6"]
+  do container_
+       (do row_ (do span12_ [class_ "col-md-12"]
+                            (h2_ (do span_ [class_ "counter"] "1 "
+                                     "Download Haskell Stack")))
+           row_ (do span6_ [class_ "col-md-6"]
                            (do operatingSystems url mos
                                operatingSystemDownload url mos)
-                    span6_ [class_ "col-md-6"]
-                           downloadContents))
+                    span6_ [class_ "col-md-6"] downloadContents))
 
 -- | Operating system choices.
 --
@@ -50,8 +54,10 @@ downloadStack url mos =
 -- to install for that operating system.
 operatingSystems :: (Route App -> Text) -> Maybe OS -> Html ()
 operatingSystems url mos =
-  do when (isNothing mos)
-          (p_ "Choose your operating system:")
+  do case mos of
+       Nothing -> p_ "Choose your operating system:"
+       Just os -> p_ (do "Chosen operating system: "
+                         strong_ (toHtml (toHuman os)))
      p_ [class_ "os-logos"]
         (do forM_ oses
                   (\(os,osLogo) ->
@@ -111,9 +117,7 @@ downloadContents =
 -- | Demo of running a Haskell script with Stack.
 runScripts :: Html ()
 runScripts =
-  do h2_ (do span_ [class_ "counter"] "2 "
-             "Running Haskell scripts")
-     p_ "To quickly run a Haskell script:"
+  do p_ "To quickly run a Haskell script:"
      ol_ (do li_ (do p_ "Copy the following content into a file called `HelloWorld.hs`:"
                      haskellPre
                        "#!/usr/bin/env stack\n\
@@ -127,9 +131,7 @@ runScripts =
 -- | Example of making a package to be built with Stack.
 writePackage :: Html ()
 writePackage =
-  do h2_ (do span_ [class_ "counter"] "3 "
-             "Write your own Haskell package")
-     p_ "This is a good way to start on a proper Haskell package. \
+  do p_ "Start on a proper Haskell package. \
         \Run the following in your terminal:"
      osxWindow "Terminal"
                (div_ [class_ "terminal-sample"]
