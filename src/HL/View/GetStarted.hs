@@ -5,6 +5,7 @@
 
 module HL.View.GetStarted where
 
+import Data.Maybe
 import HL.Types
 import HL.View
 import HL.View.Code
@@ -49,7 +50,9 @@ downloadStack url mos =
 -- to install for that operating system.
 operatingSystems :: (Route App -> Text) -> Maybe OS -> Html ()
 operatingSystems url mos =
-  do p_ [class_ "os-logos"]
+  do when (isNothing mos)
+          (p_ "Choose your operating system:")
+     p_ [class_ "os-logos"]
         (do forM_ oses
                   (\(os,osLogo) ->
                      a_ (concat [[class_ "os-logo"
@@ -93,7 +96,8 @@ operatingSystemDownload _url mos =
 -- | List what's inside the download.
 downloadContents :: Html ()
 downloadContents =
-  do p_ "Features:"
+  do p_ "With the Haskell Stack you get a comprehensive \
+        \development environment for Haskell:"
      ul_ (do li_ (do (strong_ "Stack")
                      ": A project builder for multi-package Haskell projects.")
              li_ (do (strong_ "GHC")
