@@ -86,12 +86,16 @@ operatingSystemDownload _url mos =
                    (div_ [class_ "terminal-sample"]
                          (do span_ [class_ "noselect"] "$ "
                              span_ "curl https://get.haskellstack.com/ | sh"))
+         p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#mac-os-x"]
+                "More detailed installation information")
     Just Linux ->
       do p_ "Run the following in your terminal:"
          osxWindow "Terminal"
                    (div_ [class_ "terminal-sample"]
                          (do span_ [class_ "noselect"] "$ "
                              span_ "curl https://get.haskellstack.com/ | sh"))
+         p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/"]
+                "More detailed installation information, Linux distribution packages, etc.")
     Just Windows ->
       do p_ (do "Download and run the installer: ")
          ul_ (do li_ (a_ [href_ "https://www.stackage.org/stack/windows-x86_64-installer"]
