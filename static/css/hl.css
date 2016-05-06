@@ -743,6 +743,10 @@ h3 > a, h4 > a {
   color: #999;
 }
 
+.get-started-general pre {
+  max-width: 30em;
+}
+
 .template .alert-info code {
   background-color: inherit;
   color: inherit;
