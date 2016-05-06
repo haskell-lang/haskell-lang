@@ -77,7 +77,7 @@ operatingSystems url mos =
 
 -- | Show download information for the operating system.
 operatingSystemDownload :: (Route App -> Text) -> Maybe OS -> Html ()
-operatingSystemDownload _url mos =
+operatingSystemDownload url mos =
   case mos of
     Nothing -> return ()
     Just OSX ->
@@ -89,7 +89,7 @@ operatingSystemDownload _url mos =
          p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#mac-os-x"]
                 "More detailed installation information")
     Just Linux ->
-      linuxDownload
+      linuxDownload url
     Just Windows ->
       do p_ (do "Download and run the installer: ")
          ul_ (do li_ (a_ [href_ "https://www.stackage.org/stack/windows-x86_64-installer"]
@@ -98,15 +98,49 @@ operatingSystemDownload _url mos =
                          "Windows 32-bit"))
 
 -- | Linux download details.
-linuxDownload :: Html ()
-linuxDownload =
+linuxDownload :: (Route App -> Text) -> Html ()
+linuxDownload url =
   do p_ "Run the following in your terminal:"
      osxWindow "Terminal"
                (div_ [class_ "terminal-sample"]
                      (do span_ [class_ "noselect"] "$ "
                          span_ "curl https://get.haskellstack.com/ | sh"))
-     p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/"]
-            "More detailed installation information, Linux distribution packages, etc.")
+     div_ [class_ "muted-choices"]
+          (do p_ "Or for distribution-specific packages, choose your Linux distribution:"
+              p_ (forM_ distros
+                        (\(title,logo,link) ->
+                           a_ [href_ link]
+                              (img_ [src_ (url (StaticR logo))
+                                    ,title_ title
+                                    ,class_ "distro-logo"]))))
+     p_ (do "Or "
+            a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/"]
+               "get more detailed info, more Linux distributions, etc.")
+  where distros =
+          [("Ubuntu"
+           ,img_ubuntu_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#ubuntu")
+          ,("Arch"
+           ,img_arch_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#arch-linux")
+          ,("Debian"
+           ,img_debian_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#debian")
+          ,("Fedora"
+           ,img_fedora_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#fedora")
+          ,("NixOS"
+           ,img_nixos_logo_png
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#nixos")
+          ,("OpenSUSE"
+           ,img_opensuse_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#opensuse-suse-linux-enterprise")
+          ,("Redhat"
+           ,img_redhat_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#centos")
+          ,("Centos"
+           ,img_centos_logo_svg
+           ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#centos")]
 
 -- | List what's inside the download.
 downloadContents :: Html ()
