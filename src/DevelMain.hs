@@ -33,6 +33,7 @@ main =
        , appCacheDir = cacheVar
        , appPackageInfo = packageInfo
        , appDefaultLayout = defaultLayoutImpl
+       , appFeedEntries = []
        })
      ref <- newIORef app
      env <- getEnvironment
@@ -60,6 +61,6 @@ update =
             st <- static "static"
             packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
                        >>= either throwIO return
-            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl)
+            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [])
             writeIORef ref app
             return store
