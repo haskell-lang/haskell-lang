@@ -170,7 +170,7 @@ footer _ r =
                       wikiLicense (Nothing :: Maybe Text)
                     _ -> hlCopy)))
   where hlCopy =
-          do span_ [class_ "item"] "\169 2014 Chris Done"
+          do span_ [class_ "item"] "\169 2014 haskell-lang.org"
              span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
