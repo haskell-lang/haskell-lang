@@ -15,6 +15,7 @@ import           HL.Model.Packages
 import           Yesod.Core (HandlerT, WidgetT, Html)
 import           Yesod.Core.Dispatch
 import           Yesod.Feed
+import           Yesod.GitRev (GitRev)
 import           Yesod.Slug
 import           Yesod.Static
 
@@ -37,6 +38,7 @@ data App = App
   , appPackageInfo   :: !PackageInfo
   , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Html)
   , appFeedEntries   :: ![FeedEntry Text]
+  , appGitRev        :: !GitRev
   }
 
 -- | Operating system. Used for downloads, for example.

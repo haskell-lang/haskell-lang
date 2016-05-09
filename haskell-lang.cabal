@@ -80,6 +80,7 @@ executable haskell-lang
                    , yaml
                    , yesod
                    , yesod-core
+                   , yesod-gitrev
                    , yesod-static
                    , yesod-newsfeed
 

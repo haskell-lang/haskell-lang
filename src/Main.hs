@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 -- | Web server.
 
 module Main where
@@ -13,6 +14,7 @@ import System.Directory
 import System.Environment (getEnvironment)
 import System.FilePath
 import Yesod
+import Yesod.GitRev (gitRev)
 import Yesod.Static
 
 -- | Main entry point.
@@ -37,4 +39,5 @@ main =
          , appPackageInfo = packageInfo
          , appDefaultLayout = defaultLayoutImpl
          , appFeedEntries = map toFeedEntry entries
+         , appGitRev = $gitRev
          }

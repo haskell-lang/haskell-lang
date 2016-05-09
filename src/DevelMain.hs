@@ -1,3 +1,4 @@
+{-# LANGUAGE TemplateHaskell #-}
 -- | Devel web server.
 
 module DevelMain where
@@ -16,6 +17,7 @@ import           System.Directory
 import           System.Environment (getEnvironment)
 import           System.FilePath
 import           Yesod
+import           Yesod.GitRev (gitRev)
 import           Yesod.Static
 
 -- | Start the web server.
@@ -34,6 +36,7 @@ main =
        , appPackageInfo = packageInfo
        , appDefaultLayout = defaultLayoutImpl
        , appFeedEntries = []
+       , appGitRev = $gitRev
        })
      ref <- newIORef app
      env <- getEnvironment
@@ -61,6 +64,6 @@ update =
             st <- static "static"
             packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
                        >>= either throwIO return
-            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [])
+            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [] $gitRev)
             writeIORef ref app
             return store

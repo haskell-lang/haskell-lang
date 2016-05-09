@@ -32,6 +32,7 @@ import System.Log.FastLogger
 import Yesod
 import Yesod.Caching
 import Yesod.Core.Types
+import Yesod.GitRev (GitRev)
 import Yesod.Slug
 import Yesod.Static
 
@@ -81,6 +82,7 @@ instance Human (Route App) where
       WikiHomeR{}          -> "Wiki"
       PackagesR{}          -> "Packages"
       FeedR{}              -> "News Feed"
+      GitRevR{}            -> "Build Version"
 
 instance Slug (Route App) where
   toSlug r =
@@ -103,3 +105,4 @@ instance Slug (Route App) where
       WikiHomeR{}       -> "wiki"
       PackagesR{}       -> "packages"
       FeedR{}           -> "feed"
+      GitRevR{}         -> "build-version"
