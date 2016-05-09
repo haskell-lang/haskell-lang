@@ -12,12 +12,14 @@ import Yesod.Feed
 
 getFeedR :: C TypedContent
 getFeedR = do
+    now <- liftIO getCurrentTime
     render <- getUrlRender
-    entries <- fmap appFeedEntries getYesod
-    updated <-
-        case entries of
-            entry:_ -> return (feedEntryUpdated entry)
-            [] -> liftIO getCurrentTime
+    entries' <- fmap appFeedEntries getYesod
+    let entries = filter ((<= now) . feedEntryUpdated) entries'
+        updated =
+            case entries of
+                entry:_ -> feedEntryUpdated entry
+                [] -> now
     newsFeedText Feed
         { feedTitle = "Haskell Language News Feed"
         , feedLinkSelf = render FeedR
