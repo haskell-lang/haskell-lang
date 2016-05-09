@@ -67,20 +67,46 @@ fundamentals:
     Simple POSIX-compatible regex matching.
 
 commons-intro: |
-    Packages for common tasks in Haskell programs. There is typically more than one option for these kind of tasks. The descriptions below will help you choose which package to use.
+    Packages for common tasks in Haskell programs. Typically more than one option.
 
 commons:
-- title: Test Framework
-  slug: test-framework
+- title: Testing
+  slug: testing
   description: |
-      Haskell has multiple libraries for writing individual test cases. Two commonly used libraries are [HUnit](https://www.stackage.org/package/HUnit) (for typical unit tests) and [QuickCheck](https://www.stackage.org/package/QuickCheck) (for property based testing).
-
-      At the end of the day, you'll want to build up a test suite from all of these individuals test cases. This is where a test framework comes into play.
-
+      Test frameworks that group together a bunch of tests and output
+      success/fail results in a structured way.
   choices:
   - name: hspec
     description: |
       A testing framework inspired by the Ruby library RSpec,
-      featuring a friendly language for defining tests, integration
-      with QuickCheck, SmallCheck, and HUnit; parallel test execution;
-      and automatic discovery of test files.
+      featuring a friendly language for defining tests.
+  - name: tasty
+    description: |
+      A testing framework and library with a friendly API.
+
+- title: Streaming
+  slug: streaming
+  description: |
+      Libraries which provide constant-sized memory streaming to/from
+      files, sockets, generated, etc.
+  choices:
+  - name: pipes
+    description: |
+      Combinators for awaiting and yielding, etc.
+  - name: conduit
+    description: |
+      Combinators for awaiting and yielding, with leftovers, etc.
+
+- title: Web/HTTP requests
+  slug: http-clients
+  description: |
+      Making HTTP requests to web servers, getting back a result,
+      streaming, with various options about headers, redirections,
+      etc.
+  choices:
+  - name: http-client
+    description: |
+      Simple HTTP client library with lots of options.
+  - name: wreq
+    description: |
+      A wrapper over http-client with a lensy API.
