@@ -19,9 +19,9 @@ packagesV pi =
   template []
            "Packages"
            (\_ ->
-              (container_
+              container_
                  (row_ (span12_ [class_ "col-md-12"]
-                                (content pi)))))
+                                (content pi))))
 
 content :: PackageInfo -> Html ()
 content pi =
@@ -46,7 +46,7 @@ quickLink name =
 
 package :: Bool -> Package -> Html ()
 package isCommon f =
-  (span4_ [class_ "col-md-4"]
+   span4_ [class_ "col-md-4"]
           (do let heading_ =
                     if isCommon
                        then h4_
@@ -58,7 +58,7 @@ package isCommon f =
               ul_ [class_ "quicklinks"]
                   (mapM_ link
                          [("API docs"
-                          ,"https://www.stackage.org/package/" <> packageName f)])))
+                          ,"https://www.stackage.org/package/" <> packageName f)]))
   where link :: (Text,Text) -> Html ()
         link (title,url) =
           li_ (a_ [href_ url]
