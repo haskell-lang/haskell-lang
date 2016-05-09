@@ -29,11 +29,11 @@ content :: PackageInfo -> Html ()
 content pi =
   do h1_ (toHtml ("Haskell Packages" :: String))
      toHtml (piIntro pi)
-     h2_ [id_ "_cores"] "Core"
+     h2_ [id_ "core"] "Core"
      toHtml (piFundamentalsIntro pi)
      mapM_ (row_ . mapM_ (span3_ [class_ "col-md-3"] . package False))
            (chunksOf 4 (toList (piFundamentals pi)))
-     h2_ [id_ "_common"] "Common"
+     h2_ [id_ "common"] "Common"
      toHtml (piCommonsIntro pi)
      mapM_ (row_ . mapM_ common)
            (chunksOf 2 (toList (piCommons pi)))
