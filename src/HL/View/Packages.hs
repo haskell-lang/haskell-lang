@@ -7,6 +7,8 @@ module HL.View.Packages
     ( packagesV
     ) where
 
+import Data.Foldable
+import Data.List.Split
 import Data.Monoid ((<>))
 import HL.Model.Packages
 import HL.View
@@ -19,50 +21,35 @@ packagesV pi =
   template []
            "Packages"
            (\_ ->
-              container_
+              (container_
                  (row_ (span12_ [class_ "col-md-12"]
-                                (content pi))))
+                                (content pi)))))
 
 content :: PackageInfo -> Html ()
 content pi =
   do h1_ (toHtml ("Haskell Packages" :: String))
      toHtml (piIntro pi)
-     h2_ [id_ "_quicklinks"] "Quick Links"
-     ul_ [class_ "quicklinks"]
-         (do mapM_ quickLink (fmap packageName (piFundamentals pi))
-             mapM_ quickLink (fmap packageName (foldMap commonChoices (piCommons pi))))
-     h2_ [id_ "_fundamentals"] "Fundamentals"
+     h2_ [id_ "_cores"] "Core"
      toHtml (piFundamentalsIntro pi)
-     row_ (mapM_ (package False)
-                 (piFundamentals pi))
-     h2_ [id_ "_commons"] "Commons"
-     toHtml (piCommonsIntro pi)
-     mapM_ common (piCommons pi)
-
-quickLink :: Text -> Html ()
-quickLink name =
-  li_ (a_ [href_ ("#" <> name)]
-          (toHtml name))
+     mapM_ (row_ . mapM_ (package False))
+           (chunksOf 4 (toList (piFundamentals pi)))
+     -- h2_ [id_ "_commons"] "Common"
+     -- toHtml (piCommonsIntro pi)
+     -- mapM_ common (piCommons pi)
 
 package :: Bool -> Package -> Html ()
 package isCommon f =
-   span4_ [class_ "col-md-4"]
-          (do let heading_ =
-                    if isCommon
-                       then h4_
-                       else h3_
-              heading_ [id_ (packageName f)]
-                       (a_ [href_ ("#" <> packageName f)]
-                           (toHtml (packageName f)))
-              toHtml (packageDesc f)
-              ul_ [class_ "quicklinks"]
-                  (mapM_ link
-                         [("API docs"
-                          ,"https://www.stackage.org/package/" <> packageName f)]))
-  where link :: (Text,Text) -> Html ()
-        link (title,url) =
-          li_ (a_ [href_ url]
-                  (toHtml title))
+  (span4_ [class_ "col-md-3"]
+          (a_ [class_ "package-big-link"
+              ,href_ ("https://www.stackage.org/package/" <> packageName f)]
+              (do let heading_ =
+                        if isCommon
+                           then h4_
+                           else h3_
+                  heading_ [id_ (packageName f)]
+                           (toHtml (packageName f))
+                  span_ [class_ "pkg-desc"]
+                        (toHtml (packageDesc f)))))
 
 common :: Common -> Html ()
 common c =

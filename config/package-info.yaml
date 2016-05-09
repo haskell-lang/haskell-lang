@@ -1,29 +1,73 @@
 intro: |
-  This page lists some of the most commonly used packages in Haskell.
-  You can see an extensive list of available packages on the
-  [LTS Haskell package list page](https://www.stackage.org/lts).
-
-  Want to improve this page? Please [send us a pull request](https://github.com/haskell-lang/haskell-lang/edit/master/config/package-info.yaml)!
+  This page is a sample of the most common packages. To see a complete list see [the complete package list page](https://www.stackage.org/lts).
 
 fundamentals-intro: |
-  Fundamentals are packages which solve common problems, are regularly used in most Haskell programs, and are almost universally accepted in Haskell world.
+  Core packages solve common problems and are regularly used in most Haskell programs.
 
 fundamentals:
+- name: base
+  description: |
+    Basic data types, file input/output, environment, concurrency, etc.
 - name: text
   description: |
-    Provides efficient packed-memory representations of characters. This is intended for textual data, please use [the bytestring package](#bytestring) instead for binary data.
-- name: bytestring
+    Efficient immutable string/text data type for text/unicode data.
+- name: time
   description: |
-    Provides efficient packed-memory representations of bytes. This is intended for binary data, please use [the text package](#text) instead for textual data.
+    Dealing with dates, times, time zones, milliseconds, durations, etc.
+- name: filepath
+  description: |
+    Portably deal with file paths across Windows, OS X, Linux, etc.
 - name: vector
   description: |
-    Packed memory sequences of data, similar to arrays in C. This package provides boxed, unboxed, and storable vectors (giving different performance trade-offs), mutable and immutable access, and a powerful fusion framework. This is a highly recommended library for writing real-world high performance code.
+    Efficient arrays, immutable and mutable versions.
 - name: containers
   description: |
-    Commonly used container data structures, including `Map`s (dictionaries from keys to values), `Set`s, and `Seq`s (sequential data with cheap append and prepend). These data structures are immutable/persistent, making them much easier to use safely, especially in concurrent settings.
+    Immutable maps/dictionaries, sets, and sequences with efficient appending.
+- name: unordered-containers
+  description: |
+    Immutable maps/dictionaries and sets, implemented with hashes.
+- name: directory
+  description: |
+    Portably deal with directories, files, file properties, etc.
+- name: bytestring
+  description: |
+    Efficient immutable vectors of bytes for handling binary data.
+- name: optparse-applicative
+  description: |
+    Utilities and combinators for parsing command line options
+- name: criterion
+  description: |
+    Time how long (benchmark) your functions take to run with reliable statistical analysis.
+- name: network
+  description: |
+    Network programming; TCP/UDP sockets, UNIX domain sockets, etc.
+- name: process
+  description: |
+    Launch processes, one-shot or interactively, handle stdout, stderr, etc.
+- name: async
+  description: |
+    Abstraction for performing many actions asynchronously and concurrently.
+- name: aeson
+  description: |
+    Efficient JSON parsing and printing, automatic deriving for your data types, etc.
+- name: attoparsec
+  description: |
+    Efficient parsing library, good for network protocols and complicated binary formats.
+- name: quickcheck
+  description: |
+    Check properties about functions with randomly generated inputs for sanity checks.
+- name: stm
+  description: |
+    Software-transactional memory; for atomic, reliable, composable, concurrency.
+- name: exceptions
+  description: |
+    Extensible optionally-pure exceptions, abstracting over various types.
+- name: regex-compat
+  description: |
+    Simple POSIX-compatible regex matching.
 
 commons-intro: |
-    Common tasks are activities that commonly need to be performed in a Haskell program, and typically have more than one library option available. The descriptions below will help you choose which package to use.
+    Packages for common tasks in Haskell programs. There is typically more than one option for these kind of tasks. The descriptions below will help you choose which package to use.
 
 commons:
 - title: Test Framework
@@ -34,9 +78,9 @@ commons:
       At the end of the day, you'll want to build up a test suite from all of these individuals test cases. This is where a test framework comes into play.
 
   choices:
-  - name: tasty
-    description: |
-      FIXME: Please fill this in
   - name: hspec
     description: |
-      FIXME: Please fill this in
+      A testing framework inspired by the Ruby library RSpec,
+      featuring a friendly language for defining tests, integration
+      with QuickCheck, SmallCheck, and HUnit; parallel test execution;
+      and automatic discovery of test files.

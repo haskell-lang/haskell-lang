@@ -84,6 +84,17 @@ h2 {
   margin-top: 0.5em;
 }
 
+.api-docs, .api-docs:hover {
+             font-size: 15px;
+             padding-left: 0.25em;
+             padding-right: 0.25em;
+             padding-bottom: 0.125em;
+             border-radius: 0.125em;
+             background: #4f4371;
+             color: #fff;
+             text-decoration: none;
+           }
+
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
    Syntax highlighting for general code blocks
 */
@@ -699,6 +710,27 @@ ul.quicklinks > li:first-child::before {
 
 h3 > a, h4 > a {
   color: #6e618d;
+}
+
+.page-packages .pkg-desc {
+  color: #333;
+}
+
+.page-packages .package-big-link {
+  display: block;
+  padding: 0.25em 1em 0.25em 0.5em;
+  margin-left: -0.5em;
+}
+
+.page-packages .package-big-link h3 {
+  margin-top: 0.25em;
+}
+
+.page-packages .package-big-link:hover,
+.page-packages .package-big-link:active {
+  text-decoration: none;
+  background-color: #f0f1f2 !important;
+  border-radius: 5px;
 }
 
 .page-packages .package-name a {

@@ -83,6 +83,7 @@ executable haskell-lang
                    , yesod-gitrev
                    , yesod-static
                    , yesod-newsfeed
+                   , split
 
   other-modules:     HL.Controller
                      HL.Controller.Community
