@@ -33,7 +33,7 @@ content pi =
      toHtml (piFundamentalsIntro pi)
      mapM_ (row_ . mapM_ (span3_ [class_ "col-md-3"] . package False))
            (chunksOf 4 (toList (piFundamentals pi)))
-     h2_ [id_ "_commons"] "Common"
+     h2_ [id_ "_common"] "Common"
      toHtml (piCommonsIntro pi)
      mapM_ (row_ . mapM_ common)
            (chunksOf 2 (toList (piCommons pi)))
