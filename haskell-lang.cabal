@@ -105,7 +105,6 @@ executable haskell-lang
                      HL.Model.Markdown
                      HL.Model.News
                      HL.Model.Report
-                     HL.Model.Videos
                      HL.Model.Wiki
                      HL.Model.Packages
                      HL.Static

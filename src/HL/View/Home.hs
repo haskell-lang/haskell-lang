@@ -10,8 +10,8 @@ import HL.View.Home.Features
 import HL.View.Template
 
 -- | Home view.
-homeV :: [(Text, Text, Text)] -> FromLucid App
-homeV vids =
+homeV :: FromLucid App
+homeV =
   skeleton
     "Haskell Language"
     (\_ _ ->
@@ -20,7 +20,7 @@ homeV vids =
        do navigation True [] Nothing url
           header url
           try url
-          community url vids
+          community url
           features
           events
           div_ [class_ "mobile"] $
@@ -82,8 +82,8 @@ try _ =
 
 -- | Community section.
 -- TOOD: Should contain a list of thumbnail videos. See mockup.
-community :: (Route App -> Text) -> [(Text, Text, Text)] -> Html ()
-community url vids =
+community :: (Route App -> Text) -> Html ()
+community url =
   div_ [id_ "community-wrapper"]
        (do div_ [class_ "community",background url img_community_jpg]
                 (do container_
@@ -96,14 +96,7 @@ community url vids =
                       [id_ "video-description"]
                       (row_ (span8_ [class_ "col-md-8"]
                                     (do h1_ (a_ [id_ "video-anchor"] "<title here>")
-                                        p_ (a_ [id_ "video-view"] "View the video now \8594")))))
-           div_ [class_ "videos"]
-                (container_ (row_ (span12_ [class_ "col-md-12"]
-                                           (ul_ (forM_ vids vid))))))
-  where vid :: (Text,Text,Text) -> Html ()
-        vid (n,u,thumb) =
-          li_ (a_ [class_ "vid-thumbnail",href_ u,title_ n]
-                  (img_ [src_ thumb]))
+                                        p_ (a_ [id_ "video-view"] "View the video now \8594"))))))
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?

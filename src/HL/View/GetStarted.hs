@@ -108,9 +108,9 @@ linuxDownload url =
      div_ [class_ "muted-choices"]
           (do p_ "Or for distribution-specific packages, choose your Linux distribution:"
               p_ (forM_ distros
-                        (\(title,logo,link) ->
+                        (\(title,logo',link) ->
                            a_ [href_ link]
-                              (img_ [src_ (url (StaticR logo))
+                              (img_ [src_ (url (StaticR logo'))
                                     ,title_ title
                                     ,class_ "distro-logo"]))))
      p_ (do "Or "
