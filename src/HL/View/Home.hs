@@ -22,6 +22,7 @@ homeV =
           try url
           community url
           features
+          sponsors
           events
           div_ [class_ "mobile"] $
                (navigation False [] cur url))
@@ -103,3 +104,17 @@ community url =
 events :: Html ()
 events =
   return ()
+
+-- | List of sponsors.
+sponsors :: Html ()
+sponsors =
+  div_ [class_ "sponsors"] $
+  container_ $
+  do row_ (span6_ [class_ "col-md-6"]
+                  (h1_ "Sponsors"))
+     row_ (do span6_ [class_ "col-md-6"]
+                     (p_ (do strong_ (a_ [href_ "https://www.fpcomplete.com/"] "FP Complete")
+                             " The leading commercial provider of Haskell consulting"))
+              span6_ [class_ "col-md-6"]
+                     (p_ (do strong_ (a_ [href_ "https://commercialhaskell.com/"] "The Commercial Haskell Group")
+                             " A special interest group for companies and individuals interested in commercial usage of Haskell")))

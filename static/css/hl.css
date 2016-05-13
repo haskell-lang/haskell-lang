@@ -214,6 +214,10 @@ h2 {
    Home page
 */
 
+body.page-home {
+  margin-bottom: 4em;
+}
+
 .page-home #video-anchor {
   color: #fff;
   text-decoration: none;
