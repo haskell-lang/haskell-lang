@@ -16,12 +16,18 @@ getPackageInfo =
   do info <-
        Yaml.decodeFileEither "config/package-info.yaml" >>=
        either throwIO return
-     fundamentals <-
-       mapM (\pkg ->
-               do mmd <- getPackageMarkdown (packageName pkg)
-                  return pkg {packagePage = mmd})
-            (piFundamentals info)
-     return (info {piFundamentals = fundamentals})
+     fundamentals <- addPages (piFundamentals info)
+     commons <-
+       mapM (\c ->
+               do choices <- addPages (commonChoices c)
+                  return c {commonChoices = choices})
+            (piCommons info)
+     return (info {piFundamentals = fundamentals
+                  ,piCommons = commons})
+  where addPages =
+          mapM (\pkg ->
+                  do mmd <- getPackageMarkdown (packageName pkg)
+                     return pkg {packagePage = mmd})
 
 -- | Get the markdown for a given package name's article.
 getPackageMarkdown :: PackageName -> IO (Maybe Markdown)

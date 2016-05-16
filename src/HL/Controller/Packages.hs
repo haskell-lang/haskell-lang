@@ -1,3 +1,5 @@
+{-# LANGUAGE GADTs #-}
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | GetStarted page controller.
@@ -23,8 +25,16 @@ getPackagesR =
 getPackageR :: PackageName -> C (Html ())
 getPackageR name =
   do info <- fmap appPackageInfo getYesod
-     case V.find ((==name).packageName) (piFundamentals info) of
-       Nothing -> redirect PackagesR
-       Just package -> case packagePage package of
-                         Nothing -> redirect PackagesR
-                         Just md -> lucid (packageV name md)
+     case V.find ((== name) . packageName)
+                 (piFundamentals info) of
+       Nothing ->
+         case V.find ((== name) . packageName)
+                     (V.concatMap commonChoices
+                                  (piCommons info)) of
+           Nothing -> redirect PackagesR
+           Just package -> handlePackage package
+       Just package -> handlePackage package
+  where handlePackage package =
+          case packagePage package of
+            Nothing -> redirect PackagesR
+            Just md -> lucid (packageV name md)
