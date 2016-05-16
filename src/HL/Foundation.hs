@@ -81,6 +81,7 @@ instance Human (Route App) where
       ReportR{}            -> "Report"
       WikiHomeR{}          -> "Wiki"
       PackagesR{}          -> "Packages"
+      PackageR p           -> toHuman p
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
 
@@ -104,5 +105,6 @@ instance Slug (Route App) where
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
       PackagesR{}       -> "packages"
+      PackageR x        -> "packages-" <> toSlug x
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"

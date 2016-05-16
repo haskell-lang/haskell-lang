@@ -9,6 +9,7 @@
 /mailing-lists MailingListsR GET
 /documentation DocumentationR GET
 /packages PackagesR GET
+/package/#PackageName PackageR GET
 /news NewsR GET
 /report ReportR GET
 /report/node/#Int/#FilePath ReportNodeR GET

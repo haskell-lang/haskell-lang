@@ -6,6 +6,7 @@ fundamentals-intro: |
 
 fundamentals:
 - name: base
+  tutorial: True
   description: |
     Basic data types, file input/output, environment, concurrency, etc.
 - name: text

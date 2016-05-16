@@ -1,3 +1,4 @@
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveDataTypeable #-}
 
@@ -7,11 +8,17 @@ module HL.Types where
 
 import           Control.Concurrent.MVar
 import           Control.Exception
+import qualified Data.Text.Lazy as TL
+import           Data.Aeson
+import           Data.Char
 import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
 import           Data.Typeable
-import           HL.Model.Packages
+import           Data.Vector (Vector)
+import           Lucid
+import qualified Text.Blaze.Html.Renderer.Utf8 as Blaze
+import qualified Text.Markdown as MD
 import           Yesod.Core (HandlerT, WidgetT, Html)
 import           Yesod.Core.Dispatch
 import           Yesod.Feed
@@ -36,10 +43,83 @@ data App = App
   { appStatic        :: !Static
   , appCacheDir      :: !(MVar FilePath)
   , appPackageInfo   :: !PackageInfo
-  , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Html)
+  , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Yesod.Core.Html)
   , appFeedEntries   :: ![FeedEntry Text]
   , appGitRev        :: !GitRev
   }
+
+data PackageInfo = PackageInfo
+    { piIntro :: !Markdown
+    , piFundamentalsIntro :: !Markdown
+    , piFundamentals :: !(Vector Package)
+    , piCommonsIntro :: !Markdown
+    , piCommons :: !(Vector Common)
+    }
+instance FromJSON PackageInfo where
+    parseJSON = withObject "PackageInfo" $ \o -> PackageInfo
+        <$> o .: "intro"
+        <*> o .: "fundamentals-intro"
+        <*> o .: "fundamentals"
+        <*> o .: "commons-intro"
+        <*> o .: "commons"
+
+data Package = Package
+    { packageName :: !PackageName
+    , packageDesc :: !Markdown
+    , packageTutorial :: !Bool
+    }
+
+instance FromJSON Package where
+    parseJSON = withObject "Package" $ \o -> Package
+        <$> o .: "name"
+        <*> o .: "description"
+        <*> fmap (maybe False id) (o .:? "tutorial")
+
+data Common = Common
+    { commonTitle :: !Text
+    , commonSlug :: !Text
+    , commonDesc :: !Markdown
+    , commonChoices :: !(Vector Package)
+    }
+instance FromJSON Common where
+    parseJSON = withObject "Common" $ \o -> Common
+        <$> o .: "title"
+        <*> o .: "slug"
+        <*> o .: "description"
+        <*> o .: "choices"
+
+newtype Markdown = Markdown { unMarkdown :: Text }
+  deriving FromJSON
+instance ToHtml Markdown where
+  toHtml = toHtmlRaw
+  toHtmlRaw =
+      toHtmlRaw . Blaze.renderHtml . MD.markdown settings . TL.fromStrict . unMarkdown
+    where
+      settings = MD.def
+          { MD.msXssProtect = False
+          }
+
+newtype PackageName = PackageName Text
+  deriving (Eq,Show,FromJSON,ToJSON,ToHtml)
+
+instance Read PackageName where
+  readsPrec _ str =
+    if T.all (\c -> c =='-' || c == '_' || isAlphaNum c) (T.pack str)
+       then [(PackageName (T.pack str),"")]
+       else []
+
+instance Slug PackageName where
+  toSlug (PackageName name) = name
+
+instance Human PackageName where
+  toHuman (PackageName name) = name
+
+instance PathPiece PackageName where
+  toPathPiece = toSlug
+  fromPathPiece t =
+    if T.all (\c -> c =='-' || c == '_' || isAlphaNum c) t
+       then Just (PackageName t)
+       else Nothing
 
 -- | Operating system. Used for downloads, for example.
 data OS = Windows | OSX | Linux
