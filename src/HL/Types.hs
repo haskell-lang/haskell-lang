@@ -8,15 +8,17 @@ module HL.Types where
 
 import           Control.Concurrent.MVar
 import           Control.Exception
-import qualified Data.Text.Lazy as TL
 import           Data.Aeson
 import           Data.Char
 import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
+import qualified Data.Text.Lazy as TL
 import           Data.Typeable
 import           Data.Vector (Vector)
+import           Language.Haskell.HsColour.CSS (hscolour)
 import           Lucid
+import qualified Text.Blaze as Blaze
 import qualified Text.Blaze.Html.Renderer.Utf8 as Blaze
 import qualified Text.Markdown as MD
 import           Yesod.Core (HandlerT, WidgetT, Html)
@@ -93,11 +95,16 @@ newtype Markdown = Markdown { unMarkdown :: Text }
 instance ToHtml Markdown where
   toHtml = toHtmlRaw
   toHtmlRaw =
-      toHtmlRaw . Blaze.renderHtml . MD.markdown settings . TL.fromStrict . unMarkdown
-    where
-      settings = MD.def
-          { MD.msXssProtect = False
-          }
+    toHtmlRaw .
+    Blaze.renderHtml . MD.markdown settings . TL.fromStrict . unMarkdown
+    where settings =
+            MD.def {MD.msXssProtect = False
+                   ,MD.msBlockCodeRenderer =
+                      \mlang (unrendered,rendered) ->
+                        case mlang of
+                          Just "haskell" ->
+                            Blaze.preEscapedString (hscolour False 1 (T.unpack unrendered))
+                          _ -> rendered}
 
 newtype PackageName = PackageName Text
   deriving (Eq,Show,FromJSON,ToJSON,ToHtml)
