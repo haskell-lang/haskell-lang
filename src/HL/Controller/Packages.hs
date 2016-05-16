@@ -7,11 +7,11 @@ module HL.Controller.Packages
     , getPackageR
     ) where
 
-import HL.Controller
-import HL.Model.Packages
-import HL.View
-import HL.View.Packages
-import HL.View.Package
+import qualified Data.Vector as V
+import           HL.Controller
+import           HL.View
+import           HL.View.Package
+import           HL.View.Packages
 
 -- | Packages controller.
 getPackagesR :: C (Html ())
@@ -22,7 +22,9 @@ getPackagesR =
 -- | Package controller.
 getPackageR :: PackageName -> C (Html ())
 getPackageR name =
-  do result <- getPackageMarkdown name
-     case result of
+  do info <- fmap appPackageInfo getYesod
+     case V.find ((==name).packageName) (piFundamentals info) of
        Nothing -> redirect PackagesR
-       Just md -> lucid (packageV name md)
+       Just package -> case packagePage package of
+                         Nothing -> redirect PackagesR
+                         Just md -> lucid (packageV name md)

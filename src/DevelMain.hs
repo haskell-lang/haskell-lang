@@ -3,15 +3,13 @@
 
 module DevelMain where
 
-import           HL.Dispatch ()
-import           HL.Foundation
-import           HL.View.Template
-
-import Control.Exception (throwIO)
 import           Control.Concurrent
 import           Data.IORef
-import qualified Data.Yaml as Yaml
 import           Foreign.Store
+import           HL.Dispatch ()
+import           HL.Model.Packages
+import           HL.Foundation
+import           HL.View.Template
 import           Network.Wai.Handler.Warp
 import           System.Directory
 import           System.Environment (getEnvironment)
@@ -28,8 +26,7 @@ main =
      let cacheDir = tmpDir </> "hl-cache"
      createDirectoryIfMissing True cacheDir
      cacheVar <- newMVar cacheDir
-     packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
-                >>= either throwIO return
+     packageInfo <- getPackageInfo
      app <- toWaiApp (App
        { appStatic = st
        , appCacheDir = cacheVar
@@ -62,8 +59,7 @@ update =
          do ref <- readStore store
             cacheVar <- readStore (Store 2)
             st <- static "static"
-            packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
-                       >>= either throwIO return
+            packageInfo <- getPackageInfo
             app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [] $gitRev)
             writeIORef ref app
             return store

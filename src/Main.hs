@@ -10,6 +10,7 @@ import HL.Controller.Feed (toFeedEntry)
 import HL.Dispatch ()
 import HL.Foundation
 import HL.View.Template
+import HL.Model.Packages
 import System.Directory
 import System.Environment (getEnvironment)
 import System.FilePath
@@ -28,8 +29,7 @@ main =
      cacheVar <- newMVar cacheDir
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
-     packageInfo <- Yaml.decodeFileEither "config/package-info.yaml"
-                >>= either throwIO return
+     packageInfo <- getPackageInfo
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
      putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")

@@ -41,7 +41,7 @@ content url pi =
 package :: (Route App -> Text) -> Bool -> Package -> Html ()
 package url isCommon f =
   a_ [class_ "package-big-link"
-     ,href_ ref]
+     ,href_ (packageUrl url f)]
      (do let heading_ =
                if isCommon
                   then h4_
@@ -50,9 +50,6 @@ package url isCommon f =
                   (toHtml (packageName f))
          span_ [class_ "pkg-desc"]
                (toHtml (packageDesc f)))
-  where ref = if packageTutorial f
-                 then url (PackageR (packageName f))
-                 else ("https://www.stackage.org/package/" <> toSlug (packageName f))
 
 common :: (Route App -> Text) -> Common -> Html ()
 common url c =
@@ -64,3 +61,11 @@ common url c =
                 toHtml (commonDesc c)
                 row_ (mapM_ (span6_ [class_ "col-md-6"] . package url True)
                             (commonChoices c)))
+
+-- | Get a URL for a package. Might be an internal tutorial, might be
+-- stackage.
+packageUrl :: (Route App -> Text) -> Package -> Text
+packageUrl url f =
+  case packagePage f of
+    Just{} -> url (PackageR (packageName f))
+    Nothing -> "https://www.stackage.org/package/" <> toSlug (packageName f)

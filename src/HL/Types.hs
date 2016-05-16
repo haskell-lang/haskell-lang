@@ -54,7 +54,7 @@ data PackageInfo = PackageInfo
     , piFundamentals :: !(Vector Package)
     , piCommonsIntro :: !Markdown
     , piCommons :: !(Vector Common)
-    }
+    } deriving (Show)
 instance FromJSON PackageInfo where
     parseJSON = withObject "PackageInfo" $ \o -> PackageInfo
         <$> o .: "intro"
@@ -66,21 +66,21 @@ instance FromJSON PackageInfo where
 data Package = Package
     { packageName :: !PackageName
     , packageDesc :: !Markdown
-    , packageTutorial :: !Bool
-    }
+    , packagePage :: !(Maybe Markdown)
+    } deriving (Show)
 
 instance FromJSON Package where
     parseJSON = withObject "Package" $ \o -> Package
         <$> o .: "name"
         <*> o .: "description"
-        <*> fmap (maybe False id) (o .:? "tutorial")
+        <*> pure Nothing
 
 data Common = Common
     { commonTitle :: !Text
     , commonSlug :: !Text
     , commonDesc :: !Markdown
     , commonChoices :: !(Vector Package)
-    }
+    } deriving (Show)
 instance FromJSON Common where
     parseJSON = withObject "Common" $ \o -> Common
         <$> o .: "title"
@@ -89,7 +89,7 @@ instance FromJSON Common where
         <*> o .: "choices"
 
 newtype Markdown = Markdown { unMarkdown :: Text }
-  deriving FromJSON
+  deriving (FromJSON,Show)
 instance ToHtml Markdown where
   toHtml = toHtmlRaw
   toHtmlRaw =
