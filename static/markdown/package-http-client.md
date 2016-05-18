@@ -1,6 +1,3 @@
-http-client
-===========
-
 http-client is a minimalistic package with a relatively low-level API
 and no support for TLS (HTTPS). There are add-on packages which
 provide additional functionality, e.g.:
