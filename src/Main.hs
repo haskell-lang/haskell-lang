@@ -3,20 +3,21 @@
 
 module Main where
 
-import Control.Concurrent.MVar
-import Control.Exception (throwIO)
+import           Control.Concurrent.MVar
+import           Control.Exception (throwIO)
 import qualified Data.Yaml as Yaml
-import HL.Controller.Feed (toFeedEntry)
-import HL.Dispatch ()
-import HL.Foundation
-import HL.View.Template
-import HL.Model.Packages
-import System.Directory
-import System.Environment (getEnvironment)
-import System.FilePath
-import Yesod
-import Yesod.GitRev (gitRev)
-import Yesod.Static
+import           HL.Controller.Feed (toFeedEntry)
+import           HL.Dispatch ()
+import           HL.Foundation
+import           HL.Model.Packages
+import           HL.Model.Snippets
+import           HL.View.Template
+import           System.Directory
+import           System.Environment (getEnvironment)
+import           System.FilePath
+import           Yesod
+import           Yesod.GitRev (gitRev)
+import           Yesod.Static
 
 -- | Main entry point.
 main :: IO ()
@@ -29,6 +30,7 @@ main =
      cacheVar <- newMVar cacheDir
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
+     snippets <- getSnippets
      packageInfo <- getPackageInfo
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
@@ -40,4 +42,5 @@ main =
          , appDefaultLayout = defaultLayoutImpl
          , appFeedEntries = map toFeedEntry entries
          , appGitRev = $gitRev
+         , appSnippetInfo = snippets
          }

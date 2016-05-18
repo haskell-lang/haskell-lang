@@ -1,24 +1,27 @@
+{-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE OverloadedStrings #-}
 
 -- | Home/landing page.
 
 module HL.View.Home where
 
+import HL.Types
 import HL.View
 import HL.View.Code
 import HL.View.Home.Features
 import HL.View.Template
+import System.Random
 
 -- | Home view.
-homeV :: FromLucid App
-homeV =
+homeV :: SnippetInfo -> FromLucid App
+homeV snippets =
   skeleton
     "Haskell Language"
     (\_ _ ->
        linkcss "https://fonts.googleapis.com/css?family=Ubuntu:700")
     (\cur url ->
        do navigation True [] Nothing url
-          header url
+          header snippets url
           try url
           community url
           features
@@ -33,8 +36,8 @@ homeV =
                ,js_tryhaskell_pages_js])
 
 -- | Top header section with the logo and code sample.
-header :: (Route App -> Text) -> Html ()
-header url =
+header :: SnippetInfo -> (Route App -> Text) -> Html ()
+header snippetInfo url =
   div_ [class_ "header"] $
   (container_
      (row_ (do span6_ [class_ "col-md-6"]
@@ -44,24 +47,27 @@ header url =
                span6_ [class_ "col-md-6"]
                       (div_ [class_ "branding"]
                             (do tag
-                                sample)))))
-  where branding =
-          span_ [class_ "name",background url img_logo_png] "Haskell"
+                                snippet)))))
+  where branding = span_ [class_ "name",background url img_logo_png] "Haskell"
         summation =
           span_ [class_ "summary"] "An advanced purely-functional programming language"
-        tag =
-          span_ [class_ "tag"] "Declarative, statically typed code."
-        sample =
-          div_ [class_ "code-sample",title_ "This example is contrived in order to demonstrate what Haskell looks like, including: (1) where syntax, (2) enumeration syntax, (3) pattern matching, (4) consing as an operator, (5) list comprehensions, (6) infix functions. Don't take it seriously as an efficient prime number generator."]
-               (haskellPre codeSample)
+        tag = span_ [class_ "tag"] "Declarative, statically typed code."
+        snippet =
+          maybe (p_ (toHtml (show index)))
+                sample
+                (lookup index
+                        (zip [0 ..]
+                             (siSnippets snippetInfo)))
+        index =
+          fst (randomR (0,(length (siSnippets snippetInfo)) - 1)
+                       (mkStdGen (siSeed snippetInfo)))
 
--- | Code sample.
--- TODO: should be rotatable and link to some article.
-codeSample :: Text
-codeSample =
-  "primes = filterPrime [2..] \n\
-  \  where filterPrime (p:xs) = \n\
-  \          p : filterPrime [x | x <- xs, x `mod` p /= 0]"
+-- | Show a sample code.
+
+sample :: Snippet -> Html ()
+sample snippet =
+  div_ [class_ "code-sample",title_ (snippetTitle snippet)]
+       (haskellPre (snippetCode snippet))
 
 -- | Try Haskell section.
 try :: (Route App -> Text) -> Html ()

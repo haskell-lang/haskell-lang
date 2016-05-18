@@ -70,6 +70,7 @@ executable haskell-lang
                    , spoon
                    , tagstream-conduit
                    , text
+                   , containers
                    , text-icu
                    , time
                    , transformers
@@ -84,6 +85,7 @@ executable haskell-lang
                    , yesod-static
                    , yesod-newsfeed
                    , split
+                   , random
 
   other-modules:     HL.Controller
                      HL.Controller.Community

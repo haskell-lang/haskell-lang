@@ -48,6 +48,7 @@ data App = App
   , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Yesod.Core.Html)
   , appFeedEntries   :: ![FeedEntry Text]
   , appGitRev        :: !GitRev
+  , appSnippetInfo   :: !SnippetInfo
   }
 
 data PackageInfo = PackageInfo
@@ -178,3 +179,27 @@ data PageKey = Report !Int
 
 instance Slug PageKey where
   toSlug (Report year) = "report-" <> T.pack (show year)
+
+data SnippetInfo =
+  SnippetInfo {siSnippets :: [Snippet]
+              ,siSeed :: !Int}
+  deriving (Show)
+
+instance FromJSON SnippetInfo where
+  parseJSON j =
+    do o <- parseJSON j
+       snippets <- o .: "snippets"
+       return (SnippetInfo snippets 1)
+
+data Snippet =
+  Snippet {snippetTitle :: !Text
+          ,snippetCode :: !Text}
+  deriving (Show)
+
+
+instance FromJSON Snippet where
+  parseJSON j =
+    do o <- parseJSON j
+       title <- o .: "title"
+       code <- o .: "code"
+       return (Snippet title code)

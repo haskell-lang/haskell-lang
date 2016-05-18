@@ -3,20 +3,21 @@
 
 module DevelMain where
 
-import           Control.Concurrent
-import           Data.IORef
-import           Foreign.Store
-import           HL.Dispatch ()
-import           HL.Model.Packages
-import           HL.Foundation
-import           HL.View.Template
-import           Network.Wai.Handler.Warp
-import           System.Directory
-import           System.Environment (getEnvironment)
-import           System.FilePath
-import           Yesod
-import           Yesod.GitRev (gitRev)
-import           Yesod.Static
+import Control.Concurrent
+import Data.IORef
+import Foreign.Store
+import HL.Dispatch ()
+import HL.Foundation
+import HL.Model.Packages
+import HL.Model.Snippets
+import HL.View.Template
+import Network.Wai.Handler.Warp
+import System.Directory
+import System.Environment (getEnvironment)
+import System.FilePath
+import Yesod
+import Yesod.GitRev (gitRev)
+import Yesod.Static
 
 -- | Start the web server.
 main :: IO (Store (IORef Application))
@@ -27,6 +28,7 @@ main =
      createDirectoryIfMissing True cacheDir
      cacheVar <- newMVar cacheDir
      packageInfo <- getPackageInfo
+     snippets <- getSnippets
      app <- toWaiApp (App
        { appStatic = st
        , appCacheDir = cacheVar
@@ -34,6 +36,7 @@ main =
        , appDefaultLayout = defaultLayoutImpl
        , appFeedEntries = []
        , appGitRev = $gitRev
+       , appSnippetInfo = snippets
        })
      ref <- newIORef app
      env <- getEnvironment
@@ -60,6 +63,8 @@ update =
             cacheVar <- readStore (Store 2)
             st <- static "static"
             packageInfo <- getPackageInfo
-            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [] $gitRev)
+            snippets <- getSnippets
+            print snippets
+            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [] $gitRev snippets)
             writeIORef ref app
             return store
