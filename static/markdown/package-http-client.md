@@ -1,28 +1,12 @@
 http-client is a minimalistic package with a relatively low-level API
-and no support for TLS (HTTPS). There are add-on packages which
-provide additional functionality, e.g.:
+and no support for TLS (HTTPS).
 
-* [http-client-tls](https://www.stackage.org/package/http-client-tls) provides TLS support via the Haskell-native tls package
-* [http-conduit](https://www.stackage.org/package/http-conduit) allows for streaming request and responses using conduit
+## API docs
 
-## Concepts
+The API documentation can be found
+[here](https://www.stackage.org/lts-5.17/package/http-client-0.4.28).
 
-This library makes good use of the `OverloadedStrings` language extension for
-converting string literals into `Request`s, `ByteString`s, and case-insensitive
-`ByteString`s (for header names). It's strongly recommended to use this library
-with this language extension enabled.
-
-## Caveats
-
-There are a few important caveats to mention about this library:
-
-* By default, any non-2XX status code response results in a runtime exception.
-  See the examples of `setRequestIgnoreStatus` below for more information
-* By default, http-client will respect the `http_proxy` and `https_proxy`
-  environment variables. See the proxy examples below for information on how to
-  bypass this.
-
-## Kick the tires
+## Basic usage
 
 ``` haskell
 #!/usr/bin/env stack
@@ -51,7 +35,7 @@ details (status code, headers, and the body).
 
 ## Receiving JSON
 
-We can also leverage aeson to receive a JSON message.
+We can also use aeson to receive a JSON message.
 
 ```haskell
 #!/usr/bin/env stack
@@ -83,6 +67,31 @@ signature, but usually you'll do the constraining by using a custom data type.
 
 For fun, this example prints out the JSON body in YAML format.
 
+## Advanced use
+
+There are add-on packages which
+provide additional functionality, e.g.:
+
+* [http-client-tls](https://www.stackage.org/package/http-client-tls) provides TLS support via the Haskell-native tls package
+* [http-conduit](https://www.stackage.org/package/http-conduit) allows for streaming request and responses using conduit
+
+## Concepts
+
+This library makes good use of the `OverloadedStrings` language extension for
+converting string literals into `Request`s, `ByteString`s, and case-insensitive
+`ByteString`s (for header names). It's strongly recommended to use this library
+with this language extension enabled.
+
+## Caveats
+
+There are a few important caveats to mention about this library:
+
+* By default, any non-2XX status code response results in a runtime exception.
+  See the examples of `setRequestIgnoreStatus` below for more information
+* By default, http-client will respect the `http_proxy` and `https_proxy`
+  environment variables. See the proxy examples below for information on how to
+  bypass this.
+
 ## Request methods and parseRequest
 
 You can specify the request method at the beginning of your URL:
@@ -109,7 +118,7 @@ main = do
 ```
 
 What's actually happening is that the `IsString` instance for `Request` is
-being leveraged to parse the string literal to a `Request`. But you can also be
+being used to parse the string literal to a `Request`. But you can also be
 more explicit about it with `parseRequest`:
 
 ```haskell
