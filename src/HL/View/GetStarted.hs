@@ -85,7 +85,7 @@ operatingSystemDownload url mos =
          osxWindow "Terminal"
                    (div_ [class_ "terminal-sample"]
                          (do span_ [class_ "noselect"] "$ "
-                             span_ "curl https://get.haskellstack.com/ | sh"))
+                             span_ "curl -sSL https://get.haskellstack.org/ | sh"))
          p_ (a_ [href_ "http://docs.haskellstack.org/en/stable/install_and_upgrade/#mac-os-x"]
                 "More detailed installation information")
     Just Linux ->
@@ -104,7 +104,7 @@ linuxDownload url =
      osxWindow "Terminal"
                (div_ [class_ "terminal-sample"]
                      (do span_ [class_ "noselect"] "$ "
-                         span_ "curl https://get.haskellstack.com/ | sh"))
+                         span_ "wget -qO- https://get.haskellstack.org/ | sh"))
      div_ [class_ "muted-choices"]
           (do p_ "Or for distribution-specific packages, choose your Linux distribution:"
               p_ (forM_ distros
