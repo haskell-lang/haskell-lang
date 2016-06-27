@@ -156,13 +156,14 @@ be done by simply decoding it to a `Value`, like so:
 You can also decode your JSON string to any of the JSON types that `Value`
 encapsulates:
 
-| JSON          | aeson Type    | Standard Type        |
-| ------------- |:-------------:| --------------------:|
-| Array         | `Array`       | `Vector Value`       |
-| Boolean       | `Bool`        | `Bool`               |
-| Number        | `Number`      | `Scientific`         |
-| Object        | `Object`      | `HashMap Text Value` |
-| String        | `String`      | `Text`               |
+<table class="table">
+<tr><th> JSON          </th><th> aeson Type    </th><th> Standard Type        </th></tr>
+<tr><td> Array         </td><td> <code>Array</code>       </td><td> <code>Vector Value</code>       </td></tr>
+<tr><td> Boolean       </td><td> <code>Bool</code>        </td><td> <code>Bool</code>               </td></tr>
+<tr><td> Number        </td><td> <code>Number</code>      </td><td> <code>Scientific</code>         </td></tr>
+<tr><td> Object        </td><td> <code>Object</code>      </td><td> <code>HashMap Text Value</code> </td></tr>
+<tr><td> String        </td><td> <code>String</code>      </td><td> <code>Text</code>               </td></tr>
+</table>
 
 Once you have a JSON value, you can define a `Parser` like we did in `parseJSON`
 above, and run it using `parse`, `parseEither` or `parseMaybe`.
