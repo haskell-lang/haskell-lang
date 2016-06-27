@@ -20,6 +20,7 @@ import           Language.Haskell.HsColour.CSS (hscolour)
 import           Lucid
 import qualified Text.Blaze as Blaze
 import qualified Text.Blaze.Html.Renderer.Utf8 as Blaze
+import qualified Text.Blaze.Html5 as Blaze (pre)
 import qualified Text.Markdown as MD
 import           Yesod.Core (HandlerT, WidgetT, Html)
 import           Yesod.Core.Dispatch
@@ -105,7 +106,7 @@ instance ToHtml Markdown where
                         case mlang of
                           Just "haskell" ->
                             Blaze.preEscapedString (hscolour False 1 (T.unpack unrendered))
-                          _ -> rendered}
+                          _ -> Blaze.pre rendered}
 
 newtype PackageName = PackageName Text
   deriving (Eq,Show,FromJSON,ToJSON,ToHtml)
