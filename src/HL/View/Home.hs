@@ -98,12 +98,7 @@ community url =
                       (row_ (span8_ [class_ "col-md-8"]
                                     (do h1_ "An open source community effort for over 20 years"
                                         p_ [class_ "learn-more"]
-                                           (a_ [href_ (url CommunityR)] "Learn more"))))
-                    container_
-                      [id_ "video-description"]
-                      (row_ (span8_ [class_ "col-md-8"]
-                                    (do h1_ (a_ [id_ "video-anchor"] "<title here>")
-                                        p_ (a_ [id_ "video-view"] "View the video now \8594"))))))
+                                           (a_ [href_ (url CommunityR)] "Learn more"))))))
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?
