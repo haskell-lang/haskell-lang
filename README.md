@@ -28,6 +28,31 @@ We're going to make a more straight-forward story for contributing
 content changes that should simply involve editing markdown files
 under `static/markdown/`.
 
+### Writing tutorials
+
+For each of the packages listed on
+[the packages page](https://haskell-lang.org/packages), we can have a
+tutorial in the
+[static/markdown directory](https://github.com/haskell-lang/haskell-lang/tree/master/static/markdown). The
+naming is simple: for a package `http-client`, for instance, the file
+is
+[`package-http-client.md`](https://github.com/haskell-lang/haskell-lang/blob/master/static/markdown/package-http-client.md). Feel
+free at any time to contribute pull requests to improve this content.
+
+If you would like to write a new tutorial, please follow this
+procedure to "claim" a tutorial and avoid multiple people working on
+the same content at once:
+
+* Fork the project
+* Create a new branch with a dummy Markdown file for the new content
+* Open a pull request titled "Adding tutorial for package `foo`"
+* Add your content on your branch
+* When you're done writing content, add a comment to the pull request
+  indicating that it's ready for review
+
+Before starting on new content, you should make sure that no pull
+request already exists for that topic.
+
 ## Building
 
 Run these steps:
