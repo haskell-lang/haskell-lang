@@ -3,21 +3,33 @@
 
 module DevelMain where
 
-import Control.Concurrent
-import Data.IORef
-import Foreign.Store
-import HL.Dispatch ()
-import HL.Foundation
-import HL.Model.Packages
-import HL.Model.Snippets
-import HL.View.Template
-import Network.Wai.Handler.Warp
-import System.Directory
-import System.Environment (getEnvironment)
-import System.FilePath
-import Yesod
-import Yesod.GitRev (gitRev)
-import Yesod.Static
+import           Control.Concurrent
+import           Control.Concurrent.MVar
+import           Control.Exception
+import           Control.Exception (throwIO)
+import           Data.ByteString (ByteString)
+import           Data.ByteString (ByteString)
+import qualified Data.ByteString
+import qualified Data.ByteString.Char8
+import           Data.IORef
+import           Data.Text (Text)
+import qualified Data.Text
+import qualified Data.Yaml as Yaml
+import           Foreign.Store
+import           HL.Controller.Feed (toFeedEntry,FeedEntryWrapper)
+import           HL.Dispatch ()
+import           HL.Foundation
+import           HL.Model.Packages
+import           HL.Model.Snippets
+import           HL.View.Template
+import           Network.Wai.Handler.Warp
+import           System.Directory
+import           System.Environment (getEnvironment)
+import           System.FilePath
+import           Yesod
+import           Yesod.Feed
+import           Yesod.GitRev (gitRev)
+import           Yesod.Static
 
 -- | Start the web server.
 main :: IO (Store (IORef Application))
@@ -29,12 +41,14 @@ main =
      cacheVar <- newMVar cacheDir
      packageInfo <- getPackageInfo
      snippets <- getSnippets
+     entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
+            >>= either throwIO return
      app <- toWaiApp (App
        { appStatic = st
        , appCacheDir = cacheVar
        , appPackageInfo = packageInfo
        , appDefaultLayout = defaultLayoutImpl
-       , appFeedEntries = []
+       , appFeedEntries = map toFeedEntry entries
        , appGitRev = $gitRev
        , appSnippetInfo = snippets
        })
@@ -65,6 +79,8 @@ update =
             packageInfo <- getPackageInfo
             snippets <- getSnippets
             print snippets
-            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl [] $gitRev snippets)
+            entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
+                   >>= either throwIO return
+            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl (map toFeedEntry entries) $gitRev snippets)
             writeIORef ref app
             return store

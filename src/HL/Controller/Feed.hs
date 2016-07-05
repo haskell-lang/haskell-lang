@@ -10,6 +10,7 @@ import HL.Controller
 import Text.Markdown (markdown, def, msXssProtect)
 import Yesod.Feed
 
+
 getFeedR :: C TypedContent
 getFeedR = do
     now <- liftIO getCurrentTime
