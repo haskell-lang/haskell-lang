@@ -5,5 +5,4 @@ exec "$(dirname ${BASH_SOURCE[0]})/../common/devops-helpers/kubernetes/deploy_rc
      --app "haskell-lang" \
      --repo fpco/haskell-lang \
      --specdir "$(dirname "${BASH_SOURCE[0]}")" \
-     --clusters ~/.kube/clusters/fpco-prod-us-east-1?/kubeconfig \
      "$@"
