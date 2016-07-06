@@ -11,4 +11,4 @@ announcementsFromMarkdown :: Html () -> FromLucid App
 announcementsFromMarkdown md =
   template [] "Announcements"
     (\_ -> container_ (row_  (span12_ [class_ "col-md-12"]
-                                      (md))))
+                                      md)))
