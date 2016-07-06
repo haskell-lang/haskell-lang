@@ -2,6 +2,7 @@
 
 module HL.Controller.Announcements where
 
+import           Data.Time
 import           HL.Controller
 import           HL.Model.Markdown
 import           HL.View
@@ -16,5 +17,6 @@ getAnnouncementsR =
      lucid (announcementsFromMarkdown
               (mapM_ (\entry ->
                         do h1_ (toHtml (feedEntryTitle entry))
+                           p_ (strong_ (toHtml (formatTime defaultTimeLocale "%B %d %Y" (feedEntryUpdated entry))))
                            toHtmlRaw (BlazeUtf8.renderHtml (feedEntryContent entry)))
                      feeds))
