@@ -17,4 +17,5 @@
 /wiki/#Text WikiR GET
 /wiki/ WikiHomeR GET
 /feed FeedR GET
+/intero InteroR GET
 /build-version GitRevR GitRev appGitRev

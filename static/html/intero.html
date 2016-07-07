@@ -1,0 +1,253 @@
+<div class="container">
+  <div class="row">
+    <div class="span6 col-md-6">
+      <h1>Intero for Emacs</h1>
+      <p>
+        Complete interactive development program for Haskell
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <blockquote>
+        &ldquo;I just tried this and it works. It just works. I have never had this experience with Haskell + Emacs. Thank you so much for this.&rdquo;
+      </blockquote>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="span6 col-md-6">
+      <h3 id="install">Install package</h3>
+      <p>
+        Use Emacs's built in package manager. Add the
+        following to your <code>.emacs</code>:</p>
+      <pre><span style="color:#666">;; If you don't have MELPA in your package archives:</span>
+(require 'package)
+(add-to-list
+'package-archives
+'("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+(package-refresh-contents)
+
+<span style="color:#666">;; Install Intero</span>
+(package-install 'intero)
+(add-hook 'haskell-mode-hook 'intero-mode)</pre>
+    </div>
+    <div class="span6 col-md-6">
+      <h3>
+        Modern and backwards compatible
+      </h3>
+      <p>
+        Tested on GHC 8.0.1, GHC 7.10.3, GHC 7.10.2, and GHC
+        7.8.4.
+      </p>
+      <p>
+        Backwards compatibility will be maintained as far back
+        as is possible.
+      </p>
+      <h3>General backend</h3>
+      <p>
+        The Intero backend used by the Emacs mode is a fork of
+        GHCi, it behaves like your old friend GHCi, but with
+        more features.
+      </p>
+      <p>
+        Support for other editors is not promised, but
+        patches are welcome.
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Designed for Stack</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        Intero requires stack.  Tested on a variety of Hackage
+        projects, internal client projects, from small to
+        huge.
+      </p>
+      <p>
+        If your project works with Stack, it almost definitely
+        works with Intero.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/stack-new.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Automatically installing</h3>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span6 col-md-6">
+      <p>
+        The Emacs mode automatically installs the proper
+        Intero backend program in your stack environment. Not
+        globally!
+      </p>
+      <p>
+        Each Stack project can have a separate GHC or LTS
+        version, Intero takes care of this by installing a
+        fresh copy in each LTS version.
+      </p>
+      <p>
+        After installing, it automatically boots up Intero and
+        starts checking the current file.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/auto-install.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>On the fly type checking</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        Intero works with and configures the marvelous
+        Flycheck package out of the box. Giving check
+        as-you-type, on a keybinding of your change, and/or on
+        save.
+      </p>
+      <p>
+        Errors can be seen by going to the location of the
+        error, or by hitting <code>C-c ! l</code> to see a
+        list of errors.
+      </p>
+      <p>
+        One can also jump to errors: <code>C-c ! n</code> for
+        next error, <code>C-c ! p</code> for
+        previous error.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/flycheck.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Easy target switching</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        Working on the test suite now? Just hit <code>M-x
+          intero-targets</code> and enter a stack target.
+      </p>
+      <p>
+        In the example on the right, the target is
+        <code>weigh:test:weigh-test</code>, but we can write
+        <code>:weigh-test</code> for short because it's
+        unambiguous.
+      </p>
+      <p>
+        Intero restarts with those targets configured, and
+        re-runs the flychecker. Everything is now good to go!
+      </p>
+      <p>
+        There will be interactive completion for targets in
+        the future.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/targets.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Completion as you type</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        Intero works with the Company package out of the
+        box. Auto-complete as-you-type is based on identifiers
+        that are locally defined in the declaration, in the
+        module, or imported within the module.
+      </p>
+      <p>
+        Continues to remember its completions through type
+        errors. In the future, completion will be type-driven.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/completion.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Jump to definition</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        After a module has been type checked, you can jump to
+        the definition of any locally defined or imported
+        identifier.
+      </p>
+      <p>
+        Uses the standard Emacs keybinding for
+        jumping, <code>M-.</code>. Remembers locations even
+        when a module no longer compiles.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/gotodef.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Type of selection</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        You can hit <code>C-c C-t</code> to display the type of the
+        identifier at point, or select any text to see the
+        type.
+      </p>
+      <p>
+        Remembers type information even when a module no
+        longer compiles.
+      </p>
+    </div>
+    <div class="span6 col-md-6">
+      <p><img src="static/gifs/type-info.gif" width="500px"></p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="span12 col-md-12">
+      <h3>Next steps</h3>
+    </div>
+    <div class="span6 col-md-6">
+      <p>
+        What are you waiting for? Give it a try.
+      </p>
+      <p>
+        <a href="#install">↑ Install now</a>
+      </p>
+    </div>
+  </div>
+</div>
