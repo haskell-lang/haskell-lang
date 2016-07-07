@@ -4,19 +4,11 @@
 module DevelMain where
 
 import           Control.Concurrent
-import           Control.Concurrent.MVar
 import           Control.Exception
-import           Control.Exception (throwIO)
-import           Data.ByteString (ByteString)
-import           Data.ByteString (ByteString)
-import qualified Data.ByteString
-import qualified Data.ByteString.Char8
 import           Data.IORef
-import           Data.Text (Text)
-import qualified Data.Text
 import qualified Data.Yaml as Yaml
 import           Foreign.Store
-import           HL.Controller.Feed (toFeedEntry,FeedEntryWrapper)
+import           HL.Controller.Feed (toFeedEntry)
 import           HL.Dispatch ()
 import           HL.Foundation
 import           HL.Model.Packages
@@ -27,7 +19,6 @@ import           System.Directory
 import           System.Environment (getEnvironment)
 import           System.FilePath
 import           Yesod
-import           Yesod.Feed
 import           Yesod.GitRev (gitRev)
 import           Yesod.Static
 

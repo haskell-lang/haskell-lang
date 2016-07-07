@@ -943,3 +943,11 @@ h3 > a, h4 > a {
   user-select: none;           /* Non-prefixed version, currently
                                   not supported by any browser */
 }
+
+.page-intero blockquote {
+    margin-bottom: 0;
+    font-style: italic;
+    border: 0;
+    padding-left: 0;
+  }
+}
