@@ -53,7 +53,7 @@ fundamentals:
 - name: attoparsec
   description: |
     Efficient parsing library, good for network protocols and complicated binary formats.
-- name: quickcheck
+- name: QuickCheck
   description: |
     Check properties about functions with randomly generated inputs for sanity checks.
 - name: stm
