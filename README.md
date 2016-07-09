@@ -7,10 +7,10 @@ haskell-lang
 
 This repository contains the code powering the [haskell-lang.org web
 site](http://haskell-lang.org/). This website is a community driven website for
-the Haskell programm language. Its primary motivators are:
+the Haskell programming language. Its primary motivators are:
 
 * A destination that Haskellers can happily send non-Haskellers to in order to
-  discover Haskell and get started with modern best practices.
+  discover Haskell and get started with modern best practices
 * A source of information for existing Haskellers to discover up-to-date
   information
 * A collection of links to various online communities
