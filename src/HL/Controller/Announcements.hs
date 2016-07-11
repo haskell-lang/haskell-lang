@@ -4,7 +4,6 @@ module HL.Controller.Announcements where
 
 import           Data.Time
 import           HL.Controller
-import           HL.Model.Markdown
 import           HL.View
 import           HL.View.Announcements
 import qualified Text.Blaze.Html.Renderer.Utf8 as BlazeUtf8
