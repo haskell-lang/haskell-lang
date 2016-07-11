@@ -71,6 +71,7 @@ data Package = Package
     { packageName :: !PackageName
     , packageDesc :: !Markdown
     , packagePage :: !(Maybe Markdown)
+    , packagePageUrl :: !(Maybe Text)
     } deriving (Show)
 
 instance FromJSON Package where
@@ -78,6 +79,7 @@ instance FromJSON Package where
         <$> o .: "name"
         <*> o .: "description"
         <*> pure Nothing
+        <*> o .:? "page-url"
 
 data Common = Common
     { commonTitle :: !Text

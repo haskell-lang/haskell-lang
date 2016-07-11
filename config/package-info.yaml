@@ -20,6 +20,7 @@ fundamentals:
 - name: vector
   description: |
     Efficient arrays, immutable and mutable versions.
+  page-url: https://raw.githubusercontent.com/commercialhaskell/haskelldocumentation/master/content/vector.md
 - name: containers
   description: |
     Immutable maps/dictionaries, sets, and sequences with efficient appending.
