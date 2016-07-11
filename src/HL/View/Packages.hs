@@ -16,7 +16,7 @@ import HL.View.Template
 import Prelude hiding (pi)
 
 -- | Packages view.
-packagesV :: PackageInfo -> FromLucid App
+packagesV :: PackageInfo Markdown -> FromLucid App
 packagesV pi =
   template []
            "Packages"
@@ -25,7 +25,7 @@ packagesV pi =
                  (row_ (span12_ [class_ "col-md-12"]
                                 (content url pi)))))
 
-content :: (Route App -> Text) -> PackageInfo -> Html ()
+content :: (Route App -> Text) -> PackageInfo Markdown -> Html ()
 content url pi =
   do h1_ (toHtml ("Haskell Packages" :: String))
      toHtml (piIntro pi)
@@ -38,7 +38,7 @@ content url pi =
      mapM_ (row_ . mapM_ (common url))
            (chunksOf 2 (toList (piCommons pi)))
 
-package :: (Route App -> Text) -> Bool -> Package -> Html ()
+package :: (Route App -> Text) -> Bool -> Package Markdown -> Html ()
 package url isCommon f =
   a_ [class_ "package-big-link"
      ,href_ (packageUrl url f)]
@@ -51,7 +51,7 @@ package url isCommon f =
          span_ [class_ "pkg-desc"]
                (toHtml (packageDesc f)))
 
-common :: (Route App -> Text) -> Common -> Html ()
+common :: (Route App -> Text) -> Common Markdown -> Html ()
 common url c =
   span6_ [class_ "col-md-6"]
          (do do let ident = "_common_" <> commonSlug c
@@ -64,7 +64,7 @@ common url c =
 
 -- | Get a URL for a package. Might be an internal tutorial, might be
 -- stackage.
-packageUrl :: (Route App -> Text) -> Package -> Text
+packageUrl :: (Route App -> Text) -> Package Markdown -> Text
 packageUrl url f =
   case packagePage f of
     Just{} -> url (PackageR (packageName f))

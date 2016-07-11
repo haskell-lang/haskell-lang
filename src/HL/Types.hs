@@ -1,6 +1,7 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE DeriveDataTypeable #-}
+{-# LANGUAGE TypeFamilies #-}
 
 -- | Side-wide datatypes.
 
@@ -45,21 +46,21 @@ instance Exception HaskellLangException
 data App = App
   { appStatic        :: !Static
   , appCacheDir      :: !(MVar FilePath)
-  , appPackageInfo   :: !PackageInfo
+  , appPackageInfo   :: !(PackageInfo Markdown)
   , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Yesod.Core.Html)
   , appFeedEntries   :: ![FeedEntry Text]
   , appGitRev        :: !GitRev
   , appSnippetInfo   :: !SnippetInfo
   }
 
-data PackageInfo = PackageInfo
+data PackageInfo page = PackageInfo
     { piIntro :: !Markdown
     , piFundamentalsIntro :: !Markdown
-    , piFundamentals :: !(Vector Package)
+    , piFundamentals :: !(Vector (Package page))
     , piCommonsIntro :: !Markdown
-    , piCommons :: !(Vector Common)
+    , piCommons :: !(Vector (Common page))
     } deriving (Show)
-instance FromJSON PackageInfo where
+instance (page ~ Text) => FromJSON (PackageInfo page) where
     parseJSON = withObject "PackageInfo" $ \o -> PackageInfo
         <$> o .: "intro"
         <*> o .: "fundamentals-intro"
@@ -67,25 +68,25 @@ instance FromJSON PackageInfo where
         <*> o .: "commons-intro"
         <*> o .: "commons"
 
-data Package = Package
+data Package page = Package
     { packageName :: !PackageName
     , packageDesc :: !Markdown
-    , packagePage :: !(Maybe Markdown)
+    , packagePage :: !(Maybe page)
     } deriving (Show)
 
-instance FromJSON Package where
+instance (page ~ Text) => FromJSON (Package page) where
     parseJSON = withObject "Package" $ \o -> Package
         <$> o .: "name"
         <*> o .: "description"
-        <*> pure Nothing
+        <*> o .:? "page-url"
 
-data Common = Common
+data Common page = Common
     { commonTitle :: !Text
     , commonSlug :: !Text
     , commonDesc :: !Markdown
-    , commonChoices :: !(Vector Package)
+    , commonChoices :: !(Vector (Package page))
     } deriving (Show)
-instance FromJSON Common where
+instance (page ~ Text) => FromJSON (Common page) where
     parseJSON = withObject "Common" $ \o -> Common
         <$> o .: "title"
         <*> o .: "slug"
