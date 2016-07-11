@@ -186,7 +186,9 @@ writePackage =
      p_ (do "You can now edit the source files in this directory \
             \(see the file "
             code_ "src/Lib.hs"
-            "), and run the project with"
+            "), and rebuild and run the project with "
+            code_ "stack build"
+            " and "
             code_ "stack exec new-project-exe"
             " as above.")
   where ls =
