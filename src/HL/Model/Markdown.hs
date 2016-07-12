@@ -5,21 +5,18 @@
 
 module HL.Model.Markdown where
 
-import           HL.Controller
-
-import           HL.View
-import           HL.View.Code
-
-
 import           Control.Exception
 import qualified Data.ByteString as S
 import           Data.Text.Encoding (decodeUtf8With)
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.Lazy as L
+import           HL.Controller
+import           HL.View
+import           HL.View.Code
 import           System.Directory
 import           System.FilePath
-import qualified Text.Blaze.Html5 as H
 import           Text.Blaze.Html.Renderer.Text (renderHtml)
+import qualified Text.Blaze.Html5 as H
 import           Text.Markdown (markdown, msBlockCodeRenderer, def)
 
 -- | Render Markdown to HTML
