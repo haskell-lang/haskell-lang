@@ -86,6 +86,7 @@ instance Human (Route App) where
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
       InteroR{}            -> "Intero"
+      TutorialsR{}         -> "Tutorials"
       TutorialR x          -> "Tutorial: " <> x
 
 instance Slug (Route App) where
@@ -112,6 +113,7 @@ instance Slug (Route App) where
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
+      TutorialsR{}      -> "tutorial"
       TutorialR x       -> "tutorial-" <> x
 
 instance YesodBreadcrumbs App where
@@ -139,7 +141,8 @@ instance YesodBreadcrumbs App where
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
         InteroR{}            -> return ("Intero",Nothing)
+        TutorialsR{}         -> return ("Tutorials",Just DocumentationR)
         TutorialR x          -> do
             tutorials <- fmap appTutorials getYesod
             let title = maybe x tutorialTitle (Map.lookup x tutorials)
-            return ("Tutorial: " <> title,Just DocumentationR)
+            return ("Tutorial: " <> title,Just TutorialsR)
