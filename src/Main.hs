@@ -11,6 +11,7 @@ import           HL.Dispatch ()
 import           HL.Foundation
 import           HL.Model.Packages
 import           HL.Model.Snippets
+import           HL.Model.Tutorial
 import           HL.View.Template
 import           System.Directory
 import           System.Environment (getEnvironment)
@@ -34,6 +35,7 @@ main =
      packageInfo <- getPackageInfo
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
+     tutorials <- getTutorials
      putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
      warp port App
          { appStatic = st
@@ -43,4 +45,5 @@ main =
          , appFeedEntries = map toFeedEntry entries
          , appGitRev = $gitRev
          , appSnippetInfo = snippets
+         , appTutorials = tutorials
          }

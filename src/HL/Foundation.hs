@@ -24,6 +24,7 @@ import Control.Concurrent.MVar.Lifted
 import HL.Static
 import HL.Types
 
+import qualified Data.Map as Map
 import Data.Monoid
 import Data.Text (Text)
 import Data.Text (pack)
@@ -138,4 +139,7 @@ instance YesodBreadcrumbs App where
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
         InteroR{}            -> return ("Intero",Nothing)
-        TutorialR x          -> return ("Tutorial: " <> x,Just DocumentationR)
+        TutorialR x          -> do
+            tutorials <- fmap appTutorials getYesod
+            let title = maybe x tutorialTitle (Map.lookup x tutorials)
+            return ("Tutorial: " <> title,Just DocumentationR)

@@ -5,11 +5,7 @@
 
 module HL.Controller.Tutorial where
 
-import Control.Monad.Catch (catchIOError)
-import qualified Data.ByteString as S
-import Data.Text.Encoding (decodeUtf8With)
-import Data.Text.Encoding.Error (lenientDecode)
-import qualified Data.Text as T
+import qualified Data.Map as Map
 import HL.Controller
 import HL.View
 import HL.View.Markdown
@@ -18,13 +14,9 @@ import HL.Model.Markdown
 -- | Get mailing lists.
 getTutorialR :: Text -> C (Html ())
 getTutorialR slug = do
-    let fp = "static/tutorial/" ++ T.unpack slug ++ ".md"
-    bs <- io (S.readFile fp) `catchIOError` \_ -> notFound
-    let text = decodeUtf8With lenientDecode bs
-        title = getTitleSimple text
-        !html = renderMarkdown (Markdown text)
-    lucid (markdownV title html)
+    tutorials <- fmap appTutorials getYesod
+    tutorial <- maybe notFound return (Map.lookup slug tutorials)
 
--- | A simple approach to getting the title from a Markdown file
-getTitleSimple :: Text -> Text
-getTitleSimple = T.strip . T.takeWhile (/= '\n') . T.dropWhile (== '#')
+    let title = tutorialTitle tutorial
+        !html = renderMarkdown (tutorialContent tutorial)
+    lucid (markdownV title html)

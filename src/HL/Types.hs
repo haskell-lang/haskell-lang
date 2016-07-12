@@ -10,6 +10,7 @@ import           Control.Concurrent.MVar
 import           Control.Exception
 import           Data.Aeson
 import           Data.Char
+import           Data.Map (Map)
 import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
@@ -50,6 +51,7 @@ data App = App
   , appFeedEntries   :: ![FeedEntry Text]
   , appGitRev        :: !GitRev
   , appSnippetInfo   :: !SnippetInfo
+  , appTutorials     :: !(Map Text Tutorial)
   }
 
 data PackageInfo = PackageInfo
@@ -93,6 +95,12 @@ instance FromJSON Common where
         <*> o .: "slug"
         <*> o .: "description"
         <*> o .: "choices"
+
+data Tutorial = Tutorial
+    { tutorialTitle :: !Text
+    , tutorialContent :: !Markdown
+    }
+    deriving (Show)
 
 newtype Markdown = Markdown { unMarkdown :: Text }
   deriving (FromJSON,Show)
