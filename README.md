@@ -39,6 +39,9 @@ is
 [`package-http-client.md`](https://github.com/haskell-lang/haskell-lang/blob/master/static/markdown/package-http-client.md). Feel
 free at any time to contribute pull requests to improve this content.
 
+For tutorials not connected to a specific package, you can create a Markdown
+file in the `static/tutorial` directory.
+
 If you would like to write a new tutorial, please follow this
 procedure to "claim" a tutorial and avoid multiple people working on
 the same content at once:

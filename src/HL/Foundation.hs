@@ -85,6 +85,7 @@ instance Human (Route App) where
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
       InteroR{}            -> "Intero"
+      TutorialR x          -> "Tutorial: " <> x
 
 instance Slug (Route App) where
   toSlug r =
@@ -110,3 +111,4 @@ instance Slug (Route App) where
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
+      TutorialR x       -> "tutorial-" <> x

@@ -19,3 +19,4 @@
 /feed FeedR GET
 /intero InteroR GET
 /build-version GitRevR GitRev appGitRev
+/tutorial/#Text TutorialR GET
