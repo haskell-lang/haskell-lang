@@ -6,6 +6,7 @@
 
 module HL.View.Documentation where
 
+import Control.Arrow (second)
 import HL.View
 import HL.View.Template
 
@@ -19,6 +20,7 @@ documentationV =
                   (span12_
                        [class_ "col-md-12"]
                        (do h1_ "Documentation"
+                           inSiteDocs
                            books
                            courses
                            tutorials
@@ -27,6 +29,17 @@ documentationV =
                            cabal
                            library
                            report ))))
+
+inSiteDocs :: View App ()
+inSiteDocs = do
+    h2_ "Docs on this site"
+    url <- lift (asks pageRender)
+    links (fmap (second url) inSiteLinks)
+  where
+    inSiteLinks =
+        [ ("Getting started guide", GetStartedR)
+        , ("Common packages and their documentations", PackagesR)
+        , ("List of tutorials", TutorialsR)]
 
 books :: View App ()
 books =
