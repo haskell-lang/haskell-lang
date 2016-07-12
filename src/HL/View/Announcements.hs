@@ -7,8 +7,8 @@ import HL.Types
 import HL.View
 import HL.View.Template
 
-announcementsFromMarkdown :: Html () -> FromLucid App
+announcementsFromMarkdown :: View App () -> View App ()
 announcementsFromMarkdown md =
-  template []
+  template
            "Announcements"
-           (\_ -> container_ (row_ (span12_ [class_ "col-md-12"] md)))
+           (container_ (row_ (span12_ [class_ "col-md-12"] md)))

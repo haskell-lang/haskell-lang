@@ -20,7 +20,7 @@ import qualified Text.Blaze.Html5 as H
 import           Text.Markdown (markdown, msBlockCodeRenderer, def)
 
 -- | Render Markdown to HTML
-renderMarkdown :: Markdown -> Html ()
+renderMarkdown :: Monad m => Markdown -> HtmlT m ()
 renderMarkdown (Markdown text) =
     toHtmlRaw
         (renderHtml
@@ -36,7 +36,7 @@ renderMarkdown (Markdown text) =
             else H.pre $ H.toHtml src
 
 -- | Get the HTML for the given markdown static file.
-getMarkdown :: FilePath -> IO (Html ())
+getMarkdown :: Monad m => FilePath -> IO (HtmlT m ())
 getMarkdown name =
   do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)

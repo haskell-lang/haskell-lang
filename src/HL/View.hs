@@ -19,3 +19,5 @@ import Yesod.Lucid as V
 
 todo :: Term a r => a -> r
 todo = termWith "div" [class_ "muted"]
+
+type View y a = HtmlT (Reader (Page y)) a

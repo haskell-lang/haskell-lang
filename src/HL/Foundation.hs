@@ -112,3 +112,30 @@ instance Slug (Route App) where
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
       TutorialR x       -> "tutorial-" <> x
+
+instance YesodBreadcrumbs App where
+    breadcrumb r =
+      case r of
+        CommunityR           -> return ("Community",Nothing)
+        IrcR                 -> return ("IRC",Nothing)
+        DocumentationR       -> return ("Documentation",Nothing)
+        HomeR                -> return ("Home",Nothing)
+        DonateR              -> return ("Donate",Nothing)
+        MailingListsR        -> return ("Mailing Lists",Nothing)
+        NewsR                -> return ("News",Nothing)
+        StaticR{}            -> return ("Static",Nothing)
+        GetStartedR          -> return ("Get Started",Nothing)
+        GetStartedOSR os     -> return ("Get Started (" <> toHuman os <> ")",Nothing)
+        AnnouncementsR       -> return ("Announcements",Nothing)
+        WikiR t              -> return ("Wiki: " <> t,Nothing)
+        ReportNodeR _ _      -> return ("Report Page",Nothing)
+        ReportModeR Node i   -> return ("Node " <> pack (show i),Nothing)
+        ReportModeR Mono i   -> return ("Mono " <> pack (show i),Nothing)
+        ReportR{}            -> return ("Report",Nothing)
+        WikiHomeR{}          -> return ("Wiki",Nothing)
+        PackagesR{}          -> return ("Packages",Nothing)
+        PackageR p           -> return (toHuman p,Nothing)
+        FeedR{}              -> return ("News Feed",Nothing)
+        GitRevR{}            -> return ("Build Version",Nothing)
+        InteroR{}            -> return ("Intero",Nothing)
+        TutorialR x          -> return ("Tutorial: " <> x,Just DocumentationR)

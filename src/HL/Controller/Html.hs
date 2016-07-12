@@ -10,8 +10,8 @@ import           HL.View
 import           HL.View.Template
 
 -- | Render a simple html page.
-htmlPage :: [Route App] -> Text -> FilePath -> C (Html ())
-htmlPage crumbs t name =
+htmlPage :: Text -> FilePath -> C (Html ())
+htmlPage t name =
   do dir <- getStaticDir
      content <- io (T.readFile (dir ++ "/html/" ++ name))
-     lucid (template crumbs t (const (toHtmlRaw content)))
+     lucid (template  t (toHtmlRaw content))

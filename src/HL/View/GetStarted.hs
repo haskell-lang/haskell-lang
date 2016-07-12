@@ -11,16 +11,16 @@ import HL.View.Code
 import HL.View.Template
 
 -- | Page entry point.
-getStarted :: Maybe OS -> FromLucid App
+getStarted :: Maybe OS -> View App ()
 getStarted mos =
-  template []
+  template
            "Get Started with Haskell"
-           (\url ->
-              div_ [class_ "get-started-general"]
-                   (content url mos))
+           (do url <- lift (asks pageRender)
+               div_ [class_ "get-started-general"]
+                    (content url mos))
 
 -- | Page content.
-content :: (Route App -> Text) -> Maybe OS -> Html ()
+content :: (Route App -> Text) -> Maybe OS -> View App ()
 content url mos =
   do container_
        (row_ (span12_ [class_ "col-md-12"]
@@ -37,7 +37,7 @@ content url mos =
                       (nextSteps url)))
 
 -- | The Stack download section.
-downloadStack :: (Route App -> Text) -> Maybe OS -> Html ()
+downloadStack :: (Route App -> Text) -> Maybe OS -> View App ()
 downloadStack url mos =
   do container_
        (do row_ (do span12_ [class_ "col-md-12"]
@@ -52,7 +52,7 @@ downloadStack url mos =
 --
 -- The user clicks on a logo and then is given a little guide on how
 -- to install for that operating system.
-operatingSystems :: (Route App -> Text) -> Maybe OS -> Html ()
+operatingSystems :: (Route App -> Text) -> Maybe OS -> View App ()
 operatingSystems url mos =
   do case mos of
        Nothing -> p_ "Choose your operating system:"
@@ -76,7 +76,7 @@ operatingSystems url mos =
           ,(Linux,img_linux_logo_svg)]
 
 -- | Show download information for the operating system.
-operatingSystemDownload :: (Route App -> Text) -> Maybe OS -> Html ()
+operatingSystemDownload :: (Route App -> Text) -> Maybe OS -> View App ()
 operatingSystemDownload url mos =
   case mos of
     Nothing -> return ()
@@ -98,7 +98,7 @@ operatingSystemDownload url mos =
                          "Windows 32-bit"))
 
 -- | Linux download details.
-linuxDownload :: (Route App -> Text) -> Html ()
+linuxDownload :: (Route App -> Text) -> View App ()
 linuxDownload url =
   do p_ "Run the following in your terminal:"
      osxWindow "Terminal"
@@ -143,7 +143,7 @@ linuxDownload url =
            ,"http://docs.haskellstack.org/en/stable/install_and_upgrade/#centos")]
 
 -- | List what's inside the download.
-downloadContents :: Html ()
+downloadContents :: View App ()
 downloadContents =
   do p_ "With the Haskell Stack you get a comprehensive \
         \development environment for Haskell:"
@@ -158,7 +158,7 @@ downloadContents =
              li_ "And thousands of packages installed on demand.")
 
 -- | Demo of running a Haskell script with Stack.
-runScripts :: Html ()
+runScripts :: View App ()
 runScripts =
   do p_ "To quickly run a Haskell script:"
      ol_ (do li_ (do p_ "Copy the following content into a file called `HelloWorld.hs`:"
@@ -172,7 +172,7 @@ runScripts =
      p_ "Done!"
 
 -- | Example of making a package to be built with Stack.
-writePackage :: Html ()
+writePackage :: View App ()
 writePackage =
   do p_ "Start on a proper Haskell package. \
         \Run the following in your terminal:"
@@ -198,7 +198,7 @@ writePackage =
           \stack exec new-project-exe"
 
 -- | Next steps for the user to go to.
-nextSteps :: (Route App -> Text) -> Html ()
+nextSteps :: (Route App -> Text) -> View App ()
 nextSteps url =
   do h2_ (do span_ [class_ "counter"] "3 "
              "Next steps")

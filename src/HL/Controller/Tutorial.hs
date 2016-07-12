@@ -22,10 +22,8 @@ getTutorialR slug = do
     bs <- io (S.readFile fp) `catchIOError` \_ -> notFound
     let text = decodeUtf8With lenientDecode bs
         title = getTitleSimple text
-        crumbs = [DocumentationR, TutorialR slug]
         !html = renderMarkdown (Markdown text)
-
-    lucid (markdownV crumbs title html)
+    lucid (markdownV title html)
 
 -- | A simple approach to getting the title from a Markdown file
 getTitleSimple :: Text -> Text

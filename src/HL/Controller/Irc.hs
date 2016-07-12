@@ -11,4 +11,4 @@ import HL.View
 -- | List IRC places.
 getIrcR :: C (Html ())
 getIrcR =
-  markdownPage [CommunityR,IrcR] "IRC Channels" "irc.md"
+  markdownPage "IRC Channels" "irc.md"
