@@ -115,7 +115,4 @@ sponsors =
                   (h1_ "Sponsors"))
      row_ (do span6_ [class_ "col-md-6"]
                      (p_ (do strong_ (a_ [href_ "https://www.fpcomplete.com/"] "FP Complete")
-                             " The leading commercial provider of Haskell consulting"))
-              span6_ [class_ "col-md-6"]
-                     (p_ (do strong_ (a_ [href_ "https://commercialhaskell.com/"] "The Commercial Haskell Group")
-                             " A special interest group for companies and individuals interested in commercial usage of Haskell")))
+                             " The leading commercial provider of Haskell consulting")))
