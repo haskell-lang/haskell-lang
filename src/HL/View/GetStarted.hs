@@ -149,6 +149,8 @@ downloadContents =
         \development environment for Haskell:"
      ul_ (do li_ (do (strong_ "Stack")
                      ": A project builder for multi-package Haskell projects.")
+             li_ (do (strong_ "Intero")
+                     ": Complete interactive development program for Haskell.")
              li_ (do (strong_ "GHC")
                      ": A compiler and interpreter for Haskell programs.")
              li_ (do (strong_ "Haddock")
@@ -209,4 +211,5 @@ nextSteps url =
           [("Learn about Haskell the language",url DocumentationR)
           ,("Write Haskell projects with Stack"
            ,"http://docs.haskellstack.org/en/stable/GUIDE/")
+          ,("Improve your development workflow with intero",url InteroR)
           ,("Browse packages that you can use in your projects",url PackagesR)]
