@@ -86,6 +86,7 @@ executable haskell-lang
                    , yesod-newsfeed
                    , split
                    , random
+                   , hint
 
   other-modules:     HL.Controller
                      HL.Controller.Community
