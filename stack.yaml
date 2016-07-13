@@ -5,14 +5,3 @@ extra-include-dirs:
 
 extra-lib-dirs:
 - /usr/local/opt/icu4c/lib
-
-image:
-  container:
-    base: "fpco/haskell-lang-base:latest"
-    name: "fpco/haskell-lang"
-    executables:
-      - haskell-lang
-    add:
-      config/: /haskell-lang/config/
-      static/: /haskell-lang/static/
-      themes/: /haskell-lang/themes/
