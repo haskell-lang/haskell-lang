@@ -23,6 +23,7 @@ import HL.Controller.Wiki
 import HL.Controller.Packages
 import HL.Controller.Intero
 import HL.Controller.Feed
+import HL.Controller.Tutorial
 import HL.Foundation
 import Yesod.Core.Dispatch
 

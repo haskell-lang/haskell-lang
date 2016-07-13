@@ -12,7 +12,7 @@ import Data.Text.Lazy (toStrict)
 import Network.HTTP.Conduit
 import Prelude hiding (readFile)
 
-getHaskellNews :: IO (Html ())
+getHaskellNews :: Monad m => IO (HtmlT m ())
 getHaskellNews =
   do bytes <- simpleHttp "http://haskellnews.org/grouped?embeddable"
      return (toHtmlRaw (toStrict (decodeUtf8 bytes)))

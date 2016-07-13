@@ -5,36 +5,45 @@
 
 module HL.Model.Markdown where
 
-import           HL.Controller
-
-import           HL.View
-import           HL.View.Code
-
-
 import           Control.Exception
 import qualified Data.ByteString as S
 import           Data.Text.Encoding (decodeUtf8With)
 import           Data.Text.Encoding.Error (lenientDecode)
 import qualified Data.Text.Lazy as L
+import           HL.Controller
+import           HL.View
+import           HL.View.Code
 import           System.Directory
 import           System.FilePath
-import qualified Text.Blaze.Html5 as H
 import           Text.Blaze.Html.Renderer.Text (renderHtml)
-import           Text.Markdown
+import qualified Text.Blaze.Html5 as H
+import           Text.Markdown (markdown, msBlockCodeRenderer, def)
+
+-- | Render Markdown to HTML
+renderMarkdown :: Monad m => Markdown -> HtmlT m ()
+renderMarkdown (Markdown text) =
+    toHtmlRaw
+        (renderHtml
+             (markdown
+                  def
+                  { msBlockCodeRenderer = renderer
+                  }
+                  (L.fromStrict text)))
+  where
+    renderer lang (src,_) =
+        if lang == Just "haskell"
+            then H.preEscapedToHtml (renderText (haskellPre src))
+            else H.pre $ H.toHtml src
 
 -- | Get the HTML for the given markdown static file.
-getMarkdown :: FilePath -> IO (Html ())
+getMarkdown :: Monad m => FilePath -> IO (HtmlT m ())
 getMarkdown name =
   do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
      if exists
-        then do text <- fmap (L.fromStrict . decodeUtf8With lenientDecode)
+        then do text <- fmap (decodeUtf8With lenientDecode)
                              (S.readFile (dir </> fp))
-                let !html = renderHtml (markdown def { msBlockCodeRenderer = renderer } text)
-                return (toHtmlRaw html)
+                let !html = renderMarkdown (Markdown text)
+                return html
         else throw (MarkdownFileUnavailable name)
   where fp = "markdown" </> name
-        renderer lang (src,_) =
-          if lang == Just "haskell"
-             then H.preEscapedToHtml (renderText (haskellPre src))
-             else H.pre $ H.toHtml src

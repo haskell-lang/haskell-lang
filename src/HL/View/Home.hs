@@ -13,30 +13,25 @@ import HL.View.Template
 import System.Random
 
 -- | Home view.
-homeV :: SnippetInfo -> FromLucid App
+homeV :: SnippetInfo -> View App ()
 homeV snippets =
-  skeleton
-    "Haskell Language"
-    (\_ _ ->
-       linkcss "https://fonts.googleapis.com/css?family=Ubuntu:700")
-    (\cur url ->
-       do navigation True [] Nothing url
-          header snippets url
-          try url
-          community url
-          features
-          sponsors
-          events
-          div_ [class_ "mobile"] $
-               (navigation False [] cur url))
-    (\_ url ->
-       scripts url
-               [js_jquery_console_js
-               ,js_tryhaskell_js
-               ,js_tryhaskell_pages_js])
+    skeleton
+        "Haskell Language"
+        (linkcss "https://fonts.googleapis.com/css?family=Ubuntu:700")
+        (do url <- lift (asks pageRender)
+            navigation True
+            header snippets url
+            try url
+            community url
+            features
+            sponsors
+            events
+            div_ [class_ "mobile"] $ (navigation False))
+        (scripts
+             [js_jquery_console_js, js_tryhaskell_js, js_tryhaskell_pages_js])
 
 -- | Top header section with the logo and code sample.
-header :: SnippetInfo -> (Route App -> Text) -> Html ()
+header :: SnippetInfo -> (Route App -> Text) -> View App ()
 header snippetInfo url =
   div_ [class_ "header"] $
   (container_
@@ -64,13 +59,13 @@ header snippetInfo url =
 
 -- | Show a sample code.
 
-sample :: Snippet -> Html ()
+sample :: Snippet -> View App ()
 sample snippet =
   div_ [class_ "code-sample",title_ (snippetTitle snippet)]
        (haskellPre (snippetCode snippet))
 
 -- | Try Haskell section.
-try :: (Route App -> Text) -> Html ()
+try :: (Route App -> Text) -> View App ()
 try _ =
   div_ [class_ "try",onclick_ "tryhaskell.controller.inner.click()"]
        (container_
@@ -89,7 +84,7 @@ try _ =
 
 -- | Community section.
 -- TOOD: Should contain a list of thumbnail videos. See mockup.
-community :: (Route App -> Text) -> Html ()
+community :: (Route App -> Text) -> View App ()
 community url =
   div_ [id_ "community-wrapper"]
        (do div_ [class_ "community",background url img_community_jpg]
@@ -102,12 +97,12 @@ community url =
 
 -- | Events section.
 -- TODO: Take events section from Haskell News?
-events :: Html ()
+events :: View App ()
 events =
   return ()
 
 -- | List of sponsors.
-sponsors :: Html ()
+sponsors :: View App ()
 sponsors =
   div_ [class_ "sponsors"] $
   container_ $

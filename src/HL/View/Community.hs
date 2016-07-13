@@ -9,12 +9,12 @@ import HL.View
 import HL.View.Template
 
 -- | Community view.
-communityV :: FromLucid App
+communityV :: View App ()
 communityV =
   template
-    []
     "Community"
-    (\url ->
+    (do
+       url <- lift (asks pageRender)
        container_
          (row_
             (span12_ [class_ "col-md-12"]
@@ -41,7 +41,7 @@ communityV =
                    ul_ sigs
                    h2_ ""))))
 
-online :: (Route App -> Text) -> Html ()
+online :: (Route App -> Text) -> View App ()
 online url =
   do li_ (a_ [href_ (url MailingListsR)] "The Haskell mailing lists")
      li_ (a_ [href_ (url IrcR)] "IRC (online chat)")
@@ -52,7 +52,7 @@ online url =
      li_ (a_ [href_ "http://www.haskell.org/haskellwiki/Haskell"] "Wiki")
      li_ (a_ [href_ "http://planet.haskell.org/"] "The blogosphere")
 
-offline :: Html ()
+offline :: View App ()
 offline =
   do li_ (a_ [href_ "http://www.meetup.com/ATX-Haskell/"] "Austin Haskell Users Group")
      li_ (a_ [href_ "http://www.meetup.com/Bay-Area-Haskell-Users-Group/"] "Bay Area Haskell Users Group")
@@ -64,7 +64,7 @@ offline =
      li_ (a_ [href_ "http://www.meetup.com/seahug/"] "Seattle Area Haskell Users' Group")
      li_ (a_ [href_ "http://www.meetup.com/find/?allMeetups=true&keywords=Haskell&radius=Infinity"] "More Haskell meetups at meetup.com")
 
-academicConferences :: Html ()
+academicConferences :: View App ()
 academicConferences =
   do li_ (a_ [href_ "https://www.haskell.org/haskell-symposium/"] "The Haskell Symposium")
      li_ (a_ [href_ "https://wiki.haskell.org/HaskellImplementorsWorkshop"] "Haskell Implementors' Workshop")
@@ -73,7 +73,7 @@ academicConferences =
      li_ (a_ [href_ "http://www.ifl-symposia.org/"] "International Symposia on Implementation and Application of Functional Languages")
      li_ (a_ [href_ "http://www.tifp.org/"] "Symposium on Trends in Functional Programming ")
 
-commercialConferences :: Html ()
+commercialConferences :: View App ()
 commercialConferences =
   do li_ (a_ [href_ "http://cufp.org/"] "Commercial Users of Functional Programming (Roving)")
      li_ (a_ [href_ "http://www.lambdajam.com/"] "LambdaJam (Chicago, IL, USA)")
@@ -85,13 +85,13 @@ commercialConferences =
      li_ (a_ [href_ "http://www.degoesconsulting.com/lambdaconf-2015/"] "LambdaConf (Boulder, CO, USA)")
      li_ (a_ [href_ "http://composeconference.org"] "Compose :: Conference (NY, NY, USA)")
 
-hackathons :: Html ()
+hackathons :: View App ()
 hackathons =
   do li_ (a_ [href_ "http://bayhac.org/"] "BayHac (Bay Area, USA)")
      li_ (a_ [href_ "https://wiki.haskell.org/Hac_Phi"] "Hac Phi (Philadelphia, PA, USA)")
      li_ (a_ [href_ "https://wiki.haskell.org/ZuriHac"] "ZuriHac (Zurich, CH)")
 
-sigs :: Html ()
+sigs :: View App ()
 sigs =
   do li_ (a_ [href_ "http://industry.haskell.org/"] "Industrial Haskell Group")
      li_ (a_ [href_ "http://commercialhaskell.com/"] "Commercial Haskell Group")

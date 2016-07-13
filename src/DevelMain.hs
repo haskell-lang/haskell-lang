@@ -13,6 +13,7 @@ import           HL.Dispatch ()
 import           HL.Foundation
 import           HL.Model.Packages
 import           HL.Model.Snippets
+import           HL.Model.Tutorial
 import           HL.View.Template
 import           Network.Wai.Handler.Warp
 import           System.Directory
@@ -34,6 +35,7 @@ main =
      snippets <- getSnippets
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
+     tutorials <- getTutorials
      app <- toWaiApp (App
        { appStatic = st
        , appCacheDir = cacheVar
@@ -42,6 +44,7 @@ main =
        , appFeedEntries = map toFeedEntry entries
        , appGitRev = $gitRev
        , appSnippetInfo = snippets
+       , appTutorials = tutorials
        })
      ref <- newIORef app
      env <- getEnvironment
@@ -72,6 +75,7 @@ update =
             print snippets
             entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
                    >>= either throwIO return
-            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl (map toFeedEntry entries) $gitRev snippets)
+            tutorials <- getTutorials
+            app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl (map toFeedEntry entries) $gitRev snippets tutorials)
             writeIORef ref app
             return store

@@ -10,6 +10,7 @@ import           Control.Concurrent.MVar
 import           Control.Exception
 import           Data.Aeson
 import           Data.Char
+import           Data.Map (Map)
 import           Data.Monoid
 import           Data.Text (Text)
 import qualified Data.Text as T
@@ -22,7 +23,7 @@ import qualified Text.Blaze as Blaze
 import qualified Text.Blaze.Html.Renderer.Utf8 as Blaze
 import qualified Text.Blaze.Html5 as Blaze (pre)
 import qualified Text.Markdown as MD
-import           Yesod.Core (HandlerT, WidgetT, Html)
+import           Yesod.Core (HandlerT, WidgetT, Html, YesodBreadcrumbs)
 import           Yesod.Core.Dispatch
 import           Yesod.Feed
 import           Yesod.GitRev (GitRev)
@@ -50,6 +51,7 @@ data App = App
   , appFeedEntries   :: ![FeedEntry Text]
   , appGitRev        :: !GitRev
   , appSnippetInfo   :: !SnippetInfo
+  , appTutorials     :: !(Map Text Tutorial)
   }
 
 data PackageInfo = PackageInfo
@@ -93,6 +95,12 @@ instance FromJSON Common where
         <*> o .: "slug"
         <*> o .: "description"
         <*> o .: "choices"
+
+data Tutorial = Tutorial
+    { tutorialTitle :: !Text
+    , tutorialContent :: !Markdown
+    }
+    deriving (Show)
 
 newtype Markdown = Markdown { unMarkdown :: Text }
   deriving (FromJSON,Show)
