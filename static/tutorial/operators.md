@@ -30,6 +30,86 @@ that way. Go ahead, try it out now!
 
 <form action="https://www.stackage.org/lts/hoogle" target="_blank"><input type="search" name="q"> <input type="submit" value="Search Hoogle"></form>
 
+## Function application `$`
+
+One of the most common operators, and source of initial confusion, is
+the `$` operator. All this does is _apply a function_. So, `f $ x` is
+exactly equivalent to `f x`. If so, why would you ever use `$`? The
+primary reason is - for those who prefer the style - to avoid
+paratheses. For example, you can replace:
+
+```haskell
+foo (bar (baz bin))
+```
+
+with
+
+```haskell
+foo $ bar $ baz bin
+```
+
+A less common but arguable more compelling use case is to capture the
+act of applying a function to an argument. To clarify that rather
+vague statement with an example:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver ghc-7.10.3 runghc
+
+double :: Int -> Int
+double x = x + x
+
+square :: Int -> Int
+square x = x * x
+
+main :: IO ()
+main = print (map ($ 5) [double, square])
+```
+
+The `($ 5)` bit means "apply the function to 5", and then we can use
+`map` to use it with both the `double` and `square` functions.
+
+## Function composition `.`
+
+Not much more to it than that: take two functions and compose them together.
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver ghc-7.10.3 runghc
+
+double :: Int -> Int
+double x = x + x
+
+square :: Int -> Int
+square x = x * x
+
+main :: IO ()
+main = (print . double . square) 5
+```
+
+Or you can combine this together with the `$` operator to avoid those
+parantheses if you're so inclined:
+
+```haskell
+main = print . double . square $ 5
+```
+
+In addition to its usage for function composition, the period is also used for hierarchical modules, e.g.:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver ghc-7.10.3 runghc
+import qualified Data.Monoid
+
+main :: IO ()
+main = putStrLn $ Data.Monoid.mappend "hello " "world"
+```
+
+Finally, in the `Control.Category` module, the `Category` typeclass
+_also_ uses the `.` operator to define categorical composition. This
+generalizes standard function composition, but is not as commonly
+used.
+
 ## Monoidal append `<>`
 
 The `<>` operator is just a synonym for the
@@ -64,5 +144,38 @@ import Data.Monoid ((<>))
 main :: IO ()
 main = putStrLn $ "hello " <> "there " <> "world!"
 ```
+
+## Functor map `<$>`
+
+The `<$>` operator is just a synonym for the
+[`fmap` function](https://www.stackage.org/haddock/lts-6.7/base-4.8.2.0/Prelude.html#v:fmap)
+from the `Functor` typeclass. This function generalizes the `map`
+function for lists to many other data types, such as `Maybe`, `IO`,
+and `Map`.
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver ghc-7.10.3 runghc
+import Data.Monoid ((<>))
+
+main :: IO ()
+main = do
+    putStrLn "Enter your birthday"
+    year <- read <$> getLine
+    let age :: Int
+        age = 2020 - year
+    putStrLn $ "Age in 2020: " <> show age
+```
+
+## Applicative function application `<*>`
+
+## Various monadic binding/composition operators
+
+* `>>=`
+* `>>`
+    * `*>`
+    * `<*`
+* `>=>`
+* `<=<`
 
 __FIXME ADD MORE OPERATORS__
