@@ -6,6 +6,7 @@
 module HL.Controller.Tutorial where
 
 import qualified Data.Map as Map
+import Data.Monoid ((<>))
 import HL.Controller
 import HL.View
 import HL.View.Markdown
@@ -24,6 +25,8 @@ getTutorialsR = do
                        (span12_
                             [class_ "col-md-12"]
                             (do h1_ "Tutorials"
+                                let githubUrl = "https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/"
+                                p_ (a_ [href_ githubUrl] (b_ "Edit and create tutorials on Github"))
                                 ul_
                                     (mapM_
                                          renderTutorial
@@ -41,5 +44,8 @@ getTutorialR slug = do
     tutorial <- maybe notFound return (Map.lookup slug tutorials)
 
     let title = tutorialTitle tutorial
-        !html = renderMarkdown (tutorialContent tutorial)
+        githubUrl = "https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/" <> slug <> ".md"
+        !html = do
+            p_ (a_ [href_ githubUrl] (b_ "View and edit this tutorial on Github"))
+            renderMarkdown (tutorialContent tutorial)
     lucid (markdownV title html)
