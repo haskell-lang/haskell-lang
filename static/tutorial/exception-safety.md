@@ -197,11 +197,145 @@ called.
 
 ## Interruptible actions
 
-There's an extra aspect to exceptions which is somewhat orthogonal to the sync/async breakdown, but is integral to proper exception safety. Some `IO` actions are _interruptible_. 
+Before we can jump into cleanup actions, we need to take a slight
+detour and discuss interruptible actions. These are
+[described in the Control.Exception docs](https://www.stackage.org/haddock/nightly-2016-07-17/base-4.9.0.0/Control-Exception.html#g:13). The
+basic idea is that these are actions which, even when async exceptions
+are masked, can throw an asynchronous exception. These doesn't violate
+any of our comments above, since the exceptions are being thrown from
+an `IO` action. However, the exceptions are being generated as a kill
+signal from outside of our current subroutine, and therefore should be
+treated as asynchronous/unrecoverable exceptions.
 
-## FIXME
+It's important to understand that the purpose of allowing for such a
+concept as an interruptible action is to *avoid deadlocks*. However,
+the tradeoff is that interruptible actions make it more difficult to
+write exception safe code, since they have allowed yet another
+"wormhole" through which exceptions can tunnel into our code. The
+simplest approach to dealing with this is: assume all `IO` actions may
+throw an exception. In practice, there is a subset of non-blocking
+`IO` actions which are known not to be interruptible, and are listed
+in the `Control.Exception` documentation linked to above.
 
-Write up a tutorial on bracket, interruptible exceptions, etc. Why
-hClose is broken. Trade-off between deadlock from incorrect code and
-writing incorrect code by mistake. uninterruptible mask is probably
-the right default for many cases
+Even these interrupting exceptions can be masked as well, using the
+`uninterruptibleMask` function. Inside an `uninterrupibleMask`, it's
+still entirely possible for a synchronous exception to be generated
+(via `throwIO` or equivalent), but no asynchronous exceptions will be
+thrown. This is important as we dive into cleanup functions.
+
+## Cleanup functions
+
+Similar to allocation functions, cleanup functions need guarantees
+that an asynchronous exception will not be thrown before it starts
+executing, and therefore it's necessary for a function like `bracket`
+or `withFile` to mask async exceptions. However, it's less clear that
+uninterruptible masking is the right thing. There is a long discussion
+of this
+[on the safe-exceptions issue tracker](https://github.com/fpco/safe-exceptions/issues/3). Ultimately,
+the decision from that disucssion is that it is better to err on the
+side of caution and use uninterruptible masking, at the possible risk
+of introducing delays or deadlocks. (See the section on `hClose` and
+flushing for more details.)
+
+Continuing with our ongoing example, let's look at how to write an
+allocation function that closes two files:
+
+```haskell
+close2Files (h1, h2) = closeFile h1 `finally` closeFile h2
+```
+
+Notice how, even if `closeFile h1` throws an exception, `closeFile h2`
+will still be called. This meets our guarantee of ensuring all
+resources are cleaned up even in the case of exceptions. This relies
+on `closeFile` itself providing the appropriate cleanup guarantees,
+namely that when called in a masked state, it guarantees that it will
+not return until the resources allocated by `openFile` are freed.
+
+Also, since a cleanup handler is run in such a deadlock-friendly mode
+(uninterruptible masking), it should avoid performing long-running
+actions whenever possible.
+
+## Summary of guarantees
+
+Putting it all together, here are the expected guarantees for our
+functions:
+
+* An allocation function:
+    * Can assume that it is being called in a masked (interruptible) state
+    * Must either successfully allocate a set of resources (file
+      descriptor, mutex, etc) or throw an exception and allocate no
+      resources at all
+* A cleanup function:
+    * Can assume it is being called in a masked (uninterruptible)
+      state, though for stricter conformance with `Control.Exception`
+      should assume that it is called in an interruptible state
+    * Must successfully release all resources which were allocated by
+      the allocation function
+    * Should avoid long-running or blocking actions
+
+With these guarantees met, we can use any given allocation/cleanup
+function combination in a `bracket` call and know that, when the
+`bracket` call exits, no resources will be leaked.
+
+## `hClose` and flushing
+
+To demonstrate a more complicated corner case, let's consider the
+real-life `openFile`/`hClose` allocation/cleanup combo. The actual
+`withFile` function from `System.IO` is defined as:
+
+```haskell
+withFile name mode = bracket (openFile name mode) hClose
+```
+
+The `openFile` function has to set up some bookkeeping variables for
+the `Handle`, get a file descriptor, and return. It's relatively
+uninteresting. `hClose`, on the other hand, has two distinct
+requirements:
+
+1. Flush the remaining data in the buffer to the file descriptor
+2. Close the file descriptor
+
+Flushing the buffer is necessary during normal exit (without
+exceptions), and is probably desired even in exceptional
+cases. However, it's problematic in the case of our thread dying from
+an async exception, since it can cause a significant delay in exit
+(violating our "Should avoid long-running or blocking actions"
+guarantee).
+
+By contrast, the "close the file descriptor" action is absolutely
+required for proper safe exception guarantees, regardless of why we're
+exiting (normal exit, sync exception, or async exception). Based on
+our analysis, there is no way to define `bracket` and `hClose` to make
+`withFile` behave exactly the way described here. Instead, we need to
+separate out the required and blocking actions from each
+other. Assuming that we have `hFlush` and `hCloseWithoutFlush`, this
+would look something like:
+
+```haskell
+withFile name mode inner = mask $ \restore -> do
+    h <- openFile name mode
+    eres <- try $ restore $ do
+        eres <- try (inner h)
+        case eres of
+            Left (e :: SomeException)
+                -- when an async exception was thrown,
+                -- don't block in order to flush
+                | isAsyncException e -> return ()
+            _ -> hFlush h
+        either throwIO return eres
+
+    _ :: Either SomeException () <- try $ uninterruptibleMask_ $ hCloseWithoutFlush h
+    either throwIO return eres
+```
+
+This hopefully demonstrates the inherent complexity with attempting to
+give full exception guarantees while simultaenously avoiding blocking
+calls. This is an extreme case which most people will not encounter in
+their own code.
+
+Overall, our recommendation is: if you have to choose between a
+potential deadlock or a potential resource leak, err on the side of
+deadlocking. It will be a more explicit bug, and is typically only
+triggered by another mistake in your code. Based on that, if you're
+uncertain if you should use `mask` or `uninterruptibleMask`, use the
+latter.
