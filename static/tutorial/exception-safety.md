@@ -259,6 +259,31 @@ Also, since a cleanup handler is run in such a deadlock-friendly mode
 (uninterruptible masking), it should avoid performing long-running
 actions whenever possible.
 
+## Difference between allocation and cleanup
+
+We have the following differences between allocation and cleanup
+functions:
+
+* Allocations run in a `mask`, cleanups in an `uninterruptibleMask`
+* There's no problem with allocations performing long-running,
+  blocking actions
+
+These two points go hand-in-hand. An allocation function only has
+responsibility to clean up after itself, not after some other action's
+resources. It is free to take as much time as necessary to acquire a
+resource (like a network connection), as long as it guarantees that,
+in the case of failure, it cleans up after itself. And to make that
+work, it should _not_ use an `uninterrupibleMask`, in order to avoid
+the possibility of undue delays and deadlocks.
+
+By contrast, a cleanup function needs to ensure that resources
+acquired elsewhere are always freed. Those cleanups need to happen
+regardless of how the main action exited (success, sync exception, or
+async exception), and therefore uninterruptible masking is desired to
+prevent accidental resource leaks. Since it is a standard mode of
+operation that an async exception brought about a cleanup function,
+the cleanup needs to assume that blocking behavior is not desired.
+
 ## Summary of guarantees
 
 Putting it all together, here are the expected guarantees for our
