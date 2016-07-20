@@ -228,7 +228,11 @@ thrown. This is important as we dive into cleanup functions.
 Similar to allocation functions, cleanup functions need guarantees
 that an asynchronous exception will not be thrown before it starts
 executing, and therefore it's necessary for a function like `bracket`
-or `withFile` to mask async exceptions. However, it's less clear that
+or `withFile` to mask async exceptions. And therefore, just like
+allocation functions, we don't need to use `mask` inside our cleanup
+functions, since it can be assumed to already be in place.
+
+However, it's less clear that
 uninterruptible masking is the right thing. There is a long discussion
 of this
 [on the safe-exceptions issue tracker](https://github.com/fpco/safe-exceptions/issues/3). Ultimately,
