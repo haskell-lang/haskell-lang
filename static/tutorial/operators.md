@@ -32,6 +32,10 @@ that way. Go ahead, try it out now!
 
 ## Function application `$`
 
+```haskell
+($) :: (a -> b) -> a -> b
+```
+
 One of the most common operators, and source of initial confusion, is
 the `$` operator. All this does is _apply a function_. So, `f $ x` is
 exactly equivalent to `f x`. If so, why would you ever use `$`? The
@@ -70,6 +74,10 @@ The `($ 5)` bit means "apply the function to 5", and then we can use
 `map` to use it with both the `double` and `square` functions.
 
 ## Function composition `.`
+
+```haskell
+(.) :: (b -> c) -> (a -> b) -> (a -> c)
+```
 
 Not much more to it than that: take two functions and compose them together.
 
@@ -112,6 +120,10 @@ used.
 
 ## Monoidal append `<>`
 
+```haskell
+(<>) :: Monoid m => m -> m -> m
+```
+
 The `<>` operator is just a synonym for the
 [`mappend` function](https://www.stackage.org/haddock/lts-6.7/base-4.8.2.0/Prelude.html#v:mappend). This
 comes from the `Monoid` typeclass, which represents types which have
@@ -147,6 +159,10 @@ main = putStrLn $ "hello " <> "there " <> "world!"
 
 ## Functor map `<$>`
 
+```haskell
+(<$>) :: Functor f => (a -> b) -> f a -> f b
+```
+
 The `<$>` operator is just a synonym for the
 [`fmap` function](https://www.stackage.org/haddock/lts-6.7/base-4.8.2.0/Prelude.html#v:fmap)
 from the `Functor` typeclass. This function generalizes the `map`
@@ -168,6 +184,12 @@ main = do
 ```
 
 ## Applicative function application `<*>`
+
+```haskell
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+(*>) :: Applicative f => f a -> f b -> f b
+(<*) :: Applicative f => f a -> f b -> f a
+```
 
 Commonly seen with `<$>`, `<*>` is an operator that applies a wrapped
 function to a wrapped value. It is part of the `Applicative`
@@ -231,6 +253,13 @@ frequently used:
     ```
 
 ## Various monadic binding/composition operators
+
+```haskell
+(>>=) :: Monad m => m a -> (a -> m b) -> m b
+(>>) :: Monad m => m a -> m b -> m b
+(>=>) :: Monad m => (a -> m b) -> (b -> m c) -> (a -> m c)
+(<=<) :: Monad m => (b -> m c) -> (a -> m b) -> (a -> m c)
+```
 
 There are a few different monadic binding operators. The two most
 basic are `>>=` and `>>`, as they can be trivially expressed in
