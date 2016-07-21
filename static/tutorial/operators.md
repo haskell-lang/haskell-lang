@@ -13,7 +13,7 @@ v3 = "hello " ++ "there " ++ "world"
 ```
 
 Unfortunately, not all operators are as self-explanatory as the `++`
-operator (which, in case you're wondering, it "list append"). This
+operator (which, in case you're wondering, is "list append"). This
 page will attempt to cover the most common "surprising" operators. In
 other words: we won't bother covering common mathematical operators
 like `+` or `*`, nor will we cover operators defined in less common
@@ -178,7 +178,7 @@ import Data.Monoid ((<>))
 
 main :: IO ()
 main = do
-    putStrLn "Enter your birthday"
+    putStrLn "Enter your year of birth"
     year <- read <$> getLine
     let age :: Int
         age = 2020 - year
