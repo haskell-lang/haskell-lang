@@ -155,8 +155,8 @@ downloadContents =
                      ": A compiler and interpreter for Haskell programs.")
              li_ (do (strong_ "Haddock")
                      ": A documentation generator for Haskell packages.")
-             li_ (do (strong_ "Hoogle")
-                     ": A search tool for searching Haskell packages.")
+             --li_ (do (strong_ "Hoogle")
+             --        ": A search tool for searching Haskell packages.")
              li_ "And thousands of packages installed on demand.")
 
 -- | Demo of running a Haskell script with Stack.
