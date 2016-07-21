@@ -169,13 +169,103 @@ main = do
 
 ## Applicative function application `<*>`
 
+Commonly seen with `<$>`, `<*>` is an operator that applies a wrapped
+function to a wrapped value. It is part of the `Applicative`
+typeclass, and is very often seen in code like the following:
+
+```haskell
+foo <$> bar <*> baz
+```
+
+For cases when you're dealing with a `Monad`, this is equivalent to:
+
+```haskell
+do x <- bar
+   y <- baz
+   return (foo x y)
+```
+
+Other common examples including parsers and serialization
+libraries. Here's an example you might see using the
+[aeson package](/package/aeson):
+
+```haskell
+data Person = Person { name :: Text, age :: Int } deriving Show
+
+-- We expect a JSON object, so we fail at any non-Object value.
+instance FromJSON Person where
+    parseJSON (Object v) = Person <$> v .: "name" <*> v .: "age"
+    parseJSON _ = empty
+```
+
+To go along with this, we have two helper operators that are less
+frequently used:
+
+*   `*>` ignores the value from the first argument. It can be defined as:
+
+    ```haskell
+    a1 *> a2 = (id <$ a1) <*> a2
+    ```
+
+    Or in `do`-notation:
+
+    ```haskell
+    a1 *> a2 = do
+        _ <- a1
+        a2
+    ```
+
+    For `Monad`s, this is completely equivalent to `>>`.
+
+*   `<*` is the same thing in reverse: perform the first action then
+    the second, but only take the value from the first action. Again,
+    definitions in terms of `<*>` and `do`-notation:
+
+    ```haskell
+    (<*) = liftA2 const
+
+    a1 <* a2 = do
+        res <- a1
+        _ <- a2
+        return res
+    ```
+
 ## Various monadic binding/composition operators
 
-* `>>=`
-* `>>`
-    * `*>`
-    * `<*`
-* `>=>`
-* `<=<`
+There are a few different monadic binding operators. The two most
+basic are `>>=` and `>>`, as they can be trivially expressed in
+`do`-notation. And as previously mentioned, `>>` is just a synonym for
+`*>` from the `Applicative` class, so it's even easier.
 
-__FIXME ADD MORE OPERATORS__
+```haskell
+m1 >>= f = do
+    x <- m1
+    f x
+
+m1 >> m2 = do
+    _ <- m1
+    m2
+```
+
+In addition to these two operators, there are also composition
+operators for when you have two monadic functions. `>=>` pipes the
+result from the left side to the right side, while `<=<` pipes the
+result the other way. In other words:
+
+```haskell
+f >=> g = \x -> do
+    y <- f x
+    g y
+
+g <=< f = \x -> do
+    y <- f x
+    g y
+
+f >=> g = g <=< f
+g >=> f = f <=< g
+```
+
+## More operators!
+
+If you're aware of other common operators that cause confusion, please
+open an issue or a PR to extend this document!
