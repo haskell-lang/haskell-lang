@@ -161,6 +161,8 @@ main = putStrLn $ "hello " <> "there " <> "world!"
 
 ```haskell
 (<$>) :: Functor f => (a -> b) -> f a -> f b
+(<$) :: Functor f => a -> f b -> f a
+($>) :: Functor f => f a -> b -> f b
 ```
 
 The `<$>` operator is just a synonym for the
@@ -181,6 +183,19 @@ main = do
     let age :: Int
         age = 2020 - year
     putStrLn $ "Age in 2020: " <> show age
+```
+
+In addition, there are two additional operators provided which replace
+a value inside a `Functor` instead of applying a function. This can be
+both more convenient in some cases, as well as for some `Functor`s be
+more efficient. In terms of definition:
+
+```haskell
+value <$ functor = const value <$> functor
+functor $> value = const value <$> functor
+
+x <$ y = y $> x
+x $> y = y <$ x
 ```
 
 ## Applicative function application `<*>`
