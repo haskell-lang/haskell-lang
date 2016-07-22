@@ -271,6 +271,7 @@ frequently used:
 
 ```haskell
 (>>=) :: Monad m => m a -> (a -> m b) -> m b
+(=<<) :: Monad m => (a -> m b) -> m a -> m b
 (>>) :: Monad m => m a -> m b -> m b
 (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> (a -> m c)
 (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> (a -> m c)
@@ -279,7 +280,8 @@ frequently used:
 There are a few different monadic binding operators. The two most
 basic are `>>=` and `>>`, as they can be trivially expressed in
 `do`-notation. And as previously mentioned, `>>` is just a synonym for
-`*>` from the `Applicative` class, so it's even easier.
+`*>` from the `Applicative` class, so it's even easier. `=<<` is
+just `>>=` with the arguments reversed.
 
 ```haskell
 m1 >>= f = do
@@ -289,6 +291,10 @@ m1 >>= f = do
 m1 >> m2 = do
     _ <- m1
     m2
+
+f =<< m1 = do
+    x <- m1
+    f x
 ```
 
 In addition to these two operators, there are also composition
