@@ -23,7 +23,7 @@ import qualified Text.Blaze as Blaze
 import qualified Text.Blaze.Html.Renderer.Utf8 as Blaze
 import qualified Text.Blaze.Html5 as Blaze (pre)
 import qualified Text.Markdown as MD
-import           Yesod.Core (HandlerT, WidgetT, Html, YesodBreadcrumbs)
+import           Yesod.Core (HandlerT, WidgetT, Html)
 import           Yesod.Core.Dispatch
 import           Yesod.Feed
 import           Yesod.GitRev (GitRev)

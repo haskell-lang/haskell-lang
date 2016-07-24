@@ -14,7 +14,7 @@ import qualified Data.Text as T
 
 -- | Report view.
 reportNodeV :: Mode -> Int -> View App () -> View App ()
-reportNodeV mode year inner =
+reportNodeV _mode year inner =
   templateWithBodyEnder
 
     (T.pack (show year) <>
