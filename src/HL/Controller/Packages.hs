@@ -9,6 +9,7 @@ module HL.Controller.Packages
     , getPackageR
     ) where
 
+import           Data.Monoid ((<>))
 import qualified Data.Vector as V
 import           HL.Controller
 import           HL.View
@@ -31,10 +32,12 @@ getPackageR name =
          case V.find ((== name) . packageName)
                      (V.concatMap commonChoices
                                   (piCommons info)) of
-           Nothing -> redirect PackagesR
+           Nothing -> onNotFound
            Just package -> handlePackage package
        Just package -> handlePackage package
   where handlePackage package =
           case packagePage package of
-            Nothing -> redirect PackagesR
+            Nothing -> onNotFound
             Just md -> lucid (packageV name md)
+
+        onNotFound = redirect $ "https://www.stackage.org/package/" <> toPathPiece name
