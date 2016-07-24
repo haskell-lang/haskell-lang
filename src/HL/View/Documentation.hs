@@ -35,6 +35,8 @@ inSiteDocs = do
     h2_ "Docs on this site"
     url <- lift (asks pageRender)
     links (fmap (second url) inSiteLinks)
+    p_ (do "Have other ideas for improving documentation? Please "
+           a_ [href_ "https://www.reddit.com/r/haskell_lang/comments/4udlt6/documentation_priorities/"] "discuss it on Reddit")
   where
     inSiteLinks =
         [ ("Getting started guide", GetStartedR)
