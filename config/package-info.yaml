@@ -97,6 +97,7 @@ commons:
   - name: conduit
     description: |
       Combinators for awaiting and yielding, with leftovers, etc.
+    page-url: https://raw.githubusercontent.com/commercialhaskell/haskelldocumentation/master/content/vector.md
 
 - title: Web/HTTP requests
   slug: http-clients
