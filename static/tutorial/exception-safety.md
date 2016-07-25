@@ -261,28 +261,27 @@ actions whenever possible.
 
 ## Difference between allocation and cleanup
 
-We have the following differences between allocation and cleanup
-functions:
+In `safe-exceptions`, allocations run in a `mask`, while cleanups
+run in an `uninterruptibleMask`. This difference is due to a fundamental
+difference between allocations and cleanups. If a program performing
+an allocation is interrupted, no damage is done (as long as the
+allocation is atomic). On the other hand, an interruptible cleanup
+is a possible source of leaks, since acquired resources will not be
+released.
 
-* Allocations run in a `mask`, cleanups in an `uninterruptibleMask`
-* There's no problem with allocations performing long-running,
-  blocking actions
+Note that interrupting threads is an ordinary occurrence in Haskell, and
+not something we do not expect or that we know leads to the whole program
+to terminate. For example, the `race` function from the `async` package
+will spawn two threads and terminate the one that takes longer to execute.
+If we use `race` with computations using interruptible cleanups we
+have no guarantees that those cleanups will indeed be run, and thus
+we can leak resources.
 
-These two points go hand-in-hand. An allocation function only has
-responsibility to clean up after itself, not after some other action's
-resources. It is free to take as much time as necessary to acquire a
-resource (like a network connection), as long as it guarantees that,
-in the case of failure, it cleans up after itself. And to make that
-work, it should _not_ use an `uninterrupibleMask`, in order to avoid
-the possibility of undue delays and deadlocks.
-
-By contrast, a cleanup function needs to ensure that resources
-acquired elsewhere are always freed. Those cleanups need to happen
-regardless of how the main action exited (success, sync exception, or
-async exception), and therefore uninterruptible masking is desired to
-prevent accidental resource leaks. Since it is a standard mode of
-operation that an async exception brought about a cleanup function,
-the cleanup needs to assume that blocking behavior is not desired.
+A consequence of this design choice is that there's no problem with
+allocations performing long-running, blocking actions; but we must
+make sure that the cleanups are performed quickly in order to avoid
+unduly delays. Even worse, if a cleanup deadlocks (or in other words
+waits forever) the thread executing it will be unkillable.
 
 ## Summary of guarantees
 
