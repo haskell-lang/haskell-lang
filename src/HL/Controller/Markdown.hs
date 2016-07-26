@@ -10,7 +10,7 @@ import HL.View
 import HL.View.Markdown
 
 -- | Render a simple markdown page.
-markdownPage :: [Route App] -> Text -> FilePath -> C (Html ())
-markdownPage crumbs t name =
+markdownPage :: Text -> FilePath -> C (Html ())
+markdownPage t name =
   do content <- io (getMarkdown name)
-     lucid (markdownV crumbs t content)
+     lucid (markdownV t content)

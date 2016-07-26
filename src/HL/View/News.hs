@@ -9,11 +9,10 @@ import HL.View
 import HL.View.Template
 
 -- | News view.
-newsV :: Html () -> FromLucid App
+newsV :: View App () -> View App ()
 newsV inner =
-  template []
+  template
            "News"
-           (\_ ->
-              container_
-                (do row_ (span12_ [class_ "col-md-12"] (do h1_ "News"))
-                    inner))
+           (container_
+              (do row_ (span12_ [class_ "col-md-12"] (do h1_ "News"))
+                  inner))

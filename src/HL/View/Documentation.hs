@@ -6,30 +6,44 @@
 
 module HL.View.Documentation where
 
+import Control.Arrow (second)
 import HL.View
 import HL.View.Template
 
 -- | Documentation view.
-documentationV :: FromLucid App
+documentationV :: View App ()
 documentationV =
-  template
-    []
-    "Documentation"
-    (\url ->
-       container_
-         (row_
-            (span12_ [class_ "col-md-12"]
-               (do h1_ "Documentation"
-                   books
-                   courses
-                   tutorials
-                   online
-                   manuals
-                   cabal
-                   library
-                   report url))))
+    template
+        "Documentation"
+        (container_
+             (row_
+                  (span12_
+                       [class_ "col-md-12"]
+                       (do h1_ "Documentation"
+                           inSiteDocs
+                           books
+                           courses
+                           tutorials
+                           online
+                           manuals
+                           cabal
+                           library
+                           report ))))
 
-books :: Html ()
+inSiteDocs :: View App ()
+inSiteDocs = do
+    h2_ "Docs on this site"
+    url <- lift (asks pageRender)
+    links (fmap (second url) inSiteLinks)
+    p_ (do "Have other ideas for improving documentation? Please "
+           a_ [href_ "https://www.reddit.com/r/haskell_lang/comments/4udlt6/documentation_priorities/"] "discuss it on Reddit")
+  where
+    inSiteLinks =
+        [ ("Getting started guide", GetStartedR)
+        , ("Common packages and their documentations", PackagesR)
+        , ("List of tutorials", TutorialsR)]
+
+books :: View App ()
 books =
   do h2_ "Books for Learning Haskell"
      links bookLinks
@@ -46,7 +60,7 @@ books =
       ,("The Haskell School of Music","http://haskell.cs.yale.edu/?post_type=publication&p=112")
       ,("Developing Web Applications with Haskell and Yesod","http://www.yesodweb.com/book")]
 
-courses :: Html ()
+courses :: View App ()
 courses =
   do h2_ "Courses"
      p_ "Course material created by instructors"
@@ -58,7 +72,7 @@ courses =
        ,("University of Virginia's CS 1501","http://shuklan.com/haskell/")
        ,("Stanford's cs240h","http://www.scs.stanford.edu/14sp-cs240h/")]
 
-tutorials :: Html ()
+tutorials :: View App ()
 tutorials =
   do h2_ "Tutorials"
      p_ "Short, dense, classic ways to hit the ground running"
@@ -70,7 +84,7 @@ tutorials =
        ,("Write Yourself a Scheme in 48 Hours","http://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours")
        ,("Learning Haskell","http://learn.hfm.io")]
 
-online :: Html ()
+online :: View App ()
 online =
   do h2_ "Online Resources"
      p_ "Curated resources put together by Haskellers:"
@@ -86,7 +100,7 @@ online =
       ,("Albert Y.C. Lai's Haskell Notes and Examples","http://www.vex.net/~trebla/haskell/index.xhtml")
       ,("Learning Haskell Resources on the Haskell Wiki","https://wiki.haskell.org/Learning_Haskell")]
 
-manuals :: Html ()
+manuals :: View App ()
 manuals = do h2_ "Manuals and Guides"
              p_ "Manuals and guides that cover common Haskell tooling:"
              links tools
@@ -98,7 +112,7 @@ manuals = do h2_ "Manuals and Guides"
                 ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")
                 ,("How to Write a Haskell Program","https://wiki.haskell.org/How_to_write_a_Haskell_program")]
 
-cabal :: Html ()
+cabal :: View App ()
 cabal =
   do h2_ "Package and Dependency Management"
      p_ "The Cabal guide is a good start but there's a lot to learn:"
@@ -109,7 +123,7 @@ cabal =
            ,("The Storage and Interpretation of Cabal Packages","http://www.vex.net/~trebla/haskell/sicp.xhtml")
            ,("The Cabal of Cabal","http://www.vex.net/~trebla/haskell/cabal-cabal.xhtml")]
 
-library :: Html ()
+library :: View App ()
 library =
   do h2_ "Library Documentation"
      p_ "Documentation for Haskell libraries is typically available on Hackage. We also have specialized tools for searching across it, not only by name, but by type."
@@ -122,8 +136,8 @@ library =
          ,("The Typeclassopedia","https://wiki.haskell.org/Typeclassopedia")
          ,("Haddocks for Libraries included with GHC","https://downloads.haskell.org/~ghc/latest/docs/html/libraries/index.html")]
 
-report :: (Route App -> Text) -> Html ()
-report _ =
+report :: View App ()
+report =
   do h2_ "Language Report"
      p_ (do "The Haskell 2010 language report is available online "
             a_ [href_ "//haskell.org/onlinereport/haskell2010/"] "here"
@@ -134,7 +148,7 @@ report _ =
      p_ "It can also be downloaded as a darcs repository: "
      p_ (pre_ (code_ "$ darcs get http://darcs.haskell.org/haskell2010-report"))
 
-links :: [(Text,Text)] -> Html ()
+links :: [(Text,Text)] -> View App ()
 links items =
   ul_ (forM_ items
              (\(title,url) ->

@@ -7,8 +7,7 @@ ENV LANG=C.UTF-8
 RUN apt-get update \
  && apt-get install -y --no-install-recommends libgmp10 ca-certificates libicu-dev \
  && apt-get clean
-CMD haskell-lang
-COPY _artifacts/config/ /haskell-lang/config/
-COPY _artifacts/static/ /haskell-lang/static/
 COPY _artifacts/themes/ /haskell-lang/themes/
+COPY _artifacts/config/ /haskell-lang/config/
 COPY _artifacts/haskell-lang /usr/local/bin/haskell-lang
+COPY _artifacts/static/ /haskell-lang/static/

@@ -17,43 +17,40 @@ import Yesod.Static (Static)
 
 -- | Render a template.
 template
-  :: [Route App]
-  -> Text
-  -> ((Route App -> Text) -> Html ())
-  -> FromLucid App
-template crumbs ptitle inner =
-  templateWithBodyEnder crumbs
-                        ptitle
+  :: Text
+  -> View App ()
+  -> View App ()
+template ptitle inner =
+  templateWithBodyEnder ptitle
                         inner
-                        (\_ _ -> return ())
+                        (return ())
 
 -- | Render a template, with some additional content just before
 -- </body>.
-templateWithBodyEnder :: [Route App]
-                      -> Text
-                      -> ((Route App -> Text) -> Html ())
-                      -> FromLucid App
-                      -> FromLucid App
-templateWithBodyEnder crumbs ptitle inner bodyender =
+templateWithBodyEnder :: Text
+                      -> View App ()
+                      -> View App ()
+                      -> View App ()
+templateWithBodyEnder ptitle inner bodyender =
   skeleton ptitle
-           (\_ _ -> return ())
-           (\cur url ->
-              div_ [class_ "template"]
-                   (do navigation True crumbs cur url
-                       container_ (bread url crumbs)
-                       inner url))
+           (return ())
+           (div_ [class_ "template"]
+                 (do navigation True
+                     container_ bread
+                     inner))
            bodyender
 
 -- | Render the basic site skeleton.
 skeleton
   :: Text
-  -> FromLucid App
-  -> FromLucid App
-  -> FromLucid App
-  -> FromLucid App
-skeleton ptitle innerhead innerbody bodyender mroute url =
+  -> View App ()
+  -> View App ()
+  -> View App ()
+  -> View App ()
+skeleton ptitle innerhead innerbody bodyender =
   doctypehtml_
     (do head_ headinner
+        mroute <- lift (asks pageRoute)
         body_ [class_ ("page-" <> toSlug route) | Just route <- [mroute]]
               (do bodyinner
                   analytics))
@@ -66,6 +63,7 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
          meta_ [name_ "keywords",content_ "haskell,functional,pure,programming,lazy"]
          meta_ [name_ "description",
                 content_ "The Haskell purely functional programming language home page."]
+         url <- lift (asks pageRender)
          link_ [rel_ "shortcut icon",href_ (url (StaticR img_favicon_ico))]
          linkcss "https://fonts.googleapis.com/css?family=Open+Sans"
          styles url
@@ -80,15 +78,15 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
            , title_ "Haskell Language News Feed"
            ]
 
-         innerhead mroute url
+         innerhead
     bodyinner =
-      do div_ [class_ "wrap"] (innerbody mroute url)
-         footer url mroute
-         scripts url
+      do div_ [class_ "wrap"] innerbody
+         footer
+         scripts
                  [js_jquery_js
                  ,js_bootstrap_min_js
                  ,js_home_js]
-         bodyender mroute url
+         bodyender
     -- TODO: pop this in a config file later.
     analytics =
       script_ "var _gaq = _gaq || [];\n\
@@ -101,25 +99,28 @@ skeleton ptitle innerhead innerbody bodyender mroute url =
               \})();\n"
 
 -- | Make a list of scripts.
-scripts :: (Route App -> Text) -> [Route Static] -> Html ()
-scripts url =
-  mapM_ (\route ->
-           script_ [src_ (url (StaticR route))] (mempty :: Text))
+scripts :: [Route Static] -> View App ()
+scripts routes = do
+    url <- lift (asks pageRender)
+    mapM_
+        (\route ->
+              script_ [src_ (url (StaticR route))] (mempty :: Text))
+        routes
 
 -- | Make a list of style links.
-styles :: (a -> Text) -> [a] -> Html ()
+styles :: (a -> Text) -> [a] -> View App ()
 styles url =
   mapM_ (\route ->
            linkcss (url route))
 
 -- | A link to CSSxs
-linkcss :: Text -> Html ()
+linkcss :: Text -> View App ()
 linkcss uri =
   link_ [rel_ "stylesheet",type_ "text/css",href_ uri]
 
 -- | Main navigation.
-navigation :: Bool -> [Route App] -> FromLucid App
-navigation showBrand crumbs mroute url =
+navigation :: Bool -> View App ()
+navigation showBrand =
   nav_ [class_ "navbar navbar-default"]
        (div_ [class_ "container"]
              (do when showBrand brand
@@ -127,31 +128,38 @@ navigation showBrand crumbs mroute url =
   where items =
           div_ [class_ "collapse navbar-collapse"]
                (ul_ [class_ "nav navbar-nav"]
-                    (mapM_ item [GetStartedR,PackagesR,DocumentationR,CommunityR,NewsR]))
-          where item :: Route App -> Html ()
+                    (mapM_ item [GetStartedR,LibrariesR,DocumentationR,CommunityR,NewsR]))
+          where item :: Route App -> View App ()
                 item route =
-                  li_ [class_ "active" | Just route == mroute || elem route crumbs]
-                      (a_ [href_ (url route)]
-                          (toHtml (toHuman route)))
+                  do mroute <- lift (asks pageRoute)
+                     url <- lift (asks pageRender)
+                     crumbs <- lift (asks pageCrumbs)
+                     li_ [class_ "active" | Just route == mroute || elem route (map fst crumbs)]
+                         (a_ [href_ (url route)]
+                             (toHtml (toHuman route)))
         brand =
-          div_ [class_ "navbar-header"]
-               (a_ [class_ "navbar-brand",href_ (url HomeR)]
-                   (do logo
-                       "Haskell"))
+          do url <- lift (asks pageRender)
+             div_ [class_ "navbar-header"]
+                  (a_ [class_ "navbar-brand",href_ (url HomeR)]
+                      (do logo
+                          "Haskell"))
 
 -- | The logo character in the right font. Style it with an additional
 -- class or wrapper as you wish.
-logo :: Html ()
+logo :: Monad m => HtmlT m ()
 logo = span_ [class_ "logo"] "\57344"
 
 -- | Breadcrumb.
-bread :: (Route App -> Text) -> [Route App] -> Html ()
-bread url crumbs =
-  ol_ [class_ "breadcrumb"]
-      (forM_ crumbs
-             (\route ->
-                li_ (a_ [href_ (url route)]
-                        (toHtml (toHuman route)))))
+bread :: View App ()
+bread =
+  do crumbs <- lift (asks pageCrumbs)
+     url <- lift (asks pageRender)
+     unless (length crumbs == 1)
+            (ol_ [class_ "breadcrumb"]
+                 (forM_ crumbs
+                        (\(route,title) ->
+                           li_ (a_ [href_ (url route)]
+                                   (toHtml title)))))
 
 -- | Set the background image for an element.
 background :: (Route App -> Text) -> Route Static -> Attribute
@@ -159,22 +167,24 @@ background url route =
   style_ ("background-image: url(" <> url (StaticR route) <> ")")
 
 -- | Footer across the whole site.
-footer :: (Route App -> Text) -> Maybe (Route App) -> Html ()
-footer _ r =
+footer :: View App ()
+footer =
   div_ [class_ "footer"]
        (div_ [class_ "container"]
-             (p_ (case r of
-                    Just (WikiR page) ->
-                      wikiLicense (Just page)
-                    Just (WikiHomeR{}) ->
-                      wikiLicense (Nothing :: Maybe Text)
-                    _ -> hlCopy)))
-  where hlCopy =
+             (do r <- lift (asks pageRoute)
+                 p_ (case r of
+                       Just (WikiR page) ->
+                         wikiLicense (Just page)
+                       Just (WikiHomeR{}) ->
+                         wikiLicense (Nothing :: Maybe Text)
+                       _ -> hlCopy)))
+  where hlCopy :: View App ()
+        hlCopy =
           do span_ [class_ "item"] "\169 2014-2016 haskell-lang.org"
              span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
-        wikiLicense :: Maybe Text -> Html ()
+        wikiLicense :: Maybe Text -> View App ()
         wikiLicense page =
           do span_ [class_ "item"] wikiLink
              span_ [class_ "item"]
@@ -196,16 +206,15 @@ defaultLayoutImpl widget = do
   render <- Y.getUrlRenderParams
   let title = TL.toStrict (Blaze.renderHtml (Y.pageTitle pc))
       body = Y.pageBody pc
-      content :: FromLucid App
-      content = template [] title
-              (\_ ->
-                container_
-                  (row_ (span12_ [class_ "col-md-12"]
-                    (toHtmlRaw (BlazeUtf8.renderHtml (body render))))))
+      content :: View App ()
+      content = template title
+              (container_
+                 (row_ (span12_ [class_ "col-md-12"]
+                   (toHtmlRaw (BlazeUtf8.renderHtml (body render))))))
   lucid content >>= Y.sendResponse
 
 -- | Make an element that looks like an OS X window.
-osxWindow :: Text -> Html () -> Html ()
+osxWindow :: Text -> View App () -> View App ()
 osxWindow title content =
   div_ [class_ "osx-window"]
        (div_ [class_ "window"]

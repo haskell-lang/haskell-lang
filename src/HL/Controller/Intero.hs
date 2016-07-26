@@ -11,4 +11,4 @@ import HL.View
 -- | Intero page.
 getInteroR :: C (Html ())
 getInteroR =
-  htmlPage [GetStartedR,InteroR] "Intero for Emacs" "intero.html"
+  htmlPage "Intero for Emacs" "intero.html"

@@ -24,7 +24,7 @@ import           System.FilePath
 -- | Get a report's page. The Haskell report is ISO-8859-1 encoded
 -- rather than UTF-8 so we use ICU to decode it from that instead,
 -- strip out surrounding HTML tags, and then return it as normal Html.
-getReportPage :: Int -> FilePath -> IO (Html ())
+getReportPage :: Monad m =>  Int -> FilePath -> IO (HtmlT m ())
 getReportPage year path =
   do dir <- getStaticDir
      exists <- doesFileExist (dir </> fp)
@@ -41,7 +41,7 @@ getReportPage year path =
           normalize path
 
 -- | Get ALL pages in one big-ass HTML output.
-getReportAllPages :: Int -> IO (Html ())
+getReportAllPages :: Monad m =>  Int -> IO (HtmlT m ())
 getReportAllPages year =
   do staticDir <- getStaticDir
      let reportDir =

@@ -11,7 +11,7 @@ import Data.Monoid
 
 -- | Features section explains what's notable about Haskell as a
 -- language.
-features :: Html ()
+features :: View App ()
 features =
   div_ [class_ "features"]
        (container_
@@ -23,7 +23,7 @@ features =
               row_ (do span6_ [class_ "col-md-6"] lazy
                        span6_ [class_ "col-md-6"] packages)))
 
-purefunc :: Html ()
+purefunc :: View App ()
 purefunc =
   do h2_ "Purely functional"
      p_ "Every function in Haskell is a function in the mathematical sense (i.e., \"pure\"). \
@@ -53,7 +53,7 @@ purefunc =
               " is. So by the type system you cannot mix and \
               \match purity with impurity.")
 
-statically :: Html ()
+statically :: View App ()
 statically =
   do h2_ "Statically typed"
      p_ "Every expression in Haskell has a type which is determined at compile time. \
@@ -77,7 +77,7 @@ statically =
          \of Unicode points:"
        rejectedHaskellPre "Type error" "doubleDecode = decodeUtf8 (decodeUtf8 bytes)"
 
-concurrent :: Html ()
+concurrent :: View App ()
 concurrent =
   do h2_ "Concurrent"
      p_ "Haskell lends itself well to concurrent programming due to its explicit \
@@ -112,7 +112,7 @@ concurrent =
          \the type system:"
        rejectedHaskellPre "Type error" "main = atomically (putStrLn \"Hello!\")"
 
-inference :: Html ()
+inference :: View App ()
 inference =
   do h2_ "Type inference"
      p_ "You don't have to explicitly write out every type in a Haskell program. \
@@ -150,7 +150,7 @@ inference =
                   \   return (zipWith (\\s i -> s ++ \" \" ++ show (i + 5)) ss is)\n\
                   \ => Nothing"
 
-lazy :: Html ()
+lazy :: View App ()
 lazy =
   do h2_ "Lazy"
      p_ "Functions don't evaluate their arguments. This means that programs \
@@ -183,7 +183,7 @@ lazy =
        p_ (do "Reuse the recursion patterns in "
               code_ "map"; ", "; code_ "filter"; ", "; code_ "foldr"; ", etc.")
 
-packages :: Html ()
+packages :: View App ()
 packages =
   do h2_ "Packages"
      p_ "Open source contribution to Haskell is very active with a wide range \

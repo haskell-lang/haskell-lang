@@ -25,25 +25,22 @@ import           Text.Pandoc.Walk
 import           Text.Pandoc.Writers.HTML
 
 -- | Wiki view.
-wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> FromLucid App
+wikiV :: (Route App -> Text) -> Either Text (Text,Pandoc) -> View App ()
 wikiV urlr result =
   template
-    ([WikiHomeR] ++
-     [WikiR n | Right (n,_) <- [result]])
     (case result of
        Left{} -> "Wiki error!"
        Right (t,_) -> t)
-    (\_ ->
-       container_
-         (row_
-            (span12_ [class_ "col-md-12"]
-               (case result of
-                  Left err ->
-                    do h1_  "Wiki page retrieval problem!"
-                       p_ (toHtml err)
-                  Right (t,pan) ->
-                    do h1_ (toHtml t)
-                       toHtmlRaw (renderHtml (writeHtml writeOptions (cleanup urlr pan)))))))
+    (container_
+       (row_
+          (span12_ [class_ "col-md-12"]
+             (case result of
+                Left err ->
+                  do h1_  "Wiki page retrieval problem!"
+                     p_ (toHtml err)
+                Right (t,pan) ->
+                  do h1_ (toHtml t)
+                     toHtmlRaw (renderHtml (writeHtml writeOptions (cleanup urlr pan)))))))
   where cleanup url = highlightBlock . highlightInline . relativize url
         writeOptions = def { writerTableOfContents = True }
 

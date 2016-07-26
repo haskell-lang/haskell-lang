@@ -11,6 +11,6 @@ import HL.View
 -- | Get mailing lists.
 getMailingListsR :: C (Html ())
 getMailingListsR =
-  markdownPage [CommunityR,MailingListsR]
+  markdownPage
                "Mailing Lists"
                "mailing-lists.md"

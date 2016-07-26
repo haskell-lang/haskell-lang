@@ -24,6 +24,7 @@ import Control.Concurrent.MVar.Lifted
 import HL.Static
 import HL.Types
 
+import qualified Data.Map as Map
 import Data.Monoid
 import Data.Text (Text)
 import Data.Text (pack)
@@ -82,9 +83,13 @@ instance Human (Route App) where
       WikiHomeR{}          -> "Wiki"
       PackagesR{}          -> "Packages"
       PackageR p           -> toHuman p
+      LibrariesR{}         -> "Libraries"
+      LibraryR p           -> toHuman p
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
       InteroR{}            -> "Intero"
+      TutorialsR{}         -> "Tutorials"
+      TutorialR x          -> "Tutorial: " <> x
 
 instance Slug (Route App) where
   toSlug r =
@@ -107,6 +112,43 @@ instance Slug (Route App) where
       WikiHomeR{}       -> "wiki"
       PackagesR{}       -> "packages"
       PackageR x        -> "packages-" <> toSlug x
+      LibrariesR{}      -> "libraries"
+      LibraryR x        -> "libraries-" <> toSlug x
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
+      TutorialsR{}      -> "tutorial"
+      TutorialR x       -> "tutorial-" <> x
+
+instance YesodBreadcrumbs App where
+    breadcrumb r =
+      case r of
+        CommunityR           -> return ("Community",Nothing)
+        IrcR                 -> return ("IRC",Nothing)
+        DocumentationR       -> return ("Documentation",Nothing)
+        HomeR                -> return ("Home",Nothing)
+        DonateR              -> return ("Donate",Nothing)
+        MailingListsR        -> return ("Mailing Lists",Nothing)
+        NewsR                -> return ("News",Nothing)
+        StaticR{}            -> return ("Static",Nothing)
+        GetStartedR          -> return ("Get Started",Nothing)
+        GetStartedOSR os     -> return ("Get Started (" <> toHuman os <> ")",Nothing)
+        AnnouncementsR       -> return ("Announcements",Nothing)
+        WikiR t              -> return ("Wiki: " <> t,Nothing)
+        ReportNodeR _ _      -> return ("Report Page",Nothing)
+        ReportModeR Node i   -> return ("Node " <> pack (show i),Nothing)
+        ReportModeR Mono i   -> return ("Mono " <> pack (show i),Nothing)
+        ReportR{}            -> return ("Report",Nothing)
+        WikiHomeR{}          -> return ("Wiki",Nothing)
+        PackagesR{}          -> return ("Packages",Nothing)
+        PackageR p           -> return (toHuman p,Nothing)
+        LibrariesR{}         -> return ("Libraries",Nothing)
+        LibraryR p           -> return (toHuman p,Nothing)
+        FeedR{}              -> return ("News Feed",Nothing)
+        GitRevR{}            -> return ("Build Version",Nothing)
+        InteroR{}            -> return ("Intero",Nothing)
+        TutorialsR{}         -> return ("Tutorials",Just DocumentationR)
+        TutorialR x          -> do
+            tutorials <- fmap appTutorials getYesod
+            let title = maybe x tutorialTitle (Map.lookup x tutorials)
+            return ("Tutorial: " <> title,Just TutorialsR)
