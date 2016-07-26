@@ -60,9 +60,10 @@ fundamentals:
 - name: stm
   description: |
     Software-transactional memory; for atomic, reliable, composable, concurrency.
-- name: exceptions
+- name: safe-exceptions
   description: |
     Extensible optionally-pure exceptions, abstracting over various types.
+  page-url: https://raw.githubusercontent.com/fpco/safe-haskell/master/README.md
 - name: regex-compat
   description: |
     Simple POSIX-compatible regex matching.
