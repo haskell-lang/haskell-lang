@@ -83,6 +83,8 @@ instance Human (Route App) where
       WikiHomeR{}          -> "Wiki"
       PackagesR{}          -> "Packages"
       PackageR p           -> toHuman p
+      LibrariesR{}         -> "Libraries"
+      LibraryR p           -> toHuman p
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
       InteroR{}            -> "Intero"
@@ -110,6 +112,8 @@ instance Slug (Route App) where
       WikiHomeR{}       -> "wiki"
       PackagesR{}       -> "packages"
       PackageR x        -> "packages-" <> toSlug x
+      LibrariesR{}      -> "libraries"
+      LibraryR x        -> "libraries-" <> toSlug x
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
@@ -138,6 +142,8 @@ instance YesodBreadcrumbs App where
         WikiHomeR{}          -> return ("Wiki",Nothing)
         PackagesR{}          -> return ("Packages",Nothing)
         PackageR p           -> return (toHuman p,Nothing)
+        LibrariesR{}         -> return ("Libraries",Nothing)
+        LibraryR p           -> return (toHuman p,Nothing)
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
         InteroR{}            -> return ("Intero",Nothing)

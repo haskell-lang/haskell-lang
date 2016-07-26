@@ -7,6 +7,8 @@
 module HL.Controller.Packages
     ( getPackagesR
     , getPackageR
+    , getLibrariesR
+    , getLibraryR
     ) where
 
 import qualified Data.Vector as V
@@ -15,15 +17,25 @@ import           HL.View
 import           HL.View.Package
 import           HL.View.Packages
 
+----- BEGIN Hysterical raisins
+
+getPackagesR :: C ()
+getPackagesR = redirect LibrariesR
+
+getPackageR :: PackageName -> C ()
+getPackageR = redirect . LibraryR
+
+----- END   Hysterical raisins
+
 -- | Packages controller.
-getPackagesR :: C (Html ())
-getPackagesR =
+getLibrariesR :: C (Html ())
+getLibrariesR =
   do info <- fmap appPackageInfo getYesod
      lucid (packagesV info)
 
 -- | Package controller.
-getPackageR :: PackageName -> C (Html ())
-getPackageR name =
+getLibraryR :: PackageName -> C (Html ())
+getLibraryR name =
   do info <- fmap appPackageInfo getYesod
      case V.find ((== name) . packageName)
                  (piFundamentals info) of

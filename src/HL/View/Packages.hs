@@ -19,7 +19,7 @@ import Prelude hiding (pi)
 packagesV :: PackageInfo -> View App ()
 packagesV pi =
   template
-           "Packages"
+           "Libraries"
            ((container_
                (row_ (span12_ [class_ "col-md-12"]
                               (do url <- lift (asks pageRender)
@@ -27,7 +27,7 @@ packagesV pi =
 
 content :: (Route App -> Text) -> PackageInfo -> View App ()
 content url pi =
-  do h1_ (toHtml ("Haskell Packages" :: String))
+  do h1_ (toHtml ("Haskell Libraries" :: String))
      toHtml (piIntro pi)
      h2_ [id_ "core"] "Core"
      toHtml (piFundamentalsIntro pi)
