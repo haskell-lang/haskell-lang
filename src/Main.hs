@@ -32,7 +32,7 @@ main =
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
      snippets <- getSnippets
-     packageInfo <- getPackageInfo
+     packageInfo <- getPackageInfo False
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
      tutorials <- getTutorials

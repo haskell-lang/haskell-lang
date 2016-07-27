@@ -1,5 +1,8 @@
 resolver: lts-5.13
 
+extra-deps:
+- safe-exceptions-0.1.4.0
+
 extra-include-dirs:
 - /usr/local/opt/icu4c/include
 

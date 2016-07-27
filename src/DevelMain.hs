@@ -31,7 +31,7 @@ main =
      let cacheDir = tmpDir </> "hl-cache"
      createDirectoryIfMissing True cacheDir
      cacheVar <- newMVar cacheDir
-     packageInfo <- getPackageInfo
+     packageInfo <- getPackageInfo False
      snippets <- getSnippets
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
@@ -70,7 +70,7 @@ update =
          do ref <- readStore store
             cacheVar <- readStore (Store 2)
             st <- static "static"
-            packageInfo <- getPackageInfo
+            packageInfo <- getPackageInfo False
             snippets <- getSnippets
             print snippets
             entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
