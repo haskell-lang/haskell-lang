@@ -86,6 +86,7 @@ executable haskell-lang
                    , yesod-newsfeed
                    , split
                    , random
+                   , safe-exceptions
 
   other-modules:     HL.Controller
                      HL.Controller.Community
@@ -131,3 +132,38 @@ executable haskell-lang
                      Yesod.Caching
                      Yesod.Lucid
                      Yesod.Slug
+
+test-suite haskell-lang-test
+  hs-source-dirs:    src/
+  type:              exitcode-stdio-1.0
+  main-is:           ../test/Main.hs
+  build-depends:     base
+                   , hspec
+                   , text
+                   , bytestring
+                   , conduit
+                   , conduit-extra
+                   , filepath
+                   , resourcet
+                   , transformers
+                   , yesod-static
+                   , blaze-builder
+                   , yesod-gitrev
+                   , yesod-core
+                   , yesod-newsfeed
+                   , markdown
+                   , blaze-html
+                   , blaze-markup
+                   , lucid
+                   , hscolour
+                   , containers
+                   , aeson
+                   , directory
+                   , vector
+                   , yaml
+                   , yesod
+                   , http-conduit
+                   , safe-exceptions
+                   , wai-logger
+                   , fast-logger
+                   , lifted-base

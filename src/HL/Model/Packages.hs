@@ -3,6 +3,7 @@
 module HL.Model.Packages where
 
 import           Control.Exception (throwIO)
+import           Control.Exception.Safe (tryAny)
 import qualified Data.ByteString.Lazy as L
 import           Data.Maybe (fromMaybe)
 import qualified Data.Text as T
@@ -16,8 +17,9 @@ import           Network.HTTP.Simple (httpLBS, getResponseBody, parseRequest)
 import           System.Directory
 
 -- | Get the package info from the config.
-getPackageInfo :: IO PackageInfo
-getPackageInfo =
+getPackageInfo :: Bool -- ^ fail on errors?
+               -> IO PackageInfo
+getPackageInfo fatal =
   do info <-
        Yaml.decodeFileEither "config/package-info.yaml" >>=
        either throwIO return
@@ -31,18 +33,26 @@ getPackageInfo =
                   ,piCommons = commons})
   where addPages =
           mapM (\pkg ->
-                  do mmd <- getPackageMarkdown (packageName pkg) (packagePageUrl pkg)
+                  do mmd <- getPackageMarkdown fatal (packageName pkg) (packagePageUrl pkg)
                      return pkg {packagePage = mmd})
 
 -- | Get the markdown for a given package name's article.
-getPackageMarkdown :: PackageName -> Maybe T.Text -> IO (Maybe Markdown)
-getPackageMarkdown _ (Just url) =
+getPackageMarkdown :: Bool -- ^ treat failures as fatal?
+                   -> PackageName -> Maybe T.Text -> IO (Maybe Markdown)
+getPackageMarkdown fatal _ (Just url) =
   do req <- parseRequest (T.unpack url)
-     res <- httpLBS req
-     let lbs = getResponseBody res
-         text = stripHeader (decodeUtf8With lenientDecode (L.toStrict lbs))
-     return (Just (Markdown text))
-getPackageMarkdown pkg Nothing =
+     eres <- tryAny (httpLBS req)
+     case eres of
+         Left e
+           | fatal -> throwIO e
+           | otherwise -> do
+               putStrLn $ "Error occurred downloading package tutorial: " ++ show e
+               return Nothing
+         Right res ->
+            let lbs = getResponseBody res
+                text = stripHeader (decodeUtf8With lenientDecode (L.toStrict lbs))
+             in return (Just (Markdown text))
+getPackageMarkdown _ pkg Nothing =
   do exists <- doesFileExist fp
      if exists
         then do md <- T.readFile fp

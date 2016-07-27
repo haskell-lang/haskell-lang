@@ -2,6 +2,8 @@
 
 module HL.Controller.Announcements where
 
+import           Data.List
+import           Data.Ord
 import           Data.Time
 import           HL.Controller
 import           HL.View
@@ -17,5 +19,6 @@ getAnnouncementsR =
               (mapM_ (\entry ->
                         do h1_ (toHtml (feedEntryTitle entry))
                            p_ (strong_ (toHtml (formatTime defaultTimeLocale "%B %d %Y" (feedEntryUpdated entry))))
-                           toHtmlRaw (BlazeUtf8.renderHtml (feedEntryContent entry)))
-                     feeds))
+                           toHtmlRaw (BlazeUtf8.renderHtml (feedEntryContent entry))
+                           hr_ [])
+                     (sortBy (flip (comparing feedEntryUpdated)) feeds)))
