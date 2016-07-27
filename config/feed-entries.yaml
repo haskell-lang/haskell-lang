@@ -46,3 +46,21 @@
     collaboration. Similar decisions have already been made in
     creating the [Stack build tool](http://haskellstack.com/) and
     [Stackage](https://www.stackage.org/).
+
+- url: https://haskell-lang.org/announcements
+  time: 2016-07-27T00:00:00Z
+  title: Updates for July
+  content: |
+    Since July we've made a number of updates, mostly content. Here's
+    a rundown:
+
+    * Intero was added to the site under [/intero](/intero).
+    * We've added Intero to the get-started page.
+    * We've added the [/tutorial/](/tutorial) hierarchy, with
+      [a sample tutorial](/tutorial/operators).
+    * The /packages page has been renamed to
+      [/libraries](/libraries). The idea being this might be more
+      obvious to newcomers from other languages.
+    * Added a library description for [conduit](/library/conduit).
+
+    The complete diff can be found [here](https://github.com/haskell-lang/haskell-lang/pull/66).
