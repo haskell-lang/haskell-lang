@@ -77,7 +77,7 @@ liftM :: (Monad m) => (a -> b) -> m a -> m b
 `Functor`s. Like `*>` vs `>>`, the presence of `liftM` is just a
 holdover from the days when `Functor` was not a superclass of `Monad`.
 
-## traverse_ and mapM_
+## traverse\_ and mapM\_
 
 ```haskell
 traverse_ :: (Foldable t, Applicative f) => (a -> f b) -> t a -> f ()
@@ -87,7 +87,7 @@ mapM_ :: (Foldable t, Monad m) => (a -> m b) -> t a -> m ()
 `mapM_` is `traverse_` specialized to `Monad`, relevant for the same
 superclass reason above.
 
-## sequenceA_ and sequence_
+## sequenceA\_ and sequence\_
 
 ```haskell
 sequenceA_ :: (Foldable t, Applicative f) => t (f a) -> f ()
