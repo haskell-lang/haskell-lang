@@ -118,6 +118,48 @@ _also_ uses the `.` operator to define categorical composition. This
 generalizes standard function composition, but is not as commonly
 used.
 
+## Reverse function application `&`
+
+```haskell
+(&) :: a -> (a -> b) -> b
+```
+
+`&` is just like `$` only backwards. Take our example for `$`:
+
+```haskell
+foo $ bar $ baz bin
+```
+
+This is semantically equivalent to:
+
+```haskell
+bin & baz & bar & foo
+```
+
+`&` is useful because the order in which functions are applied to their
+arguments read left to right instead of the reverse (which is the case
+for `$`). This is closer to how English is read so it can improve code clarity.
+
+In our function composition example we composed the functions
+`square`, `double`, and `print` and applied the resulting function to the number `5`.
+
+Rewriting it using `&` gives us
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-6.4 runghc
+import Data.Function
+
+double :: Int -> Int
+double x = x + x
+
+square :: Int -> Int
+square x = x * x
+
+main :: IO ()
+main = 5 & square & double & print
+```
+
 ## Monoidal append `<>`
 
 ```haskell
