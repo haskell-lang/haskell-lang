@@ -96,7 +96,7 @@ main = (print . double . square) 5
 ```
 
 Or you can combine this together with the `$` operator to avoid those
-parantheses if you're so inclined:
+parentheses if you're so inclined:
 
 ```haskell
 main = print . double . square $ 5
