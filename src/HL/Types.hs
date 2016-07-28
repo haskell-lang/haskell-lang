@@ -42,13 +42,16 @@ data HaskellLangException
 
 instance Exception HaskellLangException
 
+type URL = Text
+type AnnouncementID = Text
+
 -- | Application state.
 data App = App
   { appStatic        :: !Static
   , appCacheDir      :: !(MVar FilePath)
   , appPackageInfo   :: !PackageInfo
   , appDefaultLayout :: !(WidgetT App IO () -> HandlerT App IO Yesod.Core.Html)
-  , appFeedEntries   :: ![FeedEntry Text]
+  , appFeedEntries   :: ![(FeedEntry (Maybe URL), AnnouncementID)]
   , appGitRev        :: !GitRev
   , appSnippetInfo   :: !SnippetInfo
   , appTutorials     :: !(Map Text Tutorial)

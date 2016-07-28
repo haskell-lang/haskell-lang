@@ -1,4 +1,5 @@
 - url: https://haskell-lang.org/announcements
+  ident: haskell-lang-live
   time: 2016-07-06T00:00:00Z
   title: New haskell-lang.org
   content: |
@@ -47,7 +48,7 @@
     creating the [Stack build tool](http://haskellstack.com/) and
     [Stackage](https://www.stackage.org/).
 
-- url: https://haskell-lang.org/announcements
+- ident: updates-for-july
   time: 2016-07-27T00:00:00Z
   title: Updates for July
   content: |

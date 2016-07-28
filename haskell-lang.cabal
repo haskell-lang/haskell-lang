@@ -167,3 +167,6 @@ test-suite haskell-lang-test
                    , wai-logger
                    , fast-logger
                    , lifted-base
+                   , mtl
+                   , time
+                   , monad-extras

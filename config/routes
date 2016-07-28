@@ -2,6 +2,7 @@
 / HomeR GET
 /donate DonateR GET
 /announcements AnnouncementsR GET
+/announcements/#Text AnnouncementR GET
 /get-started GetStartedR GET
 /get-started/#OS GetStartedOSR GET
 /community CommunityR GET

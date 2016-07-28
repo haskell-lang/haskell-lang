@@ -75,6 +75,7 @@ instance Human (Route App) where
       GetStartedR          -> "Get Started"
       GetStartedOSR os     -> "Get Started (" <> toHuman os <> ")"
       AnnouncementsR       -> "Announcements"
+      AnnouncementR x      -> "Announcements " <> x
       WikiR t              -> "Wiki: " <> t
       ReportNodeR _ _      -> "Report Page"
       ReportModeR Node i   -> "Node " <> pack (show i)
@@ -105,6 +106,7 @@ instance Slug (Route App) where
       GetStartedR       -> "get-started"
       GetStartedOSR os  -> "get-started-" <> toSlug os
       AnnouncementsR    -> "announcements"
+      AnnouncementR x   -> "announcement-" <> x
       WikiR{}           -> "wiki"
       ReportNodeR{}     -> "report"
       ReportModeR{}     -> "report"
@@ -134,6 +136,7 @@ instance YesodBreadcrumbs App where
         GetStartedR          -> return ("Get Started",Nothing)
         GetStartedOSR os     -> return ("Get Started (" <> toHuman os <> ")",Nothing)
         AnnouncementsR       -> return ("Announcements",Nothing)
+        AnnouncementR x      -> return ("Announcement " <> x,Just AnnouncementsR)
         WikiR t              -> return ("Wiki: " <> t,Nothing)
         ReportNodeR _ _      -> return ("Report Page",Nothing)
         ReportModeR Node i   -> return ("Node " <> pack (show i),Nothing)
