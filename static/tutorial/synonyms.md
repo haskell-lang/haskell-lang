@@ -62,7 +62,7 @@ pure :: Applicative f => a -> f a
 return :: Monad m => a -> m a
 ```
 
-`mapM_` is `traverse_` specialized to `Monad`, relevant for the same
+`return` is `pure` specialized to `Monad`, relevant for the same
 superclass reason above.
 
 ## map, fmap and liftM
