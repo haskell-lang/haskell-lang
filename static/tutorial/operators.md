@@ -40,7 +40,7 @@ One of the most common operators, and source of initial confusion, is
 the `$` operator. All this does is _apply a function_. So, `f $ x` is
 exactly equivalent to `f x`. If so, why would you ever use `$`? The
 primary reason is - for those who prefer the style - to avoid
-paratheses. For example, you can replace:
+parentheses. For example, you can replace:
 
 ```haskell
 foo (bar (baz bin))
