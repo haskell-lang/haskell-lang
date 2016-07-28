@@ -40,7 +40,7 @@ One of the most common operators, and source of initial confusion, is
 the `$` operator. All this does is _apply a function_. So, `f $ x` is
 exactly equivalent to `f x`. If so, why would you ever use `$`? The
 primary reason is - for those who prefer the style - to avoid
-paratheses. For example, you can replace:
+parentheses. For example, you can replace:
 
 ```haskell
 foo (bar (baz bin))
@@ -52,7 +52,7 @@ with
 foo $ bar $ baz bin
 ```
 
-A less common but arguable more compelling use case is to capture the
+A less common but arguably more compelling use case is to capture the
 act of applying a function to an argument. To clarify that rather
 vague statement with an example:
 
@@ -96,7 +96,7 @@ main = (print . double . square) 5
 ```
 
 Or you can combine this together with the `$` operator to avoid those
-parantheses if you're so inclined:
+parentheses if you're so inclined:
 
 ```haskell
 main = print . double . square $ 5
