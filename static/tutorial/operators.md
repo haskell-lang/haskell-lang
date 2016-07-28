@@ -52,7 +52,7 @@ with
 foo $ bar $ baz bin
 ```
 
-A less common but arguable more compelling use case is to capture the
+A less common but arguably more compelling use case is to capture the
 act of applying a function to an argument. To clarify that rather
 vague statement with an example:
 
