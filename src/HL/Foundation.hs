@@ -42,6 +42,7 @@ mkYesodData "App" $(parseRoutesFile "config/routes")
 
 -- | Don't log anything to stdout.
 instance Yesod App where
+  approot = guessApproot
   makeLogger _ =
     do set <- newFileLoggerSet 1000 "/dev/null"
        (date,_) <- clockDateCacher

@@ -87,6 +87,7 @@ executable haskell-lang
                    , split
                    , random
                    , safe-exceptions
+                   , network-uri
 
   other-modules:     HL.Controller
                      HL.Controller.Community
@@ -170,3 +171,4 @@ test-suite haskell-lang-test
                    , mtl
                    , time
                    , monad-extras
+                   , network-uri

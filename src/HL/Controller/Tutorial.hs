@@ -6,7 +6,9 @@
 module HL.Controller.Tutorial where
 
 import qualified Data.Map as Map
+import qualified Data.Text as T
 import Data.Monoid ((<>))
+import Network.URI (isUnescapedInURIComponent, escapeURIString)
 import HL.Controller
 import HL.View
 import HL.View.Markdown
@@ -27,6 +29,12 @@ displayTutorial tutorialKey = do
                     PackageTutorial name -> redirect $ "https://www.stackage.org/package/" <> toPathPiece name
                     RegularTutorial _ -> notFound
             Just tutorial -> return tutorial
+
+    Just route <- getCurrentRoute
+    render <- getUrlRender
+    let currentUrl = render route
+        escapedUrl = T.pack (escapeURIString isUnescapedInURIComponent (T.unpack currentUrl))
+
     let title = tutorialTitle tutorial
         mgithubUrl =
             (\filename ->
@@ -34,11 +42,15 @@ displayTutorial tutorialKey = do
                   filename) <$>
             tutorialLocalFilename tutorial
         !html = do
-            forM_ mgithubUrl $
-                \githubUrl ->
-                     p_
-                         (a_
-                              [href_ githubUrl]
-                              (b_ "View and edit this tutorial on Github"))
+            p_ (do forM_ mgithubUrl $ \githubUrl ->
+                        (do a_
+                                [href_ githubUrl]
+                                (b_ "View and edit this tutorial on Github")
+                            " | ")
+
+                   -- c/o http://yannesposito.com/Scratch/en/blog/Social-link-the-right-way/
+                   a_ [href_ ("https://www.reddit.com/submit?url=" <> escapedUrl)] "Discuss on Reddit"
+                   " | "
+                   a_ [href_ ("https://twitter.com/home?status=" <> escapedUrl)] "Tweet this")
             renderMarkdown (tutorialContent tutorial)
     lucid (markdownV title html)
