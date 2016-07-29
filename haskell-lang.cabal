@@ -90,6 +90,7 @@ executable haskell-lang
 
   other-modules:     HL.Controller
                      HL.Controller.Community
+                     HL.Controller.Deprecated
                      HL.Controller.Documentation
                      HL.Controller.Donate
                      HL.Controller.GetStarted

@@ -9,13 +9,8 @@
 /irc IrcR GET
 /mailing-lists MailingListsR GET
 /documentation DocumentationR GET
-
 /libraries LibrariesR GET
 /library/#PackageName LibraryR GET
-
-/packages PackagesR GET
-/package/#PackageName PackageR GET
-
 /news NewsR GET
 /report ReportR GET
 /report/node/#Int/#FilePath ReportNodeR GET
@@ -25,5 +20,9 @@
 /feed FeedR GET
 /intero InteroR GET
 /build-version GitRevR GitRev appGitRev
-/tutorial TutorialsR GET
 /tutorial/#Text TutorialR GET
+
+-- Deprecated pages
+/tutorial OldTutorialsR GET
+/packages OldPackagesR GET
+/package/#PackageName OldPackageR GET

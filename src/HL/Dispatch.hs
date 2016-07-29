@@ -10,6 +10,7 @@
 module HL.Dispatch () where
 
 import HL.Controller.Community
+import HL.Controller.Deprecated
 import HL.Controller.Documentation
 import HL.Controller.Donate
 import HL.Controller.GetStarted

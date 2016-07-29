@@ -12,10 +12,6 @@ import HL.View
 import HL.View.Markdown
 import HL.Model.Markdown
 
--- | Get a list of tutorials
-getTutorialsR :: C ()
-getTutorialsR = redirect DocumentationR
-
 -- | Get a tutorial
 getTutorialR :: Text -> C (Html ())
 getTutorialR = displayTutorial . RegularTutorial

@@ -82,14 +82,14 @@ instance Human (Route App) where
       ReportModeR Mono i   -> "Mono " <> pack (show i)
       ReportR{}            -> "Report"
       WikiHomeR{}          -> "Wiki"
-      PackagesR{}          -> "Packages"
-      PackageR p           -> toHuman p
+      OldPackagesR{}       -> "Packages"
+      OldPackageR p        -> toHuman p
       LibrariesR{}         -> "Libraries"
       LibraryR p           -> toHuman p
       FeedR{}              -> "News Feed"
       GitRevR{}            -> "Build Version"
       InteroR{}            -> "Intero"
-      TutorialsR{}         -> "Tutorials"
+      OldTutorialsR{}      -> "Tutorials"
       TutorialR x          -> "Tutorial: " <> x
 
 instance Slug (Route App) where
@@ -112,14 +112,14 @@ instance Slug (Route App) where
       ReportModeR{}     -> "report"
       ReportR{}         -> "report"
       WikiHomeR{}       -> "wiki"
-      PackagesR{}       -> "packages"
-      PackageR x        -> "packages-" <> toSlug x
+      OldPackagesR{}    -> "packages"
+      OldPackageR x     -> "packages-" <> toSlug x
       LibrariesR{}      -> "libraries"
       LibraryR x        -> "libraries-" <> toSlug x
       FeedR{}           -> "feed"
       GitRevR{}         -> "build-version"
       InteroR{}         -> "intero"
-      TutorialsR{}      -> "tutorial"
+      OldTutorialsR{}   -> "tutorial"
       TutorialR x       -> "tutorial-" <> x
 
 instance YesodBreadcrumbs App where
@@ -143,15 +143,15 @@ instance YesodBreadcrumbs App where
         ReportModeR Mono i   -> return ("Mono " <> pack (show i),Nothing)
         ReportR{}            -> return ("Report",Nothing)
         WikiHomeR{}          -> return ("Wiki",Nothing)
-        PackagesR{}          -> return ("Packages",Nothing)
-        PackageR p           -> return (toHuman p,Nothing)
-        LibrariesR{}         -> return ("Libraries",Nothing)
+        OldPackagesR{}       -> return ("Packages",Nothing)
+        OldPackageR p        -> return (toHuman p,Nothing)
+        LibrariesR{}         -> return ("Libraries",Just DocumentationR)
         LibraryR p           -> return (toHuman p,Just LibrariesR)
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
         InteroR{}            -> return ("Intero",Nothing)
-        TutorialsR{}         -> return ("Tutorials",Just DocumentationR)
+        OldTutorialsR{}      -> return ("Tutorials",Just DocumentationR)
         TutorialR x          -> do
             tutorials <- fmap appTutorials getYesod
             let title = maybe x tutorialTitle (Map.lookup (RegularTutorial x) tutorials)
-            return ("Tutorial: " <> title,Just TutorialsR)
+            return ("Tutorial: " <> title,Just DocumentationR)

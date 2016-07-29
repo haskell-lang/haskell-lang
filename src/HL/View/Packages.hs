@@ -41,7 +41,7 @@ content url pi =
 package :: (Route App -> Text) -> Bool -> Package -> View App ()
 package url isCommon f =
   a_ [class_ "package-big-link"
-     ,href_ (url (PackageR (packageName f)))]
+     ,href_ (url (LibraryR (packageName f)))]
      (do let heading_ =
                if isCommon
                   then h4_
