@@ -146,12 +146,12 @@ instance YesodBreadcrumbs App where
         PackagesR{}          -> return ("Packages",Nothing)
         PackageR p           -> return (toHuman p,Nothing)
         LibrariesR{}         -> return ("Libraries",Nothing)
-        LibraryR p           -> return (toHuman p,Nothing)
+        LibraryR p           -> return (toHuman p,Just LibrariesR)
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
         InteroR{}            -> return ("Intero",Nothing)
         TutorialsR{}         -> return ("Tutorials",Just DocumentationR)
         TutorialR x          -> do
             tutorials <- fmap appTutorials getYesod
-            let title = maybe x tutorialTitle (Map.lookup x tutorials)
+            let title = maybe x tutorialTitle (Map.lookup (RegularTutorial x) tutorials)
             return ("Tutorial: " <> title,Just TutorialsR)

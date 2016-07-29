@@ -127,7 +127,6 @@ executable haskell-lang
                      HL.View.Template
                      HL.View.Wiki
                      HL.View.Packages
-                     HL.View.Package
                      Paths_haskell_lang
                      Yesod.Caching
                      Yesod.Lucid

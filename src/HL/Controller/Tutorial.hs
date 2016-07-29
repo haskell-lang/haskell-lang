@@ -32,20 +32,42 @@ getTutorialsR = do
                                          renderTutorial
                                          (Map.toList tutorials)))))))
   where
-    renderTutorial :: (Text, Tutorial) -> View App ()
-    renderTutorial (slug,Tutorial{tutorialTitle = title}) = do
+    renderTutorial :: (TutorialKey, Tutorial) -> View App ()
+    renderTutorial (tutorialKey,Tutorial{tutorialTitle = title}) = do
+        let route =
+              case tutorialKey of
+                PackageTutorial pkg -> LibraryR pkg
+                RegularTutorial slug -> TutorialR slug
         url <- lift (asks pageRender)
-        li_ (a_ [href_ (url (TutorialR slug))] (toHtmlRaw title))
+        li_ (a_ [href_ (url route)] (toHtmlRaw title))
 
 -- | Get a tutorial
 getTutorialR :: Text -> C (Html ())
-getTutorialR slug = do
-    tutorials <- fmap appTutorials getYesod
-    tutorial <- maybe notFound return (Map.lookup slug tutorials)
+getTutorialR = displayTutorial . RegularTutorial
 
+displayTutorial :: TutorialKey -> C (Html ())
+displayTutorial tutorialKey = do
+    tutorials <- fmap appTutorials getYesod
+    let mtutorial = Map.lookup tutorialKey tutorials
+    tutorial <-
+        case mtutorial of
+            Nothing ->
+                case tutorialKey of
+                    PackageTutorial name -> redirect $ "https://www.stackage.org/package/" <> toPathPiece name
+                    RegularTutorial _ -> notFound
+            Just tutorial -> return tutorial
     let title = tutorialTitle tutorial
-        githubUrl = "https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/" <> slug <> ".md"
+        mgithubUrl =
+            (\filename ->
+                  "https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/" <>
+                  filename) <$>
+            tutorialLocalFilename tutorial
         !html = do
-            p_ (a_ [href_ githubUrl] (b_ "View and edit this tutorial on Github"))
+            forM_ mgithubUrl $
+                \githubUrl ->
+                     p_
+                         (a_
+                              [href_ githubUrl]
+                              (b_ "View and edit this tutorial on Github"))
             renderMarkdown (tutorialContent tutorial)
     lucid (markdownV title html)

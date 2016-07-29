@@ -30,9 +30,9 @@ main =
      env <- getEnvironment
      let port = maybe 1990 read $ lookup "PORT" env
      snippets <- getSnippets
-     packageInfo <- getPackageInfo False
+     packageInfo <- getPackageInfo
      entries <- getFeedEntries
-     tutorials <- getTutorials
+     tutorials <- getTutorials False
      putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
      warp port App
          { appStatic = st

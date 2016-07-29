@@ -54,7 +54,7 @@ data App = App
   , appFeedEntries   :: ![(FeedEntry (Maybe URL), AnnouncementID)]
   , appGitRev        :: !GitRev
   , appSnippetInfo   :: !SnippetInfo
-  , appTutorials     :: !(Map Text Tutorial)
+  , appTutorials     :: !(Map TutorialKey Tutorial)
   }
 
 data PackageInfo = PackageInfo
@@ -75,16 +75,12 @@ instance FromJSON PackageInfo where
 data Package = Package
     { packageName :: !PackageName
     , packageDesc :: !Markdown
-    , packagePage :: !(Maybe Markdown)
-    , packagePageUrl :: !(Maybe Text)
     } deriving (Show)
 
 instance FromJSON Package where
     parseJSON = withObject "Package" $ \o -> Package
         <$> o .: "name"
         <*> o .: "description"
-        <*> pure Nothing
-        <*> o .:? "page-url"
 
 data Common = Common
     { commonTitle :: !Text
@@ -99,9 +95,15 @@ instance FromJSON Common where
         <*> o .: "description"
         <*> o .: "choices"
 
+data TutorialKey
+    = RegularTutorial !Text
+    | PackageTutorial !PackageName
+    deriving (Show, Eq, Ord)
+
 data Tutorial = Tutorial
     { tutorialTitle :: !Text
     , tutorialContent :: !Markdown
+    , tutorialLocalFilename :: !(Maybe Text)
     }
     deriving (Show)
 
@@ -122,7 +124,7 @@ instance ToHtml Markdown where
                           _ -> Blaze.pre rendered}
 
 newtype PackageName = PackageName Text
-  deriving (Eq,Show,FromJSON,ToJSON,ToHtml)
+  deriving (Eq,Ord,Show,FromJSON,ToJSON,ToHtml)
 
 instance Read PackageName where
   readsPrec _ str =
