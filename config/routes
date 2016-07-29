@@ -1,6 +1,5 @@
 /static StaticR Static appStatic
 / HomeR GET
-/donate DonateR GET
 /announcements AnnouncementsR GET
 /announcements/#Text AnnouncementR GET
 /get-started GetStartedR GET
@@ -12,11 +11,6 @@
 /libraries LibrariesR GET
 /library/#PackageName LibraryR GET
 /news NewsR GET
-/report ReportR GET
-/report/node/#Int/#FilePath ReportNodeR GET
-/report/#Mode/#Int ReportModeR GET
-/wiki/#Text WikiR GET
-/wiki/ WikiHomeR GET
 /feed FeedR GET
 /intero InteroR GET
 /build-version GitRevR GitRev appGitRev

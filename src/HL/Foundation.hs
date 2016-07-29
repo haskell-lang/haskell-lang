@@ -27,7 +27,6 @@ import HL.Types
 import qualified Data.Map as Map
 import Data.Monoid
 import Data.Text (Text)
-import Data.Text (pack)
 import Network.Wai.Logger
 import System.Log.FastLogger
 import Yesod
@@ -69,7 +68,6 @@ instance Human (Route App) where
       IrcR                 -> "IRC"
       DocumentationR       -> "Documentation"
       HomeR                -> "Home"
-      DonateR              -> "Donate"
       MailingListsR        -> "Mailing Lists"
       NewsR                -> "News"
       StaticR{}            -> "Static"
@@ -77,12 +75,6 @@ instance Human (Route App) where
       GetStartedOSR os     -> "Get Started (" <> toHuman os <> ")"
       AnnouncementsR       -> "Announcements"
       AnnouncementR x      -> "Announcements " <> x
-      WikiR t              -> "Wiki: " <> t
-      ReportNodeR _ _      -> "Report Page"
-      ReportModeR Node i   -> "Node " <> pack (show i)
-      ReportModeR Mono i   -> "Mono " <> pack (show i)
-      ReportR{}            -> "Report"
-      WikiHomeR{}          -> "Wiki"
       OldPackagesR{}       -> "Packages"
       OldPackageR p        -> toHuman p
       LibrariesR{}         -> "Libraries"
@@ -100,7 +92,6 @@ instance Slug (Route App) where
       IrcR              -> "irc"
       DocumentationR    -> "documentation"
       HomeR             -> "home"
-      DonateR           -> "donate"
       MailingListsR     -> "mailing-lists"
       NewsR             -> "news"
       StaticR{}         -> "static"
@@ -108,11 +99,6 @@ instance Slug (Route App) where
       GetStartedOSR os  -> "get-started-" <> toSlug os
       AnnouncementsR    -> "announcements"
       AnnouncementR x   -> "announcement-" <> x
-      WikiR{}           -> "wiki"
-      ReportNodeR{}     -> "report"
-      ReportModeR{}     -> "report"
-      ReportR{}         -> "report"
-      WikiHomeR{}       -> "wiki"
       OldPackagesR{}    -> "packages"
       OldPackageR x     -> "packages-" <> toSlug x
       LibrariesR{}      -> "libraries"
@@ -130,7 +116,6 @@ instance YesodBreadcrumbs App where
         IrcR                 -> return ("IRC",Nothing)
         DocumentationR       -> return ("Documentation",Nothing)
         HomeR                -> return ("Home",Nothing)
-        DonateR              -> return ("Donate",Nothing)
         MailingListsR        -> return ("Mailing Lists",Nothing)
         NewsR                -> return ("News",Nothing)
         StaticR{}            -> return ("Static",Nothing)
@@ -138,12 +123,6 @@ instance YesodBreadcrumbs App where
         GetStartedOSR os     -> return ("Get Started (" <> toHuman os <> ")",Nothing)
         AnnouncementsR       -> return ("Announcements",Nothing)
         AnnouncementR x      -> return ("Announcement " <> x,Just AnnouncementsR)
-        WikiR t              -> return ("Wiki: " <> t,Nothing)
-        ReportNodeR _ _      -> return ("Report Page",Nothing)
-        ReportModeR Node i   -> return ("Node " <> pack (show i),Nothing)
-        ReportModeR Mono i   -> return ("Mono " <> pack (show i),Nothing)
-        ReportR{}            -> return ("Report",Nothing)
-        WikiHomeR{}          -> return ("Wiki",Nothing)
         OldPackagesR{}       -> return ("Packages",Nothing)
         OldPackageR p        -> return (toHuman p,Nothing)
         LibrariesR{}         -> return ("Libraries",Just DocumentationR)
