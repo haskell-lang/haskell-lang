@@ -71,7 +71,6 @@ executable haskell-lang
                    , tagstream-conduit
                    , text
                    , containers
-                   , text-icu
                    , time
                    , transformers
                    , vector

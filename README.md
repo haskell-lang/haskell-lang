@@ -71,13 +71,6 @@ Run these steps:
 * Clone the repo: `$ git clone git@github.com:haskell-lang/haskell-lang.git`
 * Install dependencies and build: `$ stack build`
 
-If `text-icu` fails to build, you'll want to install the icu dev
-libraries (the appropriate include/lib directories are configured in
-the `stack.yaml` already):
-
-* Mac OS X: `brew install icu4c`
-* Ubuntu/Debian: `$ sudo apt-get install libicu-dev`
-
 ## Running
 
 It runs at: http://localhost:1990/
