@@ -5,7 +5,7 @@ $(function(){
 
 // Expandable features
 function setupFeatures(){
-  $('.features .span6').each(function(){
+  $('.features .span6, .whyhaskell .span6').each(function(){
     var $this = $(this);
     $this.click(function(){
       $this.find('.expandable').slideToggle(function(){

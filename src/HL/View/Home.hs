@@ -9,6 +9,7 @@ import HL.Types
 import HL.View
 import HL.View.Code
 import HL.View.Home.Features
+import HL.View.Home.Whyhaskell
 import HL.View.Template
 import System.Random
 
@@ -21,9 +22,10 @@ homeV snippets =
         (do url <- lift (asks pageRender)
             navigation True
             header snippets url
-            try url
-            community url
-            features
+            whyhaskell
+            when False (community url)
+            when False features
+            when False (try url)
             sponsors
             events
             div_ [class_ "mobile"] $ (navigation False))
@@ -110,7 +112,4 @@ sponsors =
                   (h1_ "Sponsors"))
      row_ (do span6_ [class_ "col-md-6"]
                      (p_ (do strong_ (a_ [href_ "https://www.fpcomplete.com/"] "FP Complete")
-                             " The leading commercial provider of Haskell consulting"))
-              span6_ [class_ "col-md-6"]
-                     (p_ (do strong_ (a_ [href_ "http://haskellbook.com/"] "Haskell Programming from First Principles")
-                             " Think learning Haskell is difficult? It doesn't have to be.")))
+                             " The leading commercial provider of Haskell consulting")))
