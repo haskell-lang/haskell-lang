@@ -39,7 +39,7 @@ content url pi =
            (chunksOf 2 (toList (piCommons pi)))
 
 package :: (Route App -> Text) -> Bool -> Package -> View App ()
-package url isCommon f =
+package url isCommon f = do
   a_ [class_ "package-big-link"
      ,href_ (url (LibraryR (packageName f)))]
      (do let heading_ =
@@ -48,8 +48,9 @@ package url isCommon f =
                   else h3_
          heading_ [id_ (toSlug (packageName f))]
                   (toHtml (packageName f))
-         span_ [class_ "pkg-desc"]
-               (toHtml (packageDesc f)))
+         )
+  span_ [class_ "pkg-desc"]
+        (toHtml (packageDesc f))
 
 common :: (Route App -> Text) -> Common -> View App ()
 common url c =
