@@ -545,6 +545,9 @@ body.page-home {
 }
 
 /* Why Haskell? */
+.page-home .whyhaskell {
+  margin-top: 15px;
+}
 
 .page-home .whyhaskell .span6 {
 

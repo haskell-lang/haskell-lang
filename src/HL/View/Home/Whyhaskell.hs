@@ -12,7 +12,7 @@ whyhaskell :: View App ()
 whyhaskell =
   div_ [class_ "whyhaskell"]
        (container_
-          (do h1_ "Why Haskell"
+          (do 
               row_ (do span6_ [class_ "col-md-6"] beprod
                        span6_ [class_ "col-md-6"] makeit)
               row_ (do span6_ [class_ "col-md-6"] community
