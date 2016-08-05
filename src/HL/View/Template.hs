@@ -128,7 +128,7 @@ navigation showBrand =
   where items =
           div_ [class_ "collapse navbar-collapse"]
                (ul_ [class_ "nav navbar-nav"]
-                    (mapM_ item [GetStartedR,LibrariesR,DocumentationR,CommunityR,NewsR]))
+                    (mapM_ item [GetStartedR,LibrariesR,DocumentationR,CommunityR]))
           where item :: Route App -> View App ()
                 item route =
                   do mroute <- lift (asks pageRoute)
