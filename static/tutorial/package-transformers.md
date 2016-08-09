@@ -122,3 +122,78 @@ someCode = do
         c2 <- lift $ getC
         return (a, b, c1, c2, ld, re)
 ```
+
+## ReaderT
+
+The `ReaderT` transformer, available from both the
+[transformers](https://www.stackage.org/package/transformers) and
+[mtl](https://www.stackage.org/package/mtl) packages, adds a read-only value
+which is accessible via `ask` and the helper function `asks`.
+
+In practice, the `ReaderT` transformer is used often for passing down
+a static configuration environment, so that such environment need not be
+explicitly passed via function parameters.
+
+Similarly to how `runMaybeT` receives a monadic function, `runReaderT`
+receives a monadic function, that is also followed by a value, which
+can be of any type.
+
+We shall demonstrate an elborate monad stack in the following example:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude        #-}
+
+import ClassyPrelude
+import Control.Monad.Reader
+import Control.Monad.Trans.Maybe
+
+main :: IO ()
+main = do
+    let maybeHeadReader = asks headMay
+    let runReaderT' = flip runReaderT
+
+    runReaderT' ['2'] $ do
+        ask >>= print -- prints: "2"
+        asks length >>= print -- prints 1
+
+        runReaderT' [42 :: Int] $ do
+            ask >>= print -- prints: "42"
+
+            x <- runMaybeT $ do
+                z <- MaybeT maybeHeadReader
+                guard $ z == 42
+                z2 <- MaybeT $ lift maybeHeadReader
+                guard $ z2 == '2'
+                return 'x'
+            print x -- prints: Just 'x'
+
+            runReaderT' (8.9 :: Double) $ do
+                ask >>= print -- prints: 8.9
+                (lift . lift) ask >>= print -- prints: "2"
+                lift ask >>= print -- prints: [42]
+
+            lift ask >>= print -- prints: "2"
+
+            -- Run with a modified environment
+            withReaderT (fmap Just) $ do
+                ask >>= print -- prints: [Just 42]
+```
+
+Notes about the example above:
+
+* Because the parameters to `runReaderT` are the monadic function
+followed by the environment, it helps on convenience to flip the
+monadic function to the second arguement, so a `do` can follow, hence
+`let runReaderT' = flip runReaderT`.
+* Notice the use of
+[classy-prelude](https://www.stackage.org/package/classy-prelude) to
+provide us with `print`, of the more general type `(Show a, MonadIO m)
+=> a -> m ()`, instead of `Show a => a -> IO ()`, so we can freely use
+anywhere inside our monad stack.
+* We also use `headMay` from `classy-prelude`.
+* We allow the nested use of readers, with `lift` used to access the
+various levels of the stack.
+* We can use `MaybeT` nested inside our stacks of `ReaderT`, and
+access the various `ReaderT` levels inside it using `lift`.
+* The use of `withReaderT` to run under a modified environment is
+demonstrated.
