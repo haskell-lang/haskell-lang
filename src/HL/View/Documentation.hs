@@ -6,13 +6,15 @@
 
 module HL.View.Documentation where
 
-import Control.Arrow (second)
+import Data.Map (Map)
+import qualified Data.Map as Map
+import HL.Types
 import HL.View
 import HL.View.Template
 
 -- | Documentation view.
-documentationV :: View App ()
-documentationV =
+documentationV :: Map TutorialKey Tutorial -> View App ()
+documentationV tutorialMap =
     template
         "Documentation"
         (container_
@@ -20,7 +22,7 @@ documentationV =
                   (span12_
                        [class_ "col-md-12"]
                        (do h1_ "Documentation"
-                           inSiteDocs
+                           inSiteDocs tutorialMap
                            books
                            courses
                            tutorials
@@ -30,18 +32,28 @@ documentationV =
                            library
                            report ))))
 
-inSiteDocs :: View App ()
-inSiteDocs = do
+inSiteDocs :: Map TutorialKey Tutorial -> View App ()
+inSiteDocs tutorialMap = do
     h2_ "Docs on this site"
     url <- lift (asks pageRender)
-    links (fmap (second url) inSiteLinks)
+    ul_ (do li_ (a_ [href_ (url GetStartedR)] "Getting started guide")
+            li_ (a_ [href_ (url LibrariesR)] "Common libraries and their documentation")
+            li_ (do "Locally hosted tutorials ("
+                    let githubUrl = "https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/"
+                    a_ [href_ githubUrl] (b_ "edit and create tutorials on Github")
+                    ")"
+                    ul_ (mapM_ renderTutorial (Map.toList tutorialMap))))
     p_ (do "Have other ideas for improving documentation? Please "
            a_ [href_ "https://www.reddit.com/r/haskell_lang/comments/4udlt6/documentation_priorities/"] "discuss it on Reddit")
   where
-    inSiteLinks =
-        [ ("Getting started guide", GetStartedR)
-        , ("Common packages and their documentations", PackagesR)
-        , ("List of tutorials", TutorialsR)]
+    renderTutorial :: (TutorialKey, Tutorial) -> View App ()
+    renderTutorial (tutorialKey,Tutorial{tutorialTitle = title}) = do
+        let route =
+              case tutorialKey of
+                PackageTutorial pkg -> LibraryR pkg
+                RegularTutorial slug -> TutorialR slug
+        url <- lift (asks pageRender)
+        li_ (a_ [href_ (url route)] (toHtmlRaw title))
 
 books :: View App ()
 books =

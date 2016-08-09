@@ -40,7 +40,7 @@ One of the most common operators, and source of initial confusion, is
 the `$` operator. All this does is _apply a function_. So, `f $ x` is
 exactly equivalent to `f x`. If so, why would you ever use `$`? The
 primary reason is - for those who prefer the style - to avoid
-paratheses. For example, you can replace:
+parentheses. For example, you can replace:
 
 ```haskell
 foo (bar (baz bin))
@@ -52,7 +52,7 @@ with
 foo $ bar $ baz bin
 ```
 
-A less common but arguable more compelling use case is to capture the
+A less common but arguably more compelling use case is to capture the
 act of applying a function to an argument. To clarify that rather
 vague statement with an example:
 
@@ -96,7 +96,7 @@ main = (print . double . square) 5
 ```
 
 Or you can combine this together with the `$` operator to avoid those
-parantheses if you're so inclined:
+parentheses if you're so inclined:
 
 ```haskell
 main = print . double . square $ 5
@@ -117,6 +117,48 @@ Finally, in the `Control.Category` module, the `Category` typeclass
 _also_ uses the `.` operator to define categorical composition. This
 generalizes standard function composition, but is not as commonly
 used.
+
+## Reverse function application `&`
+
+```haskell
+(&) :: a -> (a -> b) -> b
+```
+
+`&` is just like `$` only backwards. Take our example for `$`:
+
+```haskell
+foo $ bar $ baz bin
+```
+
+This is semantically equivalent to:
+
+```haskell
+bin & baz & bar & foo
+```
+
+`&` is useful because the order in which functions are applied to their
+arguments read left to right instead of the reverse (which is the case
+for `$`). This is closer to how English is read so it can improve code clarity.
+
+In our function composition example we composed the functions
+`square`, `double`, and `print` and applied the resulting function to the number `5`.
+
+Rewriting it using `&` gives us
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-6.4 runghc
+import Data.Function
+
+double :: Int -> Int
+double x = x + x
+
+square :: Int -> Int
+square x = x * x
+
+main :: IO ()
+main = 5 & square & double & print
+```
 
 ## Monoidal append `<>`
 

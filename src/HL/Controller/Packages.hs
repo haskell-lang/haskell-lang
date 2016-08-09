@@ -5,28 +5,14 @@
 -- | GetStarted page controller.
 
 module HL.Controller.Packages
-    ( getPackagesR
-    , getPackageR
-    , getLibrariesR
+    ( getLibrariesR
     , getLibraryR
     ) where
 
-import           Data.Monoid ((<>))
-import qualified Data.Vector as V
 import           HL.Controller
+import           HL.Controller.Tutorial (displayTutorial)
 import           HL.View
-import           HL.View.Package
 import           HL.View.Packages
-
------ BEGIN Hysterical raisins
-
-getPackagesR :: C ()
-getPackagesR = redirect LibrariesR
-
-getPackageR :: PackageName -> C ()
-getPackageR = redirect . LibraryR
-
------ END   Hysterical raisins
 
 -- | Packages controller.
 getLibrariesR :: C (Html ())
@@ -36,20 +22,4 @@ getLibrariesR =
 
 -- | Package controller.
 getLibraryR :: PackageName -> C (Html ())
-getLibraryR name =
-  do info <- fmap appPackageInfo getYesod
-     case V.find ((== name) . packageName)
-                 (piFundamentals info) of
-       Nothing ->
-         case V.find ((== name) . packageName)
-                     (V.concatMap commonChoices
-                                  (piCommons info)) of
-           Nothing -> onNotFound
-           Just package -> handlePackage package
-       Just package -> handlePackage package
-  where handlePackage package =
-          case packagePage package of
-            Nothing -> onNotFound
-            Just md -> lucid (packageV name md)
-
-        onNotFound = redirect $ "https://www.stackage.org/package/" <> toPathPiece name
+getLibraryR = displayTutorial . PackageTutorial

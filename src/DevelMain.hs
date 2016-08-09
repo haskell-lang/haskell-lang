@@ -31,9 +31,9 @@ main =
      let cacheDir = tmpDir </> "hl-cache"
      createDirectoryIfMissing True cacheDir
      cacheVar <- newMVar cacheDir
-     packageInfo <- getPackageInfo True
+     packageInfo <- getPackageInfo
      snippets <- getSnippets
-     tutorials <- getTutorials
+     tutorials <- getTutorials True
      entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
             >>= either throwIO return
      app <- toWaiApp (App
@@ -70,9 +70,9 @@ update =
          do ref <- readStore store
             cacheVar <- readStore (Store 2)
             st <- static "static"
-            packageInfo <- getPackageInfo True
+            packageInfo <- getPackageInfo
             snippets <- getSnippets
-            tutorials <- getTutorials
+            tutorials <- getTutorials True
             entries <- Yaml.decodeFileEither "config/feed-entries.yaml"
                    >>= either throwIO return
             app <- toWaiApp (App st cacheVar packageInfo defaultLayoutImpl (map toFeedEntry entries) $gitRev snippets tutorials)

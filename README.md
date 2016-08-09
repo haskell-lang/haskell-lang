@@ -26,21 +26,29 @@ Twitter](https://twitter.com/haskell_lang).
 
 We're going to make a more straight-forward story for contributing
 content changes that should simply involve editing markdown files
-under `static/markdown/`.
+under `static/markdown/` or `static/tutorial/`.
 
 ### Writing tutorials
 
-For each of the packages listed on
-[the packages page](https://haskell-lang.org/packages), we can have a
-tutorial in the
-[static/markdown directory](https://github.com/haskell-lang/haskell-lang/tree/master/static/markdown). The
-naming is simple: for a package `http-client`, for instance, the file
-is
-[`package-http-client.md`](https://github.com/haskell-lang/haskell-lang/blob/master/static/markdown/package-http-client.md). Feel
-free at any time to contribute pull requests to improve this content.
+This site supports both package-specific tutorials, as well as general
+purpose tutorials. The content for both of these lives in
+`static/tutorial/`. For package-specific tutorials, the base filename
+should be `package-<packagename>`. For example, to write a Markdown
+file with content on the vector package, you would edit the file
+`static/tutorial/package-vector.md`. The following file extensions are
+supported:
 
-For tutorials not connected to a specific package, you can create a Markdown
-file in the `static/tutorial` directory.
+* `.md` for local Markdown content. For non-package tutorials, please
+  be sure to include a title on the first line, e.g.: `# My Awesome
+  Tutorial`
+* `.url` for Markdown content hosted elsewhere. The content of this
+  file will be a URL where external content can be downloaded.
+
+If this seems overly complex, just check out the
+[existing examples in that directory](https://github.com/haskell-lang/haskell-lang/tree/master/static/tutorial).
+
+Please feel free at any time to contribute pull requests to improve
+this content.
 
 If you would like to write a new tutorial, please follow this
 procedure to "claim" a tutorial and avoid multiple people working on
@@ -62,13 +70,6 @@ Run these steps:
 
 * Clone the repo: `$ git clone git@github.com:haskell-lang/haskell-lang.git`
 * Install dependencies and build: `$ stack build`
-
-If `text-icu` fails to build, you'll want to install the icu dev
-libraries (the appropriate include/lib directories are configured in
-the `stack.yaml` already):
-
-* Mac OS X: `brew install icu4c`
-* Ubuntu/Debian: `$ sudo apt-get install libicu-dev`
 
 ## Running
 

@@ -20,7 +20,6 @@ fundamentals:
 - name: vector
   description: |
     Efficient arrays, immutable and mutable versions.
-  page-url: https://raw.githubusercontent.com/commercialhaskell/haskelldocumentation/master/content/vector.md
 - name: containers
   description: |
     Immutable maps/dictionaries, sets, and sequences with efficient appending.
@@ -63,7 +62,6 @@ fundamentals:
 - name: safe-exceptions
   description: |
     Extensible optionally-pure exceptions, abstracting over various types.
-  page-url: https://raw.githubusercontent.com/fpco/safe-exceptions/master/README.md
 - name: regex-compat
   description: |
     Simple POSIX-compatible regex matching.
@@ -98,7 +96,6 @@ commons:
   - name: conduit
     description: |
       Combinators for awaiting and yielding, with leftovers, etc.
-    page-url: https://raw.githubusercontent.com/snoyberg/conduit/master/README.md
 
 - title: Web/HTTP requests
   slug: http-clients

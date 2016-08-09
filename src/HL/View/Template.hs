@@ -128,7 +128,7 @@ navigation showBrand =
   where items =
           div_ [class_ "collapse navbar-collapse"]
                (ul_ [class_ "nav navbar-nav"]
-                    (mapM_ item [GetStartedR,LibrariesR,DocumentationR,CommunityR,NewsR]))
+                    (mapM_ item [GetStartedR,LibrariesR,DocumentationR,CommunityR]))
           where item :: Route App -> View App ()
                 item route =
                   do mroute <- lift (asks pageRoute)
@@ -171,34 +171,13 @@ footer :: View App ()
 footer =
   div_ [class_ "footer"]
        (div_ [class_ "container"]
-             (do r <- lift (asks pageRoute)
-                 p_ (case r of
-                       Just (WikiR page) ->
-                         wikiLicense (Just page)
-                       Just (WikiHomeR{}) ->
-                         wikiLicense (Nothing :: Maybe Text)
-                       _ -> hlCopy)))
+             (p_  hlCopy))
   where hlCopy :: View App ()
         hlCopy =
           do span_ [class_ "item"] "\169 2014-2016 haskell-lang.org"
              span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
-        wikiLicense :: Maybe Text -> View App ()
-        wikiLicense page =
-          do span_ [class_ "item"] wikiLink
-             span_ [class_ "item"]
-                   (do "Wiki content is available under "
-                       a_ [href_ "http://www.haskell.org/haskellwiki/HaskellWiki:Copyrights"]
-                          "a simple permissive license.")
-          where wikiLink =
-                  case page of
-                    Nothing ->
-                      a_ [href_ "http://www.haskell.org/haskellwiki/"] "Go to haskell.org wiki"
-                    Just pn ->
-                      a_ [href_ ("http://www.haskell.org/haskellwiki/index.php?title=" <>
-                                 pn <> "&action=edit")]
-                         "Edit this page"
 
 defaultLayoutImpl :: Y.WidgetT App IO () -> Y.HandlerT App IO a
 defaultLayoutImpl widget = do

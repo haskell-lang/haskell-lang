@@ -10,5 +10,6 @@ import HL.View.Documentation
 
 -- | Documentation controller.
 getDocumentationR :: C (Html ())
-getDocumentationR =
-  lucid documentationV
+getDocumentationR = do
+  tutorialMap <- fmap appTutorials getYesod
+  lucid (documentationV tutorialMap)

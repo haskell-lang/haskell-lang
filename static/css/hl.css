@@ -322,6 +322,10 @@ body.page-home {
    Try Haskell
 */
 
+.whyhaskell + .try {
+  border-top: 3px solid #eee;
+}
+
 #console {
   font-family: monospace;
 }
@@ -536,6 +540,54 @@ body.page-home {
 
 @media (max-width: 480px){
   .page-home .features .rhs {
+    display: none
+  }
+}
+
+/* Why Haskell? */
+.page-home .whyhaskell {
+  margin-top: 15px;
+}
+
+.page-home .whyhaskell .span6 {
+
+  padding-bottom: 5px;
+  border-radius: 5px;
+}
+.page-home .whyhaskell .span6 h2 {
+  margin-top: 0;
+  padding-top: 10px;
+}
+
+.page-home .whyhaskell h1 {
+  margin-top: 20px;
+}
+
+.page-home .whyhaskell h2 {
+  font-size: 25px;
+  margin-bottom: 0.7em;
+  color: #222;
+}
+
+.page-home .whyhaskell {
+  margin-bottom: 40px;
+}
+
+.page-home .whyhaskell .expandable {
+  display: none;
+}
+
+.page-home .whyhaskell .packages {
+  width: 100%;
+}
+
+.page-home .whyhaskell .packages td {
+  vertical-align: top;
+  padding-bottom: 0.125em;
+}
+
+@media (max-width: 480px){
+  .page-home .whyhaskell .rhs {
     display: none
   }
 }

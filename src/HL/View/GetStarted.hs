@@ -212,4 +212,4 @@ nextSteps url =
           ,("Write Haskell projects with Stack"
            ,"http://docs.haskellstack.org/en/stable/GUIDE/")
           ,("Improve your development workflow with intero",url InteroR)
-          ,("Browse packages that you can use in your projects",url PackagesR)]
+          ,("Browse libraries that you can use in your projects",url LibrariesR)]
