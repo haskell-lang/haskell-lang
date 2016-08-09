@@ -157,7 +157,7 @@ main = do
         asks length >>= print -- prints 1
 
         runReaderT' [42 :: Int] $ do
-            ask >>= print -- prints: "42"
+            ask >>= print -- prints: [42]
 
             x <- runMaybeT $ do
                 z <- MaybeT maybeHeadReader
