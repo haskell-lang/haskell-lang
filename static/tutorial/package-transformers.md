@@ -1,4 +1,4 @@
-The [transformers](https://www.stackage.org/package/transformers) package provides 
+The [transformers](https://www.stackage.org/package/transformers) package provides
 useful control flow extensions for monad stacks.
 
 Even without understand how Monad transformers work, the following should
@@ -39,7 +39,7 @@ someCode = do
                     return $ Just (a, b, c1, c2)
 ```
 
-Using the MaybeT transformer we can compact it:
+Using the `MaybeT` transformer we can compact it:
 
 
 ```haskell
