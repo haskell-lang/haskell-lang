@@ -163,14 +163,18 @@ downloadContents =
 runScripts :: View App ()
 runScripts =
   do p_ "To quickly run a Haskell script:"
-     ol_ (do li_ (do p_ "Copy the following content into a file called `HelloWorld.hs`:"
+     ol_ (do li_ (do p_ (do "Copy the following content into a file called "
+                            code_ "HelloWorld.hs"
+                            ":")
                      haskellPre
                        "#!/usr/bin/env stack\n\
                                  \-- stack --install-ghc runghc\n\
                                  \\n\
                                  \main :: IO ()\n\
                                  \main = putStrLn \"Hello World\"")
-             li_ "Open up a terminal and run `stack HelloWorld.hs`.")
+             li_ (do "Open up a terminal and run "
+                     code_ "stack HelloWorld.hs"
+                     "."))
      p_ "Done!"
 
 -- | Example of making a package to be built with Stack.
