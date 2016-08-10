@@ -197,3 +197,103 @@ various levels of the stack.
 access the various `ReaderT` levels inside it using `lift`.
 * The use of `withReaderT` to run under a modified environment is
 demonstrated.
+
+## EitherT
+
+The `EitherT` transformer, available from
+[transformers](https://www.stackage.org/package/either) can be
+thought of as an extension of `MaybeT`, where instead of `Nothing`
+to break out the computation, we can provide a value of a decided
+type.
+
+The following provides six examples to demonstrate the use of `EitherT`.
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude        #-}
+
+import ClassyPrelude
+import Control.Monad.Trans.Either
+
+getE :: Monad m => m (Either a Int)
+getE = return $ Right 42
+
+main :: IO ()
+main = do
+    v0 <- runEitherT $ do
+        print "Print this"
+        left 2 -- Stopping here!
+        print "Will not be printed"
+        left 3 -- Type of value passed to all left's must agree,
+               -- e.g. left [3] will have failed type checking in
+               -- this simple case.
+        print "Will also not be printed"
+        right 'x' -- Note that: right == return
+    print v0 -- prints: Left 2
+
+
+    v1 <- runEitherT $ do
+        -- Incorporate existing monadic functions returning Either,
+        -- using EitherT. The 'z' here is the value from the Right,
+        -- if Left did not get returned.
+        z <- EitherT getE
+        return $ z + 1
+    print (v1 :: Either () Int) -- prints: Right 43
+
+
+    v2 <- runEitherT $ do
+        print "Print this"
+        right [('x', 2)] -- execution does not interrupt, just
+                         -- like 'return ...' in IO ().
+                         -- the type is ignored too, and need not
+                         -- match the type of the actual 'right'.
+        print "Will also print this"
+        right 'y'
+    -- We need a type signature to give a final type for the Left:
+    print (v2 :: Either () Char) -- prints: Right 'y'
+
+
+    -- Use of 'guard' to exit, like in MaybeT
+    v3 <- runEitherT $ do
+        print "Print this"
+        guard False -- Breaks out, returning the mzero of the left type,
+                    -- which needs to implement Monoid.
+        print "Will not be printed"
+        right 'y'
+    print (v3 :: Either () Char) -- prints: Left ()
+
+
+    -- The `eitherT` utility, is like runEitherT, but transforms the
+    -- either value to a single result type, using two monadic
+    -- functions.
+    v4 <-
+        let leftSide a = return ("left " ++ show a)
+            rightSide a = return ("right " ++ show a)
+         in eitherT leftSide rightSide $ do
+                x <- lift $ getArgs
+                when (x == ["strange command line arg"]) $ do
+                    -- If this was true, the print below
+                    -- would have printed 'left \"x\"'
+                    left 'x'
+                right 4
+
+
+    -- Demonstrate hoistEither:
+    v5 <- runEitherT $ do
+        print "Print this"
+        -- hoistEither receives an Either and is equivalent
+        -- to deciding on 'left' or 'right' based on the value:
+        hoistEither $ Left ()
+        print "Will not be printed"
+        hoistEither $ Right ['x']
+
+    print v5 -- prints: Left ()
+```
+
+Also provided as utilities to be used in this transformer, are
+the functions: `bracketEitherT`, `bimapEitherT`, `mapEitherT`, and
+`swapEitherT`.
+
+### Pattern matching failures
+
+Note that unlike `MaybeT`, pattern matching failures in `do` under
+this monad, fail the upper monad.
