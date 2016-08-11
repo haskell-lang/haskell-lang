@@ -367,7 +367,7 @@ main = do
                         print "Will not be printed"
 
                 print "Will not be printed"
-                breakOut $ Right 'y'
+                return  $ Right 'y'
         print "Print this too"
         hoistEither r
     print v -- prints: Left "x"
