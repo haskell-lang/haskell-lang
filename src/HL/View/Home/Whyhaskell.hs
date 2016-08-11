@@ -50,7 +50,7 @@ community2 =
         (do "In addition, the "
             a_ [href_ "https://github.com/commercialhaskell/commercialhaskell"] "Commercial Haskell"
             " group provides a forum for commercial users to get help and collaborate on projects. Large suppliers of commercial support, "
-            a_ [href_ "https://www.fpcomplete.com/"] "like FP Complete"
+            a_ [href_ "https://www.fpcomplete.com/dev"] "like FP Complete"
             ", are available to help you succeed, as well as a large number of individual consultants.")
 
 training :: View App ()
@@ -70,13 +70,13 @@ deep = do
 
     do
       p_
-          (do a_ [href_ "https://www.haskell.org/ghc/"] "GHC" 
+          (do a_ [href_ "https://www.haskell.org/ghc/"] "GHC"
               ", Haskell’s primary compiler, features an advanced multithreaded runtime, compacting garbage collector tuned for immutable objects, customizable optimizations (via rewrite rules), and compilation to Javascript")
       p_
-          (do a_ [href_ "https://docs.haskellstack.org/en/stable/README/"] "Stack" 
+          (do a_ [href_ "https://docs.haskellstack.org/en/stable/README/"] "Stack"
               ", Haskell’s build tool of choice, combines the best practices of tools from other languages, featuring automated toolchain setup, multiple toolchain versions in parallel, curated package sets, and reproducible build plans.")
       p_
-          (do a_ [href_ "http://commercialhaskell.github.io/intero/"] "Intero" 
+          (do a_ [href_ "http://commercialhaskell.github.io/intero/"] "Intero"
               " provides you with intuitive, reliable editor integration. Your program is strongly typed: use that information to help you be productive!")
 
 rich :: View App ()
