@@ -297,3 +297,91 @@ the functions: `bracketEitherT`, `bimapEitherT`, `mapEitherT`, and
 
 Note that unlike `MaybeT`, pattern matching failures in `do` under
 this monad, fail the upper monad.
+
+## ContT
+
+Explaining the `ContT` transformer usually takes time, as it tends
+to carry you over into the realms of exception handling and coroutines
+implementations.
+
+However, instead of undergoing that, we shall demonstrate a case
+where `ContT` is immediately being useful as an enhencement over
+`EitherT`, as the latter was demonstrated above.
+
+Suppose we have a nested tree of four `runEitherT`s, where we break
+from the most inner `EitherT` into the second inner `EitherT`:
+
+```haskell
+main :: IO ()
+main = do
+    v <- runEitherT $ do
+        print "Print this"
+        r <- runEitherT $ do
+            print "Print this"
+            runEitherT $ do
+                print "Print this"
+                runEitherT $ do
+                    print "Print this"
+                    lift . lift $ left "x"
+                    print "Will not be printed"
+            print "Will not be printed"
+            right 'y'
+        print "Print this too"
+        hoistEither r
+    print v -- prints: Left "x"
+```
+
+Note the rather annoying `lift . lift`. It would get much worse,
+suppose if we would have nested six `runEitherT` into each other, and
+find ourselves quarreling with a long trail of `lift . lift . lift
+. lift ...`, just to break out to the upper level.
+
+From this it emerges that it may be nicer to label the scope from
+which we would like to break out. The example above can be rewritten
+using `runContT`:
+
+```haskell
+{-# LANGUAGE NoImplicitPrelude        #-}
+
+module ContT where
+
+import ClassyPrelude
+import Control.Monad.Trans.Cont
+import Control.Monad.Trans.Either
+
+main :: IO ()
+main = do
+    let runContM :: Monad m => ContT r m r -> m r
+        runContM = (`runContT` return)
+
+    v <- runEitherT $ do
+        print "Print this"
+        r <- do
+            runContM $ callCC $ \breakOut -> do
+                print "Print this"
+                callCC $ \_ -> do
+                    print "Print this"
+                    callCC $ \_ -> do
+                        print "Print this"
+                        breakOut $ Left "x"
+                        print "Will not be printed"
+
+                print "Will not be printed"
+                breakOut $ Right 'y'
+        print "Print this too"
+        hoistEither r
+    print v -- prints: Left "x"
+```
+
+We replaced the three internal `runEitherT`s with `callCC`s, which
+expect a monadic function receiving an argument, and we used a single
+transformer - `runContT` instead of the three. The short-hand
+`runContM` to `runContT` is used chiefly to remove some clutter, and
+to provide `EitherT`-like functionality from `runContT`. Indeed we
+could have also used a shorthand such as `runNoCC x = callCC $ \_ -> x`
+to clean up further.
+
+The immediate picture is that `breakOut` being the labmda parameter
+to the second scope, serves as a "call away" mechanism to break out
+of the context, similarly to `left` in `EitherT` and `break;` in
+many imperative languages, or `goto` with a label in C, for instance.
