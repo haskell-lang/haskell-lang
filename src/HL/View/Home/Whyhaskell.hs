@@ -12,7 +12,7 @@ whyhaskell :: View App ()
 whyhaskell =
   div_ [class_ "whyhaskell"]
        (container_
-          (do 
+          (do
               row_ (do span6_ [class_ "col-md-6"] beprod
                        span6_ [class_ "col-md-6"] makeit)
               row_ (do span6_ [class_ "col-md-6"] community
@@ -34,16 +34,33 @@ community :: View App ()
 community = do
     h2_ "Large, active community, plus commercial support"
     p_
-        "The Haskell open source community is highly active, with strong presences in mailing lists, IRC, Stack Overflow, Reddit, and more. Pick a medium you want to converse on, and odds are you’ll find a vibrant Haskell community."
+        (do "The Haskell open source community is highly active, with strong presences in "
+            a_ [href_ "/mailing-lists"] "mailing lists"
+            ", "
+            a_ [href_ "/irc"] " IRC"
+            ", "
+            a_ [href_ "/questions/tagged?tagnames=haskell"] " Stack Overflow"
+            ", "
+            a_ [href_ "/r/haskell"] " Reddit"
+            ", and "
+            a_ [href_ "/community"] " more"
+            ". Pick a medium you want to converse on, and odds are you’ll find a vibrant Haskell community.")
 community2 =
     p_
-        "In addition, the Commercial Haskell group provides a forum for commercial users to get help and collaborate on projects. Large suppliers of commercial support, like FP Complete, are available to help you succeed, as well as a large number of individual consultants."
+        (do "In addition, the "
+            a_ [href_ "https://github.com/commercialhaskell/commercialhaskell"] "Commercial Haskell"
+            " group provides a forum for commercial users to get help and collaborate on projects. Large suppliers of commercial support, "
+            a_ [href_ "https://www.fpcomplete.com/"] "like FP Complete"
+            ", are available to help you succeed, as well as a large number of individual consultants.")
 
 training :: View App ()
 training = do
     h2_ "High quality training materials"
     p_
-        "It’s never been easier to get started with Haskell. Check out our documentation page which covers topics from the simple to advanced. And don’t forget to read Haskell Programming from First Principles."
+        (do "It’s never been easier to get started with Haskell. Check out "
+            a_ [href_ "/documentation"] "our documentation page"
+            " which covers topics from the simple to advanced. And don’t forget to read "
+            a_ [href_ "http://haskellbook.com/"] "Haskell Programming from First Principles.")
 
 deep :: View App ()
 deep = do
@@ -53,17 +70,24 @@ deep = do
 
     do
       p_
-          "GHC, Haskell’s primary compiler, features an advanced multithreaded runtime, compacting garbage collector tuned for immutable objects, customizable optimizations (via rewrite rules), and compilation to Javascript"
+          (do a_ [href_ "https://www.haskell.org/ghc/"] "GHC" 
+              ", Haskell’s primary compiler, features an advanced multithreaded runtime, compacting garbage collector tuned for immutable objects, customizable optimizations (via rewrite rules), and compilation to Javascript")
       p_
-          "Stack, Haskell’s build tool of choice, combines the best practices of tools from other languages, featuring automated toolchain setup, multiple toolchain versions in parallel, curated package sets, and reproducible build plans."
+          (do a_ [href_ "https://docs.haskellstack.org/en/stable/README/"] "Stack" 
+              ", Haskell’s build tool of choice, combines the best practices of tools from other languages, featuring automated toolchain setup, multiple toolchain versions in parallel, curated package sets, and reproducible build plans.")
       p_
-          "Intero provides you with intuitive, reliable editor integration. Your program is strongly typed: use that information to help you be productive!"
+          (do a_ [href_ "http://commercialhaskell.github.io/intero/"] "Intero" 
+              " provides you with intuitive, reliable editor integration. Your program is strongly typed: use that information to help you be productive!")
 
 rich :: View App ()
 rich = do
     h2_ "Rich library ecosystem"
     p_
-        "Haskell features over 10,000 open source libraries to choose from. And with both LTS (long term support) Haskell and Stackage Nightly, you can choose whether you live on the stable or bleeding edge of library development."
+        (do "Haskell features over 10,000 open source libraries to choose from. And with both "
+            a_ [href_ "https://www.stackage.org/lts-6.11"] "LTS (long term support) Haskell"
+            " and "
+            a_ [href_ "https://www.stackage.org/nightly-2016-08-06"] "Stackage Nightly"
+            ", you can choose whether you live on the stable or bleeding edge of library development.")
 
 domains :: View App ()
 domains = do
