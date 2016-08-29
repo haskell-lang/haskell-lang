@@ -61,15 +61,10 @@ books =
      links bookLinks
   where
     bookLinks =
-      [("Learn You a Haskell for Great Good!","http://learnyouahaskell.com/")
-      ,("Real World Haskell","http://book.realworldhaskell.org/")
-      ,("Haskell Programming from first principles","http://haskellbook.com")
-      ,("Beginning Haskell","http://www.apress.com/9781430262503")
+      [("Haskell Programming from first principles","http://haskellbook.com")
+      ,("Haskell: The Craft of Functional Programming","http://www.haskellcraft.com/craft3e/Home.html")
       ,("Thinking Functionally with Haskell","http://www.cambridge.org/us/academic/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell")
       ,("Parallel and Concurrent Programming in Haskell","http://chimera.labs.oreilly.com/books/1230000000929")
-      ,("Programming in Haskell","http://www.cs.nott.ac.uk/~gmh/book.html")
-      ,("Haskell: The Craft of Functional Programming","http://www.haskellcraft.com/craft3e/Home.html")
-      ,("The Haskell School of Music","http://haskell.cs.yale.edu/?post_type=publication&p=112")
       ,("Developing Web Applications with Haskell and Yesod","http://www.yesodweb.com/book")]
 
 courses :: View App ()
