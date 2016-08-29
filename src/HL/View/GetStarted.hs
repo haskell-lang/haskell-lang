@@ -149,8 +149,8 @@ downloadContents =
         \development environment for Haskell:"
      ul_ (do li_ (do (strong_ "Stack")
                      ": A project builder for multi-package Haskell projects.")
-             li_ (do (strong_ "Intero")
-                     ": Complete interactive development program for Haskell.")
+             -- li_ (do (strong_ "Intero")
+             --         ": Complete interactive development program for Haskell.")
              li_ (do (strong_ "GHC")
                      ": A compiler and interpreter for Haskell programs.")
              li_ (do (strong_ "Haddock")
