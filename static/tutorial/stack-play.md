@@ -1,26 +1,16 @@
 # How to Play with Stack
 
-In this article we'll talk about installing a Haskell toolchain on your computer.
+This tutorial assumes you've already installed the Stack build
+tool. If you haven't yet, please start with the
+[get started page](/get-started) and then come back here.
 
-Installing a Haskell toolchain becomes really easy when you use [Stack](https://haskellstack.org).
+You may also be interested in learning:
 
-## Stack
+* [How to Script with Stack](stack-script)
+* [How to Build with Stack](stack-build)
 
-Stack is a Haskell build tool that is used to build Haskell software, manage package
-dependencies and even installing the Glorious Haskell Compiler (AKA GHC).
-
-To get started, go ahead and [download Stack](https://haskell-lang.org/get-started).
-
-After installing task you'll be able to execute it by running the `stack` command in
-your shell. Let's verify we indeed installed Stack correctly:
-
-```
-suppi@ubuntu:~$ stack --version
-Version 1.1.2, Git revision cebe10e845fed4420b6224d97dcabf20477bbd4b (3646 commits) x86_64 
-hpack-0.14.0
-```
-
-Alright! Looks like it's working!
+In this article we'll be talking about how to play with Haskell by
+using the REPL and building simple programs.
 
 ## Installing GHC
 
