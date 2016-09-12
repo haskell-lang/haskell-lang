@@ -357,6 +357,36 @@ f >=> g = g <=< f
 g >=> f = f <=< g
 ```
 
+## Alternative `<|>`
+
+```haskell
+(<|>) :: Alternative f => f a -> f a -> f a
+```
+
+The `Alternative` typeclass provides a binary operation on applicative
+functors (`<|>`), as well as some identity value (`empty`). This is
+used in the ecosystem for a number of different activities, e.g.:
+
+* In parser libraries for defining different alternative parsing
+  options
+* In the async library to run two different `Concurrently` actions at
+  once and take the first result to succeed
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-6.4 runghc --package async
+import Control.Applicative ((<|>))
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async (Concurrently (..))
+
+main :: IO ()
+main = do
+    res <- runConcurrently $
+        (Concurrently (threadDelay 1000000 >> return (Left "Hello"))) <|>
+        (Concurrently (threadDelay 2000000 >> return (Right 42)))
+    print res
+```
+
 ## More operators!
 
 If you're aware of other common operators that cause confusion, please
