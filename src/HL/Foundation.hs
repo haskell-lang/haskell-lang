@@ -125,7 +125,7 @@ instance YesodBreadcrumbs App where
         AnnouncementR x      -> return ("Announcement " <> x,Just AnnouncementsR)
         OldPackagesR{}       -> return ("Packages",Nothing)
         OldPackageR p        -> return (toHuman p,Nothing)
-        LibrariesR{}         -> return ("Libraries",Just DocumentationR)
+        LibrariesR{}         -> return ("Libraries",Nothing)
         LibraryR p           -> return (toHuman p,Just LibrariesR)
         FeedR{}              -> return ("News Feed",Nothing)
         GitRevR{}            -> return ("Build Version",Nothing)
