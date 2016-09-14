@@ -1,12 +1,3 @@
----
-title: The vector package
-author: Michael Snoyman <michael@snoyman.com>
-description: Overview and typical usage of the vector package
-first-written: 2015-10-25
-last-updated: 2015-10-25
-last-reviewed: 2015-10-25
----
-
 The de facto standard package in the Haskell ecosystem for integer-indexed
 array data is the [vector package](http://www.stackage.org/package/vector).
 This corresponds at a high level to arrays in C, or the vector class in C++'s
