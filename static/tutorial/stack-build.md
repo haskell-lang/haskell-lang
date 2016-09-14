@@ -91,7 +91,8 @@ Let's suppose your project defines an executable called
 
     ```shell
     $ $(stack exec which my-executable)
-
+    ```
+    
 3.  The `stack install` command will copy your executables into a
     user-specific directory, such as `$HOME/.local/bin` on POSIX
     systems. The directory will be printed to your console.
