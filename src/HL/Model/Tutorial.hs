@@ -9,7 +9,6 @@ import qualified Data.ByteString.Lazy as L
 import Data.Map (Map)
 import qualified Data.Map as Map
 import Data.Maybe (fromMaybe)
-import Data.Monoid ((<>))
 import Data.Text (Text)
 import qualified Data.Text as T
 import Data.Text.Encoding (decodeUtf8With)
@@ -47,15 +46,22 @@ getTutorials fatal = do
             then fmap (x :) (filterM f xs)
             else filterM f xs
 
+data TitleSource = FromMarkdown
+                 | GivenTitle !Text
+
 processFile :: Bool -> FilePath -> IO (Map TutorialKey Tutorial)
 processFile fatal fp = do
     bsOrig <- S.readFile fp
     let textOrig = decodeUtf8With lenientDecode bsOrig
     mtext <-
         case takeExtension fp of
-            ".md" -> return (Just (textOrig, Just (T.pack (takeFileName fp))))
+            ".md" -> return (Just (textOrig, FromMarkdown, Just (T.pack (takeFileName fp))))
             ".url" -> do
-                req <- parseRequest (T.unpack (T.takeWhile (/= '\n') textOrig))
+                (title, url) <-
+                    case T.lines textOrig of
+                        [title, url] -> return (title, url)
+                        _ -> error $ "Invalid format for " ++ fp
+                req <- parseRequest (T.unpack url)
                 eres <- tryAny (httpLBS req)
                 case eres of
                     Left e
@@ -66,7 +72,7 @@ processFile fatal fp = do
                     Right res ->
                         let lbs = getResponseBody res
                             text = stripHeader (decodeUtf8With lenientDecode (L.toStrict lbs))
-                        in return (Just (text, Nothing))
+                        in return (Just (text, GivenTitle title, Nothing))
             _
                 | "#" `T.isSuffixOf` T.pack fp -> return Nothing
                 | "~" `T.isSuffixOf` T.pack fp -> return Nothing
@@ -77,21 +83,32 @@ processFile fatal fp = do
 
     case mtext of
         Nothing -> return Map.empty
-        Just (text, mlocalFilename) -> do
+        Just (text, titleSource, mlocalFilename) -> do
             let base = T.pack (takeBaseName fp)
-                (tutorialKey, title, markdown) =
-                    case T.stripPrefix "package-" base of
-                        Nothing -> (RegularTutorial base, getTitleSimple text, text)
-                        Just pkgName ->
-                          ( PackageTutorial (PackageName pkgName)
-                          , pkgName <> " library"
-                          , T.concat
-                              [ "# "
-                              , pkgName
-                              , " library\n\n"
-                              , stripExistingTitle text
-                              ]
-                          )
+                mpkgName = T.stripPrefix "package-" base
+                tutorialKey = maybe (RegularTutorial base) (PackageTutorial . PackageName) mpkgName
+
+                title0 =
+                    case titleSource of
+                        FromMarkdown -> getTitleSimple text
+                        GivenTitle t -> t
+                title =
+                    case mpkgName of
+                        Nothing -> title0
+                        Just pkgName -> mconcat
+                            [ title0
+                            , " - "
+                            , pkgName
+                            , " library"
+                            ]
+
+                markdown = T.concat
+                    [ "# "
+                    , title
+                    , "\n\n"
+                    , stripExistingTitle text
+                    ]
+
             return $ Map.singleton tutorialKey Tutorial
                 { tutorialTitle = title
                 , tutorialContent = Markdown markdown
