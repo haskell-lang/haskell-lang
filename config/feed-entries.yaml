@@ -141,13 +141,20 @@
   title: Updates for September 14, 2016
   content: |
     The biggest update to the site is the addition of three new targeted "next
-    steps" tutorials for using Stack, aimed at Play (using the REPL), Script
-    (single-file programs), and Build (full projects). Hopefully this will help
-    people with different goals all get started with Haskell quickly.
+    steps" tutorials on the [get started
+    page](https://haskell-lang.org/get-started) for using Stack, aimed at
+    [Play](https://haskell-lang.org/tutorial/stack-play) (using the REPL),
+    [Script](https://haskell-lang.org/tutorial/stack-script) (single-file
+    programs), and [Build](https://haskell-lang.org/tutorial/stack-build) (full
+    projects). Hopefully this will help people with different goals all get started
+    with Haskell quickly.
 
     In addition, we have included a few new tutorials:
 
     * [Primitive Haskell](https://haskell-lang.org/tutorial/primitive-haskell)
     * [The async library](https://haskell-lang.org/library/async) (incomplete, [contributions welcome!](https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/package-async.md))
 
-    Plus a few other minor edits.
+    Plus a few other minor edits throughout the site.
+
+    The complete diff can be found
+    [here](https://github.com/haskell-lang/haskell-lang/pull/96).
