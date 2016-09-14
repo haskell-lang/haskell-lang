@@ -35,6 +35,9 @@ content url mos =
      container_
        (row_ (span12_ [class_ "col-md-12"]
                       (nextSteps url)))
+     container_
+       (row_ (span12_ [class_ "col-md-12"]
+                      (furtherInformation url)))
 
 -- | The Stack download section.
 downloadStack :: (Route App -> Text) -> Maybe OS -> View App ()
@@ -208,6 +211,22 @@ nextSteps :: (Route App -> Text) -> View App ()
 nextSteps url =
   do h2_ (do span_ [class_ "counter"] "3 "
              "Next steps")
+     p_ "Congratulations, you're setup to start writing \
+        \Haskell code! We've broken down next steps into a few \
+        \common workflows with Stack. If you're not sure where \
+        \to start, we recommend reading them in order."
+     ul_ (mapM_ (\(title,link) -> li_ (a_ [href_ (url link)] title)) nextLinks)
+  where nextLinks =
+          [("How to Play",TutorialR "stack-play")
+          ,("How to Script",TutorialR "stack-script")
+          ,("How to Build",TutorialR "stack-build")
+          ]
+
+-- | Further information
+furtherInformation :: (Route App -> Text) -> View App ()
+furtherInformation url =
+  do h2_ (do span_ [class_ "counter"] "4 "
+             "Further Information")
      p_ "Congratulations, you're setup to start writing \
         \Haskell code! Now you're ready to:"
      ul_ (mapM_ (\(title,link) -> li_ (a_ [href_ link] title)) nextLinks)
