@@ -135,3 +135,19 @@
       * And turning off warnings for name shadowing and type
         defaulting. (Checkbox is not checked by default.)
     * And other miscellaneous bug fixes.
+
+- ident: updates-for-september-14
+  time: 2016-09-14T16:00:00Z
+  title: Updates for September 14, 2016
+  content: |
+    The biggest update to the site is the addition of three new targeted "next
+    steps" tutorials for using Stack, aimed at Play (using the REPL), Script
+    (single-file programs), and Build (full projects). Hopefully this will help
+    people with different goals all get started with Haskell quickly.
+
+    In addition, we have included a few new tutorials:
+
+    * [Primitive Haskell](https://haskell-lang.org/tutorial/primitive-haskell)
+    * [The async library](https://haskell-lang.org/library/async) (incomplete, [contributions welcome!](https://github.com/haskell-lang/haskell-lang/blob/master/static/tutorial/package-async.md))
+
+    Plus a few other minor edits.
