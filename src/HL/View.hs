@@ -7,7 +7,7 @@ module HL.View
   ,module V)
   where
 
-import HL.Foundation as V (Route(..),App,Human(..),Slug(..))
+import HL.Foundation as V (Route(..), App, Human(..), Slug(..))
 import HL.Static as V
 import HL.Types as C
 
