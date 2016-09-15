@@ -9,4 +9,4 @@ import Control.Applicative
 
 -- | The model monad.
 newtype Model a = Model (IO a)
-  deriving (Monad,Functor,Applicative)
+  deriving (Monad, Functor, Applicative)
