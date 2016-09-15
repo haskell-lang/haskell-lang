@@ -97,7 +97,7 @@ processFile fatal fp = do
                         Nothing -> title0
                         Just pkgName -> mconcat
                             [ title0
-                            , " - "
+                            , if T.null title0 then "" else " - "
                             , pkgName
                             , " library"
                             ]
