@@ -60,20 +60,20 @@ operatingSystems url mos =
                          strong_ (toHtml (toHuman os)))
      p_ [class_ "os-logos"]
         (do forM_ oses
-                  (\(os,osLogo) ->
+                  (\(os, osLogo) ->
                      a_ (concat [[class_ "os-logo"
                                  ,href_ (url (GetStartedOSR os))
                                  ,title_ (toHuman os)]
-                                ,case mos of
+                                 ,case mos of
                                    Nothing -> [class_ " os-choose "]
                                    Just os'
                                      | os' == os -> [class_ " os-selected "]
                                      | otherwise -> [class_ " os-faded "]])
                         (img_ [src_ (url (StaticR osLogo))])))
   where oses =
-          [(OSX,img_apple_logo_svg)
-          ,(Windows,img_windows_logo_svg)
-          ,(Linux,img_linux_logo_svg)]
+          [(OSX, img_apple_logo_svg)
+          ,(Windows, img_windows_logo_svg)
+          ,(Linux, img_linux_logo_svg)]
 
 -- | Show download information for the operating system.
 operatingSystemDownload :: (Route App -> Text) -> Maybe OS -> View App ()
