@@ -32,7 +32,7 @@ lucid :: (Y.YesodBreadcrumbs y) => HtmlT (Reader (Page y)) () -> Y.HandlerT y IO
 lucid m = do
     render <- Y.getUrlRender
     mroute <- Y.getCurrentRoute
-    (title,breadcrumbs) <- Y.breadcrumbs
+    (title, breadcrumbs) <- Y.breadcrumbs
     return
         (runReader
              (do r <- runHtmlT m
@@ -41,7 +41,7 @@ lucid m = do
                   render
                   mroute
                   (breadcrumbs ++
-                   [ (route,title)
+                   [ (route, title)
                    | Just route <- [mroute] ])))
 
 instance ToTypedContent (Html ()) where

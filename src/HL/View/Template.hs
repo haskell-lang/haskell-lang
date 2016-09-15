@@ -58,13 +58,13 @@ skeleton ptitle innerhead innerbody bodyender =
     headinner =
       do title_ (toHtml ptitle)
          meta_ [charset_ "utf-8"]
-         meta_ [httpEquiv_ "X-UA-Compatible",content_ "IE edge"]
-         meta_ [name_ "viewport",content_ "width=device-width, initial-scale=1"]
-         meta_ [name_ "keywords",content_ "haskell,functional,pure,programming,lazy"]
+         meta_ [httpEquiv_ "X-UA-Compatible", content_ "IE edge"]
+         meta_ [name_ "viewport", content_ "width=device-width, initial-scale=1"]
+         meta_ [name_ "keywords", content_ "haskell,functional,pure,programming,lazy"]
          meta_ [name_ "description",
                 content_ "The Haskell purely functional programming language home page."]
          url <- lift (asks pageRender)
-         link_ [rel_ "shortcut icon",href_ (url (StaticR img_favicon_ico))]
+         link_ [rel_ "shortcut icon", href_ (url (StaticR img_favicon_ico))]
          linkcss "https://fonts.googleapis.com/css?family=Open+Sans"
          styles url
                 [StaticR css_bootstrap_min_css
@@ -116,7 +116,7 @@ styles url =
 -- | A link to CSSxs
 linkcss :: Text -> View App ()
 linkcss uri =
-  link_ [rel_ "stylesheet",type_ "text/css",href_ uri]
+  link_ [rel_ "stylesheet", type_ "text/css", href_ uri]
 
 -- | Main navigation.
 navigation :: Bool -> View App ()
@@ -140,7 +140,7 @@ navigation showBrand =
         brand =
           do url <- lift (asks pageRender)
              div_ [class_ "navbar-header"]
-                  (a_ [class_ "navbar-brand",href_ (url HomeR)]
+                  (a_ [class_ "navbar-brand", href_ (url HomeR)]
                       (do logo
                           "Haskell"))
 
@@ -157,7 +157,7 @@ bread =
      unless (length crumbs == 1)
             (ol_ [class_ "breadcrumb"]
                  (forM_ crumbs
-                        (\(route,title) ->
+                        (\(route, title) ->
                            li_ (a_ [href_ (url route)]
                                    (toHtml title)))))
 
@@ -200,13 +200,13 @@ osxWindow title content =
              (do div_ [class_ "titlebar"]
                       (do div_ [class_ "buttons"]
                                (do div_ [class_ "closebtn"]
-                                        (a_ [class_ "closebutton",href_ "#"]
+                                        (a_ [class_ "closebutton", href_ "#"]
                                             (span_ (strong_ "x")))
                                    div_ [class_ "minimize"]
-                                        (a_ [class_ "minimizebutton",href_ "#"]
+                                        (a_ [class_ "minimizebutton", href_ "#"]
                                             (span_ (strong_ (toHtmlRaw ("&ndash;" ::Text)))))
                                    div_ [class_ "zoom"]
-                                        (a_ [class_ "zoombutton",href_ "#"]
+                                        (a_ [class_ "zoombutton", href_ "#"]
                                             (span_ (strong_ "+"))))
                           (span_ [class_ "title-bar-text"] (toHtml title)))
                  div_ [class_ "content"] content))

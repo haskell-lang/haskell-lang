@@ -45,7 +45,7 @@ header snippetInfo url =
                       (div_ [class_ "branding"]
                             (do tag
                                 snippet)))))
-  where branding = span_ [class_ "name",background url img_logo_png] "Haskell"
+  where branding = span_ [class_ "name", background url img_logo_png] "Haskell"
         summation =
           span_ [class_ "summary"] "An advanced purely-functional programming language"
         tag = span_ [class_ "tag"] "Declarative, statically typed code."
@@ -56,23 +56,23 @@ header snippetInfo url =
                         (zip [0 ..]
                              (siSnippets snippetInfo)))
         index =
-          fst (randomR (0,(length (siSnippets snippetInfo)) - 1)
+          fst (randomR (0, (length (siSnippets snippetInfo)) - 1)
                        (mkStdGen (siSeed snippetInfo)))
 
 -- | Show a sample code.
 
 sample :: Snippet -> View App ()
 sample snippet =
-  div_ [class_ "code-sample",title_ (snippetTitle snippet)]
+  div_ [class_ "code-sample", title_ (snippetTitle snippet)]
        (haskellPre (snippetCode snippet))
 
 -- | Try Haskell section.
 try :: (Route App -> Text) -> View App ()
 try _ =
-  div_ [class_ "try",onclick_ "tryhaskell.controller.inner.click()"]
+  div_ [class_ "try", onclick_ "tryhaskell.controller.inner.click()"]
        (container_
           (row_ (do span6_ [class_ "col-md-6"] repl
-                    span6_ [class_ "col-md-6",id_ "guide"]
+                    span6_ [class_ "col-md-6", id_ "guide"]
                            (return ()))))
   where repl =
           do h2_ "Try it"
@@ -89,7 +89,7 @@ try _ =
 community :: (Route App -> Text) -> View App ()
 community url =
   div_ [id_ "community-wrapper"]
-       (do div_ [class_ "community",background url img_community_jpg]
+       (do div_ [class_ "community", background url img_community_jpg]
                 (do container_
                       [id_ "tagline"]
                       (row_ (span8_ [class_ "col-md-8"]

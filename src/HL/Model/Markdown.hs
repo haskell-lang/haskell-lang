@@ -30,7 +30,7 @@ renderMarkdown (Markdown text) =
                   }
                   (L.fromStrict text)))
   where
-    renderer lang (src,_) =
+    renderer lang (src, _) =
         if lang == Just "haskell"
             then H.preEscapedToHtml (renderText (haskellPre src))
             else H.pre $ H.toHtml src

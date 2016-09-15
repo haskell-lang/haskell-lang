@@ -47,7 +47,7 @@ inSiteDocs tutorialMap = do
            a_ [href_ "https://www.reddit.com/r/haskell_lang/comments/4udlt6/documentation_priorities/"] "discuss it on Reddit")
   where
     renderTutorial :: (TutorialKey, Tutorial) -> View App ()
-    renderTutorial (tutorialKey,Tutorial{tutorialTitle = title}) = do
+    renderTutorial (tutorialKey, Tutorial{tutorialTitle = title}) = do
         let route =
               case tutorialKey of
                 PackageTutorial pkg -> LibraryR pkg
@@ -61,11 +61,11 @@ books =
      links bookLinks
   where
     bookLinks =
-      [("Haskell Programming from first principles","http://haskellbook.com")
-      ,("Haskell: The Craft of Functional Programming","http://www.haskellcraft.com/craft3e/Home.html")
-      ,("Thinking Functionally with Haskell","http://www.cambridge.org/us/academic/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell")
-      ,("Parallel and Concurrent Programming in Haskell","http://chimera.labs.oreilly.com/books/1230000000929")
-      ,("Developing Web Applications with Haskell and Yesod","http://www.yesodweb.com/book")]
+      [("Haskell Programming from first principles", "http://haskellbook.com")
+      ,("Haskell: The Craft of Functional Programming", "http://www.haskellcraft.com/craft3e/Home.html")
+      ,("Thinking Functionally with Haskell", "http://www.cambridge.org/us/academic/subjects/computer-science/programming-languages-and-applied-logic/thinking-functionally-haskell")
+      ,("Parallel and Concurrent Programming in Haskell", "http://chimera.labs.oreilly.com/books/1230000000929")
+      ,("Developing Web Applications with Haskell and Yesod", "http://www.yesodweb.com/book")]
 
 courses :: View App ()
 courses =
@@ -74,10 +74,10 @@ courses =
      links courseLinks
   where
      courseLinks =
-       [("University of Pennsylvania's CIS 194","https://www.seas.upenn.edu/~cis194/")
-       ,("NICTA Functional Programming Course","https://github.com/NICTA/course")
-       ,("University of Virginia's CS 1501","http://shuklan.com/haskell/")
-       ,("Stanford's cs240h","http://www.scs.stanford.edu/14sp-cs240h/")]
+       [("University of Pennsylvania's CIS 194", "https://www.seas.upenn.edu/~cis194/")
+       ,("NICTA Functional Programming Course", "https://github.com/NICTA/course")
+       ,("University of Virginia's CS 1501", "http://shuklan.com/haskell/")
+       ,("Stanford's cs240h", "http://www.scs.stanford.edu/14sp-cs240h/")]
 
 tutorials :: View App ()
 tutorials =
@@ -98,26 +98,26 @@ online =
      links resources
   where
     resources =
-      [("The Haskell Wiki","http://wiki.haskell.org")
-      ,("The Haskell Wikibook","http://en.wikibooks.org/wiki/Haskell")
-      ,("FP Complete's School of Haskell","https://www.fpcomplete.com/school")
-      ,("Stephen Diehl's What I Wish I Knew When Learning Haskell","http://dev.stephendiehl.com/hask/#cabal")
-      ,("Chris Allen's List of Learning Haskell Resources","https://github.com/bitemyapp/learnhaskell")
-      ,("Bob Ippolito's Getting Started with Haskell","http://bob.ippoli.to/archives/2013/01/11/getting-started-with-haskell/")
-      ,("Albert Y.C. Lai's Haskell Notes and Examples","http://www.vex.net/~trebla/haskell/index.xhtml")
-      ,("Learning Haskell Resources on the Haskell Wiki","https://wiki.haskell.org/Learning_Haskell")]
+      [("The Haskell Wiki", "http://wiki.haskell.org")
+      ,("The Haskell Wikibook", "http://en.wikibooks.org/wiki/Haskell")
+      ,("FP Complete's School of Haskell", "https://www.fpcomplete.com/school")
+      ,("Stephen Diehl's What I Wish I Knew When Learning Haskell", "http://dev.stephendiehl.com/hask/#cabal")
+      ,("Chris Allen's List of Learning Haskell Resources", "https://github.com/bitemyapp/learnhaskell")
+      ,("Bob Ippolito's Getting Started with Haskell", "http://bob.ippoli.to/archives/2013/01/11/getting-started-with-haskell/")
+      ,("Albert Y.C. Lai's Haskell Notes and Examples", "http://www.vex.net/~trebla/haskell/index.xhtml")
+      ,("Learning Haskell Resources on the Haskell Wiki", "https://wiki.haskell.org/Learning_Haskell")]
 
 manuals :: View App ()
 manuals = do h2_ "Manuals and Guides"
              p_ "Manuals and guides that cover common Haskell tooling:"
              links tools
-  where tools = [("GHC User Guide","http://www.haskell.org/ghc/docs/latest/html/users_guide/")
-                ,("Cabal Homepage And Quick Links","https://www.haskell.org/cabal/")
-                ,("Cabal User Guide","http://www.haskell.org/cabal/users-guide/")
-                ,("Stack User Guide","https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md")
-                ,("Haddock User Guide","http://www.haskell.org/haddock/doc/html/index.html")
-                ,("Haskeleton: A Haskell Project Skeleton","http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")
-                ,("How to Write a Haskell Program","https://wiki.haskell.org/How_to_write_a_Haskell_program")]
+  where tools = [("GHC User Guide", "http://www.haskell.org/ghc/docs/latest/html/users_guide/")
+                ,("Cabal Homepage And Quick Links", "https://www.haskell.org/cabal/")
+                ,("Cabal User Guide", "http://www.haskell.org/cabal/users-guide/")
+                ,("Stack User Guide", "https://github.com/commercialhaskell/stack/blob/master/doc/GUIDE.md")
+                ,("Haddock User Guide", "http://www.haskell.org/haddock/doc/html/index.html")
+                ,("Haskeleton: A Haskell Project Skeleton", "http://taylor.fausak.me/2014/03/04/haskeleton-a-haskell-project-skeleton/")
+                ,("How to Write a Haskell Program", "https://wiki.haskell.org/How_to_write_a_Haskell_program")]
 
 cabal :: View App ()
 cabal =
@@ -125,10 +125,10 @@ cabal =
      p_ "The Cabal guide is a good start but there's a lot to learn:"
      links cabalInfo
   where cabalInfo =
-           [("Stephen Diehl's Cabal Quickstart","http://dev.stephendiehl.com/hask/#cabal")
-           ,("An Introduction to Cabal Sandboxes","http://coldwa.st/e/blog/2013-08-20-Cabal-sandbox.html")
-           ,("The Storage and Interpretation of Cabal Packages","http://www.vex.net/~trebla/haskell/sicp.xhtml")
-           ,("The Cabal of Cabal","http://www.vex.net/~trebla/haskell/cabal-cabal.xhtml")]
+           [("Stephen Diehl's Cabal Quickstart", "http://dev.stephendiehl.com/hask/#cabal")
+           ,("An Introduction to Cabal Sandboxes", "http://coldwa.st/e/blog/2013-08-20-Cabal-sandbox.html")
+           ,("The Storage and Interpretation of Cabal Packages", "http://www.vex.net/~trebla/haskell/sicp.xhtml")
+           ,("The Cabal of Cabal", "http://www.vex.net/~trebla/haskell/cabal-cabal.xhtml")]
 
 library :: View App ()
 library =
@@ -136,12 +136,12 @@ library =
      p_ "Documentation for Haskell libraries is typically available on Hackage. We also have specialized tools for searching across it, not only by name, but by type."
      links docs
   where docs =
-         [("Hoogle API Search","http://www.haskell.org/hoogle/")
+         [("Hoogle API Search", "http://www.haskell.org/hoogle/")
          ,("FPComplete API Search", "https://www.fpcomplete.com/hoogle")
-         ,("Hayoo! API Search","http://hayoo.fh-wedel.de")
+         ,("Hayoo! API Search", "http://hayoo.fh-wedel.de")
          ,("Hackage","http://hackage.haskell.org/")
-         ,("The Typeclassopedia","https://wiki.haskell.org/Typeclassopedia")
-         ,("Haddocks for Libraries included with GHC","https://downloads.haskell.org/~ghc/latest/docs/html/libraries/index.html")]
+         ,("The Typeclassopedia", "https://wiki.haskell.org/Typeclassopedia")
+         ,("Haddocks for Libraries included with GHC", "https://downloads.haskell.org/~ghc/latest/docs/html/libraries/index.html")]
 
 report :: View App ()
 report =

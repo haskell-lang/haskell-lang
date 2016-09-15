@@ -38,7 +38,7 @@ class Human a where
 data HaskellLangException
   = MarkdownFileUnavailable !FilePath
   | ReportPageNotFound !FilePath
-  deriving (Show,Typeable,Eq)
+  deriving (Show, Typeable, Eq)
 
 instance Exception HaskellLangException
 
@@ -124,7 +124,7 @@ instance ToHtml Markdown where
                           _ -> Blaze.pre rendered}
 
 newtype PackageName = PackageName Text
-  deriving (Eq,Ord,Show,FromJSON,ToJSON,ToHtml)
+  deriving (Eq, Ord, Show, FromJSON, ToJSON, ToHtml)
 
 instance Read PackageName where
   readsPrec _ str =
@@ -174,7 +174,7 @@ instance PathPiece OS where
 
 -- | Mode for rendering Haskell report.
 data Mode = Mono | Node
-  deriving (Eq,Show,Read)
+  deriving (Eq, Show, Read)
 
 instance Slug Mode where
   toSlug m =
