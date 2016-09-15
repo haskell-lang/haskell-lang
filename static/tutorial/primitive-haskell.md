@@ -277,7 +277,7 @@ RealWorld a`.
 __Exercise__: `GHC.Prim` has a [section on mutable
 variables](http://www.stackage.org/haddock/lts-1.0/ghc-prim-0.3.1.0/GHC-Prim.html#g:12),
 which forms the basis on `IORef` and `STRef`. Provide a new implementation of
-`STRef`, including `newSTRef, `readSTRef`, and `writeSTRef`.
+`STRef`, including `newSTRef`, `readSTRef`, and `writeSTRef`.
 
 ## PrimMonad
 
