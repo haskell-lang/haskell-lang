@@ -1,3 +1,5 @@
+# Efficient Packed-Memory Data Representations
+
 The de facto standard package in the Haskell ecosystem for integer-indexed
 array data is the [vector package](http://www.stackage.org/package/vector).
 This corresponds at a high level to arrays in C, or the vector class in C++'s
