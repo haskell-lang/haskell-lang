@@ -23,7 +23,7 @@ whyhaskell =
                        span6_ [class_ "col-md-6"] domains )))
 
 beprod :: View App ()
-beprod = do h2_ "Be productive, be correct"
+beprod = do h2_ "@@@ Be productive, be correct"
             p_ "Haskell’s combination of strong type system, type inference, and high level code gives you the speed of development of a scripting language like Python or Ruby, yet more robustness than common statically typed languages like Java or C#. Stop finding bugs in production, let the compiler help you make more robust applications today!"
 
 makeit :: View App ()
