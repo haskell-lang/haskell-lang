@@ -70,7 +70,7 @@ The first thing worth pointing out here is the usage of `{-# LANGUAGE
 OverloadedStrings #-}` in both examples above. This language extension
 allows us to generalize string literals like `"foo"` to be treated by
 the GHC compiler as arbitrary string-like data types, including
-`ByteString` and `Text`. We can also explicitly performance this
+`ByteString` and `Text`. We can also explicitly perform this
 conversion from string literal to the relevant datatypes using `pack`
 functions:
 
@@ -248,7 +248,7 @@ main = do
 
 This will replace invalid encoding sequences with the Unicode
 replacement character. Another is to use a function which is explicit
-in the error condition, like `encodeUtf8'`:
+in the error condition, like `decodeUtf8'`:
 
 ```haskell
 #!/usr/bin/env stack
@@ -469,7 +469,7 @@ main = print (toLazyText ("Hello " <> "there " <> "world" :: Builder))
 ```
 
 Due to memory representation issues, this is one of the corner cases
-where using a lazy Text value makes sense. The reason for this is
+where using a lazy `Text` value makes sense. The reason for this is
 that, when evaluating a `Buffer`, it is most efficient to allocate a
 series of buffers, and then represent them as a collection of strict
 chunks, instead of needing to constantly resize just a single buffer.
@@ -488,7 +488,7 @@ main = print (toLazyByteString ("Hello " <> "there " <> "world" :: Builder))
 ```
 
 However, the bytestring builder concept has a lot more flexibility to
-it. For example, instead of allocating lazy ByteString, you can work
+it. For example, instead of allocating a lazy `ByteString`, you can work
 in a fully streaming manner (such as via
 [Data.Streaming.ByteString.Builder](https://www.stackage.org/haddock/lts-6.19/streaming-commons-0.1.16/Data-Streaming-ByteString-Builder.html)):
 
@@ -567,7 +567,7 @@ using a parser, but sometimes the trade-off is worth it.
 ## text-icu
 
 If you're going to be dealing with any significant Unicode topics,
-like normalization, collation, or others, you shouldefinitely check
+like normalization, collation, or others, you should definitely check
 out the
 [text-icu package](https://www.stackage.org/lts-6.19/package/text-icu-0.7.0.1),
 which provides a binding to the very widely used ICU library. We're
