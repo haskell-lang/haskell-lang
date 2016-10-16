@@ -59,6 +59,7 @@ executable haskell-lang
                    , foreign-store
                    , hscolour
                    , http-conduit
+                   , http-types
                    , lifted-base
                    , lucid
                    , markdown
