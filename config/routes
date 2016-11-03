@@ -8,6 +8,7 @@
 /irc IrcR GET
 /mailing-lists MailingListsR GET
 /documentation DocumentationR GET
+/library LibrariesSingularR GET
 /libraries LibrariesR GET
 /library/#PackageName LibraryR GET
 /news NewsR GET
