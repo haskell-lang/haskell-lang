@@ -158,3 +158,13 @@
 
     The complete diff can be found
     [here](https://github.com/haskell-lang/haskell-lang/pull/96).
+
+- ident: updates-for-nov-3
+  time: 2016-11-03T15:00:00Z
+  title: Updates for November 3, 2016
+  content: |
+    The following changes have been made since September:
+
+    * Added a singular /library route to match /library/foo. [Requested here](https://www.reddit.com/r/haskell/comments/57aauu/new_conduit_tutorial/d8rszhy).
+    * Added a [string types tutorial](/tutorial/string-types).
+    * Library documentation pages now have descriptive titles.
