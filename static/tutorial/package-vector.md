@@ -420,7 +420,7 @@ monad*, meaning: `IO`, strict `ST s`, and transformers sitting on top of those
 two. The type class controlling this is `PrimMonad`.
 
 You can get more information on `PrimMonad` in the [Primitive
-Haskell](primitive-haskell.md) article. Without diving into details: every
+Haskell](/tutorial/primitive-haskell) article. Without diving into details: every
 primitive monad also has an associated primitive state token type, which is
 captured with `PrimState`. As a result, the type signatures for `read` and
 `write` (for boxed vectors) look like:
