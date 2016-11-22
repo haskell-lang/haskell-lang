@@ -10,6 +10,7 @@ import HL.View
 
 import Data.Monoid
 import qualified Data.Text.Lazy as TL
+import qualified Text.Blaze.Html as Blaze
 import qualified Text.Blaze.Html.Renderer.Text as Blaze
 import qualified Text.Blaze.Html.Renderer.Utf8 as BlazeUtf8
 import qualified Yesod.Core as Y
@@ -179,7 +180,7 @@ footer =
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
 
-defaultLayoutImpl :: Y.WidgetT App IO () -> Y.HandlerT App IO a
+defaultLayoutImpl :: Y.WidgetT App IO () -> Y.HandlerT App IO Blaze.Html
 defaultLayoutImpl widget = do
   pc <- Y.widgetToPageContent widget
   render <- Y.getUrlRenderParams
@@ -190,7 +191,7 @@ defaultLayoutImpl widget = do
               (container_
                  (row_ (span12_ [class_ "col-md-12"]
                    (toHtmlRaw (BlazeUtf8.renderHtml (body render))))))
-  lucid content >>= Y.sendResponse
+  fmap (Blaze.unsafeLazyByteString . renderBS) (lucid content)
 
 -- | Make an element that looks like an OS X window.
 osxWindow :: Text -> View App () -> View App ()
