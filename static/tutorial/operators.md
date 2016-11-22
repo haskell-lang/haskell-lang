@@ -7,7 +7,7 @@ lead to shorter, more elegant code in many cases. For example, compare
 these three equivalent pieces of code:
 
 ```haskell
-v1 = mappend (mappend ("hello " "there ")) "world"
+v1 = mappend (mappend "hello " "there ") "world"
 v2 = "hello " `mappend` "there " `mappend` "world"
 v3 = "hello " ++ "there " ++ "world"
 ```

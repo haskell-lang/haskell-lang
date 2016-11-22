@@ -84,6 +84,7 @@ instance Human (Route App) where
       InteroR{}            -> "Intero"
       OldTutorialsR{}      -> "Tutorials"
       TutorialR x          -> "Tutorial: " <> x
+      LibrariesSingularR   -> "Libraries"
 
 instance Slug (Route App) where
   toSlug r =
@@ -108,6 +109,7 @@ instance Slug (Route App) where
       InteroR{}         -> "intero"
       OldTutorialsR{}   -> "tutorial"
       TutorialR x       -> "tutorial-" <> x
+      LibrariesSingularR-> "libraries"
 
 instance YesodBreadcrumbs App where
     breadcrumb r =
@@ -139,3 +141,4 @@ instance YesodBreadcrumbs App where
             tutorials <- fmap appTutorials getYesod
             let title = maybe x tutorialTitle (Map.lookup (RegularTutorial x) tutorials)
             return ("Tutorial: " <> title,Just DocumentationR)
+        LibrariesSingularR   -> return ("Libraries",Just DocumentationR)
