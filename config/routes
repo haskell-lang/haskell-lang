@@ -21,3 +21,7 @@
 /tutorial OldTutorialsR GET
 /packages OldPackagesR GET
 /package/#PackageName OldPackageR GET
+
+/favicon.ico FaviconR GET
+/robots.txt RobotsR GET
+/sitemap.xml SitemapR GET

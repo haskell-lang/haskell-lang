@@ -85,6 +85,9 @@ instance Human (Route App) where
       OldTutorialsR{}      -> "Tutorials"
       TutorialR x          -> "Tutorial: " <> x
       LibrariesSingularR   -> "Libraries"
+      FaviconR             -> "favicon"
+      RobotsR              -> "robots"
+      SitemapR             -> "XML sitemap"
 
 instance Slug (Route App) where
   toSlug r =
@@ -110,6 +113,9 @@ instance Slug (Route App) where
       OldTutorialsR{}   -> "tutorial"
       TutorialR x       -> "tutorial-" <> x
       LibrariesSingularR-> "libraries"
+      FaviconR          -> "favicon"
+      RobotsR           -> "robots"
+      SitemapR          -> "XML sitemap"
 
 instance YesodBreadcrumbs App where
     breadcrumb r =
@@ -142,3 +148,6 @@ instance YesodBreadcrumbs App where
             let title = maybe x tutorialTitle (Map.lookup (RegularTutorial x) tutorials)
             return ("Tutorial: " <> title,Just DocumentationR)
         LibrariesSingularR   -> return ("Libraries",Just DocumentationR)
+        FaviconR             -> return ("favicon", Nothing)
+        RobotsR              -> return ("robots", Nothing)
+        SitemapR             -> return ("XML sitemap", Nothing)
