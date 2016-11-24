@@ -39,9 +39,9 @@ community = do
             ", "
             a_ [href_ "/irc"] " IRC"
             ", "
-            a_ [href_ "/questions/tagged?tagnames=haskell"] " Stack Overflow"
+            a_ [href_ "http://stackoverflow.com/questions/tagged?tagnames=haskell"] " Stack Overflow"
             ", "
-            a_ [href_ "/r/haskell"] " Reddit"
+            a_ [href_ "http://www.reddit.com/r/haskell"] " Reddit"
             ", and "
             a_ [href_ "/community"] " more"
             ". Pick a medium you want to converse on, and odds are you’ll find a vibrant Haskell community.")

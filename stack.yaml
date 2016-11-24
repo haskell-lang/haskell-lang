@@ -4,7 +4,7 @@ packages:
 - .
 - location:
     git: https://github.com/fpco/spiderweb
-    commit: b21d9b164f9fd22cc0d7a7096d485cd1a43fc0a9
+    commit: a5b7893d7473a54e3848258cef4b57ab48444f87
   extra-dep: true
 
 extra-deps:
