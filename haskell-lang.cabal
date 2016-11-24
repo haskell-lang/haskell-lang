@@ -49,6 +49,7 @@ library
                      -fno-warn-type-defaults
   build-depends:     base >= 4 && < 5
                    , aeson
+                   , async
                    , blaze-builder
                    , blaze-html
                    , blaze-markup
@@ -88,6 +89,7 @@ library
                    , yesod-gitrev
                    , yesod-static
                    , yesod-newsfeed
+                   , yesod-sitemap
                    , split
                    , random
                    , safe-exceptions
@@ -109,6 +111,7 @@ library
                      HL.Controller.News
                      HL.Controller.Packages
                      HL.Controller.Feed
+                     HL.Controller.Standard
                      HL.Dispatch
                      HL.Foundation
                      HL.Main
