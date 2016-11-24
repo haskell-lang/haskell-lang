@@ -37,14 +37,19 @@ data-files:          static/css/*.css
                      static/report/haskell2010/*.html
                      static/report/haskell2010/*.png
 
-executable haskell-lang
+flag library-only
+  default: False
+  description: Do not build the executable
+  manual: True
+
+library
   hs-source-dirs:    src/
   ghc-options:       -Wall
                      -O2
                      -fno-warn-type-defaults
-  main-is:           Main.hs
   build-depends:     base >= 4 && < 5
                    , aeson
+                   , async
                    , blaze-builder
                    , blaze-html
                    , blaze-markup
@@ -84,16 +89,20 @@ executable haskell-lang
                    , yesod-gitrev
                    , yesod-static
                    , yesod-newsfeed
+                   , yesod-sitemap
                    , split
                    , random
                    , safe-exceptions
                    , network-uri
 
-  other-modules:     HL.Controller
+  exposed-modules:   HL.Controller
                      HL.Controller.Community
                      HL.Controller.Deprecated
                      HL.Controller.Documentation
                      HL.Controller.GetStarted
+                     HL.Controller.Html
+                     HL.Controller.Intero
+                     HL.Controller.Tutorial
                      HL.Controller.Announcements
                      HL.Controller.Home
                      HL.Controller.Irc
@@ -102,11 +111,15 @@ executable haskell-lang
                      HL.Controller.News
                      HL.Controller.Packages
                      HL.Controller.Feed
+                     HL.Controller.Standard
                      HL.Dispatch
                      HL.Foundation
+                     HL.Main
                      HL.Model.Markdown
                      HL.Model.News
                      HL.Model.Packages
+                     HL.Model.Snippets
+                     HL.Model.Tutorial
                      HL.Static
                      HL.Types
                      HL.View
@@ -117,6 +130,7 @@ executable haskell-lang
                      HL.View.Announcements
                      HL.View.Home
                      HL.View.Home.Features
+                     HL.View.Home.Whyhaskell
                      HL.View.Markdown
                      HL.View.News
                      HL.View.Template
@@ -126,11 +140,22 @@ executable haskell-lang
                      Yesod.Lucid
                      Yesod.Slug
 
+executable haskell-lang
+  hs-source-dirs:    app/
+  ghc-options:       -Wall
+                     -O2
+                     -threaded
+  main-is:           Main.hs
+  build-depends:     base >= 4 && < 5
+                   , haskell-lang
+  if flag(library-only)
+    buildable:       False
+
 test-suite haskell-lang-test
-  hs-source-dirs:    src/
   type:              exitcode-stdio-1.0
-  main-is:           ../test/Main.hs
+  main-is:           test/Main.hs
   build-depends:     base
+                   , haskell-lang
                    , hspec
                    , text
                    , bytestring

@@ -1,8 +1,13 @@
 {-# LANGUAGE TemplateHaskell #-}
 -- | Web server.
 
-module Main where
+module HL.Main
+    ( prodMain
+    , develMain
+    ) where
 
+import           Control.Concurrent.Async (race_)
+import           Control.Concurrent (threadDelay)
 import           Control.Concurrent.MVar
 import           HL.Controller.Feed (toFeedEntry, getFeedEntries)
 import           HL.Dispatch ()
@@ -19,8 +24,8 @@ import           Yesod.GitRev (gitRev)
 import           Yesod.Static
 
 -- | Main entry point.
-main :: IO ()
-main =
+prodMain :: IO ()
+prodMain =
   do dir <- getStaticDir
      st <- static dir
      tmpDir <- getTemporaryDirectory
@@ -44,3 +49,18 @@ main =
          , appSnippetInfo = snippets
          , appTutorials = tutorials
          }
+
+develMain :: IO ()
+develMain = race_ watchTermFile prodMain
+
+watchTermFile :: IO ()
+watchTermFile =
+    loop
+  where
+    loop = do
+        exists <- doesFileExist "yesod-devel/devel-terminate"
+        if exists
+            then return ()
+            else do
+                threadDelay 100000
+                loop
