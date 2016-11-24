@@ -13,3 +13,4 @@ hl.tar.gz
 cabal.sandbox.config
 /.stack-work/
 *.swp
+yesod-devel/
