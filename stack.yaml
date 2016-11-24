@@ -1,4 +1,11 @@
-resolver: lts-5.13
+resolver: lts-6.25
+
+packages:
+- .
+- location:
+    git: https://github.com/fpco/spiderweb
+    commit: b21d9b164f9fd22cc0d7a7096d485cd1a43fc0a9
+  extra-dep: true
 
 extra-deps:
 - safe-exceptions-0.1.4.0

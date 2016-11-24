@@ -189,3 +189,5 @@ test-suite haskell-lang-test
                    , time
                    , monad-extras
                    , network-uri
+                   , spiderweb
+                   , warp

@@ -2,7 +2,8 @@
 -- | Web server.
 
 module HL.Main
-    ( prodMain
+    ( mkApp
+    , prodMain
     , develMain
     ) where
 
@@ -23,23 +24,19 @@ import           Yesod
 import           Yesod.GitRev (gitRev)
 import           Yesod.Static
 
--- | Main entry point.
-prodMain :: IO ()
-prodMain =
+mkApp :: IO App
+mkApp =
   do dir <- getStaticDir
      st <- static dir
      tmpDir <- getTemporaryDirectory
      let cacheDir = tmpDir </> "hl-cache"
      createDirectoryIfMissing True cacheDir
      cacheVar <- newMVar cacheDir
-     env <- getEnvironment
-     let port = maybe 1990 read $ lookup "PORT" env
      snippets <- getSnippets
      packageInfo <- getPackageInfo
      entries <- getFeedEntries
      tutorials <- getTutorials False
-     putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
-     warp port App
+     return App
          { appStatic = st
          , appCacheDir = cacheVar
          , appPackageInfo = packageInfo
@@ -49,6 +46,15 @@ prodMain =
          , appSnippetInfo = snippets
          , appTutorials = tutorials
          }
+
+-- | Main entry point.
+prodMain :: IO ()
+prodMain =
+  do env <- getEnvironment
+     let port = maybe 1990 read $ lookup "PORT" env
+     app <- mkApp
+     putStrLn ("Now running at: http://localhost:" ++ show port ++ "/")
+     warp port app
 
 develMain :: IO ()
 develMain = race_ watchTermFile prodMain
