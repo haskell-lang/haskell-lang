@@ -175,7 +175,7 @@ footer =
              (p_  hlCopy))
   where hlCopy :: View App ()
         hlCopy =
-          do span_ [class_ "item"] "\169 2014-2016 haskell-lang.org"
+          do span_ [class_ "item"] "\169 2014\8211\&2016 haskell-lang.org"
              span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
