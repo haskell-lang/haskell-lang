@@ -97,4 +97,5 @@ sigs :: View App ()
 sigs =
   do li_ (a_ [href_ "http://industry.haskell.org/"] "Industrial Haskell Group")
      li_ (a_ [href_ "http://commercialhaskell.com/"] "Commercial Haskell Group")
+     li_ (a_ [href_ "http://datahaskell.org"] "DataHaskell: data science, machine learning and scientific computation")
      li_ (a_ [href_ "http://lurk.org/groups/haskell-art/"] "Haskell Art")
