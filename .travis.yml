@@ -33,31 +33,33 @@ matrix:
     compiler: ": #stack default"
     addons: {apt: {packages: [libgmp-dev]}}
 
-  - env: BUILD=stack ARGS="--resolver lts-7"
-    compiler: ": #stack GHC 8.0.1"
-    addons: {apt: {packages: [libgmp-dev]}}
+  # No real matrix anymore, just build stack.yaml settings on Linux
+
+  #- env: BUILD=stack ARGS="--resolver lts-7"
+  #  compiler: ": #stack GHC 8.0.1"
+  #  addons: {apt: {packages: [libgmp-dev]}}
 
   # Nightly builds are allowed to fail
-  - env: BUILD=stack ARGS="--resolver nightly"
-    compiler: ": #stack nightly"
-    addons: {apt: {packages: [libgmp,libgmp-dev]}}
+  #- env: BUILD=stack ARGS="--resolver nightly"
+  #  compiler: ": #stack nightly"
+  #  addons: {apt: {packages: [libgmp,libgmp-dev]}}
 
   # Build on OS X in addition to Linux
-  - env: BUILD=stack ARGS=""
-    compiler: ": #stack default osx"
-    os: osx
+  #- env: BUILD=stack ARGS=""
+  #  compiler: ": #stack default osx"
+  #  os: osx
 
-  - env: BUILD=stack ARGS="--resolver lts-7"
-    compiler: ": #stack GHC 8.0.1 OS X"
-    os: osx
+  #- env: BUILD=stack ARGS="--resolver lts-7"
+  #  compiler: ": #stack GHC 8.0.1 OS X"
+  #  os: osx
 
-  - env: BUILD=stack ARGS="--resolver nightly"
-    compiler: ": #stack nightly osx"
-    os: osx
+  #- env: BUILD=stack ARGS="--resolver nightly"
+  #  compiler: ": #stack nightly osx"
+  #  os: osx
 
-  allow_failures:
-  - env: BUILD=stack ARGS="--resolver nightly"
-  - env: BUILD=stack ARGS="--resolver lts-7"
+  #allow_failures:
+  #- env: BUILD=stack ARGS="--resolver nightly"
+  #- env: BUILD=stack ARGS="--resolver lts-7"
 
 before_install:
 # Using compiler above sets CC to an invalid value, so unset it
