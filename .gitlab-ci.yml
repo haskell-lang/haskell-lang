@@ -1,0 +1,81 @@
+image: registry.gitlab.fpcomplete.com/fpco/default-build-image:17
+
+cache:
+  key: "$CI_BUILD_NAME"
+  paths:
+    - .stack-work/
+    - .stack-root/
+    - static/combined/
+
+stages:
+  - build
+  - deploy
+
+variables:
+    STACK_ROOT: "${CI_PROJECT_DIR}/.stack-root"
+    DOCKER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+
+# This creates anchors for bits of script that are reused between builds
+.anchors:
+  # The KUBE_* variables are set by Gitlab's Kubernetes deployment service
+  - &KUBELOGIN
+    echo "$KUBE_CA_PEM" >"$HOME/ca.pem" &&
+    kubectl config set-cluster cluster --server="$KUBE_URL" --certificate-authority="$HOME/ca.pem" &&
+    kubectl config set-credentials cluster --token="$KUBE_TOKEN" && kubectl config set-context cluster --cluster=cluster --user=cluster --namespace="$KUBE_NAMESPACE" &&
+    kubectl config use-context cluster
+
+build:
+  stage: build
+  only:
+    - master
+    - prod
+  script:
+    # Clear *_TOKEN variables during code build so that compile-time code can't access them
+    - CI_BUILD_TOKEN="" KUBE_TOKEN="" PROD_KUBE_TOKEN="" PROD_DOCKER_PASSWORD="" etc/scripts/stage_docker.sh --install-ghc --test
+    - docker build -t "${DOCKER_IMAGE}" etc/docker
+    - docker login -u gitlab-ci-token -p "${CI_BUILD_TOKEN}" "${CI_REGISTRY}"
+    - docker push "${DOCKER_IMAGE}"
+    - |
+      if [[ "$CI_BUILD_REF_NAME" == "master" ]]; then
+        docker tag "${DOCKER_IMAGE}" "${CI_REGISTRY_IMAGE}:latest"
+        docker push "${CI_REGISTRY_IMAGE}:latest"
+      fi
+
+deploy_master:
+  stage: deploy
+  only:
+    - master
+  environment:
+    name: haskell-lang-ci
+    url: https://ci.haskell-lang.org/
+  variables:
+    DEPLOYMENT_NAME: "haskell-lang-ci"
+  script:
+    - *KUBELOGIN
+    - kubectl set image "deployment/$DEPLOYMENT_NAME" haskell-lang="$DOCKER_IMAGE"
+    - kubectl rollout status "deployment/$DEPLOYMENT_NAME"
+
+deploy_prod:
+  stage: deploy
+  only:
+    - prod
+  environment:
+    name: haskell-lang-prod
+    url: https://haskell-lang.org/
+  variables:
+    DEPLOYMENT_NAME: "haskell-lang-prod"
+    PROD_DOCKER_IMAGE: "fpco/haskell-lang-prod:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+  script:
+    - export
+      KUBE_CA_PEM="$PROD_KUBE_CA_PEM"
+      KUBE_URL="$PROD_KUBE_URL"
+      KUBE_TOKEN="$PROD_KUBE_TOKEN"
+      KUBE_NAMESPACE="$PROD_KUBE_NAMESPACE"
+    - *KUBELOGIN
+    - docker login -u "$PROD_DOCKER_USERNAME" -p "${PROD_DOCKER_PASSWORD}"
+    - docker tag "$DOCKER_IMAGE" "$PROD_DOCKER_IMAGE"
+    - docker push "$PROD_DOCKER_IMAGE"
+    - docker tag "$DOCKER_IMAGE" "fpco/haskell-lang-prod:latest"
+    - docker push "fpco/haskell-lang-prod:latest"
+    - kubectl set image "deployment/$DEPLOYMENT_NAME" haskell-lang="$PROD_DOCKER_IMAGE"
+    - kubectl rollout status "deployment/$DEPLOYMENT_NAME"
