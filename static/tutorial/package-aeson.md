@@ -82,7 +82,7 @@ is relatively slow. So for better efficiency, you might want to override the
 `toEncoding` function `ToJSON` instance with:
 
 ``` haskell
-instance ToJSON Person
+instance ToJSON Person where
     toEncoding = genericToEncoding defaultOptions
 ```
 
