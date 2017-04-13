@@ -13,7 +13,10 @@ stages:
 
 variables:
     STACK_ROOT: "${CI_PROJECT_DIR}/.stack-root"
-    DOCKER_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+    DEPLOYMENT_IMAGE: "${CI_REGISTRY_IMAGE}:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+    DEPLOYMENT_NAME: "haskell-lang-review-${CI_BUILD_REF_SLUG}"
+    DEPLOYMENT_APP: "${CI_ENVIRONMENT_SLUG}"
+
 
 # This creates anchors for bits of script that are reused between builds
 .anchors:
@@ -23,48 +26,65 @@ variables:
     kubectl config set-cluster cluster --server="$KUBE_URL" --certificate-authority="$HOME/ca.pem" &&
     kubectl config set-credentials cluster --token="$KUBE_TOKEN" && kubectl config set-context cluster --cluster=cluster --user=cluster --namespace="$KUBE_NAMESPACE" &&
     kubectl config use-context cluster
+  - &KUBEAPPLY
+    kubectl apply -f <(envsubst <etc/kube/service_template.yaml) &&
+    kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml) &&
+    kubectl rollout status -f <(envsubst <etc/kube/deployment_template.yaml)
 
 build:
   stage: build
-  only:
-    - master
-    - prod
   script:
     # Clear *_TOKEN variables during code build so that compile-time code can't access them
     - CI_BUILD_TOKEN="" KUBE_TOKEN="" PROD_KUBE_TOKEN="" PROD_DOCKER_PASSWORD="" etc/scripts/stage_docker.sh --install-ghc --test
-    - docker build -t "${DOCKER_IMAGE}" etc/docker
+    - docker build -t "${DEPLOYMENT_IMAGE}" etc/docker
     - docker login -u gitlab-ci-token -p "${CI_BUILD_TOKEN}" "${CI_REGISTRY}"
-    - docker push "${DOCKER_IMAGE}"
+    - docker push "${DEPLOYMENT_IMAGE}"
     - |
       if [[ "$CI_BUILD_REF_NAME" == "master" ]]; then
-        docker tag "${DOCKER_IMAGE}" "${CI_REGISTRY_IMAGE}:latest"
+        docker tag "${DEPLOYMENT_IMAGE}" "${CI_REGISTRY_IMAGE}:latest"
         docker push "${CI_REGISTRY_IMAGE}:latest"
       fi
 
-deploy_master:
+deploy_review:
   stage: deploy
   only:
+    - branches
+  except:
     - master
   environment:
-    name: haskell-lang-ci
-    url: https://ci.haskell-lang.org/
+    name: haskell-lang-review/$CI_BUILD_REF_NAME
+    url: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-untrusted.fpcomplete.com/
+    on_stop: stop_review
   variables:
-    DEPLOYMENT_NAME: "haskell-lang-ci"
+    APPROOT: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-untrusted.fpcomplete.com/
   script:
     - *KUBELOGIN
-    - kubectl set image "deployment/$DEPLOYMENT_NAME" haskell-lang="$DOCKER_IMAGE"
-    - kubectl rollout status "deployment/$DEPLOYMENT_NAME"
+    - *KUBEAPPLY
+
+stop_review:
+  stage: deploy
+  only:
+    - branches
+  except:
+    - master
+  when: manual
+  environment:
+    name: haskell-lang-review/$CI_BUILD_REF_NAME
+    action: stop
+  script:
+    - *KUBELOGIN
+    - kubectl delete service,deployment -l app=${CI_ENVIRONMENT_SLUG}
 
 deploy_prod:
   stage: deploy
   only:
-    - prod
+    - master
   environment:
     name: haskell-lang-prod
     url: https://haskell-lang.org/
   variables:
     DEPLOYMENT_NAME: "haskell-lang-prod"
-    PROD_DOCKER_IMAGE: "fpco/haskell-lang-prod:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+    PROD_DEPLOYMENT_IMAGE: "fpco/haskell-lang-prod:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
   script:
     - export
       KUBE_CA_PEM="$PROD_KUBE_CA_PEM"
@@ -73,9 +93,11 @@ deploy_prod:
       KUBE_NAMESPACE="$PROD_KUBE_NAMESPACE"
     - *KUBELOGIN
     - docker login -u "$PROD_DOCKER_USERNAME" -p "${PROD_DOCKER_PASSWORD}"
-    - docker tag "$DOCKER_IMAGE" "$PROD_DOCKER_IMAGE"
-    - docker push "$PROD_DOCKER_IMAGE"
-    - docker tag "$DOCKER_IMAGE" "fpco/haskell-lang-prod:latest"
+    - docker tag "$DEPLOYMENT_IMAGE" "$PROD_DEPLOYMENT_IMAGE"
+    - docker push "$PROD_DEPLOYMENT_IMAGE"
+    - docker tag "$DEPLOYMENT_IMAGE" "fpco/haskell-lang-prod:latest"
     - docker push "fpco/haskell-lang-prod:latest"
-    - kubectl set image "deployment/$DEPLOYMENT_NAME" haskell-lang="$PROD_DOCKER_IMAGE"
+    - export DEPLOYMENT_IMAGE=$PROD_DEPLOYMENT_IMAGE
+    - kubectl apply -f <(envsubst <etc/kube/service_template.yaml)
+    - kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml)
     - kubectl rollout status "deployment/$DEPLOYMENT_NAME"

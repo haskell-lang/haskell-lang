@@ -1,0 +1,16 @@
+# Kubernetes
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: "${DEPLOYMENT_NAME}"
+  labels:
+    app: "${DEPLOYMENT_APP}"
+spec:
+  ports:
+  - name: http
+    port: 9090
+    targetPort: http
+  selector:
+    app: "${DEPLOYMENT_APP}"
+  type: ClusterIP
