@@ -26,11 +26,9 @@ features =
 purefunc :: View App ()
 purefunc =
   do h2_ "Purely functional"
-     p_ "Every function in Haskell is a function in the mathematical sense (i.e., \"pure\"). \
-        \Even side-effecting IO operations are but a description of what to do, produced \
-        \by pure code. There are no statements or instructions, only expressions which \
-        \cannot mutate variables (local or global) nor access state like time or random \
-        \numbers."
+     p_ "Haskell has no statements, instructions, or variables. Every value is a constant. \
+        \Operations that have side-effects or perform IO are described using a separate IO type \
+        \ that distinguishes them from ordinary pure values."
      p_ [class_ "expand"] (a_ "Click to expand")
      div_ [class_ "expandable"] $ do
        p_ (do "The following function takes an integer and returns an integer. "
@@ -56,11 +54,7 @@ purefunc =
 statically :: View App ()
 statically =
   do h2_ "Statically typed"
-     p_ "Every expression in Haskell has a type which is determined at compile time. \
-       \All the types composed together by function application have to match up. If \
-       \they don't, the program will be rejected by the compiler. Types become not \
-       \only a form of guarantee, but a language for expressing the construction \
-       \of programs."
+     p_ ""
      p_ [class_ "expand"] (a_ "Click to expand")
      div_ [class_ "expandable"] $ do
        p_ "All Haskell values have a type:"
@@ -115,10 +109,8 @@ concurrent =
 inference :: View App ()
 inference =
   do h2_ "Type inference"
-     p_ "You don't have to explicitly write out every type in a Haskell program. \
-       \Types will be inferred by unifying every type bidirectionally. However, you \
-       \can write out types if you choose, or ask the compiler to write them for you \
-       \for handy documentation."
+     p_ "Static types without the pain. Specify the types when you want to, let the \
+        \compiler infer the types when you don't."
      p_ [class_ "expand"] (a_ "Click to expand")
      div_ [class_ "expandable"] $ do
        p_ "This example has a type signature for every binding:"
@@ -153,11 +145,10 @@ inference =
 lazy :: View App ()
 lazy =
   do h2_ "Lazy"
-     p_ "Functions don't evaluate their arguments. This means that programs \
-       \can compose together very well, with the ability to write control \
-       \constructs (such as if/else) just by writing normal functions. The purity \
-       \of Haskell code makes it easy to fuse chains of functions together, allowing \
-       \for performance benefits."
+     p_ "Values are computed when they are needed, rather than when they are defined in code. \
+        \ If a value you defined is not used, it never gets evaluated. This means you can spend \
+        \less time thinking about how your program is executed, and more time thinking about what \
+        \your program does."
      p_ [class_ "expand"] $ a_ "Click to expand"
      div_ [class_ "expandable"] $ do
        p_ "Define control structures easily:"
