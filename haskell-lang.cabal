@@ -112,6 +112,7 @@ library
                      HL.Controller.Packages
                      HL.Controller.Feed
                      HL.Controller.Standard
+                     HL.Controller.SuccessStories
                      HL.Dispatch
                      HL.Foundation
                      HL.Main

@@ -22,6 +22,7 @@ import HL.Controller.Packages
 import HL.Controller.Intero
 import HL.Controller.Feed
 import HL.Controller.Standard
+import HL.Controller.SuccessStories
 import HL.Controller.Tutorial
 import HL.Foundation
 import Yesod.Core.Dispatch

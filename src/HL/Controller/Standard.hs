@@ -57,6 +57,12 @@ getSitemapR = do
             , sitemapPriority = Just 0.7
             }
         yield SitemapUrl
+            { sitemapLoc = SuccessStoriesR
+            , sitemapLastMod = Nothing
+            , sitemapChangeFreq = Nothing
+            , sitemapPriority = Just 0.7
+            }
+        yield SitemapUrl
             { sitemapLoc = DocumentationR
             , sitemapLastMod = Nothing
             , sitemapChangeFreq = Nothing
