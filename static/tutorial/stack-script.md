@@ -113,20 +113,19 @@ correct GHC is downloaded and installed if necessary.
 
 ## Script interpreter
 
-Remember to pass all of these flags on the command line is very
+Remembering to pass all of these flags on the command line is very
 tedious, error prone, and makes it difficult to share scripts with
 others. To address this, Stack has a
 [*script interpreter* feature](https://docs.haskellstack.org/en/stable/GUIDE/#script-interpreter)
-which allows these flags to be placed at the top of your script. The
-flags accepted are identical to what you're used to on the command
-line. So if we modify our `http.hs` to say:
+which allows these flags to be placed at the top of your script. Stack
+also has a dedicated `script` command which has some nice features
+like auto-detection of packages you need based on import statements.
+
+If we modify our `http.hs` to say:
 
 ```haskell
 #!/usr/bin/env stack
-{- stack --resolver lts-6.15 --install-ghc
-    runghc
-    --package http-conduit
--}
+-- stack --resolver lts-6.15 script
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.ByteString.Lazy.Char8 as L8
 import           Network.HTTP.Simple
