@@ -315,4 +315,254 @@ main = do
 
 ## Async
 
-**FIXME** Needs to be written
+Sometimes you need a bit more control than is offered by the
+`Concurrently` family. In those cases, you'll want to use the `Async`
+type and its associated functions. The core type for all of this is:
+
+```haskell
+data Async a
+```
+
+This represents an action running in a different thread which, if
+successful, will give a result of type `a`. There are lots of things
+you can do to interact with that thread:
+
+* See if it's still running
+* Wait for it to finish
+* Get its result
+* Kill it early
+
+Most of this is pretty straightforward, but there are three possibly
+surprising things worth pointing out right off the bat:
+
+1. I used the phrase "if successful" above. It's possible that the
+   action will instead _fail_ with a runtime exception. Therefore, any
+   function which gets a result also needs to deal with a possible
+   `SomeException`. As you'll see, a number of the functions here deal
+   with that case by simply rethrowing that exception in the calling
+   thread.
+2. In order to allow for more composability (as we'll see later), the
+   ability to query a thread's status can be performed from within an
+   `STM` transaction. Most (if not all) of these `STM` functions also
+   have `IO` variants, but that's just for user convenience.
+3. Killing a thread early, or canceling it, involves throwing it an
+   async exception. If your action misbehaves with async exceptions,
+   canceling may fail. We'll demonstrate that below, but I recommend
+   checking out the
+   [safe-exceptions tutorial](https://haskell-lang.org/library/safe-exceptions)
+   for advice on doing this right.
+
+But before we can get into details, let's just see the launching of
+some basic `Async`s.
+
+### Launching
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Monad
+import Say
+
+talker :: String -> IO ()
+talker str = forever $ do
+  sayString str
+  threadDelay 500000
+
+getResult :: IO Int
+getResult = do
+  sayString "Doing some big computation..."
+  threadDelay 2000000
+  sayString "Done!"
+  return 42
+
+main :: IO ()
+main = do
+  async1 <- async $ talker "async"
+  withAsync (talker "withAsync") $ \async2 -> do
+    async3 <- async getResult
+
+    res <- poll async3
+    case res of
+      Nothing -> sayString "getResult still running"
+      Just (Left e) -> sayString $ "getResult failed: " ++ show e
+      Just (Right x) -> sayString $ "getResult finished: " ++ show x
+
+    res <- waitCatch async3
+    case res of
+      Left e -> sayString $ "getResult failed: " ++ show e
+      Right x -> sayString $ "getResult finished: " ++ show x
+
+    res <- wait async3
+    sayString $ "getResult finished: " ++ show (res :: Int)
+
+  sayString "withAsync talker should be dead, but not async"
+  threadDelay 2000000
+
+  sayString "Now killing async talker"
+  cancel async1
+
+  threadDelay 2000000
+  sayString "Goodbye!"
+```
+
+This demonstrates the two most common ways of launching an `Async`:
+
+* The `async` function will launch a new `Async` without any plans to
+  kill the thread. It's your responsibility to do so if you wish,
+  explicitly, via `cancel`
+* `withAsync` will launch a thread and run an action with that thread
+  running. When the supplied action finishes, that thread is
+  `cancel`ed.
+
+The advantage of `withAsync` is that it is exception safe.
+
+__Exercise__ Implement your own `withAsync` using `bracket`, `async`,
+and `cancel`.
+
+This also demonstrated three of the most popular functions for
+querying an `Async`'s status:
+
+* `poll` checks if a thread is still running. If it's complete, it
+  gives you a `Just` with `Either` the `SomeException` it failed with,
+  or the result.
+* `waitCatch` will block until the thread exits, and then give you
+  `Either` the `SomeException` or the result.
+* `wait` also blocks, but in the case of a `SomeException` will throw
+  it as a runtime exception.
+
+__Exercise__ Implement `wait` in terms of `waitCatch`. Can you
+efficiently implement `waitCatch` in terms of `poll`?
+
+In general, you should prefer `withAsync` in place of `async` to avoid
+having unneeded threads running. If you specifically need a thread to
+outlive a certain block, then `async` is the right function to use.
+
+### Composing in STM
+
+Let's simplify our example above a bit, and instead of using the `IO`
+variants of the functions, use the `STM` functions. This should look
+pretty familiar:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Concurrent.STM
+import Control.Monad
+import Say
+
+getResult :: IO Int
+getResult = do
+  sayString "Doing some big computation..."
+  threadDelay 2000000
+  sayString "Done!"
+  return 42
+
+main :: IO ()
+main = withAsync getResult $ \a -> do
+  res <- atomically $ pollSTM a
+
+  case res of
+    Nothing -> sayString "getResult still running"
+    Just (Left e) -> sayString $ "getResult failed: " ++ show e
+    Just (Right x) -> sayString $ "getResult finished: " ++ show x
+
+  res <- atomically $ waitCatchSTM a
+  case res of
+    Left e -> sayString $ "getResult failed: " ++ show e
+    Right x -> sayString $ "getResult finished: " ++ show x
+
+  res <- atomically $ waitSTM a
+  sayString $ "getResult finished: " ++ show (res :: Int)
+```
+
+All we've done is append `STM` to the function names and stick an
+`atomically` at the front. On its own, this isn't too exciting, just
+informative.
+
+__Exercise__ Implement both `waitCatchSTM` and `waitSTM` in terms of
+`pollSTM`
+
+__Exercise__ Now implement `pollSTM` in terms of `waitCatchSTM`.
+
+So what's so great about this STM business? For one, it can allow us
+to do more sophisticated queries, like racing two `Async`s:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+import Control.Applicative ((<|>))
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Concurrent.STM
+import Say
+
+getResult1 :: IO Int
+getResult1 = do
+  sayString "Doing some big computation..."
+  threadDelay 2000000
+  sayString "Done!"
+  return 42
+
+getResult2 :: IO Int
+getResult2 = do
+  sayString "Doing some smaller computation..."
+  threadDelay 1000000
+  sayString "Done!"
+  return 41
+
+main :: IO ()
+main = do
+  res <- withAsync getResult1 $ \a1 ->
+         withAsync getResult2 $ \a2 ->
+         atomically $ waitSTM a1 <|> waitSTM a2
+
+  sayString $ "getResult finished: " ++ show (res :: Int)
+```
+
+Yes, in this case using the `race` function would make more sense, but
+as problems grow in complexity, this flexibility will be important.
+
+__Exercise__ Identify the behavior of this program if `getResult2`
+throws an exception. Can you modify the code so that, if either of the
+threads completes successfully, we get a result?
+
+### Breaking async exceptions
+
+Look at how easy it is to break our program completely:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Exception
+import Control.Monad
+import Say
+
+evil :: IO ()
+evil = forever $ do
+  eres <- try $ threadDelay 1000000
+  sayShow (eres :: Either SomeException ())
+
+main :: IO ()
+main = withAsync evil $ const $ return ()
+```
+
+This code will loop forever, since the `cancel` call's exception is
+caught by the `try` and execution continues indefinitely. This is
+_very bad code_, don't do this!
+
+__Exercise__ Switch the import from `Control.Exception` to
+`Control.Exception.Safe`. What happens? Why?
+
+### Linking
+
+**FIXME**
+
+## Lifted
+
+**FIXME**
