@@ -561,8 +561,176 @@ __Exercise__ Switch the import from `Control.Exception` to
 
 ### Linking
 
-**FIXME**
+Let's say you want to run some kind of a background processing
+thread. You want to kick it off, leave it running, and essentially
+forget all about it. However, if that thread goes down for some
+reason, you need to ensure that your main thread goes down too. Such a
+situation makes a lot of sense, for example, with a job queue.
+
+To make this work, you can use the `link` function, which ensures that
+if your `Async` ends with an exception, that exception is rethrown to
+the main thread.
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+{-# LANGUAGE OverloadedStrings #-}
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Concurrent.STM
+import Control.Monad (forever)
+import Say (say)
+import Data.Text (Text)
+
+data Work = Work Text -- intentionally lazy, you'll see why below
+
+jobQueue :: TChan Work -> IO a
+jobQueue chan = forever $ do
+  Work t <- atomically $ readTChan chan
+  say t
+
+main :: IO ()
+main = do
+  chan <- newTChanIO
+  a <- async $ jobQueue chan
+  link a
+  forever $ do
+    atomically $ do
+      writeTChan chan $ Work "Hello"
+      writeTChan chan $ Work undefined
+      writeTChan chan $ Work "World"
+    threadDelay 1000000
+```
+
+__Question__ What's the behavior without the `link` call?
+
+__Question__ What's the behavior if `Work` was strict in its `Text`?
+How about if we forced evaluation with `writeTChan chan $! Work $!
+undefined`?
+
+__Exercise__ Rewrite this program to use `race` instead of `async` and
+`link`.
 
 ## Lifted
 
-**FIXME**
+All of the functions in `Control.Concurrent.Async` live in either the
+`STM` or `IO` types. Many of the `IO` functions&mdash;like
+`cancel`&mdash;could be lifted to `MonadIO` with a simple `liftIO`
+call. However, many others, like `async`, cannot (since they have the
+`IO` type appearing as an input, otherwise known as _negative
+position_). That would seem to exclude the possibility of using monad
+transformers.
+
+We can make usage of a transformer like `ReaderT` work by manually
+wrapping/unwrapping its constructor. Let's adapt the `jobQueue`
+example from above to use a `ReaderT` and see how that goes:
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+{-# LANGUAGE OverloadedStrings #-}
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async
+import Control.Concurrent.STM
+import Control.Monad (forever)
+import Say (say)
+import Data.Text (Text)
+import Control.Monad.Reader
+
+data Work = Work Text
+
+jobQueue :: ReaderT (TChan Work) IO a
+jobQueue = forever $ do
+  chan <- ask
+  Work t <- liftIO $ atomically $ readTChan chan
+  say t
+
+inner :: ReaderT (TChan Work) IO ()
+inner = ReaderT $ \chan -> do
+  race_ (runReaderT jobQueue chan) $ flip runReaderT chan $ do
+    forever $ do
+      chan <- ask
+      liftIO $ atomically $ do
+        writeTChan chan $ Work "Hello"
+        writeTChan chan $ Work undefined
+        writeTChan chan $ Work "World"
+      liftIO $ threadDelay 1000000
+
+main :: IO ()
+main = do
+  chan <- newTChanIO
+  runReaderT inner chan
+```
+
+Workable, but tedious. Fortunately, the `lifted-async` package
+provides a version of the async API which is lifted to many more
+monads. Let's see how a simple change in import lets us write much
+nicer code.
+
+```haskell
+#!/usr/bin/env stack
+-- stack --resolver lts-8.12 script
+{-# LANGUAGE OverloadedStrings #-}
+import Control.Concurrent (threadDelay)
+import Control.Concurrent.Async.Lifted.Safe
+import Control.Concurrent.STM
+import Control.Monad (forever)
+import Say (say)
+import Data.Text (Text)
+import Control.Monad.Reader
+
+data Work = Work Text
+
+jobQueue :: ReaderT (TChan Work) IO a
+jobQueue = forever $ do
+  chan <- ask
+  Work t <- liftIO $ atomically $ readTChan chan
+  say t
+
+inner :: ReaderT (TChan Work) IO ()
+inner = do
+  race_ jobQueue $ do
+    forever $ do
+      chan <- ask
+      liftIO $ atomically $ do
+        writeTChan chan $ Work "Hello"
+        writeTChan chan $ Work undefined
+        writeTChan chan $ Work "World"
+      liftIO $ threadDelay 1000000
+
+main :: IO ()
+main = do
+  chan <- newTChanIO
+  runReaderT inner chan
+```
+
+All of the `runReaderT`/`ReaderT` mess in `inner` completely
+disappeared.
+
+You may be wondering why the module name has a `Safe` at the end. The
+reason has to do with _discarded monadic state_. Transformers like
+`StateT` and `WriterT` introduce additional temporary state in between
+computations. For example, with `put 5`, we have modified the value
+stored by a `StateT`.
+
+Imagine a function like `concurrently (put 5) (put 6)`. Which state
+will survive? It's frankly arbitrary, and there are three valid
+options to consider:
+
+* The first one
+* The second one
+* Discard both states
+
+What's special about the `Safe` module is that it only works for
+transformer stacks that have no intermediate state, such as `ReaderT`.
+
+Confused by all of that? OK, here are some simple rules:
+
+* If your code is easy to write and uncluttered with the normal
+  `async` API, just use that
+* If you have a transformer stack and are fighting with type errors,
+  you can safely used the `Control.Concurrent.Async.Lifted.Safe`
+  module.
+* If that's not enough, you can use `Control.Concurrent.Async.Lifted`,
+  but give strong consideration to whether you are unintentionally
+  discarding intermediate state in ways that you shouldn't.
