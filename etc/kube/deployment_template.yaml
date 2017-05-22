@@ -1,0 +1,48 @@
+# Kubernetes
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "${DEPLOYMENT_NAME}"
+spec:
+  replicas: 2
+  minReadySeconds: 5
+  template:
+    metadata:
+      labels:
+        app: "${DEPLOYMENT_APP}"
+    spec:
+      containers:
+        - name: haskell-lang
+          image: "${DEPLOYMENT_IMAGE}"
+          imagePullPolicy: Always
+          env:
+            - name: PORT
+              value: "9090"
+            - name: APPROOT
+              value: "${APPROOT}"
+          workingDir: /haskell-lang
+          command:
+            - haskell-lang
+          ports:
+            - name: http
+              containerPort: 9090
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 9090
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 9090
+            initialDelaySeconds: 60
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+      imagePullSecrets:
+        - name: registry-key
