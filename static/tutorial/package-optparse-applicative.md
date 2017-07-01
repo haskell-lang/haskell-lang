@@ -16,6 +16,7 @@ Basic example
 Here's an example:
 
 ```haskell
+import Data.Semigroup ((<>))
 import Options.Applicative
 
 data Opts = Opts
@@ -71,6 +72,7 @@ Sub-commands example
 It's also easy to create a program with multiple sub-commands:
 
 ```haskell
+import Data.Semigroup ((<>))
 import Options.Applicative
 
 data Opts = Opts
