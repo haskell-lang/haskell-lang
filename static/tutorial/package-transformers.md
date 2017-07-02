@@ -383,7 +383,7 @@ to provide `EitherT`-like functionality from `runContT`. Indeed we
 could have also used a shorthand such as `runNoCC x = callCC $ \_ -> x`
 to clean up further.
 
-The immediate picture is that `breakOut` being the labmda parameter
+The immediate picture is that `breakOut` being the lambda parameter
 to the second scope, serves as a "call away" mechanism to break out
 of the context, similarly to `left` in `EitherT` and `break;` in
 many imperative languages, or `goto` with a label in C, for instance.
