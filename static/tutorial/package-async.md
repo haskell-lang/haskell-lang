@@ -42,7 +42,11 @@ you can get away with `concurrently`/`race`/`Concurrently`, you should.
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Concurrent
 import Control.Concurrent.Async
 
@@ -68,7 +72,11 @@ function returns only the first one to complete:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Concurrent
 import Control.Concurrent.Async
 
@@ -96,8 +104,11 @@ instance. We can demonstrate that, though the code will be quite a bit more
 verbose:
 
 ```haskell
-#!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Applicative
 import Control.Concurrent
 import Control.Concurrent.Async
@@ -130,7 +141,11 @@ great for larger scale cases, such as when we want to discard some results.
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Concurrent.Async
 import Data.Foldable (traverse_)
 
@@ -168,7 +183,11 @@ other thread:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Concurrent
 import Control.Concurrent.Async
 import Control.Exception
@@ -206,10 +225,14 @@ thread to continue running as long as the main thread is in operation:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+-}
 import Control.Concurrent
 import Control.Concurrent.Async
-import Control.Exception
+import Control.Exception (assert)
 
 -- | Print successive numbers to stdout. Notice how it returns @a@ instead of
 -- @()@. This lets the type system know that, under normal circumstances, this
@@ -266,7 +289,13 @@ the monadic state to make this work.
 
 ```haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.10 runghc --package async
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package monad-control
+  --package mtl
+-}
 {-# LANGUAGE FlexibleContexts #-}
 import Control.Concurrent
 import Control.Concurrent.Async
@@ -359,7 +388,12 @@ some basic `Async`s.
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package say
+-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
 import Control.Monad
@@ -447,7 +481,13 @@ pretty familiar:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package say
+  --package stm
+-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
 import Control.Concurrent.STM
@@ -493,7 +533,13 @@ to do more sophisticated queries, like racing two `Async`s:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package say
+  --package stm
+-}
 import Control.Applicative ((<|>))
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
@@ -536,7 +582,13 @@ Look at how easy it is to break our program completely:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package say
+  --package safe-exceptions
+-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
 import Control.Exception
@@ -572,8 +624,14 @@ if your `Async` ends with an exception, that exception is rethrown to
 the main thread.
 
 ```haskell
-#!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package say
+  --package stm
+  --package text
+-}
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
@@ -627,7 +685,15 @@ example from above to use a `ReaderT` and see how that goes:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package async
+  --package mtl
+  --package say
+  --package stm
+  --package text
+-}
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async
@@ -669,7 +735,15 @@ nicer code.
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-8.12 script
+{-
+stack script
+  --resolver lts-8.21
+  --package lifted-async
+  --package mtl
+  --package say
+  --package stm
+  --package text
+-}
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Concurrent (threadDelay)
 import Control.Concurrent.Async.Lifted.Safe
