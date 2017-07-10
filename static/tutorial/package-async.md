@@ -209,7 +209,7 @@ thread to continue running as long as the main thread is in operation:
 -- stack script --resolver lts-8.22
 import Control.Concurrent
 import Control.Concurrent.Async
-import Control.Exception (assert)
+import Control.Exception
 
 -- | Print successive numbers to stdout. Notice how it returns @a@ instead of
 -- @()@. This lets the type system know that, under normal circumstances, this
