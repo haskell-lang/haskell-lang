@@ -572,6 +572,7 @@ if your `Async` ends with an exception, that exception is rethrown to
 the main thread.
 
 ```haskell
+#!/usr/bin/env stack
 -- stack script --resolver lts-8.22
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Concurrent (threadDelay)
