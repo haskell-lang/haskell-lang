@@ -96,6 +96,7 @@ instance. We can demonstrate that, though the code will be quite a bit more
 verbose:
 
 ```haskell
+#!/usr/bin/env stack
 -- stack script --resolver lts-8.22
 import Control.Applicative
 import Control.Concurrent
