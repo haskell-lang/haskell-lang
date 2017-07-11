@@ -58,7 +58,7 @@ compiler generate the implementation for you.
 
 ``` haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.13 runghc --package aeson
+-- stack script --resolver lts-8.22
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 import Data.Aeson
@@ -100,7 +100,7 @@ reverse - create a `Value` from a Haskell value of your type.
 
 ``` haskell
 #!/usr/bin/env stack
--- stack --install-ghc --resolver lts-5.13 runghc --package aeson
+-- stack script --resolver lts-8.22
 {-# LANGUAGE OverloadedStrings #-}
 import Control.Applicative
 import Data.Aeson
