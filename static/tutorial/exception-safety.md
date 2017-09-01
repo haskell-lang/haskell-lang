@@ -236,13 +236,13 @@ However, it's less clear that
 uninterruptible masking is the right thing. There is a long discussion
 of this
 [on the safe-exceptions issue tracker](https://github.com/fpco/safe-exceptions/issues/3). Ultimately,
-the decision from that disucssion is that it is better to err on the
+the decision from that discussion is that it is better to err on the
 side of caution and use uninterruptible masking, at the possible risk
 of introducing delays or deadlocks. (See the section on `hClose` and
 flushing for more details.)
 
-Continuing with our ongoing example, let's look at how to write an
-allocation function that closes two files:
+Continuing with our ongoing example, let's look at how to write a
+cleanup function that closes two files:
 
 ```haskell
 close2Files (h1, h2) = closeFile h1 `finally` closeFile h2
