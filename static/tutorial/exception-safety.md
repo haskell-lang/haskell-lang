@@ -236,7 +236,7 @@ However, it's less clear that
 uninterruptible masking is the right thing. There is a long discussion
 of this
 [on the safe-exceptions issue tracker](https://github.com/fpco/safe-exceptions/issues/3). Ultimately,
-the decision from that disucssion is that it is better to err on the
+the decision from that discussion is that it is better to err on the
 side of caution and use uninterruptible masking, at the possible risk
 of introducing delays or deadlocks. (See the section on `hClose` and
 flushing for more details.)
