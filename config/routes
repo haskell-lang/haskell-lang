@@ -8,6 +8,7 @@
 /irc IrcR GET
 /mailing-lists MailingListsR GET
 /success-stories SuccessStoriesR GET
+/how-to-contribute HowToContributeR GET
 /documentation DocumentationR GET
 /library LibrariesSingularR GET
 /libraries LibrariesR GET

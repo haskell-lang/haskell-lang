@@ -46,6 +46,7 @@ online url =
   do li_ (a_ [href_ (url MailingListsR)] "The Haskell mailing lists")
      li_ (a_ [href_ (url IrcR)] "IRC (online chat)")
      li_ (a_ [href_ (url SuccessStoriesR)] "Haskell success stories")
+     li_ (a_ [href_ (url HowToContributeR)] "How to contribute to Haskell projects")
      li_ (a_ [href_ "http://stackoverflow.com/questions/tagged?tagnames=haskell"] "StackOverflow")
      li_ (a_ [href_ "https://plus.google.com/communities/104818126031270146189"] "Google+ community")
      li_ (a_ [href_ "https://www.facebook.com/groups/programming.haskell/"] "Facebook community")
