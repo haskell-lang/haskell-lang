@@ -4,6 +4,8 @@ Below is a list of projects that have well-labeled newcomer issues.
 
 If your project fits this description as well, feel free to [open a PR to add it to the list](https://github.com/haskell-lang/haskell-lang/pulls).
 
+Check out [Haskell Weekly](https://haskellweekly.news/) for a list of hand-picked issues each week.
+
 + [aeson](https://github.com/bos/aeson)
 
   > aeson is a fast Haskell library for working with JSON data.
