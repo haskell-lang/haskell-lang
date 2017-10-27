@@ -71,6 +71,10 @@ h2 {
   color: #fff;
 }
 
+.footer .brand a {
+  color: #428bca
+}
+
 .footer .item + .item {
   margin-left: 2em;
 }

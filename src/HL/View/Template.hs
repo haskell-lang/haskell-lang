@@ -176,6 +176,16 @@ footer =
   where hlCopy :: View App ()
         hlCopy =
           do span_ [class_ "item"] "\169 2014\8211\&2017 haskell-lang.org"
+             home <- fmap (== Just HomeR) (lift (asks pageRoute))
+             unless
+               home
+               (span_
+                  [class_ "item brand"]
+                  (a_
+                     [ href_ "https://www.fpcomplete.com/"
+                     , title_ "Created and run by FP Complete"
+                     ]
+                     "FP Complete"))
              span_ [class_ "item footer-contribute pull-right"]
                    (do "Got changes to contribute? "
                        a_ [href_ "https://github.com/haskell-lang/haskell-lang"] "Fork or comment on Github")
