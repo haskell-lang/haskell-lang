@@ -110,3 +110,19 @@ commons:
   - name: wreq
     description: |
       A wrapper over http-client with a lensy API.
+
+- title: Web/HTTP servers
+  slug: http-servers
+  description: |
+      Servers for running web applications and APIs over HTTP.
+  choices:
+  - name: wai
+    description: |
+      A minimal interface for defining web applications. The most common WAI
+      backend is Warp.
+  - name: warp
+    description: |
+      A fast, lightweight web server.
+  - name: servant
+    description: |
+      Combinators for defining web APIs as types.
