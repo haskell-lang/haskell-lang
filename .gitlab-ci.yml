@@ -101,3 +101,30 @@ deploy_prod:
     - kubectl apply -f <(envsubst <etc/kube/service_template.yaml)
     - kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml)
     - kubectl rollout status "deployment/$DEPLOYMENT_NAME"
+
+deploy_prod_v2:
+  stage: deploy
+  only:
+    - master
+  environment:
+    name: haskell-lang-prod
+    url: https://haskell-lang.org/
+  variables:
+    DEPLOYMENT_NAME: "haskell-lang-prod"
+    PROD_DEPLOYMENT_IMAGE: "fpco/haskell-lang-prod:${CI_BUILD_REF_SLUG}_${CI_PIPELINE_ID}"
+  script:
+    - export
+      KUBE_CA_PEM="$PROD_V2_KUBE_CA_PEM"
+      KUBE_URL="$PROD_V2_KUBE_URL"
+      KUBE_TOKEN="$PROD_V2_KUBE_TOKEN"
+      KUBE_NAMESPACE="$PROD_V2_KUBE_NAMESPACE"
+    - *KUBELOGIN
+    - docker login -u "$PROD_DOCKER_USERNAME" -p "${PROD_DOCKER_PASSWORD}"
+    - docker tag "$DEPLOYMENT_IMAGE" "$PROD_DEPLOYMENT_IMAGE"
+    - docker push "$PROD_DEPLOYMENT_IMAGE"
+    - docker tag "$DEPLOYMENT_IMAGE" "fpco/haskell-lang-prod:latest"
+    - docker push "fpco/haskell-lang-prod:latest"
+    - export DEPLOYMENT_IMAGE=$PROD_DEPLOYMENT_IMAGE
+    - kubectl apply -f <(envsubst <etc/kube/service_template.yaml)
+    - kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml)
+    - kubectl rollout status "deployment/$DEPLOYMENT_NAME"
