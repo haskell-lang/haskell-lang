@@ -662,18 +662,17 @@ main = do
   runReaderT inner chan
 ```
 
-Workable, but tedious. Fortunately, the `lifted-async` package
-provides a version of the async API which is lifted to many more
-monads. Let's see how a simple change in import lets us write much
-nicer code.
+Workable, but tedious. Fortunately, the `unliftio` package provides a
+version of the async API which is lifted to many more monads. Let's
+see how a simple change in import lets us write much nicer code.
 
 ```haskell
 #!/usr/bin/env stack
--- stack script --resolver lts-8.22
+-- stack script --resolver lts-10.3
 {-# LANGUAGE OverloadedStrings #-}
-import Control.Concurrent (threadDelay)
-import Control.Concurrent.Async.Lifted.Safe
-import Control.Concurrent.STM
+import UnliftIO.Async
+import UnliftIO.Concurrent (threadDelay)
+import UnliftIO.STM
 import Control.Monad (forever)
 import Say (say)
 import Data.Text (Text)
@@ -707,30 +706,18 @@ main = do
 All of the `runReaderT`/`ReaderT` mess in `inner` completely
 disappeared.
 
-You may be wondering why the module name has a `Safe` at the end. The
-reason has to do with _discarded monadic state_. Transformers like
-`StateT` and `WriterT` introduce additional temporary state in between
-computations. For example, with `put 5`, we have modified the value
-stored by a `StateT`.
-
-Imagine a function like `concurrently (put 5) (put 6)`. Which state
-will survive? It's frankly arbitrary, and there are three valid
-options to consider:
+This will work for any monad stack which is an instance of
+`MonadUnliftIO`, which allows for transformers like `ReaderT` or
+`IdentityT`, but disallows transformers like `StateT` and `WriterT` as
+they will result in discarded monadic state. Imagine a function like
+`concurrently (put 5) (put 6)`. Which state will survive? It's frankly
+arbitrary, and there are three valid options to consider:
 
 * The first one
 * The second one
 * Discard both states
 
-What's special about the `Safe` module is that it only works for
-transformer stacks that have no intermediate state, such as `ReaderT`.
-
-Confused by all of that? OK, here are some simple rules:
-
-* If your code is easy to write and uncluttered with the normal
-  `async` API, just use that
-* If you have a transformer stack and are fighting with type errors,
-  you can safely used the `Control.Concurrent.Async.Lifted.Safe`
-  module.
-* If that's not enough, you can use `Control.Concurrent.Async.Lifted`,
-  but give strong consideration to whether you are unintentionally
-  discarding intermediate state in ways that you shouldn't.
+Using `UnliftIO.Async` as a drop in replacement for
+`Control.Concurrent.Async` is straightforward, the only API change to
+be aware of is that the `Async` data type will take an extra type
+paramter for the underlying monad.
