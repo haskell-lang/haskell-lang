@@ -20,8 +20,6 @@ module HL.Foundation
   ,Mode(..))
   where
 
---import Control.Concurrent.MVar.Lifted
---import Control.Concurrent.MVar
 import HL.Static
 import HL.Types
 
