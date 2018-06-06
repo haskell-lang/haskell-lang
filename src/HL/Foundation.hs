@@ -12,7 +12,7 @@ module HL.Foundation
   (module HL.Static
   ,App(..)
   ,Route(..)
-  ,Handler
+  ,HL.Foundation.Handler
   ,Widget
   ,resourcesApp
   ,Slug(..)
@@ -20,10 +20,12 @@ module HL.Foundation
   ,Mode(..))
   where
 
-import Control.Concurrent.MVar.Lifted
+--import Control.Concurrent.MVar.Lifted
+--import Control.Concurrent.MVar
 import HL.Static
 import HL.Types
 
+import UnliftIO
 import qualified Data.Map as Map
 import Data.Monoid
 import Data.Text (Text)
@@ -56,10 +58,11 @@ instance Yesod App where
   -- to avoid unnecessary overhead and cookie header generation.
   makeSessionBackend _ = return Nothing
 
-instance MonadCaching (HandlerT App IO) where
+instance MonadCaching (HandlerFor App) where
   withCacheDir cont =
-    do dirVar <- fmap appCacheDir getYesod
-       withMVar dirVar cont
+    do
+      dirVar <- fmap appCacheDir getYesod
+      withMVar dirVar cont
 
 instance Human (Route App) where
   toHuman r =
