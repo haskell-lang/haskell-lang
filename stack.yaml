@@ -1,4 +1,4 @@
-resolver: lts-6.25
+resolver: lts-11.10
 
 packages:
 - .
@@ -6,9 +6,6 @@ packages:
     git: https://github.com/fpco/spiderweb
     commit: a5b7893d7473a54e3848258cef4b57ab48444f87
   extra-dep: true
-
-extra-deps:
-- safe-exceptions-0.1.4.0
 
 extra-include-dirs:
 - /usr/local/opt/icu4c/include
