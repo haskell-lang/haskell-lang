@@ -94,10 +94,20 @@ operatingSystemDownload url mos =
     Just Linux ->
       linuxDownload url
     Just Windows ->
+      windowsDownload url
+
+
+windowsDownload :: (Route App -> Text) -> View App ()
+windowsDownload _ =
       do p_ (do "Download and run the installer: ")
-         ul_ (do li_ (a_ [href_ "https://www.stackage.org/stack/windows-x86_64-installer"]
-                         "Windows 64-bit")
-                 li_ (a_ [href_ "https://www.stackage.org/stack/windows-i386-installer"]
+         (a_ [ class_ "windows-button"
+             , href_ "https://www.stackage.org/stack/windows-x86_64-installer"
+             ]
+                         "Windows")
+         div_ [class_ "muted-choices"]
+           (do
+             p_ (do "For those on older machines, or running a legacy OS, we also offer a 32-bit version: ")
+             (a_ [href_ "https://www.stackage.org/stack/windows-i386-installer"]
                          "Windows 32-bit"))
 
 -- | Linux download details.
