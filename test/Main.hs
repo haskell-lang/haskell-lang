@@ -10,6 +10,7 @@ import SpiderWeb
 import Data.String (fromString)
 import Network.Wai.Handler.Warp (testWithApplication)
 import Yesod.Core (toWaiApp)
+import RIO (runSimpleApp)
 
 main :: IO ()
 main = hspec $ do
@@ -19,4 +20,4 @@ main = hspec $ do
 
     it "link checking" $
       testWithApplication (mkApp >>= toWaiApp) $ \port ->
-        void $ download $ fromString $ "http://localhost:" ++ show port
+        void $ runSimpleApp $ download $ fromString $ "http://localhost:" ++ show port

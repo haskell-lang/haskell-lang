@@ -193,3 +193,4 @@ test-suite haskell-lang-test
                    , spiderweb
                    , warp
                    , unliftio
+                   , rio
