@@ -1,4 +1,3 @@
-
 # Serializing data---the binary library
 
 *binary* is straightforward to use library for decoding (parsing)
@@ -6,11 +5,11 @@ and encoding binary data. There are a number of ways to work with
 binary, ways that range from simple to complex.
 
 
-## Decoding and encoding standard data types. 
+## Decoding and encoding standard data types.
 
 Byte strings can be trivially decoded to Haskell values, provided that the types of those values are instances of `Binary`. Analogously, types that are instances of `Binary` can easily be encoded back to byte strings. *binary* comes with convenient `Binary` instances for a good number of the standard data types including numbers, booleans, lists, tuples, and so on.
 
-Let us try these instances out in GHCi. You'll need to import 
+Let us try these instances out in GHCi. You'll need to import
 `Data.Binary` to run the examples below.
 
 ```
@@ -56,26 +55,26 @@ import Data.Binary
 import Data.Text
 import GHC.Generics (Generic)
 
-data Transaction = 
-  Txn { account :: Text, amount :: Float } 
+data Transaction =
+  Txn { account :: Text, amount :: Float }
   deriving (Generic, Show)
 
 instance Binary Transaction
 
 main :: IO ()
 main = do
-  let bytes = 
+  let bytes =
    encode (Txn { account = "Cash", amount = 10 })
   putStrLn $ "Encode: " ++ show bytes
-  putStrLn $ "Decode: " ++ 
+  putStrLn $ "Decode: " ++
     show (decode bytes :: Transaction)
 ```
 
-## Custom decoding and encoding 
+## Custom decoding and encoding
 
 `Binary` instances may also be written by hand.
 
-For decoding, you need to define `get`, of type `Get t` where `Get` is an instance of `Monad`.  
+For decoding, you need to define `get`, of type `Get t` where `Get` is an instance of `Monad`.
 
 For encoding, you need to provide a definition for `put`, which is a function that takes a value of the type you wish to encode and a value of type `Put`. By definition, `Put = PutM ()`
 where `PutM` is also an instance of `Monad`.
@@ -104,13 +103,14 @@ instance Binary Transaction where
 
 main :: IO () -- The main action is unchanged from before.
 main = do
-  let bytes = 
+  let bytes =
     encode (Txn { account = "Cash", amount = 1000 })
   putStrLn $ "Encode: " ++ show bytes
-  putStrLn $ "Decode: " ++ 
+  putStrLn $ "Decode: " ++
     show (decode bytes :: Transaction)
 ```
 
 
 ## Conclusion
+
 While quite straightforward to use, the *binary* library is vulnerable to two criticisms. Firstly, as its creator Duncan Coutts pointed out, `binary` entangles the issue of serializing Haskell values with that of read/writing externally defined formats. This can be confusing. Secondly, the error messages one may encounter when using `binary`are perhaps not as helpful as one would like. The `cereal` library offers to address the latter (though not the former) problem.
