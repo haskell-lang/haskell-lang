@@ -100,14 +100,14 @@ operatingSystemDownload url mos =
 windowsDownload :: (Route App -> Text) -> View App ()
 windowsDownload _ =
       do p_ (do "Download and run the installer: ")
-         (a_ [ class_ "windows-button"
+         (a_ [ class_ "btn btn-primary"
              , href_ "https://www.stackage.org/stack/windows-x86_64-installer"
              ]
-                         "Windows")
+                         "Windows 64-bit installer")
          div_ [class_ "muted-choices"]
            (do
-             p_ (do "For those on older machines, or running a legacy OS, we also offer a 32-bit version: ")
-             (a_ [href_ "https://www.stackage.org/stack/windows-i386-installer"]
+             p_ (do "For those on older machines, or running a legacy OS, we also offer a 32-bit version: "
+                    a_ [href_ "https://www.stackage.org/stack/windows-i386-installer"]
                          "Windows 32-bit"))
 
 -- | Linux download details.
