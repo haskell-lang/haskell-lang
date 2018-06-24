@@ -114,6 +114,7 @@ library
                      HL.Controller.Feed
                      HL.Controller.Standard
                      HL.Controller.SuccessStories
+                     HL.Controller.HowToContribute
                      HL.Dispatch
                      HL.Foundation
                      HL.Main
