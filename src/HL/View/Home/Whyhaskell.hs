@@ -66,7 +66,7 @@ deep :: View App ()
 deep = do
     h2_ "Deep roots, modern tools"
     p_
-        "Haskell first appeared in 1990, born out of deep collaboration in the academic world to create a real world functional programming language. In its 26 years of existence, Haskell has been improved and refined, and has had a significant impact on many other programming languages. At the same time, it sports modern tooling:"
+        "Haskell first appeared in 1990, born out of deep collaboration in the academic world to create a real world functional programming language. In its 28 years of existence, Haskell has been improved and refined, and has had a significant impact on many other programming languages. At the same time, it sports modern tooling:"
 
     do
       p_
