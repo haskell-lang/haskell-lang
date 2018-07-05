@@ -84,9 +84,9 @@ rich = do
     h2_ "Rich library ecosystem"
     p_
         (do "Haskell features over 10,000 open source libraries to choose from. And with both "
-            a_ [href_ "https://www.stackage.org/lts-6.11"] "LTS (long term support) Haskell"
+            a_ [href_ "https://www.stackage.org/lts"] "LTS (long term support) Haskell"
             " and "
-            a_ [href_ "https://www.stackage.org/nightly-2016-08-06"] "Stackage Nightly"
+            a_ [href_ "https://www.stackage.org/nightly"] "Stackage Nightly"
             ", you can choose whether you live on the stable or bleeding edge of library development.")
 
 domains :: View App ()
