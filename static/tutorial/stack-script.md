@@ -125,7 +125,7 @@ If we modify our `http.hs` to say:
 
 ```haskell
 #!/usr/bin/env stack
--- stack --resolver lts-6.15 script
+-- stack --resolver lts-12.5 script
 {-# LANGUAGE OverloadedStrings #-}
 import qualified Data.ByteString.Lazy.Char8 as L8
 import           Network.HTTP.Simple
