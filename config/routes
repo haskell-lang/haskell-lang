@@ -12,7 +12,6 @@
 /library LibrariesSingularR GET
 /libraries LibrariesR GET
 /library/#PackageName LibraryR GET
-/news NewsR GET
 /feed FeedR GET
 /intero InteroR GET
 /build-version GitRevR GitRev appGitRev

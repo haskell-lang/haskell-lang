@@ -17,7 +17,6 @@ import HL.Controller.Announcements
 import HL.Controller.Home
 import HL.Controller.Irc
 import HL.Controller.MailingLists
-import HL.Controller.News
 import HL.Controller.Packages
 import HL.Controller.Intero
 import HL.Controller.Feed

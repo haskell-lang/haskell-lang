@@ -71,7 +71,6 @@ instance Human (Route App) where
       HomeR                -> "Home"
       MailingListsR        -> "Mailing Lists"
       SuccessStoriesR      -> "Success Stories"
-      NewsR                -> "News"
       StaticR{}            -> "Static"
       GetStartedR          -> "Get Started"
       GetStartedOSR os     -> "Get Started (" <> toHuman os <> ")"
@@ -100,7 +99,6 @@ instance Slug (Route App) where
       HomeR             -> "home"
       MailingListsR     -> "mailing-lists"
       SuccessStoriesR   -> "success-stories"
-      NewsR             -> "news"
       StaticR{}         -> "static"
       GetStartedR       -> "get-started"
       GetStartedOSR os  -> "get-started-" <> toSlug os
@@ -129,7 +127,6 @@ instance YesodBreadcrumbs App where
         HomeR                -> return ("Home",Nothing)
         MailingListsR        -> return ("Mailing Lists",Nothing)
         SuccessStoriesR      -> return ("Success Stories",Nothing)
-        NewsR                -> return ("News",Nothing)
         StaticR{}            -> return ("Static",Nothing)
         GetStartedR          -> return ("Get Started",Nothing)
         GetStartedOSR os     -> return ("Get Started (" <> toHuman os <> ")",Nothing)

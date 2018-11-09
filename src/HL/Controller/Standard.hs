@@ -75,12 +75,6 @@ getSitemapR = do
             , sitemapPriority = Just 0.9
             }
         yield SitemapUrl
-            { sitemapLoc = NewsR
-            , sitemapLastMod = Nothing
-            , sitemapChangeFreq = Just Daily
-            , sitemapPriority = Just 0.5
-            }
-        yield SitemapUrl
             { sitemapLoc = InteroR
             , sitemapLastMod = Nothing
             , sitemapChangeFreq = Nothing
