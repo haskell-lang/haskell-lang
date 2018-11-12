@@ -1,14 +1,7 @@
-resolver: lts-6.25
-
-packages:
-- .
-- location:
-    git: https://github.com/fpco/spiderweb
-    commit: a5b7893d7473a54e3848258cef4b57ab48444f87
-  extra-dep: true
+resolver: nightly-2018-06-20
 
 extra-deps:
-- safe-exceptions-0.1.4.0
+- archive: https://github.com/fpco/spiderweb/archive/7acb788f62e7c46b9d72f29331561a3d20821496.tar.gz
 
 extra-include-dirs:
 - /usr/local/opt/icu4c/include

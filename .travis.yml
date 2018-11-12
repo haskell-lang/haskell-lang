@@ -83,7 +83,12 @@ before_install:
 install:
 - echo "$(ghc --version) [$(ghc --print-project-git-commit-id 2> /dev/null || echo '?')]"
 - if [ -f configure.ac ]; then autoreconf -i; fi
+
+# Deal with OOM situation
+- stack --no-terminal --install-ghc $ARGS build haskell-src-exts
+- stack --no-terminal --install-ghc $ARGS build Cabal
+
 - stack --no-terminal --install-ghc $ARGS test --bench --only-dependencies
 
 script:
-- stack --no-terminal $ARGS test --bench --no-run-benchmarks --haddock --no-haddock-deps
+- stack --no-terminal $ARGS test --bench --no-run-benchmarks # Haddock is always broken --haddock --no-haddock-deps

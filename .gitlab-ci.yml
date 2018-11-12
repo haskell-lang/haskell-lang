@@ -1,4 +1,4 @@
-image: registry.gitlab.fpcomplete.com/fpco/default-build-image:17
+image: registry.gitlab.fpcomplete.com/fpco/default-build-image:1954
 
 cache:
   key: "$CI_BUILD_NAME"
@@ -29,6 +29,7 @@ variables:
   - &KUBEAPPLY
     kubectl apply -f <(envsubst <etc/kube/service_template.yaml) &&
     kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml) &&
+    kubectl apply -f <(envsubst <etc/kube/ingress_template.yaml) &&
     kubectl rollout status -f <(envsubst <etc/kube/deployment_template.yaml)
 
 build:
@@ -47,16 +48,18 @@ build:
 
 deploy_review:
   stage: deploy
+  when: manual
   only:
     - branches
   except:
     - master
   environment:
     name: haskell-lang-review/$CI_BUILD_REF_NAME
-    url: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-untrusted.fpcomplete.com/
+    url: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-public.fpcomplete.com/
     on_stop: stop_review
   variables:
-    APPROOT: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-untrusted.fpcomplete.com/
+    APPROOT: https://haskell-lang-$CI_BUILD_REF_SLUG.fpco-public.fpcomplete.com/
+    HOST: haskell-lang-$CI_BUILD_REF_SLUG.fpco-public.fpcomplete.com
   script:
     - *KUBELOGIN
     - *KUBEAPPLY
@@ -73,7 +76,7 @@ stop_review:
     action: stop
   script:
     - *KUBELOGIN
-    - kubectl delete service,deployment -l app=${CI_ENVIRONMENT_SLUG}
+    - kubectl delete service,deployment,ingress,secret -l app=${CI_ENVIRONMENT_SLUG}
 
 deploy_prod:
   stage: deploy

@@ -65,7 +65,6 @@ library
                    , hscolour
                    , http-conduit
                    , http-types
-                   , lifted-base
                    , lucid
                    , markdown
                    , monad-extras
@@ -79,6 +78,8 @@ library
                    , containers
                    , time
                    , transformers
+                   , unliftio
+                   , unliftio-core
                    , vector
                    , wai-logger
                    , warp
@@ -108,7 +109,6 @@ library
                      HL.Controller.Irc
                      HL.Controller.MailingLists
                      HL.Controller.Markdown
-                     HL.Controller.News
                      HL.Controller.Packages
                      HL.Controller.Feed
                      HL.Controller.Standard
@@ -117,7 +117,6 @@ library
                      HL.Foundation
                      HL.Main
                      HL.Model.Markdown
-                     HL.Model.News
                      HL.Model.Packages
                      HL.Model.Snippets
                      HL.Model.Tutorial
@@ -133,7 +132,6 @@ library
                      HL.View.Home.Features
                      HL.View.Home.Whyhaskell
                      HL.View.Markdown
-                     HL.View.News
                      HL.View.Template
                      HL.View.Packages
                      Paths_haskell_lang
@@ -185,10 +183,11 @@ test-suite haskell-lang-test
                    , safe-exceptions
                    , wai-logger
                    , fast-logger
-                   , lifted-base
                    , mtl
                    , time
                    , monad-extras
                    , network-uri
                    , spiderweb
                    , warp
+                   , unliftio
+                   , rio
