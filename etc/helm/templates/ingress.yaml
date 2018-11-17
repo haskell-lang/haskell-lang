@@ -1,0 +1,36 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := .Values.deployment.name -}}
+{{- $ingressPath := .Values.ingress.path -}}
+{{- $ingressServicePort := .Values.ingress.servicePort -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app: {{ .Values.deployment.app }}
+    chart: {{ template "haskell-lang.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+{{- with .Values.ingress.annotations }}
+  annotations:
+{{ toYaml . | indent 4 }}
+{{- end }}
+spec:
+  tls:
+    - hosts:
+      {{- range .Values.ingress.hosts }}
+        - {{ . }}
+      {{- end }}
+      secretName: {{ $fullName }}-tls
+  rules:
+  {{- range .Values.ingress.hosts }}
+    - host: {{ . }}
+      http:
+        paths:
+          - path: {{ $ingressPath }}
+            backend:
+              serviceName: {{ $fullName }}
+              servicePort: 9090
+  {{- end }}
+{{- end }}
+
