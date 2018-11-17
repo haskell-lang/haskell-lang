@@ -1,0 +1,60 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ .Values.deployment.name }}
+spec:
+  replicas: {{ .Values.image.replicas }}
+  minReadySeconds: {{ .Values.image.minReadySeconds }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.deployment.app }}
+    spec:
+      containers:
+        - name: haskell-lang
+          image: {{ .Values.image.image }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: PORT
+              value: {{ .Values.image.port.containerPort | quote }}
+            - name: APPROOT
+              value: {{ .Values.image.env.approot | quote}}
+          workingDir: /haskell-lang
+          command:
+            - haskell-lang
+          ports:
+            - name: http
+              containerPort: {{ .Values.image.port.containerPort }}
+          readinessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.image.port.containerPort }}
+            initialDelaySeconds: 5
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+          livenessProbe:
+            httpGet:
+              path: /
+              port: {{ .Values.image.port.containerPort }}
+            initialDelaySeconds: 60
+            timeoutSeconds: 1
+            periodSeconds: 5
+            successThreshold: 1
+            failureThreshold: 3
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+    {{- with .Values.nodeSelector }}
+      nodeSelector:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+{{ toYaml . | indent 8 }}
+    {{- end }}
+      imagePullSecrets:
+        - name: registry-key

@@ -1,0 +1,47 @@
+# Default values for haskell-lang.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+# set deployment.name=$DEPLOYMENT_APP
+# set deployment.name="${DEPLOYMENT_APP}"
+# set image.image=DEPLOYMENT_IMAGE
+# set image.env.approot=$APPROOT
+
+deployment:
+  name: "${DEPLOYMENT_NAME}"
+  app:  "${DEPLOYMENT_APP}"
+
+image:
+  image: "${DEPLOYMENT_IMAGE}"
+  pullPolicy: IfNotPresent
+  replicas: 2
+  minReadySeconds: 5
+  env:
+    approot: "${APPROOT}"
+  port:
+    containerPort: 9090
+
+service:
+  type: ClusterIP
+  port: "9090"
+
+ingress:
+  enabled: true
+  annotations:
+     kubernetes.io/ingress.class: "nginx"
+     kubernetes.io/tls-acme: "true"
+  path: /
+  hosts:
+    - "${HOST}"
+
+resources: {}
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
