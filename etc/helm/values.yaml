@@ -1,17 +1,4 @@
-# Default values for haskell-lang.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-# set deployment.name=$DEPLOYMENT_APP
-# set deployment.name="${DEPLOYMENT_APP}"
-# set image.image=DEPLOYMENT_IMAGE
-# set image.env.approot=$APPROOT
-
-deployment:
-  name: "${DEPLOYMENT_NAME}"
-  app:  "${DEPLOYMENT_APP}"
-
 image:
-  image: "${DEPLOYMENT_IMAGE}"
   pullPolicy: IfNotPresent
   replicas: 2
   minReadySeconds: 5

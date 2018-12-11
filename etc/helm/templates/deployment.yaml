@@ -1,14 +1,14 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
+  name: {{ .Values.name }}
 spec:
   replicas: {{ .Values.image.replicas }}
   minReadySeconds: {{ .Values.image.minReadySeconds }}
   template:
     metadata:
       labels:
-        app: {{ .Values.deployment.app }}
+        app: {{ .Values.app }}
     spec:
       containers:
         - name: haskell-lang

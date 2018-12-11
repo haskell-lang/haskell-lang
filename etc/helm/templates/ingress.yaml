@@ -1,5 +1,5 @@
 {{- if .Values.ingress.enabled -}}
-{{- $fullName := .Values.deployment.name -}}
+{{- $fullName := .Values.name -}}
 {{- $ingressPath := .Values.ingress.path -}}
 {{- $ingressServicePort := .Values.ingress.servicePort -}}
 apiVersion: extensions/v1beta1
@@ -7,7 +7,7 @@ kind: Ingress
 metadata:
   name: {{ $fullName }}
   labels:
-    app: {{ .Values.deployment.app }}
+    app: {{ .Values.app }}
     chart: {{ template "haskell-lang.chart" . }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
