@@ -2,8 +2,6 @@ image:
   pullPolicy: IfNotPresent
   replicas: 2
   minReadySeconds: 5
-  env:
-    approot: "${APPROOT}"
   port:
     containerPort: 9090
 
@@ -17,8 +15,6 @@ ingress:
      kubernetes.io/ingress.class: "nginx"
      kubernetes.io/tls-acme: "true"
   path: /
-  hosts:
-    - "${HOST}"
 
 resources: {}
   #  cpu: 100m
