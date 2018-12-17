@@ -1,4 +1,4 @@
-image: registry.gitlab.fpcomplete.com/fpco/default-build-image:1954
+image: registry.gitlab.fpcomplete.com/fpco/default-build-image:5354
 
 cache:
   key: "$CI_BUILD_NAME"
@@ -31,6 +31,11 @@ variables:
     kubectl apply -f <(envsubst <etc/kube/deployment_template.yaml) &&
     kubectl apply -f <(envsubst <etc/kube/ingress_template.yaml) &&
     kubectl rollout status -f <(envsubst <etc/kube/deployment_template.yaml)
+  - &HELMUPGRADE
+    helm upgrade -i "${DEPLOYMENT_NAME}" etc/helm --set name="${DEPLOYMENT_NAME}" --set app="${DEPLOYMENT_APP}" --set image.image="${DEPLOYMENT_IMAGE}" --set image.env.approot="{$APPROOT} --set ingress.hosts="${HOST}" --values values/$CI_ENVIRONMENT_NAME.yaml
+  - &HELMCHECK
+    helm ls &&
+    helm status "${DEPLOYMENT_NAME}"
 
 build:
   stage: build
@@ -62,7 +67,8 @@ deploy_review:
     HOST: haskell-lang-$CI_BUILD_REF_SLUG.fpco-public.fpcomplete.com
   script:
     - *KUBELOGIN
-    - *KUBEAPPLY
+    - *HELMUPGRADE
+    - *HELMCHECK
 
 stop_review:
   stage: deploy
@@ -76,7 +82,8 @@ stop_review:
     action: stop
   script:
     - *KUBELOGIN
-    - kubectl delete service,deployment,ingress,secret -l app=${CI_ENVIRONMENT_SLUG}
+    - helm delete --purge "${DEPLOYMENT_IMAGE}"
+    - helm ls
 
 deploy_prod:
   stage: deploy
