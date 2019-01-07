@@ -175,7 +175,7 @@ footer =
              (p_  hlCopy))
   where hlCopy :: View App ()
         hlCopy =
-          do span_ [class_ "item"] "\169 2014\8211\&2017 haskell-lang.org"
+          do span_ [class_ "item"] "\169 2014\8211\&2019 haskell-lang.org"
              home <- fmap (== Just HomeR) (lift (asks pageRoute))
              unless
                home
