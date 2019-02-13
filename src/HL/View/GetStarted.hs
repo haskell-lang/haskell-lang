@@ -184,7 +184,7 @@ runScripts =
                                  \-- stack --install-ghc runghc\n\
                                  \\n\
                                  \main :: IO ()\n\
-                                 \main = putStrLn \"Hello World\"")
+                                 \main = do putStrLn \"Hello World\"")
              li_ (do "Open up a terminal and run "
                      code_ "stack HelloWorld.hs"
                      "."))
