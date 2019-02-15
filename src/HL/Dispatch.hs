@@ -9,20 +9,12 @@
 
 module HL.Dispatch () where
 
-import HL.Controller.Community
 import HL.Controller.Deprecated
-import HL.Controller.Documentation
-import HL.Controller.GetStarted
 import HL.Controller.Announcements
-import HL.Controller.Home
-import HL.Controller.Irc
-import HL.Controller.MailingLists
-import HL.Controller.Packages
 import HL.Controller.Intero
 import HL.Controller.Feed
 import HL.Controller.Standard
-import HL.Controller.SuccessStories
-import HL.Controller.Tutorial
+import HL.Controller.Redirects
 import HL.Foundation
 import Yesod.Core.Dispatch
 
