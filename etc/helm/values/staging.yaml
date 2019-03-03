@@ -1,0 +1,30 @@
+image:
+  pullPolicy: IfNotPresent
+  replicas: 2
+  minReadySeconds: 5
+  port:
+    containerPort: 9090
+
+service:
+  type: ClusterIP
+  port: "9090"
+
+ingress:
+  enabled: true
+  annotations:
+     kubernetes.io/ingress.class: "nginx"
+     kubernetes.io/tls-acme: "true"
+  path: /
+
+resources: {}
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+  #  memory: 128Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
